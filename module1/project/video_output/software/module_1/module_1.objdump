@@ -1,0 +1,4496 @@
+
+module_1.elf:     file format elf32-littlenios2
+module_1.elf
+architecture: nios2, flags 0x00000112:
+EXEC_P, HAS_SYMS, D_PAGED
+start address 0x00000020
+
+Program Header:
+    LOAD off    0x00001000 vaddr 0x00000000 paddr 0x00000000 align 2**12
+         filesz 0x00000020 memsz 0x00000020 flags r-x
+    LOAD off    0x00001020 vaddr 0x00000020 paddr 0x00000020 align 2**12
+         filesz 0x00002ca8 memsz 0x00002ca8 flags r-x
+    LOAD off    0x00003cc8 vaddr 0x00002cc8 paddr 0x0000332c align 2**12
+         filesz 0x00000664 memsz 0x00000664 flags rw-
+    LOAD off    0x00004990 vaddr 0x00003990 paddr 0x00003990 align 2**12
+         filesz 0x00000000 memsz 0x000001a0 flags rw-
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .entry        00000020  00000000  00000000  00001000  2**5
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .text         00002c20  00000020  00000020  00001020  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .rodata       00000088  00002c40  00002c40  00003c40  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  3 .rwdata       00000664  00002cc8  0000332c  00003cc8  2**2
+                  CONTENTS, ALLOC, LOAD, DATA, SMALL_DATA
+  4 .bss          000001a0  00003990  00003990  00004990  2**2
+                  ALLOC, SMALL_DATA
+  5 .comment      00000026  00000000  00000000  0000432c  2**0
+                  CONTENTS, READONLY
+  6 .debug_aranges 000003a8  00000000  00000000  00004358  2**3
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_pubnames 0000072c  00000000  00000000  00004700  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_info   00007e6c  00000000  00000000  00004e2c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_abbrev 000019d4  00000000  00000000  0000cc98  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_line   00004cbb  00000000  00000000  0000e66c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_frame  00000770  00000000  00000000  00013328  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_str    00000cc8  00000000  00000000  00013a98  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 13 .debug_loc    00000ec6  00000000  00000000  00014760  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 14 .debug_alt_sim_info 00000010  00000000  00000000  00015628  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 15 .debug_ranges 000000c0  00000000  00000000  00015638  2**3
+                  CONTENTS, READONLY, DEBUGGING
+ 16 .thread_model 00000003  00000000  00000000  00016e6c  2**0
+                  CONTENTS, READONLY
+ 17 .cpu          0000000c  00000000  00000000  00016e6f  2**0
+                  CONTENTS, READONLY
+ 18 .qsys         00000001  00000000  00000000  00016e7b  2**0
+                  CONTENTS, READONLY
+ 19 .simulation_enabled 00000001  00000000  00000000  00016e7c  2**0
+                  CONTENTS, READONLY
+ 20 .stderr_dev   00000004  00000000  00000000  00016e7d  2**0
+                  CONTENTS, READONLY
+ 21 .stdin_dev    00000004  00000000  00000000  00016e81  2**0
+                  CONTENTS, READONLY
+ 22 .stdout_dev   00000004  00000000  00000000  00016e85  2**0
+                  CONTENTS, READONLY
+ 23 .sopc_system_name 0000000b  00000000  00000000  00016e89  2**0
+                  CONTENTS, READONLY
+ 24 .quartus_project_dir 00000026  00000000  00000000  00016e94  2**0
+                  CONTENTS, READONLY
+ 25 .sopcinfo     00071eb2  00000000  00000000  00016eba  2**0
+                  CONTENTS, READONLY
+SYMBOL TABLE:
+00000000 l    d  .entry	00000000 .entry
+00000020 l    d  .text	00000000 .text
+00002c40 l    d  .rodata	00000000 .rodata
+00002cc8 l    d  .rwdata	00000000 .rwdata
+00003990 l    d  .bss	00000000 .bss
+00000000 l    d  .comment	00000000 .comment
+00000000 l    d  .debug_aranges	00000000 .debug_aranges
+00000000 l    d  .debug_pubnames	00000000 .debug_pubnames
+00000000 l    d  .debug_info	00000000 .debug_info
+00000000 l    d  .debug_abbrev	00000000 .debug_abbrev
+00000000 l    d  .debug_line	00000000 .debug_line
+00000000 l    d  .debug_frame	00000000 .debug_frame
+00000000 l    d  .debug_str	00000000 .debug_str
+00000000 l    d  .debug_loc	00000000 .debug_loc
+00000000 l    d  .debug_alt_sim_info	00000000 .debug_alt_sim_info
+00000000 l    d  .debug_ranges	00000000 .debug_ranges
+00000058 l       .text	00000000 alt_after_alt_main
+00000000 l    df *ABS*	00000000 exercise5.c
+00000000 l    df *ABS*	00000000 lib2-divmod.c
+000001d8 l     F .text	0000007c udivmodsi4
+00000000 l    df *ABS*	00000000 rand.c
+00000000 l    df *ABS*	00000000 impure.c
+00002cc8 l     O .rwdata	00000400 impure_data
+00000000 l    df *ABS*	00000000 libgcc2.c
+00000000 l    df *ABS*	00000000 lib2-mul.c
+00000000 l    df *ABS*	00000000 alt_load.c
+00000594 l     F .text	0000006c alt_load_section
+00000000 l    df *ABS*	00000000 alt_main.c
+00000000 l    df *ABS*	00000000 alt_sys_init.c
+000030c8 l     O .rwdata	00000048 char_drawer
+00003110 l     O .rwdata	00000054 pixel_buffer_dma
+0000095c l     F .text	00000038 alt_dev_reg
+00000000 l    df *ABS*	00000000 altera_up_avalon_video_character_buffer_with_dma.c
+00000000 l    df *ABS*	00000000 altera_up_avalon_video_pixel_buffer_dma.c
+00000000 l    df *ABS*	00000000 alt_close.c
+00002338 l     F .text	00000060 alt_get_errno
+00000000 l    df *ABS*	00000000 alt_dcache_flush_all.c
+00000000 l    df *ABS*	00000000 alt_dev.c
+000023b4 l     F .text	0000002c alt_dev_null_write
+00000000 l    df *ABS*	00000000 alt_dev_llist_insert.c
+00002494 l     F .text	00000060 alt_get_errno
+00000000 l    df *ABS*	00000000 alt_do_ctors.c
+00000000 l    df *ABS*	00000000 alt_do_dtors.c
+00000000 l    df *ABS*	00000000 alt_errno.c
+00000000 l    df *ABS*	00000000 alt_find_dev.c
+00000000 l    df *ABS*	00000000 alt_icache_flush_all.c
+00000000 l    df *ABS*	00000000 alt_release_fd.c
+00000000 l    df *ABS*	00000000 altera_nios2_qsys_irq.c
+00000000 l    df *ABS*	00000000 atexit.c
+00000000 l    df *ABS*	00000000 exit.c
+00000000 l    df *ABS*	00000000 int_errno.c
+00000000 l    df *ABS*	00000000 memcmp.c
+00000000 l    df *ABS*	00000000 strcmp.c
+00000000 l    df *ABS*	00000000 strlen.c
+00000000 l    df *ABS*	00000000 __atexit.c
+00000000 l    df *ABS*	00000000 __call_atexit.c
+00002a28 l     F .text	00000004 register_fini
+00000000 l    df *ABS*	00000000 alt_exit.c
+00002bdc l     F .text	00000040 alt_sim_halt
+00000600 g     F .text	00000050 alt_main
+00001928 g     F .text	000003d8 alt_up_pixel_buffer_dma_draw_vline
+0000332c g       *ABS*	00000000 __flash_rwdata_start
+00000b28 g     F .text	00000114 alt_up_char_buffer_string
+00000a58 g     F .text	000000d0 alt_up_char_buffer_draw
+00000cd8 g     F .text	000001ac alt_up_pixel_buffer_dma_draw
+00000000  w      *UND*	00000000 __errno
+00000c98 g     F .text	00000040 alt_up_pixel_buffer_dma_open_dev
+00000000 g     F .entry	0000000c __reset
+00000020 g       *ABS*	00000000 __flash_exceptions_start
+0000399c g     O .bss	00000004 errno
+00003994 g     O .bss	00000004 alt_argv
+0000b30c g       *ABS*	00000000 _gp
+00000e84 g     F .text	00000058 alt_up_pixel_buffer_dma_change_back_buffer_address
+0000318c g     O .rwdata	00000180 alt_fd_list
+000025bc g     F .text	00000094 alt_find_dev
+00000c3c g     F .text	0000005c alt_up_char_buffer_clear
+00002c40 g       *ABS*	00000000 __DTOR_END__
+00000f34 g     F .text	00000034 alt_up_pixel_buffer_dma_check_swap_buffers_status
+00000000  w      *UND*	00000000 malloc
+00000000 g       *ABS*	00000000 __alt_mem_onchip_memory2_0
+00000314 g     F .text	00000008 __udivsi3
+000015d0 g     F .text	00000358 alt_up_pixel_buffer_dma_draw_hline
+00001dc4 g     F .text	000000d8 helper_plot_pixel
+00003324 g     O .rwdata	00000004 alt_max_fd
+00000f68 g     F .text	0000016c alt_up_pixel_buffer_dma_clear_screen
+00003310 g     O .rwdata	00000004 _global_impure_ptr
+00003b30 g       *ABS*	00000000 __bss_end
+000010d4 g     F .text	000004fc alt_up_pixel_buffer_dma_draw_box
+00003164 g     O .rwdata	00000028 alt_dev_null
+00002398 g     F .text	0000001c alt_dcache_flush_all
+00001d00 g     F .text	000000c4 alt_up_pixel_buffer_dma_draw_rectangle
+0000332c g       *ABS*	00000000 __ram_rwdata_end
+0000331c g     O .rwdata	00000008 alt_dev_list
+00001e9c g     F .text	0000039c alt_up_pixel_buffer_dma_draw_line
+00002cc8 g       *ABS*	00000000 __ram_rodata_end
+0000031c g     F .text	00000008 __umodsi3
+00003b30 g       *ABS*	00000000 end
+00000994 g     F .text	00000084 alt_up_char_buffer_init
+00002c3c g       *ABS*	00000000 __CTOR_LIST__
+00007d00 g       *ABS*	00000000 __alt_stack_pointer
+00002a2c g     F .text	000001b0 __call_exitprocs
+00000020 g     F .text	0000003c _start
+00000340 g     F .text	00000078 rand
+00000684 g     F .text	000002d8 alt_sys_init
+000028f4 g     F .text	00000134 __register_exitproc
+000004dc g     F .text	00000038 __mulsi3
+00002cc8 g       *ABS*	00000000 __ram_rwdata_start
+00002c40 g       *ABS*	00000000 __ram_rodata_start
+00002750 g     F .text	00000074 memcmp
+00003b30 g       *ABS*	00000000 __alt_stack_base
+000023e0 g     F .text	000000b4 alt_dev_llist_insert
+00003990 g       *ABS*	00000000 __bss_start
+0000005c g     F .text	0000017c main
+00003998 g     O .bss	00000004 alt_envp
+00000edc g     F .text	00000058 alt_up_pixel_buffer_dma_swap_buffers
+00000a18 g     F .text	00000040 alt_up_char_buffer_open_dev
+00000324 g     F .text	0000001c srand
+000039a0 g     O .bss	00000190 _atexit0
+00003328 g     O .rwdata	00000004 alt_errno
+00000254 g     F .text	00000060 __divsi3
+00002c40 g       *ABS*	00000000 __CTOR_END__
+000027c4 g     F .text	000000bc strcmp
+00002c40 g       *ABS*	00000000 __flash_rodata_start
+00002c40 g       *ABS*	00000000 __DTOR_LIST__
+00000650 g     F .text	00000034 alt_irq_init
+0000266c g     F .text	00000078 alt_release_fd
+00002704 g     F .text	00000014 atexit
+0000330c g     O .rwdata	00000004 _impure_ptr
+00003990 g     O .bss	00000004 alt_argc
+00002558 g     F .text	00000064 _do_dtors
+00003314 g     O .rwdata	00000008 alt_fs_list
+00000020 g       *ABS*	00000000 __ram_exceptions_start
+0000332c g       *ABS*	00000000 _edata
+00003b30 g       *ABS*	00000000 _end
+00000020 g       *ABS*	00000000 __ram_exceptions_end
+000026e4 g     F .text	00000020 altera_nios2_qsys_irq_init
+00002718 g     F .text	00000038 exit
+000002b4 g     F .text	00000060 __modsi3
+00007d00 g       *ABS*	00000000 __alt_data_end
+01000000 g       *ABS*	00000000 __alt_mem_sdram
+00002c1c g     F .text	00000020 _exit
+000003b8 g     F .text	00000124 __muldi3
+00002880 g     F .text	00000074 strlen
+00002650 g     F .text	0000001c alt_icache_flush_all
+000024f4 g     F .text	00000064 _do_ctors
+00002238 g     F .text	00000100 close
+00000514 g     F .text	00000080 alt_load
+00000000  w      *UND*	00000000 free
+
+
+
+Disassembly of section .entry:
+
+00000000 <__reset>:
+ * Jump to the _start entry point in the .text section if reset code
+ * is allowed or if optimizing for RTL simulation.
+ */
+#if defined(ALT_ALLOW_CODE_AT_RESET) || defined(ALT_SIM_OPTIMIZE)
+    /* Jump to the _start entry point in the .text section. */
+    movhi r1, %hi(_start)
+   0:	00400034 	movhi	at,0
+    ori r1, r1, %lo(_start)
+   4:	08400814 	ori	at,at,32
+    jmp r1
+   8:	0800683a 	jmp	at
+	...
+
+Disassembly of section .text:
+
+00000020 <_start>:
+#if (NIOS2_NUM_OF_SHADOW_REG_SETS == 0)    
+    /*
+     * Now that the caches are initialized, set up the stack pointer.
+     * The value provided by the linker is assumed to be correctly aligned.
+     */
+    movhi sp, %hi(__alt_stack_pointer)
+      20:	06c00034 	movhi	sp,0
+    ori sp, sp, %lo(__alt_stack_pointer)
+      24:	dedf4014 	ori	sp,sp,32000
+
+    /* Set up the global pointer. */
+    movhi gp, %hi(_gp)
+      28:	06800034 	movhi	gp,0
+    ori gp, gp, %lo(_gp)
+      2c:	d6acc314 	ori	gp,gp,45836
+ */
+#ifndef ALT_SIM_OPTIMIZE
+    /* Log that the BSS is about to be cleared. */
+    ALT_LOG_PUTS(alt_log_msg_bss)
+
+    movhi r2, %hi(__bss_start)
+      30:	00800034 	movhi	r2,0
+    ori r2, r2, %lo(__bss_start)
+      34:	108e6414 	ori	r2,r2,14736
+
+    movhi r3, %hi(__bss_end)
+      38:	00c00034 	movhi	r3,0
+    ori r3, r3, %lo(__bss_end)
+      3c:	18cecc14 	ori	r3,r3,15152
+
+    beq r2, r3, 1f
+      40:	10c00326 	beq	r2,r3,50 <_start+0x30>
+
+0:
+    stw zero, (r2)
+      44:	10000015 	stw	zero,0(r2)
+    addi r2, r2, 4
+      48:	10800104 	addi	r2,r2,4
+    bltu r2, r3, 0b
+      4c:	10fffd36 	bltu	r2,r3,44 <_start+0x24>
+     * section aren't defined until alt_load() has been called).
+     */
+    mov   et, zero
+#endif
+
+    call alt_load
+      50:	00005140 	call	514 <alt_load>
+
+    /* Log that alt_main is about to be called. */
+    ALT_LOG_PUTS(alt_log_msg_alt_main)
+
+    /* Call the C entry point. It should never return. */
+    call alt_main
+      54:	00006000 	call	600 <alt_main>
+
+00000058 <alt_after_alt_main>:
+
+    /* Wait in infinite loop in case alt_main does return. */
+alt_after_alt_main:
+    br alt_after_alt_main
+      58:	003fff06 	br	58 <alt_after_alt_main>
+
+0000005c <main>:
+#include "altera_up_avalon_video_pixel_buffer_dma.h"
+#include <unistd.h>
+#define drawer_base (volatile int *) 0xb020
+
+int main()
+{
+      5c:	defff204 	addi	sp,sp,-56
+      60:	dfc00d15 	stw	ra,52(sp)
+      64:	df000c15 	stw	fp,48(sp)
+      68:	df000c04 	addi	fp,sp,48
+	alt_up_pixel_buffer_dma_dev* pixel_buffer;
+	pixel_buffer = alt_up_pixel_buffer_dma_open_dev("/dev/pixel_buffer_dma");
+      6c:	01000034 	movhi	r4,0
+      70:	210b1004 	addi	r4,r4,11328
+      74:	0000c980 	call	c98 <alt_up_pixel_buffer_dma_open_dev>
+      78:	e0bfff15 	stw	r2,-4(fp)
+      7c:	00000006 	br	80 <main+0x24>
+		//printf("error initializing pixel buffer (check name in alt_up_pixel_buffer_dma_open_dev)\n");
+	}
+
+	while(1) {
+		int x1, x2, y1, y2, colour, max_x, max_y;
+		max_x = 20;
+      80:	00800504 	movi	r2,20
+      84:	e0bff915 	stw	r2,-28(fp)
+		max_y = 20;
+      88:	00800504 	movi	r2,20
+      8c:	e0bff815 	stw	r2,-32(fp)
+		x1 = rand() % (320 - max_x);
+      90:	00003400 	call	340 <rand>
+      94:	1009883a 	mov	r4,r2
+      98:	00c05004 	movi	r3,320
+      9c:	e0bff917 	ldw	r2,-28(fp)
+      a0:	188bc83a 	sub	r5,r3,r2
+      a4:	00002b40 	call	2b4 <__modsi3>
+      a8:	e0bffe15 	stw	r2,-8(fp)
+		x2 = (rand() % max_x) + x1;
+      ac:	00003400 	call	340 <rand>
+      b0:	1009883a 	mov	r4,r2
+      b4:	e17ff917 	ldw	r5,-28(fp)
+      b8:	00002b40 	call	2b4 <__modsi3>
+      bc:	1007883a 	mov	r3,r2
+      c0:	e0bffe17 	ldw	r2,-8(fp)
+      c4:	1885883a 	add	r2,r3,r2
+      c8:	e0bffd15 	stw	r2,-12(fp)
+		y1 = rand() % (240 - max_y);
+      cc:	00003400 	call	340 <rand>
+      d0:	1009883a 	mov	r4,r2
+      d4:	00c03c04 	movi	r3,240
+      d8:	e0bff817 	ldw	r2,-32(fp)
+      dc:	188bc83a 	sub	r5,r3,r2
+      e0:	00002b40 	call	2b4 <__modsi3>
+      e4:	e0bffc15 	stw	r2,-16(fp)
+		y2 = (rand() % max_y) + y1;
+      e8:	00003400 	call	340 <rand>
+      ec:	1009883a 	mov	r4,r2
+      f0:	e17ff817 	ldw	r5,-32(fp)
+      f4:	00002b40 	call	2b4 <__modsi3>
+      f8:	1007883a 	mov	r3,r2
+      fc:	e0bffc17 	ldw	r2,-16(fp)
+     100:	1885883a 	add	r2,r3,r2
+     104:	e0bffb15 	stw	r2,-20(fp)
+		colour = rand() % 65535;
+     108:	00003400 	call	340 <rand>
+     10c:	1009883a 	mov	r4,r2
+     110:	017fffd4 	movui	r5,65535
+     114:	00002b40 	call	2b4 <__modsi3>
+     118:	e0bffa15 	stw	r2,-24(fp)
+
+		alt_up_pixel_buffer_dma_change_back_buffer_address(pixel_buffer, PIXEL_BUFFER_BASE);
+     11c:	e13fff17 	ldw	r4,-4(fp)
+     120:	01400234 	movhi	r5,8
+     124:	0000e840 	call	e84 <alt_up_pixel_buffer_dma_change_back_buffer_address>
+		alt_up_pixel_buffer_dma_swap_buffers(pixel_buffer);
+     128:	e13fff17 	ldw	r4,-4(fp)
+     12c:	0000edc0 	call	edc <alt_up_pixel_buffer_dma_swap_buffers>
+		while (alt_up_pixel_buffer_dma_check_swap_buffers_status(pixel_buffer));
+     130:	e13fff17 	ldw	r4,-4(fp)
+     134:	0000f340 	call	f34 <alt_up_pixel_buffer_dma_check_swap_buffers_status>
+     138:	1004c03a 	cmpne	r2,r2,zero
+     13c:	103ffc1e 	bne	r2,zero,130 <main+0xd4>
+		//alt_up_pixel_buffer_dma_clear_screen(pixel_buffer, 0);
+
+		int hw = 0;
+     140:	e03ff715 	stw	zero,-36(fp)
+		if (hw) {
+     144:	e0bff717 	ldw	r2,-36(fp)
+     148:	1005003a 	cmpeq	r2,r2,zero
+     14c:	1000171e 	bne	r2,zero,1ac <main+0x150>
+			   IOWR_32DIRECT(drawer_base,0,x1); // Set x1
+     150:	00ec0814 	movui	r3,45088
+     154:	e0bffe17 	ldw	r2,-8(fp)
+     158:	18800035 	stwio	r2,0(r3)
+			   IOWR_32DIRECT(drawer_base,4,y1); // Set y1
+     15c:	00ec0914 	movui	r3,45092
+     160:	e0bffc17 	ldw	r2,-16(fp)
+     164:	18800035 	stwio	r2,0(r3)
+			   IOWR_32DIRECT(drawer_base,8,x2); // Set x2
+     168:	00ec0a14 	movui	r3,45096
+     16c:	e0bffd17 	ldw	r2,-12(fp)
+     170:	18800035 	stwio	r2,0(r3)
+			   IOWR_32DIRECT(drawer_base,12,y2); // Set y2
+     174:	00ec0b14 	movui	r3,45100
+     178:	e0bffb17 	ldw	r2,-20(fp)
+     17c:	18800035 	stwio	r2,0(r3)
+			   IOWR_32DIRECT(drawer_base,16,colour);  // Set colour
+     180:	00ec0c14 	movui	r3,45104
+     184:	e0bffa17 	ldw	r2,-24(fp)
+     188:	18800035 	stwio	r2,0(r3)
+			   IOWR_32DIRECT(drawer_base,20,1);  // Start drawing
+     18c:	00ec0d14 	movui	r3,45108
+     190:	00800044 	movi	r2,1
+     194:	18800035 	stwio	r2,0(r3)
+			   while(IORD_32DIRECT(drawer_base,20)==0); // wait until done
+     198:	00ac0d14 	movui	r2,45108
+     19c:	10800037 	ldwio	r2,0(r2)
+     1a0:	1005003a 	cmpeq	r2,r2,zero
+     1a4:	103ffc1e 	bne	r2,zero,198 <main+0x13c>
+     1a8:	003fb506 	br	80 <main+0x24>
+		} else {
+			   alt_up_pixel_buffer_dma_draw_box(pixel_buffer, x1,y1,x2,y2,colour,0);
+     1ac:	e0bffb17 	ldw	r2,-20(fp)
+     1b0:	d8800015 	stw	r2,0(sp)
+     1b4:	e0bffa17 	ldw	r2,-24(fp)
+     1b8:	d8800115 	stw	r2,4(sp)
+     1bc:	d8000215 	stw	zero,8(sp)
+     1c0:	e13fff17 	ldw	r4,-4(fp)
+     1c4:	e17ffe17 	ldw	r5,-8(fp)
+     1c8:	e1bffc17 	ldw	r6,-16(fp)
+     1cc:	e1fffd17 	ldw	r7,-12(fp)
+     1d0:	00010d40 	call	10d4 <alt_up_pixel_buffer_dma_draw_box>
+		}
+	}
+     1d4:	003faa06 	br	80 <main+0x24>
+
+000001d8 <udivmodsi4>:
+     1d8:	29001b2e 	bgeu	r5,r4,248 <udivmodsi4+0x70>
+     1dc:	28001a16 	blt	r5,zero,248 <udivmodsi4+0x70>
+     1e0:	00800044 	movi	r2,1
+     1e4:	0007883a 	mov	r3,zero
+     1e8:	01c007c4 	movi	r7,31
+     1ec:	00000306 	br	1fc <udivmodsi4+0x24>
+     1f0:	19c01326 	beq	r3,r7,240 <udivmodsi4+0x68>
+     1f4:	18c00044 	addi	r3,r3,1
+     1f8:	28000416 	blt	r5,zero,20c <udivmodsi4+0x34>
+     1fc:	294b883a 	add	r5,r5,r5
+     200:	1085883a 	add	r2,r2,r2
+     204:	293ffa36 	bltu	r5,r4,1f0 <udivmodsi4+0x18>
+     208:	10000d26 	beq	r2,zero,240 <udivmodsi4+0x68>
+     20c:	0007883a 	mov	r3,zero
+     210:	21400236 	bltu	r4,r5,21c <udivmodsi4+0x44>
+     214:	2149c83a 	sub	r4,r4,r5
+     218:	1886b03a 	or	r3,r3,r2
+     21c:	1004d07a 	srli	r2,r2,1
+     220:	280ad07a 	srli	r5,r5,1
+     224:	103ffa1e 	bne	r2,zero,210 <udivmodsi4+0x38>
+     228:	30000226 	beq	r6,zero,234 <udivmodsi4+0x5c>
+     22c:	2005883a 	mov	r2,r4
+     230:	f800283a 	ret
+     234:	1809883a 	mov	r4,r3
+     238:	2005883a 	mov	r2,r4
+     23c:	f800283a 	ret
+     240:	0007883a 	mov	r3,zero
+     244:	003ff806 	br	228 <udivmodsi4+0x50>
+     248:	00800044 	movi	r2,1
+     24c:	0007883a 	mov	r3,zero
+     250:	003fef06 	br	210 <udivmodsi4+0x38>
+
+00000254 <__divsi3>:
+     254:	defffe04 	addi	sp,sp,-8
+     258:	dc000015 	stw	r16,0(sp)
+     25c:	dfc00115 	stw	ra,4(sp)
+     260:	0021883a 	mov	r16,zero
+     264:	20000c16 	blt	r4,zero,298 <__divsi3+0x44>
+     268:	000d883a 	mov	r6,zero
+     26c:	28000e16 	blt	r5,zero,2a8 <__divsi3+0x54>
+     270:	00001d80 	call	1d8 <udivmodsi4>
+     274:	1007883a 	mov	r3,r2
+     278:	8005003a 	cmpeq	r2,r16,zero
+     27c:	1000011e 	bne	r2,zero,284 <__divsi3+0x30>
+     280:	00c7c83a 	sub	r3,zero,r3
+     284:	1805883a 	mov	r2,r3
+     288:	dfc00117 	ldw	ra,4(sp)
+     28c:	dc000017 	ldw	r16,0(sp)
+     290:	dec00204 	addi	sp,sp,8
+     294:	f800283a 	ret
+     298:	0109c83a 	sub	r4,zero,r4
+     29c:	04000044 	movi	r16,1
+     2a0:	000d883a 	mov	r6,zero
+     2a4:	283ff20e 	bge	r5,zero,270 <__divsi3+0x1c>
+     2a8:	014bc83a 	sub	r5,zero,r5
+     2ac:	8021003a 	cmpeq	r16,r16,zero
+     2b0:	003fef06 	br	270 <__divsi3+0x1c>
+
+000002b4 <__modsi3>:
+     2b4:	deffff04 	addi	sp,sp,-4
+     2b8:	dfc00015 	stw	ra,0(sp)
+     2bc:	01800044 	movi	r6,1
+     2c0:	2807883a 	mov	r3,r5
+     2c4:	20000416 	blt	r4,zero,2d8 <__modsi3+0x24>
+     2c8:	28000c16 	blt	r5,zero,2fc <__modsi3+0x48>
+     2cc:	dfc00017 	ldw	ra,0(sp)
+     2d0:	dec00104 	addi	sp,sp,4
+     2d4:	00001d81 	jmpi	1d8 <udivmodsi4>
+     2d8:	0109c83a 	sub	r4,zero,r4
+     2dc:	28000b16 	blt	r5,zero,30c <__modsi3+0x58>
+     2e0:	180b883a 	mov	r5,r3
+     2e4:	01800044 	movi	r6,1
+     2e8:	00001d80 	call	1d8 <udivmodsi4>
+     2ec:	0085c83a 	sub	r2,zero,r2
+     2f0:	dfc00017 	ldw	ra,0(sp)
+     2f4:	dec00104 	addi	sp,sp,4
+     2f8:	f800283a 	ret
+     2fc:	014bc83a 	sub	r5,zero,r5
+     300:	dfc00017 	ldw	ra,0(sp)
+     304:	dec00104 	addi	sp,sp,4
+     308:	00001d81 	jmpi	1d8 <udivmodsi4>
+     30c:	0147c83a 	sub	r3,zero,r5
+     310:	003ff306 	br	2e0 <__modsi3+0x2c>
+
+00000314 <__udivsi3>:
+     314:	000d883a 	mov	r6,zero
+     318:	00001d81 	jmpi	1d8 <udivmodsi4>
+
+0000031c <__umodsi3>:
+     31c:	01800044 	movi	r6,1
+     320:	00001d81 	jmpi	1d8 <udivmodsi4>
+
+00000324 <srand>:
+     324:	00800034 	movhi	r2,0
+     328:	108cc304 	addi	r2,r2,13068
+     32c:	11400017 	ldw	r5,0(r2)
+     330:	0007883a 	mov	r3,zero
+     334:	28c02a15 	stw	r3,168(r5)
+     338:	29002915 	stw	r4,164(r5)
+     33c:	f800283a 	ret
+
+00000340 <rand>:
+     340:	defffe04 	addi	sp,sp,-8
+     344:	00800034 	movhi	r2,0
+     348:	108cc304 	addi	r2,r2,13068
+     34c:	dc000015 	stw	r16,0(sp)
+     350:	14000017 	ldw	r16,0(r2)
+     354:	dfc00115 	stw	ra,4(sp)
+     358:	00932574 	movhi	r2,19605
+     35c:	109fcb44 	addi	r2,r2,32557
+     360:	82002917 	ldw	r8,164(r16)
+     364:	82402a17 	ldw	r9,168(r16)
+     368:	00d614b4 	movhi	r3,22610
+     36c:	18fd0b44 	addi	r3,r3,-3027
+     370:	4009883a 	mov	r4,r8
+     374:	180f883a 	mov	r7,r3
+     378:	100d883a 	mov	r6,r2
+     37c:	480b883a 	mov	r5,r9
+     380:	00003b80 	call	3b8 <__muldi3>
+     384:	02000044 	movi	r8,1
+     388:	1209883a 	add	r4,r2,r8
+     38c:	2095803a 	cmpltu	r10,r4,r2
+     390:	50d5883a 	add	r10,r10,r3
+     394:	81002915 	stw	r4,164(r16)
+     398:	01200034 	movhi	r4,32768
+     39c:	213fffc4 	addi	r4,r4,-1
+     3a0:	2284703a 	and	r2,r4,r10
+     3a4:	82802a15 	stw	r10,168(r16)
+     3a8:	dfc00117 	ldw	ra,4(sp)
+     3ac:	dc000017 	ldw	r16,0(sp)
+     3b0:	dec00204 	addi	sp,sp,8
+     3b4:	f800283a 	ret
+
+000003b8 <__muldi3>:
+     3b8:	defff204 	addi	sp,sp,-56
+     3bc:	df000c15 	stw	fp,48(sp)
+     3c0:	3038d43a 	srli	fp,r6,16
+     3c4:	dd000815 	stw	r20,32(sp)
+     3c8:	dc400515 	stw	r17,20(sp)
+     3cc:	2028d43a 	srli	r20,r4,16
+     3d0:	247fffcc 	andi	r17,r4,65535
+     3d4:	dc000415 	stw	r16,16(sp)
+     3d8:	343fffcc 	andi	r16,r6,65535
+     3dc:	dcc00715 	stw	r19,28(sp)
+     3e0:	d9000015 	stw	r4,0(sp)
+     3e4:	2827883a 	mov	r19,r5
+     3e8:	8809883a 	mov	r4,r17
+     3ec:	d9400115 	stw	r5,4(sp)
+     3f0:	800b883a 	mov	r5,r16
+     3f4:	d9800215 	stw	r6,8(sp)
+     3f8:	dfc00d15 	stw	ra,52(sp)
+     3fc:	d9c00315 	stw	r7,12(sp)
+     400:	dd800a15 	stw	r22,40(sp)
+     404:	dd400915 	stw	r21,36(sp)
+     408:	302d883a 	mov	r22,r6
+     40c:	ddc00b15 	stw	r23,44(sp)
+     410:	dc800615 	stw	r18,24(sp)
+     414:	00004dc0 	call	4dc <__mulsi3>
+     418:	8809883a 	mov	r4,r17
+     41c:	e00b883a 	mov	r5,fp
+     420:	102b883a 	mov	r21,r2
+     424:	00004dc0 	call	4dc <__mulsi3>
+     428:	800b883a 	mov	r5,r16
+     42c:	a009883a 	mov	r4,r20
+     430:	1023883a 	mov	r17,r2
+     434:	00004dc0 	call	4dc <__mulsi3>
+     438:	a009883a 	mov	r4,r20
+     43c:	e00b883a 	mov	r5,fp
+     440:	1021883a 	mov	r16,r2
+     444:	00004dc0 	call	4dc <__mulsi3>
+     448:	a8ffffcc 	andi	r3,r21,65535
+     44c:	a82ad43a 	srli	r21,r21,16
+     450:	8c23883a 	add	r17,r17,r16
+     454:	1011883a 	mov	r8,r2
+     458:	ac6b883a 	add	r21,r21,r17
+     45c:	a804943a 	slli	r2,r21,16
+     460:	b009883a 	mov	r4,r22
+     464:	980b883a 	mov	r5,r19
+     468:	10c7883a 	add	r3,r2,r3
+     46c:	a812d43a 	srli	r9,r21,16
+     470:	180d883a 	mov	r6,r3
+     474:	ac00022e 	bgeu	r21,r16,480 <__muldi3+0xc8>
+     478:	00800074 	movhi	r2,1
+     47c:	4091883a 	add	r8,r8,r2
+     480:	4267883a 	add	r19,r8,r9
+     484:	302d883a 	mov	r22,r6
+     488:	00004dc0 	call	4dc <__mulsi3>
+     48c:	d9400317 	ldw	r5,12(sp)
+     490:	d9000017 	ldw	r4,0(sp)
+     494:	1023883a 	mov	r17,r2
+     498:	00004dc0 	call	4dc <__mulsi3>
+     49c:	14cb883a 	add	r5,r2,r19
+     4a0:	894b883a 	add	r5,r17,r5
+     4a4:	b005883a 	mov	r2,r22
+     4a8:	2807883a 	mov	r3,r5
+     4ac:	dfc00d17 	ldw	ra,52(sp)
+     4b0:	df000c17 	ldw	fp,48(sp)
+     4b4:	ddc00b17 	ldw	r23,44(sp)
+     4b8:	dd800a17 	ldw	r22,40(sp)
+     4bc:	dd400917 	ldw	r21,36(sp)
+     4c0:	dd000817 	ldw	r20,32(sp)
+     4c4:	dcc00717 	ldw	r19,28(sp)
+     4c8:	dc800617 	ldw	r18,24(sp)
+     4cc:	dc400517 	ldw	r17,20(sp)
+     4d0:	dc000417 	ldw	r16,16(sp)
+     4d4:	dec00e04 	addi	sp,sp,56
+     4d8:	f800283a 	ret
+
+000004dc <__mulsi3>:
+     4dc:	20000a26 	beq	r4,zero,508 <__mulsi3+0x2c>
+     4e0:	0007883a 	mov	r3,zero
+     4e4:	2080004c 	andi	r2,r4,1
+     4e8:	1005003a 	cmpeq	r2,r2,zero
+     4ec:	2008d07a 	srli	r4,r4,1
+     4f0:	1000011e 	bne	r2,zero,4f8 <__mulsi3+0x1c>
+     4f4:	1947883a 	add	r3,r3,r5
+     4f8:	294b883a 	add	r5,r5,r5
+     4fc:	203ff91e 	bne	r4,zero,4e4 <__mulsi3+0x8>
+     500:	1805883a 	mov	r2,r3
+     504:	f800283a 	ret
+     508:	0007883a 	mov	r3,zero
+     50c:	1805883a 	mov	r2,r3
+     510:	f800283a 	ret
+
+00000514 <alt_load>:
+ * there is no bootloader, so this application is responsible for loading to
+ * RAM any sections that are required.
+ */  
+
+void alt_load (void)
+{
+     514:	defffe04 	addi	sp,sp,-8
+     518:	dfc00115 	stw	ra,4(sp)
+     51c:	df000015 	stw	fp,0(sp)
+     520:	d839883a 	mov	fp,sp
+  /* 
+   * Copy the .rwdata section. 
+   */
+
+  alt_load_section (&__flash_rwdata_start, 
+     524:	01000034 	movhi	r4,0
+     528:	210ccb04 	addi	r4,r4,13100
+     52c:	01400034 	movhi	r5,0
+     530:	294b3204 	addi	r5,r5,11464
+     534:	01800034 	movhi	r6,0
+     538:	318ccb04 	addi	r6,r6,13100
+     53c:	00005940 	call	594 <alt_load_section>
+
+  /*
+   * Copy the exception handler.
+   */
+
+  alt_load_section (&__flash_exceptions_start, 
+     540:	01000034 	movhi	r4,0
+     544:	21000804 	addi	r4,r4,32
+     548:	01400034 	movhi	r5,0
+     54c:	29400804 	addi	r5,r5,32
+     550:	01800034 	movhi	r6,0
+     554:	31800804 	addi	r6,r6,32
+     558:	00005940 	call	594 <alt_load_section>
+
+  /*
+   * Copy the .rodata section.
+   */
+
+  alt_load_section (&__flash_rodata_start, 
+     55c:	01000034 	movhi	r4,0
+     560:	210b1004 	addi	r4,r4,11328
+     564:	01400034 	movhi	r5,0
+     568:	294b1004 	addi	r5,r5,11328
+     56c:	01800034 	movhi	r6,0
+     570:	318b3204 	addi	r6,r6,11464
+     574:	00005940 	call	594 <alt_load_section>
+  
+  /*
+   * Now ensure that the caches are in synch.
+   */
+  
+  alt_dcache_flush_all();
+     578:	00023980 	call	2398 <alt_dcache_flush_all>
+  alt_icache_flush_all();
+     57c:	00026500 	call	2650 <alt_icache_flush_all>
+}
+     580:	e037883a 	mov	sp,fp
+     584:	dfc00117 	ldw	ra,4(sp)
+     588:	df000017 	ldw	fp,0(sp)
+     58c:	dec00204 	addi	sp,sp,8
+     590:	f800283a 	ret
+
+00000594 <alt_load_section>:
+ */
+
+static void ALT_INLINE alt_load_section (alt_u32* from, 
+                                         alt_u32* to, 
+                                         alt_u32* end)
+{
+     594:	defffc04 	addi	sp,sp,-16
+     598:	df000315 	stw	fp,12(sp)
+     59c:	df000304 	addi	fp,sp,12
+     5a0:	e13ffd15 	stw	r4,-12(fp)
+     5a4:	e17ffe15 	stw	r5,-8(fp)
+     5a8:	e1bfff15 	stw	r6,-4(fp)
+  if (to != from)
+     5ac:	e0fffe17 	ldw	r3,-8(fp)
+     5b0:	e0bffd17 	ldw	r2,-12(fp)
+     5b4:	18800e26 	beq	r3,r2,5f0 <alt_load_section+0x5c>
+  {
+    while( to != end )
+     5b8:	00000a06 	br	5e4 <alt_load_section+0x50>
+    {
+      *to++ = *from++;
+     5bc:	e0bffd17 	ldw	r2,-12(fp)
+     5c0:	10c00017 	ldw	r3,0(r2)
+     5c4:	e0bffe17 	ldw	r2,-8(fp)
+     5c8:	10c00015 	stw	r3,0(r2)
+     5cc:	e0bffe17 	ldw	r2,-8(fp)
+     5d0:	10800104 	addi	r2,r2,4
+     5d4:	e0bffe15 	stw	r2,-8(fp)
+     5d8:	e0bffd17 	ldw	r2,-12(fp)
+     5dc:	10800104 	addi	r2,r2,4
+     5e0:	e0bffd15 	stw	r2,-12(fp)
+                                         alt_u32* to, 
+                                         alt_u32* end)
+{
+  if (to != from)
+  {
+    while( to != end )
+     5e4:	e0fffe17 	ldw	r3,-8(fp)
+     5e8:	e0bfff17 	ldw	r2,-4(fp)
+     5ec:	18bff31e 	bne	r3,r2,5bc <alt_load_section+0x28>
+    {
+      *to++ = *from++;
+    }
+  }
+}
+     5f0:	e037883a 	mov	sp,fp
+     5f4:	df000017 	ldw	fp,0(sp)
+     5f8:	dec00104 	addi	sp,sp,4
+     5fc:	f800283a 	ret
+
+00000600 <alt_main>:
+ * devices/filesystems/components in the system; and call the entry point for
+ * the users application, i.e. main().
+ */
+
+void alt_main (void)
+{
+     600:	defffd04 	addi	sp,sp,-12
+     604:	dfc00215 	stw	ra,8(sp)
+     608:	df000115 	stw	fp,4(sp)
+     60c:	df000104 	addi	fp,sp,4
+#endif
+
+  /* ALT LOG - please see HAL/sys/alt_log_printf.h for details */
+  ALT_LOG_PRINT_BOOT("[alt_main.c] Entering alt_main, calling alt_irq_init.\r\n");
+  /* Initialize the interrupt controller. */
+  alt_irq_init (NULL);
+     610:	0009883a 	mov	r4,zero
+     614:	00006500 	call	650 <alt_irq_init>
+  ALT_LOG_PRINT_BOOT("[alt_main.c] Done OS Init, calling alt_sem_create.\r\n");
+  ALT_SEM_CREATE (&alt_fd_list_lock, 1);
+
+  /* Initialize the device drivers/software components. */
+  ALT_LOG_PRINT_BOOT("[alt_main.c] Calling alt_sys_init.\r\n");
+  alt_sys_init();
+     618:	00006840 	call	684 <alt_sys_init>
+  /* 
+   * Call the C++ constructors 
+   */
+
+  ALT_LOG_PRINT_BOOT("[alt_main.c] Calling C++ constructors.\r\n");
+  _do_ctors ();
+     61c:	00024f40 	call	24f4 <_do_ctors>
+   * redefined as _exit()). This is in the interest of reducing code footprint,
+   * in that the atexit() overhead is removed when it's not needed.
+   */
+
+  ALT_LOG_PRINT_BOOT("[alt_main.c] Calling atexit.\r\n");
+  atexit (_do_dtors);
+     620:	01000034 	movhi	r4,0
+     624:	21095604 	addi	r4,r4,9560
+     628:	00027040 	call	2704 <atexit>
+  ALT_LOG_PRINT_BOOT("[alt_main.c] Calling main.\r\n");
+
+#ifdef ALT_NO_EXIT
+  main (alt_argc, alt_argv, alt_envp);
+#else
+  result = main (alt_argc, alt_argv, alt_envp);
+     62c:	d121a117 	ldw	r4,-31100(gp)
+     630:	d161a217 	ldw	r5,-31096(gp)
+     634:	d1a1a317 	ldw	r6,-31092(gp)
+     638:	000005c0 	call	5c <main>
+     63c:	e0bfff15 	stw	r2,-4(fp)
+  close(STDOUT_FILENO);
+     640:	01000044 	movi	r4,1
+     644:	00022380 	call	2238 <close>
+  exit (result);
+     648:	e13fff17 	ldw	r4,-4(fp)
+     64c:	00027180 	call	2718 <exit>
+
+00000650 <alt_irq_init>:
+ * The "base" parameter is ignored and only
+ * present for backwards-compatibility.
+ */
+
+void alt_irq_init ( const void* base )
+{
+     650:	defffd04 	addi	sp,sp,-12
+     654:	dfc00215 	stw	ra,8(sp)
+     658:	df000115 	stw	fp,4(sp)
+     65c:	df000104 	addi	fp,sp,4
+     660:	e13fff15 	stw	r4,-4(fp)
+    ALTERA_NIOS2_QSYS_IRQ_INIT ( NIOS2_QSYS_0, nios2_qsys_0);
+     664:	00026e40 	call	26e4 <altera_nios2_qsys_irq_init>
+ * alt_irq_cpu_enable_interrupts() enables the CPU to start taking interrupts.
+ */
+static ALT_INLINE void ALT_ALWAYS_INLINE 
+       alt_irq_cpu_enable_interrupts ()
+{
+    NIOS2_WRITE_STATUS(NIOS2_STATUS_PIE_MSK
+     668:	00800044 	movi	r2,1
+     66c:	1001703a 	wrctl	status,r2
+    alt_irq_cpu_enable_interrupts();
+}
+     670:	e037883a 	mov	sp,fp
+     674:	dfc00117 	ldw	ra,4(sp)
+     678:	df000017 	ldw	fp,0(sp)
+     67c:	dec00204 	addi	sp,sp,8
+     680:	f800283a 	ret
+
+00000684 <alt_sys_init>:
+ * Initialize the non-interrupt controller devices.
+ * Called after alt_irq_init().
+ */
+
+void alt_sys_init( void )
+{
+     684:	defffd04 	addi	sp,sp,-12
+     688:	dfc00215 	stw	ra,8(sp)
+     68c:	df000115 	stw	fp,4(sp)
+     690:	df000104 	addi	fp,sp,4
+    ALTERA_UP_AVALON_VIDEO_CHARACTER_BUFFER_WITH_DMA_INIT ( CHAR_DRAWER, char_drawer);
+     694:	00800034 	movhi	r2,0
+     698:	108c3204 	addi	r2,r2,12488
+     69c:	10800a17 	ldw	r2,40(r2)
+     6a0:	10800104 	addi	r2,r2,4
+     6a4:	10800017 	ldw	r2,0(r2)
+     6a8:	10ffffcc 	andi	r3,r2,65535
+     6ac:	00800034 	movhi	r2,0
+     6b0:	108c3204 	addi	r2,r2,12488
+     6b4:	10c00c15 	stw	r3,48(r2)
+     6b8:	00800034 	movhi	r2,0
+     6bc:	108c3204 	addi	r2,r2,12488
+     6c0:	10800a17 	ldw	r2,40(r2)
+     6c4:	10800104 	addi	r2,r2,4
+     6c8:	10800017 	ldw	r2,0(r2)
+     6cc:	1005d43a 	srai	r2,r2,16
+     6d0:	10ffffcc 	andi	r3,r2,65535
+     6d4:	00800034 	movhi	r2,0
+     6d8:	108c3204 	addi	r2,r2,12488
+     6dc:	10c00d15 	stw	r3,52(r2)
+     6e0:	00800034 	movhi	r2,0
+     6e4:	108c3204 	addi	r2,r2,12488
+     6e8:	10800c17 	ldw	r2,48(r2)
+     6ec:	10801068 	cmpgeui	r2,r2,65
+     6f0:	1000081e 	bne	r2,zero,714 <alt_sys_init+0x90>
+     6f4:	00c00034 	movhi	r3,0
+     6f8:	18cc3204 	addi	r3,r3,12488
+     6fc:	00800fc4 	movi	r2,63
+     700:	18800f15 	stw	r2,60(r3)
+     704:	00c00034 	movhi	r3,0
+     708:	18cc3204 	addi	r3,r3,12488
+     70c:	00800184 	movi	r2,6
+     710:	18801015 	stw	r2,64(r3)
+     714:	00800034 	movhi	r2,0
+     718:	108c3204 	addi	r2,r2,12488
+     71c:	10800d17 	ldw	r2,52(r2)
+     720:	10800868 	cmpgeui	r2,r2,33
+     724:	1000041e 	bne	r2,zero,738 <alt_sys_init+0xb4>
+     728:	00c00034 	movhi	r3,0
+     72c:	18cc3204 	addi	r3,r3,12488
+     730:	008007c4 	movi	r2,31
+     734:	18801115 	stw	r2,68(r3)
+     738:	01000034 	movhi	r4,0
+     73c:	210c3204 	addi	r4,r4,12488
+     740:	00009940 	call	994 <alt_up_char_buffer_init>
+     744:	01000034 	movhi	r4,0
+     748:	210c3204 	addi	r4,r4,12488
+     74c:	000095c0 	call	95c <alt_dev_reg>
+    ALTERA_UP_AVALON_VIDEO_PIXEL_BUFFER_DMA_INIT ( PIXEL_BUFFER_DMA, pixel_buffer_dma);
+     750:	00800034 	movhi	r2,0
+     754:	108c4404 	addi	r2,r2,12560
+     758:	10800a17 	ldw	r2,40(r2)
+     75c:	10800017 	ldw	r2,0(r2)
+     760:	1007883a 	mov	r3,r2
+     764:	00800034 	movhi	r2,0
+     768:	108c4404 	addi	r2,r2,12560
+     76c:	10c00b15 	stw	r3,44(r2)
+     770:	00800034 	movhi	r2,0
+     774:	108c4404 	addi	r2,r2,12560
+     778:	10800a17 	ldw	r2,40(r2)
+     77c:	10800104 	addi	r2,r2,4
+     780:	10800017 	ldw	r2,0(r2)
+     784:	1007883a 	mov	r3,r2
+     788:	00800034 	movhi	r2,0
+     78c:	108c4404 	addi	r2,r2,12560
+     790:	10c00c15 	stw	r3,48(r2)
+     794:	00800034 	movhi	r2,0
+     798:	108c4404 	addi	r2,r2,12560
+     79c:	10800a17 	ldw	r2,40(r2)
+     7a0:	10800204 	addi	r2,r2,8
+     7a4:	10800017 	ldw	r2,0(r2)
+     7a8:	10ffffcc 	andi	r3,r2,65535
+     7ac:	00800034 	movhi	r2,0
+     7b0:	108c4404 	addi	r2,r2,12560
+     7b4:	10c00f15 	stw	r3,60(r2)
+     7b8:	00800034 	movhi	r2,0
+     7bc:	108c4404 	addi	r2,r2,12560
+     7c0:	10800a17 	ldw	r2,40(r2)
+     7c4:	10800204 	addi	r2,r2,8
+     7c8:	10800017 	ldw	r2,0(r2)
+     7cc:	1005d43a 	srai	r2,r2,16
+     7d0:	10ffffcc 	andi	r3,r2,65535
+     7d4:	00800034 	movhi	r2,0
+     7d8:	108c4404 	addi	r2,r2,12560
+     7dc:	10c01015 	stw	r3,64(r2)
+     7e0:	00800034 	movhi	r2,0
+     7e4:	108c4404 	addi	r2,r2,12560
+     7e8:	10800a17 	ldw	r2,40(r2)
+     7ec:	10800304 	addi	r2,r2,12
+     7f0:	10800017 	ldw	r2,0(r2)
+     7f4:	1005d07a 	srai	r2,r2,1
+     7f8:	10c0004c 	andi	r3,r2,1
+     7fc:	00800034 	movhi	r2,0
+     800:	108c4404 	addi	r2,r2,12560
+     804:	10c00d15 	stw	r3,52(r2)
+     808:	00800034 	movhi	r2,0
+     80c:	108c4404 	addi	r2,r2,12560
+     810:	10800a17 	ldw	r2,40(r2)
+     814:	10800304 	addi	r2,r2,12
+     818:	10800017 	ldw	r2,0(r2)
+     81c:	1005d13a 	srai	r2,r2,4
+     820:	10c003cc 	andi	r3,r2,15
+     824:	00800034 	movhi	r2,0
+     828:	108c4404 	addi	r2,r2,12560
+     82c:	10c00e15 	stw	r3,56(r2)
+     830:	00800034 	movhi	r2,0
+     834:	108c4404 	addi	r2,r2,12560
+     838:	10800a17 	ldw	r2,40(r2)
+     83c:	10800304 	addi	r2,r2,12
+     840:	10800017 	ldw	r2,0(r2)
+     844:	1005d43a 	srai	r2,r2,16
+     848:	1007883a 	mov	r3,r2
+     84c:	00bfffc4 	movi	r2,-1
+     850:	1884703a 	and	r2,r3,r2
+     854:	e0bfff45 	stb	r2,-3(fp)
+     858:	00800034 	movhi	r2,0
+     85c:	108c4404 	addi	r2,r2,12560
+     860:	10800a17 	ldw	r2,40(r2)
+     864:	10800304 	addi	r2,r2,12
+     868:	10800017 	ldw	r2,0(r2)
+     86c:	1005d63a 	srai	r2,r2,24
+     870:	1007883a 	mov	r3,r2
+     874:	00bfffc4 	movi	r2,-1
+     878:	1884703a 	and	r2,r3,r2
+     87c:	e0bfff05 	stb	r2,-4(fp)
+     880:	00800034 	movhi	r2,0
+     884:	108c4404 	addi	r2,r2,12560
+     888:	10800e17 	ldw	r2,56(r2)
+     88c:	10800058 	cmpnei	r2,r2,1
+     890:	1000041e 	bne	r2,zero,8a4 <alt_sys_init+0x220>
+     894:	00800034 	movhi	r2,0
+     898:	108c4404 	addi	r2,r2,12560
+     89c:	10001115 	stw	zero,68(r2)
+     8a0:	00000e06 	br	8dc <alt_sys_init+0x258>
+     8a4:	00800034 	movhi	r2,0
+     8a8:	108c4404 	addi	r2,r2,12560
+     8ac:	10800e17 	ldw	r2,56(r2)
+     8b0:	10800098 	cmpnei	r2,r2,2
+     8b4:	1000051e 	bne	r2,zero,8cc <alt_sys_init+0x248>
+     8b8:	00c00034 	movhi	r3,0
+     8bc:	18cc4404 	addi	r3,r3,12560
+     8c0:	00800044 	movi	r2,1
+     8c4:	18801115 	stw	r2,68(r3)
+     8c8:	00000406 	br	8dc <alt_sys_init+0x258>
+     8cc:	00c00034 	movhi	r3,0
+     8d0:	18cc4404 	addi	r3,r3,12560
+     8d4:	00800084 	movi	r2,2
+     8d8:	18801115 	stw	r2,68(r3)
+     8dc:	e0ffff43 	ldbu	r3,-3(fp)
+     8e0:	00800804 	movi	r2,32
+     8e4:	10c7c83a 	sub	r3,r2,r3
+     8e8:	00bfffc4 	movi	r2,-1
+     8ec:	10c6d83a 	srl	r3,r2,r3
+     8f0:	00800034 	movhi	r2,0
+     8f4:	108c4404 	addi	r2,r2,12560
+     8f8:	10c01215 	stw	r3,72(r2)
+     8fc:	e0ffff43 	ldbu	r3,-3(fp)
+     900:	00800034 	movhi	r2,0
+     904:	108c4404 	addi	r2,r2,12560
+     908:	10801117 	ldw	r2,68(r2)
+     90c:	1887883a 	add	r3,r3,r2
+     910:	00800034 	movhi	r2,0
+     914:	108c4404 	addi	r2,r2,12560
+     918:	10c01315 	stw	r3,76(r2)
+     91c:	e0ffff03 	ldbu	r3,-4(fp)
+     920:	00800804 	movi	r2,32
+     924:	10c7c83a 	sub	r3,r2,r3
+     928:	00bfffc4 	movi	r2,-1
+     92c:	10c6d83a 	srl	r3,r2,r3
+     930:	00800034 	movhi	r2,0
+     934:	108c4404 	addi	r2,r2,12560
+     938:	10c01415 	stw	r3,80(r2)
+     93c:	01000034 	movhi	r4,0
+     940:	210c4404 	addi	r4,r4,12560
+     944:	000095c0 	call	95c <alt_dev_reg>
+}
+     948:	e037883a 	mov	sp,fp
+     94c:	dfc00117 	ldw	ra,4(sp)
+     950:	df000017 	ldw	fp,0(sp)
+     954:	dec00204 	addi	sp,sp,8
+     958:	f800283a 	ret
+
+0000095c <alt_dev_reg>:
+ */
+
+extern int alt_fs_reg  (alt_dev* dev); 
+
+static ALT_INLINE int alt_dev_reg (alt_dev* dev)
+{
+     95c:	defffd04 	addi	sp,sp,-12
+     960:	dfc00215 	stw	ra,8(sp)
+     964:	df000115 	stw	fp,4(sp)
+     968:	df000104 	addi	fp,sp,4
+     96c:	e13fff15 	stw	r4,-4(fp)
+  extern alt_llist alt_dev_list;
+
+  return alt_dev_llist_insert ((alt_dev_llist*) dev, &alt_dev_list);
+     970:	e13fff17 	ldw	r4,-4(fp)
+     974:	01400034 	movhi	r5,0
+     978:	294cc704 	addi	r5,r5,13084
+     97c:	00023e00 	call	23e0 <alt_dev_llist_insert>
+}
+     980:	e037883a 	mov	sp,fp
+     984:	dfc00117 	ldw	ra,4(sp)
+     988:	df000017 	ldw	fp,0(sp)
+     98c:	dec00204 	addi	sp,sp,8
+     990:	f800283a 	ret
+
+00000994 <alt_up_char_buffer_init>:
+#include <priv/alt_file.h>
+
+#include "altera_up_avalon_video_character_buffer_with_dma.h"
+#include "altera_up_avalon_video_character_buffer_with_dma_regs.h"
+
+void alt_up_char_buffer_init(alt_up_char_buffer_dev *char_buffer) {
+     994:	defffc04 	addi	sp,sp,-16
+     998:	dfc00315 	stw	ra,12(sp)
+     99c:	df000215 	stw	fp,8(sp)
+     9a0:	df000204 	addi	fp,sp,8
+     9a4:	e13fff15 	stw	r4,-4(fp)
+	char * name;
+	name = (char *) char_buffer->dev.name;
+     9a8:	e0bfff17 	ldw	r2,-4(fp)
+     9ac:	10800217 	ldw	r2,8(r2)
+     9b0:	e0bffe15 	stw	r2,-8(fp)
+
+	for ( ; (*name) != '\0'; name++) {
+     9b4:	00000c06 	br	9e8 <alt_up_char_buffer_init+0x54>
+		if (strcmp(name, "_avalon_char_buffer_slave") == 0) {
+     9b8:	e13ffe17 	ldw	r4,-8(fp)
+     9bc:	01400034 	movhi	r5,0
+     9c0:	294b2804 	addi	r5,r5,11424
+     9c4:	00027c40 	call	27c4 <strcmp>
+     9c8:	1004c03a 	cmpne	r2,r2,zero
+     9cc:	1000031e 	bne	r2,zero,9dc <alt_up_char_buffer_init+0x48>
+			(*name) = '\0';
+     9d0:	e0bffe17 	ldw	r2,-8(fp)
+     9d4:	10000005 	stb	zero,0(r2)
+			break;
+     9d8:	00000a06 	br	a04 <alt_up_char_buffer_init+0x70>
+
+void alt_up_char_buffer_init(alt_up_char_buffer_dev *char_buffer) {
+	char * name;
+	name = (char *) char_buffer->dev.name;
+
+	for ( ; (*name) != '\0'; name++) {
+     9dc:	e0bffe17 	ldw	r2,-8(fp)
+     9e0:	10800044 	addi	r2,r2,1
+     9e4:	e0bffe15 	stw	r2,-8(fp)
+     9e8:	e0bffe17 	ldw	r2,-8(fp)
+     9ec:	10800003 	ldbu	r2,0(r2)
+     9f0:	10803fcc 	andi	r2,r2,255
+     9f4:	1080201c 	xori	r2,r2,128
+     9f8:	10bfe004 	addi	r2,r2,-128
+     9fc:	1004c03a 	cmpne	r2,r2,zero
+     a00:	103fed1e 	bne	r2,zero,9b8 <alt_up_char_buffer_init+0x24>
+			break;
+		}
+	}
+	
+	return;
+}
+     a04:	e037883a 	mov	sp,fp
+     a08:	dfc00117 	ldw	ra,4(sp)
+     a0c:	df000017 	ldw	fp,0(sp)
+     a10:	dec00204 	addi	sp,sp,8
+     a14:	f800283a 	ret
+
+00000a18 <alt_up_char_buffer_open_dev>:
+
+alt_up_char_buffer_dev* alt_up_char_buffer_open_dev(const char* name) {
+     a18:	defffc04 	addi	sp,sp,-16
+     a1c:	dfc00315 	stw	ra,12(sp)
+     a20:	df000215 	stw	fp,8(sp)
+     a24:	df000204 	addi	fp,sp,8
+     a28:	e13fff15 	stw	r4,-4(fp)
+  // find the device from the device list 
+  // (see altera_hal/HAL/inc/priv/alt_file.h 
+  // and altera_hal/HAL/src/alt_find_dev.c 
+  // for details)
+  alt_up_char_buffer_dev *dev = (alt_up_char_buffer_dev *)alt_find_dev(name, &alt_dev_list);
+     a2c:	e13fff17 	ldw	r4,-4(fp)
+     a30:	01400034 	movhi	r5,0
+     a34:	294cc704 	addi	r5,r5,13084
+     a38:	00025bc0 	call	25bc <alt_find_dev>
+     a3c:	e0bffe15 	stw	r2,-8(fp)
+
+  return dev;
+     a40:	e0bffe17 	ldw	r2,-8(fp)
+}
+     a44:	e037883a 	mov	sp,fp
+     a48:	dfc00117 	ldw	ra,4(sp)
+     a4c:	df000017 	ldw	fp,0(sp)
+     a50:	dec00204 	addi	sp,sp,8
+     a54:	f800283a 	ret
+
+00000a58 <alt_up_char_buffer_draw>:
+
+int alt_up_char_buffer_draw(alt_up_char_buffer_dev *char_buffer, unsigned char ch, 
+	unsigned int x, unsigned int y) {
+     a58:	defff904 	addi	sp,sp,-28
+     a5c:	df000615 	stw	fp,24(sp)
+     a60:	df000604 	addi	fp,sp,24
+     a64:	e13ffb15 	stw	r4,-20(fp)
+     a68:	e1bffd15 	stw	r6,-12(fp)
+     a6c:	e1fffe15 	stw	r7,-8(fp)
+     a70:	e17ffc05 	stb	r5,-16(fp)
+	// boundary check
+	if (x >= char_buffer->x_resolution || y >= char_buffer->y_resolution )
+     a74:	e0bffb17 	ldw	r2,-20(fp)
+     a78:	10c00c17 	ldw	r3,48(r2)
+     a7c:	e0bffd17 	ldw	r2,-12(fp)
+     a80:	10c0042e 	bgeu	r2,r3,a94 <alt_up_char_buffer_draw+0x3c>
+     a84:	e0bffb17 	ldw	r2,-20(fp)
+     a88:	10c00d17 	ldw	r3,52(r2)
+     a8c:	e0bffe17 	ldw	r2,-8(fp)
+     a90:	10c00336 	bltu	r2,r3,aa0 <alt_up_char_buffer_draw+0x48>
+		return -1;
+     a94:	00bfffc4 	movi	r2,-1
+     a98:	e0bfff15 	stw	r2,-4(fp)
+     a9c:	00001d06 	br	b14 <alt_up_char_buffer_draw+0xbc>
+	
+	unsigned int addr = 0;
+     aa0:	e03ffa15 	stw	zero,-24(fp)
+	addr |= ((x & char_buffer->x_coord_mask) << char_buffer->x_coord_offset);
+     aa4:	e0bffb17 	ldw	r2,-20(fp)
+     aa8:	10c00f17 	ldw	r3,60(r2)
+     aac:	e0bffd17 	ldw	r2,-12(fp)
+     ab0:	1886703a 	and	r3,r3,r2
+     ab4:	e0bffb17 	ldw	r2,-20(fp)
+     ab8:	10800e17 	ldw	r2,56(r2)
+     abc:	1886983a 	sll	r3,r3,r2
+     ac0:	e0bffa17 	ldw	r2,-24(fp)
+     ac4:	10c4b03a 	or	r2,r2,r3
+     ac8:	e0bffa15 	stw	r2,-24(fp)
+	addr |= ((y & char_buffer->y_coord_mask) << char_buffer->y_coord_offset);
+     acc:	e0bffb17 	ldw	r2,-20(fp)
+     ad0:	10c01117 	ldw	r3,68(r2)
+     ad4:	e0bffe17 	ldw	r2,-8(fp)
+     ad8:	1886703a 	and	r3,r3,r2
+     adc:	e0bffb17 	ldw	r2,-20(fp)
+     ae0:	10801017 	ldw	r2,64(r2)
+     ae4:	1886983a 	sll	r3,r3,r2
+     ae8:	e0bffa17 	ldw	r2,-24(fp)
+     aec:	10c4b03a 	or	r2,r2,r3
+     af0:	e0bffa15 	stw	r2,-24(fp)
+	IOWR_8DIRECT(char_buffer->buffer_base, addr, ch);
+     af4:	e0bffb17 	ldw	r2,-20(fp)
+     af8:	10800b17 	ldw	r2,44(r2)
+     afc:	1007883a 	mov	r3,r2
+     b00:	e0bffa17 	ldw	r2,-24(fp)
+     b04:	1885883a 	add	r2,r3,r2
+     b08:	e0fffc03 	ldbu	r3,-16(fp)
+     b0c:	10c00025 	stbio	r3,0(r2)
+
+	return 0;
+     b10:	e03fff15 	stw	zero,-4(fp)
+     b14:	e0bfff17 	ldw	r2,-4(fp)
+}
+     b18:	e037883a 	mov	sp,fp
+     b1c:	df000017 	ldw	fp,0(sp)
+     b20:	dec00104 	addi	sp,sp,4
+     b24:	f800283a 	ret
+
+00000b28 <alt_up_char_buffer_string>:
+
+int alt_up_char_buffer_string(alt_up_char_buffer_dev *char_buffer, const char *ptr, 
+	unsigned int x, unsigned int y) {
+     b28:	defff904 	addi	sp,sp,-28
+     b2c:	df000615 	stw	fp,24(sp)
+     b30:	df000604 	addi	fp,sp,24
+     b34:	e13ffb15 	stw	r4,-20(fp)
+     b38:	e17ffc15 	stw	r5,-16(fp)
+     b3c:	e1bffd15 	stw	r6,-12(fp)
+     b40:	e1fffe15 	stw	r7,-8(fp)
+	// boundary check
+	if (x >= char_buffer->x_resolution || y >= char_buffer->y_resolution )
+     b44:	e0bffb17 	ldw	r2,-20(fp)
+     b48:	10c00c17 	ldw	r3,48(r2)
+     b4c:	e0bffd17 	ldw	r2,-12(fp)
+     b50:	10c0042e 	bgeu	r2,r3,b64 <alt_up_char_buffer_string+0x3c>
+     b54:	e0bffb17 	ldw	r2,-20(fp)
+     b58:	10c00d17 	ldw	r3,52(r2)
+     b5c:	e0bffe17 	ldw	r2,-8(fp)
+     b60:	10c00336 	bltu	r2,r3,b70 <alt_up_char_buffer_string+0x48>
+		return -1;
+     b64:	00bfffc4 	movi	r2,-1
+     b68:	e0bfff15 	stw	r2,-4(fp)
+     b6c:	00002e06 	br	c28 <alt_up_char_buffer_string+0x100>
+	
+	unsigned int offset = 0;
+     b70:	e03ffa15 	stw	zero,-24(fp)
+	offset = (y << char_buffer->y_coord_offset) + x;
+     b74:	e0bffb17 	ldw	r2,-20(fp)
+     b78:	10801017 	ldw	r2,64(r2)
+     b7c:	1007883a 	mov	r3,r2
+     b80:	e0bffe17 	ldw	r2,-8(fp)
+     b84:	10c6983a 	sll	r3,r2,r3
+     b88:	e0bffd17 	ldw	r2,-12(fp)
+     b8c:	1885883a 	add	r2,r3,r2
+     b90:	e0bffa15 	stw	r2,-24(fp)
+
+	while ( *ptr )
+     b94:	00001c06 	br	c08 <alt_up_char_buffer_string+0xe0>
+	{
+		IOWR_8DIRECT(char_buffer->buffer_base, offset, *ptr);
+     b98:	e0bffb17 	ldw	r2,-20(fp)
+     b9c:	10800b17 	ldw	r2,44(r2)
+     ba0:	1007883a 	mov	r3,r2
+     ba4:	e0bffa17 	ldw	r2,-24(fp)
+     ba8:	1889883a 	add	r4,r3,r2
+     bac:	e0bffc17 	ldw	r2,-16(fp)
+     bb0:	10800003 	ldbu	r2,0(r2)
+     bb4:	10c03fcc 	andi	r3,r2,255
+     bb8:	18c0201c 	xori	r3,r3,128
+     bbc:	18ffe004 	addi	r3,r3,-128
+     bc0:	2005883a 	mov	r2,r4
+     bc4:	10c00025 	stbio	r3,0(r2)
+		++ptr;
+     bc8:	e0bffc17 	ldw	r2,-16(fp)
+     bcc:	10800044 	addi	r2,r2,1
+     bd0:	e0bffc15 	stw	r2,-16(fp)
+		if (++x >= char_buffer->x_resolution)
+     bd4:	e0bffd17 	ldw	r2,-12(fp)
+     bd8:	10800044 	addi	r2,r2,1
+     bdc:	e0bffd15 	stw	r2,-12(fp)
+     be0:	e0bffb17 	ldw	r2,-20(fp)
+     be4:	10c00c17 	ldw	r3,48(r2)
+     be8:	e0bffd17 	ldw	r2,-12(fp)
+     bec:	10c00336 	bltu	r2,r3,bfc <alt_up_char_buffer_string+0xd4>
+			return -1;
+     bf0:	00bfffc4 	movi	r2,-1
+     bf4:	e0bfff15 	stw	r2,-4(fp)
+     bf8:	00000b06 	br	c28 <alt_up_char_buffer_string+0x100>
+		++offset;
+     bfc:	e0bffa17 	ldw	r2,-24(fp)
+     c00:	10800044 	addi	r2,r2,1
+     c04:	e0bffa15 	stw	r2,-24(fp)
+		return -1;
+	
+	unsigned int offset = 0;
+	offset = (y << char_buffer->y_coord_offset) + x;
+
+	while ( *ptr )
+     c08:	e0bffc17 	ldw	r2,-16(fp)
+     c0c:	10800003 	ldbu	r2,0(r2)
+     c10:	10803fcc 	andi	r2,r2,255
+     c14:	1080201c 	xori	r2,r2,128
+     c18:	10bfe004 	addi	r2,r2,-128
+     c1c:	1004c03a 	cmpne	r2,r2,zero
+     c20:	103fdd1e 	bne	r2,zero,b98 <alt_up_char_buffer_string+0x70>
+		++ptr;
+		if (++x >= char_buffer->x_resolution)
+			return -1;
+		++offset;
+	}
+	return 0;
+     c24:	e03fff15 	stw	zero,-4(fp)
+     c28:	e0bfff17 	ldw	r2,-4(fp)
+}
+     c2c:	e037883a 	mov	sp,fp
+     c30:	df000017 	ldw	fp,0(sp)
+     c34:	dec00104 	addi	sp,sp,4
+     c38:	f800283a 	ret
+
+00000c3c <alt_up_char_buffer_clear>:
+
+int alt_up_char_buffer_clear(alt_up_char_buffer_dev *char_buffer) {
+     c3c:	defffe04 	addi	sp,sp,-8
+     c40:	df000115 	stw	fp,4(sp)
+     c44:	df000104 	addi	fp,sp,4
+     c48:	e13fff15 	stw	r4,-4(fp)
+	IOWR_ALT_UP_CHAR_BUFFER_CLR_SCRN(char_buffer->ctrl_reg_base, 1);
+     c4c:	e0bfff17 	ldw	r2,-4(fp)
+     c50:	10800a17 	ldw	r2,40(r2)
+     c54:	10800084 	addi	r2,r2,2
+     c58:	1007883a 	mov	r3,r2
+     c5c:	00800044 	movi	r2,1
+     c60:	18800025 	stbio	r2,0(r3)
+	while ((IORD_ALT_UP_CHAR_BUFFER_CLR_SCRN(char_buffer->ctrl_reg_base) & ALT_UP_CHAR_BUFFER_CLR_SCRN_MSK) >> ALT_UP_CHAR_BUFFER_CLR_SCRN_OFST);
+     c64:	e0bfff17 	ldw	r2,-4(fp)
+     c68:	10800a17 	ldw	r2,40(r2)
+     c6c:	10800084 	addi	r2,r2,2
+     c70:	10800023 	ldbuio	r2,0(r2)
+     c74:	1080004c 	andi	r2,r2,1
+     c78:	10803fcc 	andi	r2,r2,255
+     c7c:	1004c03a 	cmpne	r2,r2,zero
+     c80:	103ff81e 	bne	r2,zero,c64 <alt_up_char_buffer_clear+0x28>
+	return 0;
+     c84:	0005883a 	mov	r2,zero
+}
+     c88:	e037883a 	mov	sp,fp
+     c8c:	df000017 	ldw	fp,0(sp)
+     c90:	dec00104 	addi	sp,sp,4
+     c94:	f800283a 	ret
+
+00000c98 <alt_up_pixel_buffer_dma_open_dev>:
+
+#include "altera_up_avalon_video_pixel_buffer_dma.h"
+
+#define ABS(x)	((x >= 0) ? (x) : (-(x)))
+
+alt_up_pixel_buffer_dma_dev* alt_up_pixel_buffer_dma_open_dev(const char* name) {
+     c98:	defffc04 	addi	sp,sp,-16
+     c9c:	dfc00315 	stw	ra,12(sp)
+     ca0:	df000215 	stw	fp,8(sp)
+     ca4:	df000204 	addi	fp,sp,8
+     ca8:	e13fff15 	stw	r4,-4(fp)
+  // find the device from the device list 
+  // (see altera_hal/HAL/inc/priv/alt_file.h 
+  // and altera_hal/HAL/src/alt_find_dev.c 
+  // for details)
+  alt_up_pixel_buffer_dma_dev *dev = (alt_up_pixel_buffer_dma_dev*)alt_find_dev(name, &alt_dev_list);
+     cac:	e13fff17 	ldw	r4,-4(fp)
+     cb0:	01400034 	movhi	r5,0
+     cb4:	294cc704 	addi	r5,r5,13084
+     cb8:	00025bc0 	call	25bc <alt_find_dev>
+     cbc:	e0bffe15 	stw	r2,-8(fp)
+
+  return dev;
+     cc0:	e0bffe17 	ldw	r2,-8(fp)
+}
+     cc4:	e037883a 	mov	sp,fp
+     cc8:	dfc00117 	ldw	ra,4(sp)
+     ccc:	df000017 	ldw	fp,0(sp)
+     cd0:	dec00204 	addi	sp,sp,8
+     cd4:	f800283a 	ret
+
+00000cd8 <alt_up_pixel_buffer_dma_draw>:
+
+int alt_up_pixel_buffer_dma_draw(alt_up_pixel_buffer_dma_dev *pixel_buffer, unsigned int color, unsigned int x, unsigned int y)
+/* This function draws a pixel to the back buffer.
+ */
+{
+     cd8:	defff804 	addi	sp,sp,-32
+     cdc:	dfc00715 	stw	ra,28(sp)
+     ce0:	df000615 	stw	fp,24(sp)
+     ce4:	df000604 	addi	fp,sp,24
+     ce8:	e13ffb15 	stw	r4,-20(fp)
+     cec:	e17ffc15 	stw	r5,-16(fp)
+     cf0:	e1bffd15 	stw	r6,-12(fp)
+     cf4:	e1fffe15 	stw	r7,-8(fp)
+	// boundary check
+	if (x >= pixel_buffer->x_resolution || y >= pixel_buffer->y_resolution )
+     cf8:	e0bffb17 	ldw	r2,-20(fp)
+     cfc:	10c00f17 	ldw	r3,60(r2)
+     d00:	e0bffd17 	ldw	r2,-12(fp)
+     d04:	10c0042e 	bgeu	r2,r3,d18 <alt_up_pixel_buffer_dma_draw+0x40>
+     d08:	e0bffb17 	ldw	r2,-20(fp)
+     d0c:	10c01017 	ldw	r3,64(r2)
+     d10:	e0bffe17 	ldw	r2,-8(fp)
+     d14:	10c00336 	bltu	r2,r3,d24 <alt_up_pixel_buffer_dma_draw+0x4c>
+		return -1;
+     d18:	00bfffc4 	movi	r2,-1
+     d1c:	e0bfff15 	stw	r2,-4(fp)
+     d20:	00005206 	br	e6c <alt_up_pixel_buffer_dma_draw+0x194>
+
+	unsigned int addr = 0;
+     d24:	e03ffa15 	stw	zero,-24(fp)
+	/* Check the mode VGA Pixel Buffer is using. */
+	if (pixel_buffer->addressing_mode == ALT_UP_PIXEL_BUFFER_XY_ADDRESS_MODE) {
+     d28:	e0bffb17 	ldw	r2,-20(fp)
+     d2c:	10800d17 	ldw	r2,52(r2)
+     d30:	1004c03a 	cmpne	r2,r2,zero
+     d34:	1000151e 	bne	r2,zero,d8c <alt_up_pixel_buffer_dma_draw+0xb4>
+		/* For X-Y addressing mode, the address format is | unused | Y | X |. So shift bits for coordinates X and Y into their respective locations. */
+		addr |= ((x & pixel_buffer->x_coord_mask) << pixel_buffer->x_coord_offset);
+     d38:	e0bffb17 	ldw	r2,-20(fp)
+     d3c:	10c01217 	ldw	r3,72(r2)
+     d40:	e0bffd17 	ldw	r2,-12(fp)
+     d44:	1886703a 	and	r3,r3,r2
+     d48:	e0bffb17 	ldw	r2,-20(fp)
+     d4c:	10801117 	ldw	r2,68(r2)
+     d50:	1886983a 	sll	r3,r3,r2
+     d54:	e0bffa17 	ldw	r2,-24(fp)
+     d58:	10c4b03a 	or	r2,r2,r3
+     d5c:	e0bffa15 	stw	r2,-24(fp)
+		addr |= ((y & pixel_buffer->y_coord_mask) << pixel_buffer->y_coord_offset);
+     d60:	e0bffb17 	ldw	r2,-20(fp)
+     d64:	10c01417 	ldw	r3,80(r2)
+     d68:	e0bffe17 	ldw	r2,-8(fp)
+     d6c:	1886703a 	and	r3,r3,r2
+     d70:	e0bffb17 	ldw	r2,-20(fp)
+     d74:	10801317 	ldw	r2,76(r2)
+     d78:	1886983a 	sll	r3,r3,r2
+     d7c:	e0bffa17 	ldw	r2,-24(fp)
+     d80:	10c4b03a 	or	r2,r2,r3
+     d84:	e0bffa15 	stw	r2,-24(fp)
+     d88:	00001806 	br	dec <alt_up_pixel_buffer_dma_draw+0x114>
+	} else {
+		/* In a consecutive addressing mode, the pixels are stored in consecutive memory locations. So the address of a pixel at (x,y) can be computed as
+		 * (y*x_resolution + x).*/
+		addr += ((x & pixel_buffer->x_coord_mask) << pixel_buffer->x_coord_offset);
+     d8c:	e0bffb17 	ldw	r2,-20(fp)
+     d90:	10c01217 	ldw	r3,72(r2)
+     d94:	e0bffd17 	ldw	r2,-12(fp)
+     d98:	1886703a 	and	r3,r3,r2
+     d9c:	e0bffb17 	ldw	r2,-20(fp)
+     da0:	10801117 	ldw	r2,68(r2)
+     da4:	1886983a 	sll	r3,r3,r2
+     da8:	e0bffa17 	ldw	r2,-24(fp)
+     dac:	10c5883a 	add	r2,r2,r3
+     db0:	e0bffa15 	stw	r2,-24(fp)
+		addr += (((y & pixel_buffer->y_coord_mask) * pixel_buffer->x_resolution) << pixel_buffer->x_coord_offset);
+     db4:	e0bffb17 	ldw	r2,-20(fp)
+     db8:	10c01417 	ldw	r3,80(r2)
+     dbc:	e0bffe17 	ldw	r2,-8(fp)
+     dc0:	1888703a 	and	r4,r3,r2
+     dc4:	e0bffb17 	ldw	r2,-20(fp)
+     dc8:	11400f17 	ldw	r5,60(r2)
+     dcc:	00004dc0 	call	4dc <__mulsi3>
+     dd0:	1007883a 	mov	r3,r2
+     dd4:	e0bffb17 	ldw	r2,-20(fp)
+     dd8:	10801117 	ldw	r2,68(r2)
+     ddc:	1886983a 	sll	r3,r3,r2
+     de0:	e0bffa17 	ldw	r2,-24(fp)
+     de4:	10c5883a 	add	r2,r2,r3
+     de8:	e0bffa15 	stw	r2,-24(fp)
+	}
+	/* Now, depending on the color depth, write the pixel color to the specified memory location. */
+	if (pixel_buffer->color_mode == ALT_UP_8BIT_COLOR_MODE) {
+     dec:	e0bffb17 	ldw	r2,-20(fp)
+     df0:	10800e17 	ldw	r2,56(r2)
+     df4:	10800058 	cmpnei	r2,r2,1
+     df8:	1000081e 	bne	r2,zero,e1c <alt_up_pixel_buffer_dma_draw+0x144>
+		IOWR_8DIRECT(pixel_buffer->back_buffer_start_address, addr, color);
+     dfc:	e0bffb17 	ldw	r2,-20(fp)
+     e00:	10800c17 	ldw	r2,48(r2)
+     e04:	1007883a 	mov	r3,r2
+     e08:	e0bffa17 	ldw	r2,-24(fp)
+     e0c:	1885883a 	add	r2,r3,r2
+     e10:	e0fffc17 	ldw	r3,-16(fp)
+     e14:	10c00025 	stbio	r3,0(r2)
+     e18:	00001306 	br	e68 <alt_up_pixel_buffer_dma_draw+0x190>
+	} else if (pixel_buffer->color_mode == ALT_UP_16BIT_COLOR_MODE) {
+     e1c:	e0bffb17 	ldw	r2,-20(fp)
+     e20:	10800e17 	ldw	r2,56(r2)
+     e24:	10800098 	cmpnei	r2,r2,2
+     e28:	1000081e 	bne	r2,zero,e4c <alt_up_pixel_buffer_dma_draw+0x174>
+		IOWR_16DIRECT(pixel_buffer->back_buffer_start_address, addr, color);
+     e2c:	e0bffb17 	ldw	r2,-20(fp)
+     e30:	10800c17 	ldw	r2,48(r2)
+     e34:	1007883a 	mov	r3,r2
+     e38:	e0bffa17 	ldw	r2,-24(fp)
+     e3c:	1885883a 	add	r2,r3,r2
+     e40:	e0fffc17 	ldw	r3,-16(fp)
+     e44:	10c0002d 	sthio	r3,0(r2)
+     e48:	00000706 	br	e68 <alt_up_pixel_buffer_dma_draw+0x190>
+	} else {
+		IOWR_32DIRECT(pixel_buffer->back_buffer_start_address, addr, color);
+     e4c:	e0bffb17 	ldw	r2,-20(fp)
+     e50:	10800c17 	ldw	r2,48(r2)
+     e54:	1007883a 	mov	r3,r2
+     e58:	e0bffa17 	ldw	r2,-24(fp)
+     e5c:	1885883a 	add	r2,r3,r2
+     e60:	e0fffc17 	ldw	r3,-16(fp)
+     e64:	10c00035 	stwio	r3,0(r2)
+	}
+
+	return 0;
+     e68:	e03fff15 	stw	zero,-4(fp)
+     e6c:	e0bfff17 	ldw	r2,-4(fp)
+}
+     e70:	e037883a 	mov	sp,fp
+     e74:	dfc00117 	ldw	ra,4(sp)
+     e78:	df000017 	ldw	fp,0(sp)
+     e7c:	dec00204 	addi	sp,sp,8
+     e80:	f800283a 	ret
+
+00000e84 <alt_up_pixel_buffer_dma_change_back_buffer_address>:
+
+int alt_up_pixel_buffer_dma_change_back_buffer_address(alt_up_pixel_buffer_dma_dev *pixel_buffer, unsigned int new_address)
+/* This function changes the memory address for the back buffer. */
+{
+     e84:	defffd04 	addi	sp,sp,-12
+     e88:	df000215 	stw	fp,8(sp)
+     e8c:	df000204 	addi	fp,sp,8
+     e90:	e13ffe15 	stw	r4,-8(fp)
+     e94:	e17fff15 	stw	r5,-4(fp)
+	IOWR_32DIRECT(pixel_buffer->base, 4, new_address);
+     e98:	e0bffe17 	ldw	r2,-8(fp)
+     e9c:	10800a17 	ldw	r2,40(r2)
+     ea0:	10800104 	addi	r2,r2,4
+     ea4:	e0ffff17 	ldw	r3,-4(fp)
+     ea8:	10c00035 	stwio	r3,0(r2)
+	pixel_buffer->back_buffer_start_address = IORD_32DIRECT(pixel_buffer->base, 4);
+     eac:	e0bffe17 	ldw	r2,-8(fp)
+     eb0:	10800a17 	ldw	r2,40(r2)
+     eb4:	10800104 	addi	r2,r2,4
+     eb8:	10800037 	ldwio	r2,0(r2)
+     ebc:	1007883a 	mov	r3,r2
+     ec0:	e0bffe17 	ldw	r2,-8(fp)
+     ec4:	10c00c15 	stw	r3,48(r2)
+	return 0;
+     ec8:	0005883a 	mov	r2,zero
+}
+     ecc:	e037883a 	mov	sp,fp
+     ed0:	df000017 	ldw	fp,0(sp)
+     ed4:	dec00104 	addi	sp,sp,4
+     ed8:	f800283a 	ret
+
+00000edc <alt_up_pixel_buffer_dma_swap_buffers>:
+
+int alt_up_pixel_buffer_dma_swap_buffers(alt_up_pixel_buffer_dma_dev *pixel_buffer)
+/* This function swaps the front and back buffers. At the next refresh cycle the back buffer will be drawn on the screen
+ * and will become the front buffer. */
+{
+     edc:	defffe04 	addi	sp,sp,-8
+     ee0:	df000115 	stw	fp,4(sp)
+     ee4:	df000104 	addi	fp,sp,4
+     ee8:	e13fff15 	stw	r4,-4(fp)
+	register unsigned int temp = pixel_buffer->back_buffer_start_address;
+     eec:	e0bfff17 	ldw	r2,-4(fp)
+     ef0:	11000c17 	ldw	r4,48(r2)
+	IOWR_32DIRECT(pixel_buffer->base, 0, 1);
+     ef4:	e0bfff17 	ldw	r2,-4(fp)
+     ef8:	10800a17 	ldw	r2,40(r2)
+     efc:	1007883a 	mov	r3,r2
+     f00:	00800044 	movi	r2,1
+     f04:	18800035 	stwio	r2,0(r3)
+	pixel_buffer->back_buffer_start_address = pixel_buffer->buffer_start_address;
+     f08:	e0bfff17 	ldw	r2,-4(fp)
+     f0c:	10c00b17 	ldw	r3,44(r2)
+     f10:	e0bfff17 	ldw	r2,-4(fp)
+     f14:	10c00c15 	stw	r3,48(r2)
+	pixel_buffer->buffer_start_address = temp;
+     f18:	e0bfff17 	ldw	r2,-4(fp)
+     f1c:	11000b15 	stw	r4,44(r2)
+	return 0;
+     f20:	0005883a 	mov	r2,zero
+}
+     f24:	e037883a 	mov	sp,fp
+     f28:	df000017 	ldw	fp,0(sp)
+     f2c:	dec00104 	addi	sp,sp,4
+     f30:	f800283a 	ret
+
+00000f34 <alt_up_pixel_buffer_dma_check_swap_buffers_status>:
+int alt_up_pixel_buffer_dma_check_swap_buffers_status(alt_up_pixel_buffer_dma_dev *pixel_buffer)
+/* This function checks if the buffer swap has occured. Since the buffer swap only happens after an entire screen is drawn,
+ * it is important to wait for this function to return 0 before proceeding to draw on either buffer. When both front and the back buffers
+ * have the same address calling the alt_up_pixel_buffer_dma_swap_buffers(...) function and then waiting for this function to return 0, causes your program to
+ * wait for the screen to refresh. */
+{
+     f34:	defffe04 	addi	sp,sp,-8
+     f38:	df000115 	stw	fp,4(sp)
+     f3c:	df000104 	addi	fp,sp,4
+     f40:	e13fff15 	stw	r4,-4(fp)
+	return (IORD_32DIRECT(pixel_buffer->base, 12) & 0x1);
+     f44:	e0bfff17 	ldw	r2,-4(fp)
+     f48:	10800a17 	ldw	r2,40(r2)
+     f4c:	10800304 	addi	r2,r2,12
+     f50:	10800037 	ldwio	r2,0(r2)
+     f54:	1080004c 	andi	r2,r2,1
+}
+     f58:	e037883a 	mov	sp,fp
+     f5c:	df000017 	ldw	fp,0(sp)
+     f60:	dec00104 	addi	sp,sp,4
+     f64:	f800283a 	ret
+
+00000f68 <alt_up_pixel_buffer_dma_clear_screen>:
+
+void alt_up_pixel_buffer_dma_clear_screen(alt_up_pixel_buffer_dma_dev *pixel_buffer, int backbuffer)
+/* This function clears the screen by setting each pixel to a black color. */
+{
+     f68:	defff504 	addi	sp,sp,-44
+     f6c:	dfc00a15 	stw	ra,40(sp)
+     f70:	df000915 	stw	fp,36(sp)
+     f74:	df000904 	addi	fp,sp,36
+     f78:	e13ff715 	stw	r4,-36(fp)
+     f7c:	e17ff815 	stw	r5,-32(fp)
+	register unsigned int addr;
+	register unsigned int limit_x, limit_y;
+	
+	/* Set up the address to start clearing from and the screen boundaries. */
+	if (backbuffer == 1)
+     f80:	e0bff817 	ldw	r2,-32(fp)
+     f84:	10800058 	cmpnei	r2,r2,1
+     f88:	1000041e 	bne	r2,zero,f9c <alt_up_pixel_buffer_dma_clear_screen+0x34>
+		addr = pixel_buffer->back_buffer_start_address;
+     f8c:	e0bff717 	ldw	r2,-36(fp)
+     f90:	10800c17 	ldw	r2,48(r2)
+     f94:	e0bfff15 	stw	r2,-4(fp)
+     f98:	00000306 	br	fa8 <alt_up_pixel_buffer_dma_clear_screen+0x40>
+	else
+		addr = pixel_buffer->buffer_start_address;
+     f9c:	e0bff717 	ldw	r2,-36(fp)
+     fa0:	10800b17 	ldw	r2,44(r2)
+     fa4:	e0bfff15 	stw	r2,-4(fp)
+	limit_x = pixel_buffer->x_resolution;
+     fa8:	e0bff717 	ldw	r2,-36(fp)
+     fac:	10800f17 	ldw	r2,60(r2)
+     fb0:	e0bffe15 	stw	r2,-8(fp)
+	/* In 16 and 32-bit color modes we use twice or four times more memory for the display buffer.*/
+	if (pixel_buffer->color_mode == ALT_UP_16BIT_COLOR_MODE) {
+     fb4:	e0bff717 	ldw	r2,-36(fp)
+     fb8:	10800e17 	ldw	r2,56(r2)
+     fbc:	10800098 	cmpnei	r2,r2,2
+     fc0:	1000051e 	bne	r2,zero,fd8 <alt_up_pixel_buffer_dma_clear_screen+0x70>
+		limit_x = limit_x << 1;
+     fc4:	e0fffe17 	ldw	r3,-8(fp)
+     fc8:	e0fffe17 	ldw	r3,-8(fp)
+     fcc:	18c5883a 	add	r2,r3,r3
+     fd0:	e0bffe15 	stw	r2,-8(fp)
+     fd4:	00000506 	br	fec <alt_up_pixel_buffer_dma_clear_screen+0x84>
+	} else {
+		limit_x = limit_x << 2;
+     fd8:	e13ffe17 	ldw	r4,-8(fp)
+     fdc:	e13ffe17 	ldw	r4,-8(fp)
+     fe0:	2105883a 	add	r2,r4,r4
+     fe4:	1085883a 	add	r2,r2,r2
+     fe8:	e0bffe15 	stw	r2,-8(fp)
+	}	
+	limit_y = pixel_buffer->y_resolution;
+     fec:	e0bff717 	ldw	r2,-36(fp)
+     ff0:	10801017 	ldw	r2,64(r2)
+     ff4:	e0bffd15 	stw	r2,-12(fp)
+
+	if (pixel_buffer->addressing_mode == ALT_UP_PIXEL_BUFFER_XY_ADDRESS_MODE) {
+     ff8:	e0bff717 	ldw	r2,-36(fp)
+     ffc:	10800d17 	ldw	r2,52(r2)
+    1000:	1004c03a 	cmpne	r2,r2,zero
+    1004:	10001e1e 	bne	r2,zero,1080 <alt_up_pixel_buffer_dma_clear_screen+0x118>
+		/* Clear the screen when the VGA is set up in an XY addressing mode. */
+		register unsigned int x,y;
+		register unsigned int offset_y;
+		offset_y = pixel_buffer->y_coord_offset;
+    1008:	e0bff717 	ldw	r2,-36(fp)
+    100c:	10801317 	ldw	r2,76(r2)
+    1010:	e0bffa15 	stw	r2,-24(fp)
+
+		for (y = 0; y < limit_y; y++)
+    1014:	e03ffb15 	stw	zero,-20(fp)
+    1018:	00001506 	br	1070 <alt_up_pixel_buffer_dma_clear_screen+0x108>
+		{
+			for (x = 0; x < limit_x; x = x + 4)
+    101c:	e03ffc15 	stw	zero,-16(fp)
+    1020:	00000706 	br	1040 <alt_up_pixel_buffer_dma_clear_screen+0xd8>
+			{
+				IOWR_32DIRECT(addr, x, 0);
+    1024:	e0ffff17 	ldw	r3,-4(fp)
+    1028:	e0bffc17 	ldw	r2,-16(fp)
+    102c:	1885883a 	add	r2,r3,r2
+    1030:	10000035 	stwio	zero,0(r2)
+		register unsigned int offset_y;
+		offset_y = pixel_buffer->y_coord_offset;
+
+		for (y = 0; y < limit_y; y++)
+		{
+			for (x = 0; x < limit_x; x = x + 4)
+    1034:	e0bffc17 	ldw	r2,-16(fp)
+    1038:	10800104 	addi	r2,r2,4
+    103c:	e0bffc15 	stw	r2,-16(fp)
+    1040:	e0fffc17 	ldw	r3,-16(fp)
+    1044:	e13ffe17 	ldw	r4,-8(fp)
+    1048:	193ff636 	bltu	r3,r4,1024 <alt_up_pixel_buffer_dma_clear_screen+0xbc>
+			{
+				IOWR_32DIRECT(addr, x, 0);
+			}
+			addr = addr + (1 << offset_y);
+    104c:	e0fffa17 	ldw	r3,-24(fp)
+    1050:	00800044 	movi	r2,1
+    1054:	10c4983a 	sll	r2,r2,r3
+    1058:	e0ffff17 	ldw	r3,-4(fp)
+    105c:	1887883a 	add	r3,r3,r2
+    1060:	e0ffff15 	stw	r3,-4(fp)
+		/* Clear the screen when the VGA is set up in an XY addressing mode. */
+		register unsigned int x,y;
+		register unsigned int offset_y;
+		offset_y = pixel_buffer->y_coord_offset;
+
+		for (y = 0; y < limit_y; y++)
+    1064:	e13ffb17 	ldw	r4,-20(fp)
+    1068:	21000044 	addi	r4,r4,1
+    106c:	e13ffb15 	stw	r4,-20(fp)
+    1070:	e0bffb17 	ldw	r2,-20(fp)
+    1074:	e0fffd17 	ldw	r3,-12(fp)
+    1078:	10ffe836 	bltu	r2,r3,101c <alt_up_pixel_buffer_dma_clear_screen+0xb4>
+    107c:	00001006 	br	10c0 <alt_up_pixel_buffer_dma_clear_screen+0x158>
+			addr = addr + (1 << offset_y);
+		}
+	} else {
+		/* Clear the screen when the VGA is set up in a linear addressing mode. */
+		register int x;
+		limit_y = limit_x*limit_y;	
+    1080:	e13ffd17 	ldw	r4,-12(fp)
+    1084:	e17ffe17 	ldw	r5,-8(fp)
+    1088:	00004dc0 	call	4dc <__mulsi3>
+    108c:	e0bffd15 	stw	r2,-12(fp)
+
+		for (x = 0; x < limit_y; x = x + 4)
+    1090:	e03ff915 	stw	zero,-28(fp)
+    1094:	00000706 	br	10b4 <alt_up_pixel_buffer_dma_clear_screen+0x14c>
+		{
+			IOWR_32DIRECT(addr, x, 0);
+    1098:	e0ffff17 	ldw	r3,-4(fp)
+    109c:	e0bff917 	ldw	r2,-28(fp)
+    10a0:	1885883a 	add	r2,r3,r2
+    10a4:	10000035 	stwio	zero,0(r2)
+	} else {
+		/* Clear the screen when the VGA is set up in a linear addressing mode. */
+		register int x;
+		limit_y = limit_x*limit_y;	
+
+		for (x = 0; x < limit_y; x = x + 4)
+    10a8:	e13ff917 	ldw	r4,-28(fp)
+    10ac:	21000104 	addi	r4,r4,4
+    10b0:	e13ff915 	stw	r4,-28(fp)
+    10b4:	e0bff917 	ldw	r2,-28(fp)
+    10b8:	e0fffd17 	ldw	r3,-12(fp)
+    10bc:	10fff636 	bltu	r2,r3,1098 <alt_up_pixel_buffer_dma_clear_screen+0x130>
+		{
+			IOWR_32DIRECT(addr, x, 0);
+		}
+	}
+}
+    10c0:	e037883a 	mov	sp,fp
+    10c4:	dfc00117 	ldw	ra,4(sp)
+    10c8:	df000017 	ldw	fp,0(sp)
+    10cc:	dec00204 	addi	sp,sp,8
+    10d0:	f800283a 	ret
+
+000010d4 <alt_up_pixel_buffer_dma_draw_box>:
+
+void alt_up_pixel_buffer_dma_draw_box(alt_up_pixel_buffer_dma_dev *pixel_buffer, int x0, int y0, int x1, int y1, int color, int backbuffer)
+/* This function draws a filled box. */
+{
+    10d4:	deffec04 	addi	sp,sp,-80
+    10d8:	dfc01315 	stw	ra,76(sp)
+    10dc:	df001215 	stw	fp,72(sp)
+    10e0:	df001204 	addi	fp,sp,72
+    10e4:	e13fee15 	stw	r4,-72(fp)
+    10e8:	e17fef15 	stw	r5,-68(fp)
+    10ec:	e1bff015 	stw	r6,-64(fp)
+    10f0:	e1fff115 	stw	r7,-60(fp)
+	register unsigned int addr;
+	register unsigned int limit_x = pixel_buffer->x_resolution;
+    10f4:	e0bfee17 	ldw	r2,-72(fp)
+    10f8:	10800f17 	ldw	r2,60(r2)
+    10fc:	e0bffe15 	stw	r2,-8(fp)
+	register unsigned int limit_y = pixel_buffer->y_resolution;
+    1100:	e0bfee17 	ldw	r2,-72(fp)
+    1104:	10801017 	ldw	r2,64(r2)
+    1108:	e0bffd15 	stw	r2,-12(fp)
+	register unsigned int temp;
+	register unsigned int l_x = x0;
+    110c:	e0bfef17 	ldw	r2,-68(fp)
+    1110:	e0bffb15 	stw	r2,-20(fp)
+	register unsigned int r_x = x1;
+    1114:	e0fff117 	ldw	r3,-60(fp)
+    1118:	e0fffa15 	stw	r3,-24(fp)
+	register unsigned int t_y = y0;
+    111c:	e13ff017 	ldw	r4,-64(fp)
+    1120:	e13ff915 	stw	r4,-28(fp)
+	register unsigned int b_y = y1;
+    1124:	e0800217 	ldw	r2,8(fp)
+    1128:	e0bff815 	stw	r2,-32(fp)
+	register unsigned int local_color = color;
+    112c:	e0c00317 	ldw	r3,12(fp)
+    1130:	e0fff715 	stw	r3,-36(fp)
+	
+	/* Check coordinates */
+	if (l_x > r_x)
+    1134:	e13ffa17 	ldw	r4,-24(fp)
+    1138:	e0bffb17 	ldw	r2,-20(fp)
+    113c:	2080062e 	bgeu	r4,r2,1158 <alt_up_pixel_buffer_dma_draw_box+0x84>
+	{
+		temp = l_x;
+    1140:	e0fffb17 	ldw	r3,-20(fp)
+    1144:	e0fffc15 	stw	r3,-16(fp)
+		l_x = r_x;
+    1148:	e13ffa17 	ldw	r4,-24(fp)
+    114c:	e13ffb15 	stw	r4,-20(fp)
+		r_x = temp;
+    1150:	e0bffc17 	ldw	r2,-16(fp)
+    1154:	e0bffa15 	stw	r2,-24(fp)
+	}
+	if (t_y > b_y)
+    1158:	e0fff817 	ldw	r3,-32(fp)
+    115c:	e13ff917 	ldw	r4,-28(fp)
+    1160:	1900062e 	bgeu	r3,r4,117c <alt_up_pixel_buffer_dma_draw_box+0xa8>
+	{
+		temp = t_y;
+    1164:	e0bff917 	ldw	r2,-28(fp)
+    1168:	e0bffc15 	stw	r2,-16(fp)
+		t_y = b_y;
+    116c:	e0fff817 	ldw	r3,-32(fp)
+    1170:	e0fff915 	stw	r3,-28(fp)
+		b_y = temp;
+    1174:	e13ffc17 	ldw	r4,-16(fp)
+    1178:	e13ff815 	stw	r4,-32(fp)
+	}
+	if ((l_x >= limit_x) || (t_y >= limit_y) || (r_x < 0) || (b_y < 0))
+    117c:	e0bffb17 	ldw	r2,-20(fp)
+    1180:	e0fffe17 	ldw	r3,-8(fp)
+    1184:	10c10d2e 	bgeu	r2,r3,15bc <alt_up_pixel_buffer_dma_draw_box+0x4e8>
+    1188:	e13ff917 	ldw	r4,-28(fp)
+    118c:	e0bffd17 	ldw	r2,-12(fp)
+    1190:	20800136 	bltu	r4,r2,1198 <alt_up_pixel_buffer_dma_draw_box+0xc4>
+	{
+		/* Drawing outside of the window, so don't bother. */
+		return;
+    1194:	00010906 	br	15bc <alt_up_pixel_buffer_dma_draw_box+0x4e8>
+	/* Clip the box and draw only within the confines of the screen. */
+	if (l_x < 0)
+	{
+		l_x = 0;
+	}
+	if (r_x >= limit_x)
+    1198:	e0fffa17 	ldw	r3,-24(fp)
+    119c:	e13ffe17 	ldw	r4,-8(fp)
+    11a0:	19000336 	bltu	r3,r4,11b0 <alt_up_pixel_buffer_dma_draw_box+0xdc>
+	{
+		r_x = limit_x - 1;
+    11a4:	e0bffe17 	ldw	r2,-8(fp)
+    11a8:	10bfffc4 	addi	r2,r2,-1
+    11ac:	e0bffa15 	stw	r2,-24(fp)
+	}
+	if (t_y < 0)
+	{
+		t_y = 0;
+	}
+	if (b_y >= limit_y)
+    11b0:	e0fff817 	ldw	r3,-32(fp)
+    11b4:	e13ffd17 	ldw	r4,-12(fp)
+    11b8:	19000336 	bltu	r3,r4,11c8 <alt_up_pixel_buffer_dma_draw_box+0xf4>
+	{
+		b_y = limit_y - 1;
+    11bc:	e0bffd17 	ldw	r2,-12(fp)
+    11c0:	10bfffc4 	addi	r2,r2,-1
+    11c4:	e0bff815 	stw	r2,-32(fp)
+	}
+
+	/* Set up the address to start clearing from and the screen boundaries. */
+	if (backbuffer == 1)
+    11c8:	e0800417 	ldw	r2,16(fp)
+    11cc:	10800058 	cmpnei	r2,r2,1
+    11d0:	1000041e 	bne	r2,zero,11e4 <alt_up_pixel_buffer_dma_draw_box+0x110>
+		addr = pixel_buffer->back_buffer_start_address;
+    11d4:	e0bfee17 	ldw	r2,-72(fp)
+    11d8:	10800c17 	ldw	r2,48(r2)
+    11dc:	e0bfff15 	stw	r2,-4(fp)
+    11e0:	00000306 	br	11f0 <alt_up_pixel_buffer_dma_draw_box+0x11c>
+	else
+		addr = pixel_buffer->buffer_start_address;
+    11e4:	e0bfee17 	ldw	r2,-72(fp)
+    11e8:	10800b17 	ldw	r2,44(r2)
+    11ec:	e0bfff15 	stw	r2,-4(fp)
+
+	/* Draw the box using one of the addressing modes. */
+	if (pixel_buffer->addressing_mode == ALT_UP_PIXEL_BUFFER_XY_ADDRESS_MODE) {
+    11f0:	e0bfee17 	ldw	r2,-72(fp)
+    11f4:	10800d17 	ldw	r2,52(r2)
+    11f8:	1004c03a 	cmpne	r2,r2,zero
+    11fc:	1000721e 	bne	r2,zero,13c8 <alt_up_pixel_buffer_dma_draw_box+0x2f4>
+		/* Draw a box of a given color on the screen using the XY addressing mode. */
+		register unsigned int x,y;
+		register unsigned int offset_y;
+		offset_y = pixel_buffer->y_coord_offset;
+    1200:	e0bfee17 	ldw	r2,-72(fp)
+    1204:	10801317 	ldw	r2,76(r2)
+    1208:	e0bff415 	stw	r2,-48(fp)
+		addr = addr + (t_y << offset_y);
+    120c:	e0bff417 	ldw	r2,-48(fp)
+    1210:	e0fff917 	ldw	r3,-28(fp)
+    1214:	1884983a 	sll	r2,r3,r2
+    1218:	e13fff17 	ldw	r4,-4(fp)
+    121c:	2089883a 	add	r4,r4,r2
+    1220:	e13fff15 	stw	r4,-4(fp)
+		
+		/* This portion of the code is purposefully replicated. This is because having a text for
+		 * the mode would unnecessarily slow down the drawing of a box. */
+		if (pixel_buffer->color_mode == ALT_UP_8BIT_COLOR_MODE) {
+    1224:	e0bfee17 	ldw	r2,-72(fp)
+    1228:	10800e17 	ldw	r2,56(r2)
+    122c:	10800058 	cmpnei	r2,r2,1
+    1230:	10001e1e 	bne	r2,zero,12ac <alt_up_pixel_buffer_dma_draw_box+0x1d8>
+			for (y = t_y; y <= b_y; y++)
+    1234:	e0bff917 	ldw	r2,-28(fp)
+    1238:	e0bff515 	stw	r2,-44(fp)
+    123c:	00001706 	br	129c <alt_up_pixel_buffer_dma_draw_box+0x1c8>
+			{
+				for (x = l_x; x <= r_x; x++)
+    1240:	e0fffb17 	ldw	r3,-20(fp)
+    1244:	e0fff615 	stw	r3,-40(fp)
+    1248:	00000806 	br	126c <alt_up_pixel_buffer_dma_draw_box+0x198>
+				{
+					IOWR_8DIRECT(addr, x, local_color);
+    124c:	e0ffff17 	ldw	r3,-4(fp)
+    1250:	e0bff617 	ldw	r2,-40(fp)
+    1254:	1885883a 	add	r2,r3,r2
+    1258:	e0fff717 	ldw	r3,-36(fp)
+    125c:	10c00025 	stbio	r3,0(r2)
+		/* This portion of the code is purposefully replicated. This is because having a text for
+		 * the mode would unnecessarily slow down the drawing of a box. */
+		if (pixel_buffer->color_mode == ALT_UP_8BIT_COLOR_MODE) {
+			for (y = t_y; y <= b_y; y++)
+			{
+				for (x = l_x; x <= r_x; x++)
+    1260:	e13ff617 	ldw	r4,-40(fp)
+    1264:	21000044 	addi	r4,r4,1
+    1268:	e13ff615 	stw	r4,-40(fp)
+    126c:	e0bffa17 	ldw	r2,-24(fp)
+    1270:	e0fff617 	ldw	r3,-40(fp)
+    1274:	10fff52e 	bgeu	r2,r3,124c <alt_up_pixel_buffer_dma_draw_box+0x178>
+				{
+					IOWR_8DIRECT(addr, x, local_color);
+				}
+				addr = addr + (1 << offset_y);
+    1278:	e0fff417 	ldw	r3,-48(fp)
+    127c:	00800044 	movi	r2,1
+    1280:	10c4983a 	sll	r2,r2,r3
+    1284:	e13fff17 	ldw	r4,-4(fp)
+    1288:	2089883a 	add	r4,r4,r2
+    128c:	e13fff15 	stw	r4,-4(fp)
+		addr = addr + (t_y << offset_y);
+		
+		/* This portion of the code is purposefully replicated. This is because having a text for
+		 * the mode would unnecessarily slow down the drawing of a box. */
+		if (pixel_buffer->color_mode == ALT_UP_8BIT_COLOR_MODE) {
+			for (y = t_y; y <= b_y; y++)
+    1290:	e0bff517 	ldw	r2,-44(fp)
+    1294:	10800044 	addi	r2,r2,1
+    1298:	e0bff515 	stw	r2,-44(fp)
+    129c:	e0fff817 	ldw	r3,-32(fp)
+    12a0:	e13ff517 	ldw	r4,-44(fp)
+    12a4:	193fe62e 	bgeu	r3,r4,1240 <alt_up_pixel_buffer_dma_draw_box+0x16c>
+    12a8:	0000c406 	br	15bc <alt_up_pixel_buffer_dma_draw_box+0x4e8>
+				{
+					IOWR_8DIRECT(addr, x, local_color);
+				}
+				addr = addr + (1 << offset_y);
+			}
+		} else if (pixel_buffer->color_mode == ALT_UP_16BIT_COLOR_MODE) {
+    12ac:	e0bfee17 	ldw	r2,-72(fp)
+    12b0:	10800e17 	ldw	r2,56(r2)
+    12b4:	10800098 	cmpnei	r2,r2,2
+    12b8:	1000211e 	bne	r2,zero,1340 <alt_up_pixel_buffer_dma_draw_box+0x26c>
+			for (y = t_y; y <= b_y; y++)
+    12bc:	e0bff917 	ldw	r2,-28(fp)
+    12c0:	e0bff515 	stw	r2,-44(fp)
+    12c4:	00001a06 	br	1330 <alt_up_pixel_buffer_dma_draw_box+0x25c>
+			{
+				for (x = l_x; x <= r_x; x++)
+    12c8:	e0fffb17 	ldw	r3,-20(fp)
+    12cc:	e0fff615 	stw	r3,-40(fp)
+    12d0:	00000b06 	br	1300 <alt_up_pixel_buffer_dma_draw_box+0x22c>
+				{
+					IOWR_16DIRECT(addr, x << 1, local_color);
+    12d4:	e13ff617 	ldw	r4,-40(fp)
+    12d8:	e13ff617 	ldw	r4,-40(fp)
+    12dc:	2105883a 	add	r2,r4,r4
+    12e0:	1007883a 	mov	r3,r2
+    12e4:	e0bfff17 	ldw	r2,-4(fp)
+    12e8:	1885883a 	add	r2,r3,r2
+    12ec:	e0fff717 	ldw	r3,-36(fp)
+    12f0:	10c0002d 	sthio	r3,0(r2)
+				addr = addr + (1 << offset_y);
+			}
+		} else if (pixel_buffer->color_mode == ALT_UP_16BIT_COLOR_MODE) {
+			for (y = t_y; y <= b_y; y++)
+			{
+				for (x = l_x; x <= r_x; x++)
+    12f4:	e0bff617 	ldw	r2,-40(fp)
+    12f8:	10800044 	addi	r2,r2,1
+    12fc:	e0bff615 	stw	r2,-40(fp)
+    1300:	e0fffa17 	ldw	r3,-24(fp)
+    1304:	e13ff617 	ldw	r4,-40(fp)
+    1308:	193ff22e 	bgeu	r3,r4,12d4 <alt_up_pixel_buffer_dma_draw_box+0x200>
+				{
+					IOWR_16DIRECT(addr, x << 1, local_color);
+				}
+				addr = addr + (1 << offset_y);
+    130c:	e0fff417 	ldw	r3,-48(fp)
+    1310:	00800044 	movi	r2,1
+    1314:	10c4983a 	sll	r2,r2,r3
+    1318:	e0ffff17 	ldw	r3,-4(fp)
+    131c:	1887883a 	add	r3,r3,r2
+    1320:	e0ffff15 	stw	r3,-4(fp)
+					IOWR_8DIRECT(addr, x, local_color);
+				}
+				addr = addr + (1 << offset_y);
+			}
+		} else if (pixel_buffer->color_mode == ALT_UP_16BIT_COLOR_MODE) {
+			for (y = t_y; y <= b_y; y++)
+    1324:	e13ff517 	ldw	r4,-44(fp)
+    1328:	21000044 	addi	r4,r4,1
+    132c:	e13ff515 	stw	r4,-44(fp)
+    1330:	e0bff817 	ldw	r2,-32(fp)
+    1334:	e0fff517 	ldw	r3,-44(fp)
+    1338:	10ffe32e 	bgeu	r2,r3,12c8 <alt_up_pixel_buffer_dma_draw_box+0x1f4>
+    133c:	00009f06 	br	15bc <alt_up_pixel_buffer_dma_draw_box+0x4e8>
+				addr = addr + (1 << offset_y);
+			}
+		}
+		else
+		{
+			for (y = t_y; y <= b_y; y++)
+    1340:	e13ff917 	ldw	r4,-28(fp)
+    1344:	e13ff515 	stw	r4,-44(fp)
+    1348:	00001b06 	br	13b8 <alt_up_pixel_buffer_dma_draw_box+0x2e4>
+			{
+				for (x = l_x; x <= r_x; x++)
+    134c:	e0bffb17 	ldw	r2,-20(fp)
+    1350:	e0bff615 	stw	r2,-40(fp)
+    1354:	00000c06 	br	1388 <alt_up_pixel_buffer_dma_draw_box+0x2b4>
+				{
+					IOWR_32DIRECT(addr, x << 2, local_color);
+    1358:	e0fff617 	ldw	r3,-40(fp)
+    135c:	e0fff617 	ldw	r3,-40(fp)
+    1360:	18c5883a 	add	r2,r3,r3
+    1364:	1085883a 	add	r2,r2,r2
+    1368:	1007883a 	mov	r3,r2
+    136c:	e0bfff17 	ldw	r2,-4(fp)
+    1370:	1885883a 	add	r2,r3,r2
+    1374:	e0fff717 	ldw	r3,-36(fp)
+    1378:	10c00035 	stwio	r3,0(r2)
+		}
+		else
+		{
+			for (y = t_y; y <= b_y; y++)
+			{
+				for (x = l_x; x <= r_x; x++)
+    137c:	e13ff617 	ldw	r4,-40(fp)
+    1380:	21000044 	addi	r4,r4,1
+    1384:	e13ff615 	stw	r4,-40(fp)
+    1388:	e0bffa17 	ldw	r2,-24(fp)
+    138c:	e0fff617 	ldw	r3,-40(fp)
+    1390:	10fff12e 	bgeu	r2,r3,1358 <alt_up_pixel_buffer_dma_draw_box+0x284>
+				{
+					IOWR_32DIRECT(addr, x << 2, local_color);
+				}
+				addr = addr + (1 << offset_y);
+    1394:	e0fff417 	ldw	r3,-48(fp)
+    1398:	00800044 	movi	r2,1
+    139c:	10c4983a 	sll	r2,r2,r3
+    13a0:	e13fff17 	ldw	r4,-4(fp)
+    13a4:	2089883a 	add	r4,r4,r2
+    13a8:	e13fff15 	stw	r4,-4(fp)
+				addr = addr + (1 << offset_y);
+			}
+		}
+		else
+		{
+			for (y = t_y; y <= b_y; y++)
+    13ac:	e0bff517 	ldw	r2,-44(fp)
+    13b0:	10800044 	addi	r2,r2,1
+    13b4:	e0bff515 	stw	r2,-44(fp)
+    13b8:	e0fff817 	ldw	r3,-32(fp)
+    13bc:	e13ff517 	ldw	r4,-44(fp)
+    13c0:	193fe22e 	bgeu	r3,r4,134c <alt_up_pixel_buffer_dma_draw_box+0x278>
+    13c4:	00007d06 	br	15bc <alt_up_pixel_buffer_dma_draw_box+0x4e8>
+	} else {
+		/* Draw a box of a given color on the screen using the linear addressing mode. */
+		register unsigned int x,y;
+		/* This portion of the code is purposefully replicated. This is because having a text for
+		 * the mode would unnecessarily slow down the drawing of a box. */
+		if (pixel_buffer->color_mode == ALT_UP_8BIT_COLOR_MODE) {
+    13c8:	e0bfee17 	ldw	r2,-72(fp)
+    13cc:	10800e17 	ldw	r2,56(r2)
+    13d0:	10800058 	cmpnei	r2,r2,1
+    13d4:	1000221e 	bne	r2,zero,1460 <alt_up_pixel_buffer_dma_draw_box+0x38c>
+			addr = addr + t_y * limit_x;
+    13d8:	e13ff917 	ldw	r4,-28(fp)
+    13dc:	e17ffe17 	ldw	r5,-8(fp)
+    13e0:	00004dc0 	call	4dc <__mulsi3>
+    13e4:	e0ffff17 	ldw	r3,-4(fp)
+    13e8:	1887883a 	add	r3,r3,r2
+    13ec:	e0ffff15 	stw	r3,-4(fp)
+			for (y = t_y; y <= b_y; y++)
+    13f0:	e13ff917 	ldw	r4,-28(fp)
+    13f4:	e13ff215 	stw	r4,-56(fp)
+    13f8:	00001506 	br	1450 <alt_up_pixel_buffer_dma_draw_box+0x37c>
+			{
+				for (x = l_x; x <= r_x; x++)
+    13fc:	e0bffb17 	ldw	r2,-20(fp)
+    1400:	e0bff315 	stw	r2,-52(fp)
+    1404:	00000806 	br	1428 <alt_up_pixel_buffer_dma_draw_box+0x354>
+				{
+					IOWR_8DIRECT(addr, x, local_color);
+    1408:	e0ffff17 	ldw	r3,-4(fp)
+    140c:	e0bff317 	ldw	r2,-52(fp)
+    1410:	1885883a 	add	r2,r3,r2
+    1414:	e0fff717 	ldw	r3,-36(fp)
+    1418:	10c00025 	stbio	r3,0(r2)
+		 * the mode would unnecessarily slow down the drawing of a box. */
+		if (pixel_buffer->color_mode == ALT_UP_8BIT_COLOR_MODE) {
+			addr = addr + t_y * limit_x;
+			for (y = t_y; y <= b_y; y++)
+			{
+				for (x = l_x; x <= r_x; x++)
+    141c:	e0fff317 	ldw	r3,-52(fp)
+    1420:	18c00044 	addi	r3,r3,1
+    1424:	e0fff315 	stw	r3,-52(fp)
+    1428:	e13ffa17 	ldw	r4,-24(fp)
+    142c:	e0bff317 	ldw	r2,-52(fp)
+    1430:	20bff52e 	bgeu	r4,r2,1408 <alt_up_pixel_buffer_dma_draw_box+0x334>
+				{
+					IOWR_8DIRECT(addr, x, local_color);
+				}
+				addr = addr + limit_x;
+    1434:	e0ffff17 	ldw	r3,-4(fp)
+    1438:	e13ffe17 	ldw	r4,-8(fp)
+    143c:	1907883a 	add	r3,r3,r4
+    1440:	e0ffff15 	stw	r3,-4(fp)
+		register unsigned int x,y;
+		/* This portion of the code is purposefully replicated. This is because having a text for
+		 * the mode would unnecessarily slow down the drawing of a box. */
+		if (pixel_buffer->color_mode == ALT_UP_8BIT_COLOR_MODE) {
+			addr = addr + t_y * limit_x;
+			for (y = t_y; y <= b_y; y++)
+    1444:	e0bff217 	ldw	r2,-56(fp)
+    1448:	10800044 	addi	r2,r2,1
+    144c:	e0bff215 	stw	r2,-56(fp)
+    1450:	e0fff817 	ldw	r3,-32(fp)
+    1454:	e13ff217 	ldw	r4,-56(fp)
+    1458:	193fe82e 	bgeu	r3,r4,13fc <alt_up_pixel_buffer_dma_draw_box+0x328>
+    145c:	00005706 	br	15bc <alt_up_pixel_buffer_dma_draw_box+0x4e8>
+				{
+					IOWR_8DIRECT(addr, x, local_color);
+				}
+				addr = addr + limit_x;
+			}
+		} else if (pixel_buffer->color_mode == ALT_UP_16BIT_COLOR_MODE) {
+    1460:	e0bfee17 	ldw	r2,-72(fp)
+    1464:	10800e17 	ldw	r2,56(r2)
+    1468:	10800098 	cmpnei	r2,r2,2
+    146c:	1000291e 	bne	r2,zero,1514 <alt_up_pixel_buffer_dma_draw_box+0x440>
+			limit_x = limit_x << 1;
+    1470:	e0fffe17 	ldw	r3,-8(fp)
+    1474:	e0fffe17 	ldw	r3,-8(fp)
+    1478:	18c5883a 	add	r2,r3,r3
+    147c:	e0bffe15 	stw	r2,-8(fp)
+			addr = addr + t_y * limit_x;
+    1480:	e13ff917 	ldw	r4,-28(fp)
+    1484:	e17ffe17 	ldw	r5,-8(fp)
+    1488:	00004dc0 	call	4dc <__mulsi3>
+    148c:	e13fff17 	ldw	r4,-4(fp)
+    1490:	2089883a 	add	r4,r4,r2
+    1494:	e13fff15 	stw	r4,-4(fp)
+			for (y = t_y; y <= b_y; y++)
+    1498:	e0bff917 	ldw	r2,-28(fp)
+    149c:	e0bff215 	stw	r2,-56(fp)
+    14a0:	00001806 	br	1504 <alt_up_pixel_buffer_dma_draw_box+0x430>
+			{
+				for (x = l_x; x <= r_x; x++)
+    14a4:	e0fffb17 	ldw	r3,-20(fp)
+    14a8:	e0fff315 	stw	r3,-52(fp)
+    14ac:	00000b06 	br	14dc <alt_up_pixel_buffer_dma_draw_box+0x408>
+				{
+					IOWR_16DIRECT(addr, x << 1, local_color);
+    14b0:	e13ff317 	ldw	r4,-52(fp)
+    14b4:	e13ff317 	ldw	r4,-52(fp)
+    14b8:	2105883a 	add	r2,r4,r4
+    14bc:	1007883a 	mov	r3,r2
+    14c0:	e0bfff17 	ldw	r2,-4(fp)
+    14c4:	1885883a 	add	r2,r3,r2
+    14c8:	e0fff717 	ldw	r3,-36(fp)
+    14cc:	10c0002d 	sthio	r3,0(r2)
+		} else if (pixel_buffer->color_mode == ALT_UP_16BIT_COLOR_MODE) {
+			limit_x = limit_x << 1;
+			addr = addr + t_y * limit_x;
+			for (y = t_y; y <= b_y; y++)
+			{
+				for (x = l_x; x <= r_x; x++)
+    14d0:	e0bff317 	ldw	r2,-52(fp)
+    14d4:	10800044 	addi	r2,r2,1
+    14d8:	e0bff315 	stw	r2,-52(fp)
+    14dc:	e0fffa17 	ldw	r3,-24(fp)
+    14e0:	e13ff317 	ldw	r4,-52(fp)
+    14e4:	193ff22e 	bgeu	r3,r4,14b0 <alt_up_pixel_buffer_dma_draw_box+0x3dc>
+				{
+					IOWR_16DIRECT(addr, x << 1, local_color);
+				}
+				addr = addr + limit_x;
+    14e8:	e0bfff17 	ldw	r2,-4(fp)
+    14ec:	e0fffe17 	ldw	r3,-8(fp)
+    14f0:	10c5883a 	add	r2,r2,r3
+    14f4:	e0bfff15 	stw	r2,-4(fp)
+				addr = addr + limit_x;
+			}
+		} else if (pixel_buffer->color_mode == ALT_UP_16BIT_COLOR_MODE) {
+			limit_x = limit_x << 1;
+			addr = addr + t_y * limit_x;
+			for (y = t_y; y <= b_y; y++)
+    14f8:	e13ff217 	ldw	r4,-56(fp)
+    14fc:	21000044 	addi	r4,r4,1
+    1500:	e13ff215 	stw	r4,-56(fp)
+    1504:	e0bff817 	ldw	r2,-32(fp)
+    1508:	e0fff217 	ldw	r3,-56(fp)
+    150c:	10ffe52e 	bgeu	r2,r3,14a4 <alt_up_pixel_buffer_dma_draw_box+0x3d0>
+    1510:	00002a06 	br	15bc <alt_up_pixel_buffer_dma_draw_box+0x4e8>
+				addr = addr + limit_x;
+			}
+		}
+		else
+		{
+			limit_x = limit_x << 2;
+    1514:	e13ffe17 	ldw	r4,-8(fp)
+    1518:	e13ffe17 	ldw	r4,-8(fp)
+    151c:	2105883a 	add	r2,r4,r4
+    1520:	1085883a 	add	r2,r2,r2
+    1524:	e0bffe15 	stw	r2,-8(fp)
+			addr = addr + t_y * limit_x;
+    1528:	e13ff917 	ldw	r4,-28(fp)
+    152c:	e17ffe17 	ldw	r5,-8(fp)
+    1530:	00004dc0 	call	4dc <__mulsi3>
+    1534:	e0ffff17 	ldw	r3,-4(fp)
+    1538:	1887883a 	add	r3,r3,r2
+    153c:	e0ffff15 	stw	r3,-4(fp)
+			for (y = t_y; y <= b_y; y++)
+    1540:	e13ff917 	ldw	r4,-28(fp)
+    1544:	e13ff215 	stw	r4,-56(fp)
+    1548:	00001906 	br	15b0 <alt_up_pixel_buffer_dma_draw_box+0x4dc>
+			{
+				for (x = l_x; x <= r_x; x++)
+    154c:	e0bffb17 	ldw	r2,-20(fp)
+    1550:	e0bff315 	stw	r2,-52(fp)
+    1554:	00000c06 	br	1588 <alt_up_pixel_buffer_dma_draw_box+0x4b4>
+				{
+					IOWR_32DIRECT(addr, x << 2, local_color);
+    1558:	e0fff317 	ldw	r3,-52(fp)
+    155c:	e0fff317 	ldw	r3,-52(fp)
+    1560:	18c5883a 	add	r2,r3,r3
+    1564:	1085883a 	add	r2,r2,r2
+    1568:	1007883a 	mov	r3,r2
+    156c:	e0bfff17 	ldw	r2,-4(fp)
+    1570:	1885883a 	add	r2,r3,r2
+    1574:	e0fff717 	ldw	r3,-36(fp)
+    1578:	10c00035 	stwio	r3,0(r2)
+		{
+			limit_x = limit_x << 2;
+			addr = addr + t_y * limit_x;
+			for (y = t_y; y <= b_y; y++)
+			{
+				for (x = l_x; x <= r_x; x++)
+    157c:	e13ff317 	ldw	r4,-52(fp)
+    1580:	21000044 	addi	r4,r4,1
+    1584:	e13ff315 	stw	r4,-52(fp)
+    1588:	e0bffa17 	ldw	r2,-24(fp)
+    158c:	e0fff317 	ldw	r3,-52(fp)
+    1590:	10fff12e 	bgeu	r2,r3,1558 <alt_up_pixel_buffer_dma_draw_box+0x484>
+				{
+					IOWR_32DIRECT(addr, x << 2, local_color);
+				}
+				addr = addr + limit_x;
+    1594:	e13fff17 	ldw	r4,-4(fp)
+    1598:	e0bffe17 	ldw	r2,-8(fp)
+    159c:	2089883a 	add	r4,r4,r2
+    15a0:	e13fff15 	stw	r4,-4(fp)
+		}
+		else
+		{
+			limit_x = limit_x << 2;
+			addr = addr + t_y * limit_x;
+			for (y = t_y; y <= b_y; y++)
+    15a4:	e0fff217 	ldw	r3,-56(fp)
+    15a8:	18c00044 	addi	r3,r3,1
+    15ac:	e0fff215 	stw	r3,-56(fp)
+    15b0:	e13ff817 	ldw	r4,-32(fp)
+    15b4:	e0bff217 	ldw	r2,-56(fp)
+    15b8:	20bfe42e 	bgeu	r4,r2,154c <alt_up_pixel_buffer_dma_draw_box+0x478>
+				}
+				addr = addr + limit_x;
+			}
+		}
+	}
+}
+    15bc:	e037883a 	mov	sp,fp
+    15c0:	dfc00117 	ldw	ra,4(sp)
+    15c4:	df000017 	ldw	fp,0(sp)
+    15c8:	dec00204 	addi	sp,sp,8
+    15cc:	f800283a 	ret
+
+000015d0 <alt_up_pixel_buffer_dma_draw_hline>:
+
+void alt_up_pixel_buffer_dma_draw_hline(alt_up_pixel_buffer_dma_dev *pixel_buffer, int x0, int x1, int y, int color, int backbuffer)
+/* This method draws a horizontal line. This method is faster than using the line method because we know the direction of the line. */
+{
+    15d0:	defff104 	addi	sp,sp,-60
+    15d4:	dfc00e15 	stw	ra,56(sp)
+    15d8:	df000d15 	stw	fp,52(sp)
+    15dc:	df000d04 	addi	fp,sp,52
+    15e0:	e13ff315 	stw	r4,-52(fp)
+    15e4:	e17ff415 	stw	r5,-48(fp)
+    15e8:	e1bff515 	stw	r6,-44(fp)
+    15ec:	e1fff615 	stw	r7,-40(fp)
+	register unsigned int addr;
+	register unsigned int limit_x = pixel_buffer->x_resolution;
+    15f0:	e0bff317 	ldw	r2,-52(fp)
+    15f4:	10800f17 	ldw	r2,60(r2)
+    15f8:	e0bffe15 	stw	r2,-8(fp)
+	register unsigned int limit_y = pixel_buffer->y_resolution;
+    15fc:	e0bff317 	ldw	r2,-52(fp)
+    1600:	10801017 	ldw	r2,64(r2)
+    1604:	e0bffd15 	stw	r2,-12(fp)
+	register unsigned int temp;
+	register unsigned int l_x = x0;
+    1608:	e0bff417 	ldw	r2,-48(fp)
+    160c:	e0bffc15 	stw	r2,-16(fp)
+	register unsigned int r_x = x1;
+    1610:	e0fff517 	ldw	r3,-44(fp)
+    1614:	e0fffb15 	stw	r3,-20(fp)
+	register unsigned int line_y = y;
+    1618:	e13ff617 	ldw	r4,-40(fp)
+    161c:	e13ffa15 	stw	r4,-24(fp)
+	register unsigned int local_color = color;
+    1620:	e0800217 	ldw	r2,8(fp)
+    1624:	e0bff915 	stw	r2,-28(fp)
+	
+	/* Check coordinates */
+	if (l_x > r_x)
+    1628:	e0fffb17 	ldw	r3,-20(fp)
+    162c:	e13ffc17 	ldw	r4,-16(fp)
+    1630:	1900042e 	bgeu	r3,r4,1644 <alt_up_pixel_buffer_dma_draw_hline+0x74>
+	{
+		temp = l_x;
+    1634:	e0bffc17 	ldw	r2,-16(fp)
+		l_x = r_x;
+    1638:	e0fffb17 	ldw	r3,-20(fp)
+    163c:	e0fffc15 	stw	r3,-16(fp)
+		r_x = temp;
+    1640:	e0bffb15 	stw	r2,-20(fp)
+	}
+	if ((l_x >= limit_x) || (line_y >= limit_y) || (r_x < 0) || (line_y < 0))
+    1644:	e13ffc17 	ldw	r4,-16(fp)
+    1648:	e0bffe17 	ldw	r2,-8(fp)
+    164c:	2080b12e 	bgeu	r4,r2,1914 <alt_up_pixel_buffer_dma_draw_hline+0x344>
+    1650:	e13ffa17 	ldw	r4,-24(fp)
+    1654:	e0fffd17 	ldw	r3,-12(fp)
+    1658:	20c00136 	bltu	r4,r3,1660 <alt_up_pixel_buffer_dma_draw_hline+0x90>
+	{
+		/* Drawing outside of the window, so don't bother. */
+		return;
+    165c:	0000ad06 	br	1914 <alt_up_pixel_buffer_dma_draw_hline+0x344>
+	/* Clip the box and draw only within the confines of the screen. */
+	if (l_x < 0)
+	{
+		l_x = 0;
+	}
+	if (r_x >= limit_x)
+    1660:	e0bffb17 	ldw	r2,-20(fp)
+    1664:	e0fffe17 	ldw	r3,-8(fp)
+    1668:	10c00336 	bltu	r2,r3,1678 <alt_up_pixel_buffer_dma_draw_hline+0xa8>
+	{
+		r_x = limit_x - 1;
+    166c:	e13ffe17 	ldw	r4,-8(fp)
+    1670:	213fffc4 	addi	r4,r4,-1
+    1674:	e13ffb15 	stw	r4,-20(fp)
+	}
+
+	/* Set up the address to start clearing from and the screen boundaries. */
+	if (backbuffer == 1)
+    1678:	e0800317 	ldw	r2,12(fp)
+    167c:	10800058 	cmpnei	r2,r2,1
+    1680:	1000041e 	bne	r2,zero,1694 <alt_up_pixel_buffer_dma_draw_hline+0xc4>
+		addr = pixel_buffer->back_buffer_start_address;
+    1684:	e0bff317 	ldw	r2,-52(fp)
+    1688:	10800c17 	ldw	r2,48(r2)
+    168c:	e0bfff15 	stw	r2,-4(fp)
+    1690:	00000306 	br	16a0 <alt_up_pixel_buffer_dma_draw_hline+0xd0>
+	else
+		addr = pixel_buffer->buffer_start_address;
+    1694:	e0bff317 	ldw	r2,-52(fp)
+    1698:	10800b17 	ldw	r2,44(r2)
+    169c:	e0bfff15 	stw	r2,-4(fp)
+
+	/* Draw a horizontal line using one of the addressing modes. */
+	if (pixel_buffer->addressing_mode == ALT_UP_PIXEL_BUFFER_XY_ADDRESS_MODE) {
+    16a0:	e0bff317 	ldw	r2,-52(fp)
+    16a4:	10800d17 	ldw	r2,52(r2)
+    16a8:	1004c03a 	cmpne	r2,r2,zero
+    16ac:	1000431e 	bne	r2,zero,17bc <alt_up_pixel_buffer_dma_draw_hline+0x1ec>
+		/* Draw a horizontal line of a given color on the screen using the XY addressing mode. */
+		register unsigned int x;
+		register unsigned int offset_y;
+		offset_y = pixel_buffer->y_coord_offset;
+    16b0:	e0bff317 	ldw	r2,-52(fp)
+    16b4:	10801317 	ldw	r2,76(r2)
+		addr = addr + (line_y << offset_y);
+    16b8:	e0fffa17 	ldw	r3,-24(fp)
+    16bc:	1884983a 	sll	r2,r3,r2
+    16c0:	e13fff17 	ldw	r4,-4(fp)
+    16c4:	2089883a 	add	r4,r4,r2
+    16c8:	e13fff15 	stw	r4,-4(fp)
+		
+		/* This portion of the code is purposefully replicated. This is because having a text for
+		 * the mode would unnecessarily slow down the drawing of a horizontal line. */
+		if (pixel_buffer->color_mode == ALT_UP_8BIT_COLOR_MODE) {
+    16cc:	e0bff317 	ldw	r2,-52(fp)
+    16d0:	10800e17 	ldw	r2,56(r2)
+    16d4:	10800058 	cmpnei	r2,r2,1
+    16d8:	10000f1e 	bne	r2,zero,1718 <alt_up_pixel_buffer_dma_draw_hline+0x148>
+			for (x = l_x; x <= r_x; x++)
+    16dc:	e0bffc17 	ldw	r2,-16(fp)
+    16e0:	e0bff815 	stw	r2,-32(fp)
+    16e4:	00000806 	br	1708 <alt_up_pixel_buffer_dma_draw_hline+0x138>
+			{
+				IOWR_8DIRECT(addr, x, local_color);
+    16e8:	e0ffff17 	ldw	r3,-4(fp)
+    16ec:	e0bff817 	ldw	r2,-32(fp)
+    16f0:	1885883a 	add	r2,r3,r2
+    16f4:	e0fff917 	ldw	r3,-28(fp)
+    16f8:	10c00025 	stbio	r3,0(r2)
+		addr = addr + (line_y << offset_y);
+		
+		/* This portion of the code is purposefully replicated. This is because having a text for
+		 * the mode would unnecessarily slow down the drawing of a horizontal line. */
+		if (pixel_buffer->color_mode == ALT_UP_8BIT_COLOR_MODE) {
+			for (x = l_x; x <= r_x; x++)
+    16fc:	e0fff817 	ldw	r3,-32(fp)
+    1700:	18c00044 	addi	r3,r3,1
+    1704:	e0fff815 	stw	r3,-32(fp)
+    1708:	e13ffb17 	ldw	r4,-20(fp)
+    170c:	e0bff817 	ldw	r2,-32(fp)
+    1710:	20bff52e 	bgeu	r4,r2,16e8 <alt_up_pixel_buffer_dma_draw_hline+0x118>
+    1714:	00007f06 	br	1914 <alt_up_pixel_buffer_dma_draw_hline+0x344>
+			{
+				IOWR_8DIRECT(addr, x, local_color);
+			}
+		} else if (pixel_buffer->color_mode == ALT_UP_16BIT_COLOR_MODE) {
+    1718:	e0bff317 	ldw	r2,-52(fp)
+    171c:	10800e17 	ldw	r2,56(r2)
+    1720:	10800098 	cmpnei	r2,r2,2
+    1724:	1000121e 	bne	r2,zero,1770 <alt_up_pixel_buffer_dma_draw_hline+0x1a0>
+			for (x = l_x; x <= r_x; x++)
+    1728:	e0fffc17 	ldw	r3,-16(fp)
+    172c:	e0fff815 	stw	r3,-32(fp)
+    1730:	00000b06 	br	1760 <alt_up_pixel_buffer_dma_draw_hline+0x190>
+			{
+				IOWR_16DIRECT(addr, x << 1, local_color);
+    1734:	e13ff817 	ldw	r4,-32(fp)
+    1738:	e13ff817 	ldw	r4,-32(fp)
+    173c:	2105883a 	add	r2,r4,r4
+    1740:	1007883a 	mov	r3,r2
+    1744:	e0bfff17 	ldw	r2,-4(fp)
+    1748:	1885883a 	add	r2,r3,r2
+    174c:	e0fff917 	ldw	r3,-28(fp)
+    1750:	10c0002d 	sthio	r3,0(r2)
+			for (x = l_x; x <= r_x; x++)
+			{
+				IOWR_8DIRECT(addr, x, local_color);
+			}
+		} else if (pixel_buffer->color_mode == ALT_UP_16BIT_COLOR_MODE) {
+			for (x = l_x; x <= r_x; x++)
+    1754:	e0bff817 	ldw	r2,-32(fp)
+    1758:	10800044 	addi	r2,r2,1
+    175c:	e0bff815 	stw	r2,-32(fp)
+    1760:	e0fffb17 	ldw	r3,-20(fp)
+    1764:	e13ff817 	ldw	r4,-32(fp)
+    1768:	193ff22e 	bgeu	r3,r4,1734 <alt_up_pixel_buffer_dma_draw_hline+0x164>
+    176c:	00006906 	br	1914 <alt_up_pixel_buffer_dma_draw_hline+0x344>
+				IOWR_16DIRECT(addr, x << 1, local_color);
+			}
+		}
+		else
+		{
+			for (x = l_x; x <= r_x; x++)
+    1770:	e0bffc17 	ldw	r2,-16(fp)
+    1774:	e0bff815 	stw	r2,-32(fp)
+    1778:	00000c06 	br	17ac <alt_up_pixel_buffer_dma_draw_hline+0x1dc>
+			{
+				IOWR_32DIRECT(addr, x << 2, local_color);
+    177c:	e0fff817 	ldw	r3,-32(fp)
+    1780:	e0fff817 	ldw	r3,-32(fp)
+    1784:	18c5883a 	add	r2,r3,r3
+    1788:	1085883a 	add	r2,r2,r2
+    178c:	1007883a 	mov	r3,r2
+    1790:	e0bfff17 	ldw	r2,-4(fp)
+    1794:	1885883a 	add	r2,r3,r2
+    1798:	e0fff917 	ldw	r3,-28(fp)
+    179c:	10c00035 	stwio	r3,0(r2)
+				IOWR_16DIRECT(addr, x << 1, local_color);
+			}
+		}
+		else
+		{
+			for (x = l_x; x <= r_x; x++)
+    17a0:	e13ff817 	ldw	r4,-32(fp)
+    17a4:	21000044 	addi	r4,r4,1
+    17a8:	e13ff815 	stw	r4,-32(fp)
+    17ac:	e0bffb17 	ldw	r2,-20(fp)
+    17b0:	e0fff817 	ldw	r3,-32(fp)
+    17b4:	10fff12e 	bgeu	r2,r3,177c <alt_up_pixel_buffer_dma_draw_hline+0x1ac>
+    17b8:	00005606 	br	1914 <alt_up_pixel_buffer_dma_draw_hline+0x344>
+	} else {
+		/* Draw a horizontal line of a given color on the screen using the linear addressing mode. */
+		register unsigned int x;
+		/* This portion of the code is purposefully replicated. This is because having a text for
+		 * the mode would unnecessarily slow down the drawing of a box. */
+		if (pixel_buffer->color_mode == ALT_UP_8BIT_COLOR_MODE) {
+    17bc:	e0bff317 	ldw	r2,-52(fp)
+    17c0:	10800e17 	ldw	r2,56(r2)
+    17c4:	10800058 	cmpnei	r2,r2,1
+    17c8:	1000151e 	bne	r2,zero,1820 <alt_up_pixel_buffer_dma_draw_hline+0x250>
+			addr = addr + line_y * limit_x;
+    17cc:	e13ffa17 	ldw	r4,-24(fp)
+    17d0:	e17ffe17 	ldw	r5,-8(fp)
+    17d4:	00004dc0 	call	4dc <__mulsi3>
+    17d8:	e13fff17 	ldw	r4,-4(fp)
+    17dc:	2089883a 	add	r4,r4,r2
+    17e0:	e13fff15 	stw	r4,-4(fp)
+			for (x = l_x; x <= r_x; x++)
+    17e4:	e0bffc17 	ldw	r2,-16(fp)
+    17e8:	e0bff715 	stw	r2,-36(fp)
+    17ec:	00000806 	br	1810 <alt_up_pixel_buffer_dma_draw_hline+0x240>
+			{
+				IOWR_8DIRECT(addr, x, local_color);
+    17f0:	e0ffff17 	ldw	r3,-4(fp)
+    17f4:	e0bff717 	ldw	r2,-36(fp)
+    17f8:	1885883a 	add	r2,r3,r2
+    17fc:	e0fff917 	ldw	r3,-28(fp)
+    1800:	10c00025 	stbio	r3,0(r2)
+		register unsigned int x;
+		/* This portion of the code is purposefully replicated. This is because having a text for
+		 * the mode would unnecessarily slow down the drawing of a box. */
+		if (pixel_buffer->color_mode == ALT_UP_8BIT_COLOR_MODE) {
+			addr = addr + line_y * limit_x;
+			for (x = l_x; x <= r_x; x++)
+    1804:	e0fff717 	ldw	r3,-36(fp)
+    1808:	18c00044 	addi	r3,r3,1
+    180c:	e0fff715 	stw	r3,-36(fp)
+    1810:	e13ffb17 	ldw	r4,-20(fp)
+    1814:	e0bff717 	ldw	r2,-36(fp)
+    1818:	20bff52e 	bgeu	r4,r2,17f0 <alt_up_pixel_buffer_dma_draw_hline+0x220>
+    181c:	00003d06 	br	1914 <alt_up_pixel_buffer_dma_draw_hline+0x344>
+			{
+				IOWR_8DIRECT(addr, x, local_color);
+			}
+		} else if (pixel_buffer->color_mode == ALT_UP_16BIT_COLOR_MODE) {
+    1820:	e0bff317 	ldw	r2,-52(fp)
+    1824:	10800e17 	ldw	r2,56(r2)
+    1828:	10800098 	cmpnei	r2,r2,2
+    182c:	10001c1e 	bne	r2,zero,18a0 <alt_up_pixel_buffer_dma_draw_hline+0x2d0>
+			limit_x = limit_x << 1;
+    1830:	e0fffe17 	ldw	r3,-8(fp)
+    1834:	e0fffe17 	ldw	r3,-8(fp)
+    1838:	18c5883a 	add	r2,r3,r3
+    183c:	e0bffe15 	stw	r2,-8(fp)
+			addr = addr + line_y * limit_x;
+    1840:	e13ffa17 	ldw	r4,-24(fp)
+    1844:	e17ffe17 	ldw	r5,-8(fp)
+    1848:	00004dc0 	call	4dc <__mulsi3>
+    184c:	e13fff17 	ldw	r4,-4(fp)
+    1850:	2089883a 	add	r4,r4,r2
+    1854:	e13fff15 	stw	r4,-4(fp)
+			for (x = l_x; x <= r_x; x++)
+    1858:	e0bffc17 	ldw	r2,-16(fp)
+    185c:	e0bff715 	stw	r2,-36(fp)
+    1860:	00000b06 	br	1890 <alt_up_pixel_buffer_dma_draw_hline+0x2c0>
+			{
+				IOWR_16DIRECT(addr, x << 1, local_color);
+    1864:	e0fff717 	ldw	r3,-36(fp)
+    1868:	e0fff717 	ldw	r3,-36(fp)
+    186c:	18c5883a 	add	r2,r3,r3
+    1870:	1007883a 	mov	r3,r2
+    1874:	e0bfff17 	ldw	r2,-4(fp)
+    1878:	1885883a 	add	r2,r3,r2
+    187c:	e0fff917 	ldw	r3,-28(fp)
+    1880:	10c0002d 	sthio	r3,0(r2)
+				IOWR_8DIRECT(addr, x, local_color);
+			}
+		} else if (pixel_buffer->color_mode == ALT_UP_16BIT_COLOR_MODE) {
+			limit_x = limit_x << 1;
+			addr = addr + line_y * limit_x;
+			for (x = l_x; x <= r_x; x++)
+    1884:	e13ff717 	ldw	r4,-36(fp)
+    1888:	21000044 	addi	r4,r4,1
+    188c:	e13ff715 	stw	r4,-36(fp)
+    1890:	e0bffb17 	ldw	r2,-20(fp)
+    1894:	e0fff717 	ldw	r3,-36(fp)
+    1898:	10fff22e 	bgeu	r2,r3,1864 <alt_up_pixel_buffer_dma_draw_hline+0x294>
+    189c:	00001d06 	br	1914 <alt_up_pixel_buffer_dma_draw_hline+0x344>
+				IOWR_16DIRECT(addr, x << 1, local_color);
+			}
+		}
+		else
+		{
+			limit_x = limit_x << 2;
+    18a0:	e13ffe17 	ldw	r4,-8(fp)
+    18a4:	e13ffe17 	ldw	r4,-8(fp)
+    18a8:	2105883a 	add	r2,r4,r4
+    18ac:	1085883a 	add	r2,r2,r2
+    18b0:	e0bffe15 	stw	r2,-8(fp)
+			addr = addr + line_y * limit_x;
+    18b4:	e13ffa17 	ldw	r4,-24(fp)
+    18b8:	e17ffe17 	ldw	r5,-8(fp)
+    18bc:	00004dc0 	call	4dc <__mulsi3>
+    18c0:	e0ffff17 	ldw	r3,-4(fp)
+    18c4:	1887883a 	add	r3,r3,r2
+    18c8:	e0ffff15 	stw	r3,-4(fp)
+			for (x = l_x; x <= r_x; x++)
+    18cc:	e13ffc17 	ldw	r4,-16(fp)
+    18d0:	e13ff715 	stw	r4,-36(fp)
+    18d4:	00000c06 	br	1908 <alt_up_pixel_buffer_dma_draw_hline+0x338>
+			{
+				IOWR_32DIRECT(addr, x << 2, local_color);
+    18d8:	e0fff717 	ldw	r3,-36(fp)
+    18dc:	e0fff717 	ldw	r3,-36(fp)
+    18e0:	18c5883a 	add	r2,r3,r3
+    18e4:	1085883a 	add	r2,r2,r2
+    18e8:	1007883a 	mov	r3,r2
+    18ec:	e0bfff17 	ldw	r2,-4(fp)
+    18f0:	1885883a 	add	r2,r3,r2
+    18f4:	e0fff917 	ldw	r3,-28(fp)
+    18f8:	10c00035 	stwio	r3,0(r2)
+		}
+		else
+		{
+			limit_x = limit_x << 2;
+			addr = addr + line_y * limit_x;
+			for (x = l_x; x <= r_x; x++)
+    18fc:	e13ff717 	ldw	r4,-36(fp)
+    1900:	21000044 	addi	r4,r4,1
+    1904:	e13ff715 	stw	r4,-36(fp)
+    1908:	e0bffb17 	ldw	r2,-20(fp)
+    190c:	e0fff717 	ldw	r3,-36(fp)
+    1910:	10fff12e 	bgeu	r2,r3,18d8 <alt_up_pixel_buffer_dma_draw_hline+0x308>
+				IOWR_32DIRECT(addr, x << 2, local_color);
+			}
+			addr = addr + limit_x;
+		}
+	}
+}
+    1914:	e037883a 	mov	sp,fp
+    1918:	dfc00117 	ldw	ra,4(sp)
+    191c:	df000017 	ldw	fp,0(sp)
+    1920:	dec00204 	addi	sp,sp,8
+    1924:	f800283a 	ret
+
+00001928 <alt_up_pixel_buffer_dma_draw_vline>:
+
+
+void alt_up_pixel_buffer_dma_draw_vline(alt_up_pixel_buffer_dma_dev *pixel_buffer, int x, int y0, int y1, int color, int backbuffer)
+/* This method draws a vertical line. This method is faster than using the line method because we know the direction of the line. */
+
+{
+    1928:	defff004 	addi	sp,sp,-64
+    192c:	dfc00f15 	stw	ra,60(sp)
+    1930:	df000e15 	stw	fp,56(sp)
+    1934:	df000e04 	addi	fp,sp,56
+    1938:	e13ff215 	stw	r4,-56(fp)
+    193c:	e17ff315 	stw	r5,-52(fp)
+    1940:	e1bff415 	stw	r6,-48(fp)
+    1944:	e1fff515 	stw	r7,-44(fp)
+	register unsigned int addr;
+	register unsigned int limit_x = pixel_buffer->x_resolution;
+    1948:	e0bff217 	ldw	r2,-56(fp)
+    194c:	10800f17 	ldw	r2,60(r2)
+    1950:	e0bffe15 	stw	r2,-8(fp)
+	register unsigned int limit_y = pixel_buffer->y_resolution;
+    1954:	e0bff217 	ldw	r2,-56(fp)
+    1958:	10801017 	ldw	r2,64(r2)
+    195c:	e0bffd15 	stw	r2,-12(fp)
+	register unsigned int temp;
+	register unsigned int line_x = x;
+    1960:	e0bff317 	ldw	r2,-52(fp)
+    1964:	e0bffc15 	stw	r2,-16(fp)
+	register unsigned int t_y = y0;
+    1968:	e0fff417 	ldw	r3,-48(fp)
+    196c:	e0fffb15 	stw	r3,-20(fp)
+	register unsigned int b_y = y1;
+    1970:	e13ff517 	ldw	r4,-44(fp)
+    1974:	e13ffa15 	stw	r4,-24(fp)
+	register unsigned int local_color = color;
+    1978:	e0800217 	ldw	r2,8(fp)
+    197c:	e0bff915 	stw	r2,-28(fp)
+	
+	/* Check coordinates */
+	if (t_y > b_y)
+    1980:	e0fffa17 	ldw	r3,-24(fp)
+    1984:	e13ffb17 	ldw	r4,-20(fp)
+    1988:	1900042e 	bgeu	r3,r4,199c <alt_up_pixel_buffer_dma_draw_vline+0x74>
+	{
+		temp = t_y;
+    198c:	e0bffb17 	ldw	r2,-20(fp)
+		t_y = b_y;
+    1990:	e0fffa17 	ldw	r3,-24(fp)
+    1994:	e0fffb15 	stw	r3,-20(fp)
+		b_y = temp;
+    1998:	e0bffa15 	stw	r2,-24(fp)
+	}
+	if ((line_x >= limit_x) || (t_y >= limit_y) || (line_x < 0) || (b_y < 0))
+    199c:	e13ffc17 	ldw	r4,-16(fp)
+    19a0:	e0bffe17 	ldw	r2,-8(fp)
+    19a4:	2080d12e 	bgeu	r4,r2,1cec <alt_up_pixel_buffer_dma_draw_vline+0x3c4>
+    19a8:	e0fffb17 	ldw	r3,-20(fp)
+    19ac:	e13ffd17 	ldw	r4,-12(fp)
+    19b0:	19000136 	bltu	r3,r4,19b8 <alt_up_pixel_buffer_dma_draw_vline+0x90>
+	{
+		/* Drawing outside of the window, so don't bother. */
+		return;
+    19b4:	0000cd06 	br	1cec <alt_up_pixel_buffer_dma_draw_vline+0x3c4>
+	/* Clip the box and draw only within the confines of the screen. */
+	if (t_y < 0)
+	{
+		t_y = 0;
+	}
+	if (b_y >= limit_y)
+    19b8:	e0bffa17 	ldw	r2,-24(fp)
+    19bc:	e0fffd17 	ldw	r3,-12(fp)
+    19c0:	10c00336 	bltu	r2,r3,19d0 <alt_up_pixel_buffer_dma_draw_vline+0xa8>
+	{
+		b_y = limit_y - 1;
+    19c4:	e13ffd17 	ldw	r4,-12(fp)
+    19c8:	213fffc4 	addi	r4,r4,-1
+    19cc:	e13ffa15 	stw	r4,-24(fp)
+	}
+
+	/* Set up the address to start clearing from and the screen boundaries. */
+	if (backbuffer == 1)
+    19d0:	e0800317 	ldw	r2,12(fp)
+    19d4:	10800058 	cmpnei	r2,r2,1
+    19d8:	1000041e 	bne	r2,zero,19ec <alt_up_pixel_buffer_dma_draw_vline+0xc4>
+		addr = pixel_buffer->back_buffer_start_address;
+    19dc:	e0bff217 	ldw	r2,-56(fp)
+    19e0:	10800c17 	ldw	r2,48(r2)
+    19e4:	e0bfff15 	stw	r2,-4(fp)
+    19e8:	00000306 	br	19f8 <alt_up_pixel_buffer_dma_draw_vline+0xd0>
+	else
+		addr = pixel_buffer->buffer_start_address;
+    19ec:	e0bff217 	ldw	r2,-56(fp)
+    19f0:	10800b17 	ldw	r2,44(r2)
+    19f4:	e0bfff15 	stw	r2,-4(fp)
+
+	/* Draw the vertical line using one of the addressing modes. */
+	if (pixel_buffer->addressing_mode == ALT_UP_PIXEL_BUFFER_XY_ADDRESS_MODE) {
+    19f8:	e0bff217 	ldw	r2,-56(fp)
+    19fc:	10800d17 	ldw	r2,52(r2)
+    1a00:	1004c03a 	cmpne	r2,r2,zero
+    1a04:	1000571e 	bne	r2,zero,1b64 <alt_up_pixel_buffer_dma_draw_vline+0x23c>
+		/* Draw a vertical line of a given color on the screen using the XY addressing mode. */
+		register unsigned int y;
+		register unsigned int offset_y;
+		offset_y = pixel_buffer->y_coord_offset;
+    1a08:	e0bff217 	ldw	r2,-56(fp)
+    1a0c:	10801317 	ldw	r2,76(r2)
+    1a10:	e0bff715 	stw	r2,-36(fp)
+		addr = addr + (t_y << offset_y);
+    1a14:	e0bff717 	ldw	r2,-36(fp)
+    1a18:	e0fffb17 	ldw	r3,-20(fp)
+    1a1c:	1884983a 	sll	r2,r3,r2
+    1a20:	e13fff17 	ldw	r4,-4(fp)
+    1a24:	2089883a 	add	r4,r4,r2
+    1a28:	e13fff15 	stw	r4,-4(fp)
+		
+		/* This portion of the code is purposefully replicated. This is because having a text for
+		 * the mode would unnecessarily slow down the drawing of a box. */
+		if (pixel_buffer->color_mode == ALT_UP_8BIT_COLOR_MODE) {
+    1a2c:	e0bff217 	ldw	r2,-56(fp)
+    1a30:	10800e17 	ldw	r2,56(r2)
+    1a34:	10800058 	cmpnei	r2,r2,1
+    1a38:	1000151e 	bne	r2,zero,1a90 <alt_up_pixel_buffer_dma_draw_vline+0x168>
+			for (y = t_y; y <= b_y; y++)
+    1a3c:	e0bffb17 	ldw	r2,-20(fp)
+    1a40:	e0bff815 	stw	r2,-32(fp)
+    1a44:	00000e06 	br	1a80 <alt_up_pixel_buffer_dma_draw_vline+0x158>
+			{
+				IOWR_8DIRECT(addr, line_x, local_color);
+    1a48:	e0ffff17 	ldw	r3,-4(fp)
+    1a4c:	e0bffc17 	ldw	r2,-16(fp)
+    1a50:	1885883a 	add	r2,r3,r2
+    1a54:	e0fff917 	ldw	r3,-28(fp)
+    1a58:	10c00025 	stbio	r3,0(r2)
+				addr = addr + (1 << offset_y);
+    1a5c:	e0fff717 	ldw	r3,-36(fp)
+    1a60:	00800044 	movi	r2,1
+    1a64:	10c4983a 	sll	r2,r2,r3
+    1a68:	e0ffff17 	ldw	r3,-4(fp)
+    1a6c:	1887883a 	add	r3,r3,r2
+    1a70:	e0ffff15 	stw	r3,-4(fp)
+		addr = addr + (t_y << offset_y);
+		
+		/* This portion of the code is purposefully replicated. This is because having a text for
+		 * the mode would unnecessarily slow down the drawing of a box. */
+		if (pixel_buffer->color_mode == ALT_UP_8BIT_COLOR_MODE) {
+			for (y = t_y; y <= b_y; y++)
+    1a74:	e13ff817 	ldw	r4,-32(fp)
+    1a78:	21000044 	addi	r4,r4,1
+    1a7c:	e13ff815 	stw	r4,-32(fp)
+    1a80:	e0bffa17 	ldw	r2,-24(fp)
+    1a84:	e0fff817 	ldw	r3,-32(fp)
+    1a88:	10ffef2e 	bgeu	r2,r3,1a48 <alt_up_pixel_buffer_dma_draw_vline+0x120>
+    1a8c:	00009706 	br	1cec <alt_up_pixel_buffer_dma_draw_vline+0x3c4>
+			{
+				IOWR_8DIRECT(addr, line_x, local_color);
+				addr = addr + (1 << offset_y);
+			}
+		} else if (pixel_buffer->color_mode == ALT_UP_16BIT_COLOR_MODE) {
+    1a90:	e0bff217 	ldw	r2,-56(fp)
+    1a94:	10800e17 	ldw	r2,56(r2)
+    1a98:	10800098 	cmpnei	r2,r2,2
+    1a9c:	1000181e 	bne	r2,zero,1b00 <alt_up_pixel_buffer_dma_draw_vline+0x1d8>
+			for (y = t_y; y <= b_y; y++)
+    1aa0:	e13ffb17 	ldw	r4,-20(fp)
+    1aa4:	e13ff815 	stw	r4,-32(fp)
+    1aa8:	00001106 	br	1af0 <alt_up_pixel_buffer_dma_draw_vline+0x1c8>
+			{
+				IOWR_16DIRECT(addr, line_x << 1, local_color);
+    1aac:	e0fffc17 	ldw	r3,-16(fp)
+    1ab0:	e0fffc17 	ldw	r3,-16(fp)
+    1ab4:	18c5883a 	add	r2,r3,r3
+    1ab8:	1007883a 	mov	r3,r2
+    1abc:	e0bfff17 	ldw	r2,-4(fp)
+    1ac0:	1885883a 	add	r2,r3,r2
+    1ac4:	e0fff917 	ldw	r3,-28(fp)
+    1ac8:	10c0002d 	sthio	r3,0(r2)
+				addr = addr + (1 << offset_y);
+    1acc:	e0fff717 	ldw	r3,-36(fp)
+    1ad0:	00800044 	movi	r2,1
+    1ad4:	10c4983a 	sll	r2,r2,r3
+    1ad8:	e13fff17 	ldw	r4,-4(fp)
+    1adc:	2089883a 	add	r4,r4,r2
+    1ae0:	e13fff15 	stw	r4,-4(fp)
+			{
+				IOWR_8DIRECT(addr, line_x, local_color);
+				addr = addr + (1 << offset_y);
+			}
+		} else if (pixel_buffer->color_mode == ALT_UP_16BIT_COLOR_MODE) {
+			for (y = t_y; y <= b_y; y++)
+    1ae4:	e0bff817 	ldw	r2,-32(fp)
+    1ae8:	10800044 	addi	r2,r2,1
+    1aec:	e0bff815 	stw	r2,-32(fp)
+    1af0:	e0fffa17 	ldw	r3,-24(fp)
+    1af4:	e13ff817 	ldw	r4,-32(fp)
+    1af8:	193fec2e 	bgeu	r3,r4,1aac <alt_up_pixel_buffer_dma_draw_vline+0x184>
+    1afc:	00007b06 	br	1cec <alt_up_pixel_buffer_dma_draw_vline+0x3c4>
+				addr = addr + (1 << offset_y);
+			}
+		}
+		else
+		{
+			for (y = t_y; y <= b_y; y++)
+    1b00:	e0bffb17 	ldw	r2,-20(fp)
+    1b04:	e0bff815 	stw	r2,-32(fp)
+    1b08:	00001206 	br	1b54 <alt_up_pixel_buffer_dma_draw_vline+0x22c>
+			{
+				IOWR_32DIRECT(addr, line_x << 2, local_color);
+    1b0c:	e0fffc17 	ldw	r3,-16(fp)
+    1b10:	e0fffc17 	ldw	r3,-16(fp)
+    1b14:	18c5883a 	add	r2,r3,r3
+    1b18:	1085883a 	add	r2,r2,r2
+    1b1c:	1007883a 	mov	r3,r2
+    1b20:	e0bfff17 	ldw	r2,-4(fp)
+    1b24:	1885883a 	add	r2,r3,r2
+    1b28:	e0fff917 	ldw	r3,-28(fp)
+    1b2c:	10c00035 	stwio	r3,0(r2)
+				addr = addr + (1 << offset_y);
+    1b30:	e0fff717 	ldw	r3,-36(fp)
+    1b34:	00800044 	movi	r2,1
+    1b38:	10c4983a 	sll	r2,r2,r3
+    1b3c:	e13fff17 	ldw	r4,-4(fp)
+    1b40:	2089883a 	add	r4,r4,r2
+    1b44:	e13fff15 	stw	r4,-4(fp)
+				addr = addr + (1 << offset_y);
+			}
+		}
+		else
+		{
+			for (y = t_y; y <= b_y; y++)
+    1b48:	e0bff817 	ldw	r2,-32(fp)
+    1b4c:	10800044 	addi	r2,r2,1
+    1b50:	e0bff815 	stw	r2,-32(fp)
+    1b54:	e0fffa17 	ldw	r3,-24(fp)
+    1b58:	e13ff817 	ldw	r4,-32(fp)
+    1b5c:	193feb2e 	bgeu	r3,r4,1b0c <alt_up_pixel_buffer_dma_draw_vline+0x1e4>
+    1b60:	00006206 	br	1cec <alt_up_pixel_buffer_dma_draw_vline+0x3c4>
+	} else {
+		/* Draw a vertical line of a given color on the screen using the linear addressing mode. */
+		register unsigned int y;
+		/* This portion of the code is purposefully replicated. This is because having a text for
+		 * the mode would unnecessarily slow down the drawing of a box. */
+		if (pixel_buffer->color_mode == ALT_UP_8BIT_COLOR_MODE) {
+    1b64:	e0bff217 	ldw	r2,-56(fp)
+    1b68:	10800e17 	ldw	r2,56(r2)
+    1b6c:	10800058 	cmpnei	r2,r2,1
+    1b70:	1000191e 	bne	r2,zero,1bd8 <alt_up_pixel_buffer_dma_draw_vline+0x2b0>
+			addr = addr + t_y * limit_x;
+    1b74:	e13ffb17 	ldw	r4,-20(fp)
+    1b78:	e17ffe17 	ldw	r5,-8(fp)
+    1b7c:	00004dc0 	call	4dc <__mulsi3>
+    1b80:	e0ffff17 	ldw	r3,-4(fp)
+    1b84:	1887883a 	add	r3,r3,r2
+    1b88:	e0ffff15 	stw	r3,-4(fp)
+			for (y = t_y; y <= b_y; y++)
+    1b8c:	e13ffb17 	ldw	r4,-20(fp)
+    1b90:	e13ff615 	stw	r4,-40(fp)
+    1b94:	00000c06 	br	1bc8 <alt_up_pixel_buffer_dma_draw_vline+0x2a0>
+			{
+				IOWR_8DIRECT(addr, line_x, local_color);
+    1b98:	e0ffff17 	ldw	r3,-4(fp)
+    1b9c:	e0bffc17 	ldw	r2,-16(fp)
+    1ba0:	1885883a 	add	r2,r3,r2
+    1ba4:	e0fff917 	ldw	r3,-28(fp)
+    1ba8:	10c00025 	stbio	r3,0(r2)
+				addr = addr + limit_x;
+    1bac:	e0bfff17 	ldw	r2,-4(fp)
+    1bb0:	e0fffe17 	ldw	r3,-8(fp)
+    1bb4:	10c5883a 	add	r2,r2,r3
+    1bb8:	e0bfff15 	stw	r2,-4(fp)
+		register unsigned int y;
+		/* This portion of the code is purposefully replicated. This is because having a text for
+		 * the mode would unnecessarily slow down the drawing of a box. */
+		if (pixel_buffer->color_mode == ALT_UP_8BIT_COLOR_MODE) {
+			addr = addr + t_y * limit_x;
+			for (y = t_y; y <= b_y; y++)
+    1bbc:	e13ff617 	ldw	r4,-40(fp)
+    1bc0:	21000044 	addi	r4,r4,1
+    1bc4:	e13ff615 	stw	r4,-40(fp)
+    1bc8:	e0bffa17 	ldw	r2,-24(fp)
+    1bcc:	e0fff617 	ldw	r3,-40(fp)
+    1bd0:	10fff12e 	bgeu	r2,r3,1b98 <alt_up_pixel_buffer_dma_draw_vline+0x270>
+    1bd4:	00004506 	br	1cec <alt_up_pixel_buffer_dma_draw_vline+0x3c4>
+			{
+				IOWR_8DIRECT(addr, line_x, local_color);
+				addr = addr + limit_x;
+			}
+		} else if (pixel_buffer->color_mode == ALT_UP_16BIT_COLOR_MODE) {
+    1bd8:	e0bff217 	ldw	r2,-56(fp)
+    1bdc:	10800e17 	ldw	r2,56(r2)
+    1be0:	10800098 	cmpnei	r2,r2,2
+    1be4:	1000201e 	bne	r2,zero,1c68 <alt_up_pixel_buffer_dma_draw_vline+0x340>
+			limit_x = limit_x << 1;
+    1be8:	e13ffe17 	ldw	r4,-8(fp)
+    1bec:	e13ffe17 	ldw	r4,-8(fp)
+    1bf0:	2105883a 	add	r2,r4,r4
+    1bf4:	e0bffe15 	stw	r2,-8(fp)
+			addr = addr + t_y * limit_x;
+    1bf8:	e13ffb17 	ldw	r4,-20(fp)
+    1bfc:	e17ffe17 	ldw	r5,-8(fp)
+    1c00:	00004dc0 	call	4dc <__mulsi3>
+    1c04:	e0ffff17 	ldw	r3,-4(fp)
+    1c08:	1887883a 	add	r3,r3,r2
+    1c0c:	e0ffff15 	stw	r3,-4(fp)
+			for (y = t_y; y <= b_y; y++)
+    1c10:	e13ffb17 	ldw	r4,-20(fp)
+    1c14:	e13ff615 	stw	r4,-40(fp)
+    1c18:	00000f06 	br	1c58 <alt_up_pixel_buffer_dma_draw_vline+0x330>
+			{
+				IOWR_16DIRECT(addr, line_x << 1, local_color);
+    1c1c:	e0fffc17 	ldw	r3,-16(fp)
+    1c20:	e0fffc17 	ldw	r3,-16(fp)
+    1c24:	18c5883a 	add	r2,r3,r3
+    1c28:	1007883a 	mov	r3,r2
+    1c2c:	e0bfff17 	ldw	r2,-4(fp)
+    1c30:	1885883a 	add	r2,r3,r2
+    1c34:	e0fff917 	ldw	r3,-28(fp)
+    1c38:	10c0002d 	sthio	r3,0(r2)
+				addr = addr + limit_x;
+    1c3c:	e13fff17 	ldw	r4,-4(fp)
+    1c40:	e0bffe17 	ldw	r2,-8(fp)
+    1c44:	2089883a 	add	r4,r4,r2
+    1c48:	e13fff15 	stw	r4,-4(fp)
+				addr = addr + limit_x;
+			}
+		} else if (pixel_buffer->color_mode == ALT_UP_16BIT_COLOR_MODE) {
+			limit_x = limit_x << 1;
+			addr = addr + t_y * limit_x;
+			for (y = t_y; y <= b_y; y++)
+    1c4c:	e0fff617 	ldw	r3,-40(fp)
+    1c50:	18c00044 	addi	r3,r3,1
+    1c54:	e0fff615 	stw	r3,-40(fp)
+    1c58:	e13ffa17 	ldw	r4,-24(fp)
+    1c5c:	e0bff617 	ldw	r2,-40(fp)
+    1c60:	20bfee2e 	bgeu	r4,r2,1c1c <alt_up_pixel_buffer_dma_draw_vline+0x2f4>
+    1c64:	00002106 	br	1cec <alt_up_pixel_buffer_dma_draw_vline+0x3c4>
+				addr = addr + limit_x;
+			}
+		}
+		else
+		{
+			limit_x = limit_x << 2;
+    1c68:	e0fffe17 	ldw	r3,-8(fp)
+    1c6c:	e0fffe17 	ldw	r3,-8(fp)
+    1c70:	18c5883a 	add	r2,r3,r3
+    1c74:	1085883a 	add	r2,r2,r2
+    1c78:	e0bffe15 	stw	r2,-8(fp)
+			addr = addr + t_y * limit_x;
+    1c7c:	e13ffb17 	ldw	r4,-20(fp)
+    1c80:	e17ffe17 	ldw	r5,-8(fp)
+    1c84:	00004dc0 	call	4dc <__mulsi3>
+    1c88:	e13fff17 	ldw	r4,-4(fp)
+    1c8c:	2089883a 	add	r4,r4,r2
+    1c90:	e13fff15 	stw	r4,-4(fp)
+			for (y = t_y; y <= b_y; y++)
+    1c94:	e0bffb17 	ldw	r2,-20(fp)
+    1c98:	e0bff615 	stw	r2,-40(fp)
+    1c9c:	00001006 	br	1ce0 <alt_up_pixel_buffer_dma_draw_vline+0x3b8>
+			{
+				IOWR_32DIRECT(addr, line_x << 2, local_color);
+    1ca0:	e0fffc17 	ldw	r3,-16(fp)
+    1ca4:	e0fffc17 	ldw	r3,-16(fp)
+    1ca8:	18c5883a 	add	r2,r3,r3
+    1cac:	1085883a 	add	r2,r2,r2
+    1cb0:	1007883a 	mov	r3,r2
+    1cb4:	e0bfff17 	ldw	r2,-4(fp)
+    1cb8:	1885883a 	add	r2,r3,r2
+    1cbc:	e0fff917 	ldw	r3,-28(fp)
+    1cc0:	10c00035 	stwio	r3,0(r2)
+				addr = addr + limit_x;
+    1cc4:	e13fff17 	ldw	r4,-4(fp)
+    1cc8:	e0bffe17 	ldw	r2,-8(fp)
+    1ccc:	2089883a 	add	r4,r4,r2
+    1cd0:	e13fff15 	stw	r4,-4(fp)
+		}
+		else
+		{
+			limit_x = limit_x << 2;
+			addr = addr + t_y * limit_x;
+			for (y = t_y; y <= b_y; y++)
+    1cd4:	e0fff617 	ldw	r3,-40(fp)
+    1cd8:	18c00044 	addi	r3,r3,1
+    1cdc:	e0fff615 	stw	r3,-40(fp)
+    1ce0:	e13ffa17 	ldw	r4,-24(fp)
+    1ce4:	e0bff617 	ldw	r2,-40(fp)
+    1ce8:	20bfed2e 	bgeu	r4,r2,1ca0 <alt_up_pixel_buffer_dma_draw_vline+0x378>
+				IOWR_32DIRECT(addr, line_x << 2, local_color);
+				addr = addr + limit_x;
+			}
+		}
+	}
+}
+    1cec:	e037883a 	mov	sp,fp
+    1cf0:	dfc00117 	ldw	ra,4(sp)
+    1cf4:	df000017 	ldw	fp,0(sp)
+    1cf8:	dec00204 	addi	sp,sp,8
+    1cfc:	f800283a 	ret
+
+00001d00 <alt_up_pixel_buffer_dma_draw_rectangle>:
+
+void alt_up_pixel_buffer_dma_draw_rectangle(alt_up_pixel_buffer_dma_dev *pixel_buffer, int x0, int y0, int x1, int y1, int color, int backbuffer)
+{
+    1d00:	defff804 	addi	sp,sp,-32
+    1d04:	dfc00715 	stw	ra,28(sp)
+    1d08:	df000615 	stw	fp,24(sp)
+    1d0c:	df000604 	addi	fp,sp,24
+    1d10:	e13ffc15 	stw	r4,-16(fp)
+    1d14:	e17ffd15 	stw	r5,-12(fp)
+    1d18:	e1bffe15 	stw	r6,-8(fp)
+    1d1c:	e1ffff15 	stw	r7,-4(fp)
+	alt_up_pixel_buffer_dma_draw_hline(pixel_buffer, x0, x1, y0, color, backbuffer);
+    1d20:	e0800317 	ldw	r2,12(fp)
+    1d24:	d8800015 	stw	r2,0(sp)
+    1d28:	e0800417 	ldw	r2,16(fp)
+    1d2c:	d8800115 	stw	r2,4(sp)
+    1d30:	e13ffc17 	ldw	r4,-16(fp)
+    1d34:	e17ffd17 	ldw	r5,-12(fp)
+    1d38:	e1bfff17 	ldw	r6,-4(fp)
+    1d3c:	e1fffe17 	ldw	r7,-8(fp)
+    1d40:	00015d00 	call	15d0 <alt_up_pixel_buffer_dma_draw_hline>
+	alt_up_pixel_buffer_dma_draw_hline(pixel_buffer, x0, x1, y1, color, backbuffer);
+    1d44:	e0800317 	ldw	r2,12(fp)
+    1d48:	d8800015 	stw	r2,0(sp)
+    1d4c:	e0800417 	ldw	r2,16(fp)
+    1d50:	d8800115 	stw	r2,4(sp)
+    1d54:	e13ffc17 	ldw	r4,-16(fp)
+    1d58:	e17ffd17 	ldw	r5,-12(fp)
+    1d5c:	e1bfff17 	ldw	r6,-4(fp)
+    1d60:	e1c00217 	ldw	r7,8(fp)
+    1d64:	00015d00 	call	15d0 <alt_up_pixel_buffer_dma_draw_hline>
+	alt_up_pixel_buffer_dma_draw_vline(pixel_buffer, x0, y0, y1, color, backbuffer);
+    1d68:	e0800317 	ldw	r2,12(fp)
+    1d6c:	d8800015 	stw	r2,0(sp)
+    1d70:	e0800417 	ldw	r2,16(fp)
+    1d74:	d8800115 	stw	r2,4(sp)
+    1d78:	e13ffc17 	ldw	r4,-16(fp)
+    1d7c:	e17ffd17 	ldw	r5,-12(fp)
+    1d80:	e1bffe17 	ldw	r6,-8(fp)
+    1d84:	e1c00217 	ldw	r7,8(fp)
+    1d88:	00019280 	call	1928 <alt_up_pixel_buffer_dma_draw_vline>
+	alt_up_pixel_buffer_dma_draw_vline(pixel_buffer, x1, y0, y1, color, backbuffer);
+    1d8c:	e0800317 	ldw	r2,12(fp)
+    1d90:	d8800015 	stw	r2,0(sp)
+    1d94:	e0800417 	ldw	r2,16(fp)
+    1d98:	d8800115 	stw	r2,4(sp)
+    1d9c:	e13ffc17 	ldw	r4,-16(fp)
+    1da0:	e17fff17 	ldw	r5,-4(fp)
+    1da4:	e1bffe17 	ldw	r6,-8(fp)
+    1da8:	e1c00217 	ldw	r7,8(fp)
+    1dac:	00019280 	call	1928 <alt_up_pixel_buffer_dma_draw_vline>
+}
+    1db0:	e037883a 	mov	sp,fp
+    1db4:	dfc00117 	ldw	ra,4(sp)
+    1db8:	df000017 	ldw	fp,0(sp)
+    1dbc:	dec00204 	addi	sp,sp,8
+    1dc0:	f800283a 	ret
+
+00001dc4 <helper_plot_pixel>:
+
+void helper_plot_pixel(register unsigned int buffer_start, register int line_size, register int x, register int y, register int color, register int mode)
+/* This is a helper function that draws a pixel at a given location. Note that no boundary checks are made,
+ * so drawing off-screen may cause unpredictable side effects. */
+{
+    1dc4:	defffa04 	addi	sp,sp,-24
+    1dc8:	dfc00515 	stw	ra,20(sp)
+    1dcc:	df000415 	stw	fp,16(sp)
+    1dd0:	df000404 	addi	fp,sp,16
+    1dd4:	e13ffc15 	stw	r4,-16(fp)
+    1dd8:	e17ffd15 	stw	r5,-12(fp)
+    1ddc:	e1bffe15 	stw	r6,-8(fp)
+    1de0:	e1ffff15 	stw	r7,-4(fp)
+	if (mode == 0)
+    1de4:	e0c00317 	ldw	r3,12(fp)
+    1de8:	1804c03a 	cmpne	r2,r3,zero
+    1dec:	10000b1e 	bne	r2,zero,1e1c <helper_plot_pixel+0x58>
+		IOWR_8DIRECT(buffer_start, line_size*y+x, color);
+    1df0:	e13ffd17 	ldw	r4,-12(fp)
+    1df4:	e17fff17 	ldw	r5,-4(fp)
+    1df8:	00004dc0 	call	4dc <__mulsi3>
+    1dfc:	e0fffe17 	ldw	r3,-8(fp)
+    1e00:	10c5883a 	add	r2,r2,r3
+    1e04:	1007883a 	mov	r3,r2
+    1e08:	e0bffc17 	ldw	r2,-16(fp)
+    1e0c:	1885883a 	add	r2,r3,r2
+    1e10:	e0c00217 	ldw	r3,8(fp)
+    1e14:	10c00025 	stbio	r3,0(r2)
+    1e18:	00001b06 	br	1e88 <helper_plot_pixel+0xc4>
+	else if (mode == 1)
+    1e1c:	e0c00317 	ldw	r3,12(fp)
+    1e20:	18800058 	cmpnei	r2,r3,1
+    1e24:	10000c1e 	bne	r2,zero,1e58 <helper_plot_pixel+0x94>
+		IOWR_16DIRECT(buffer_start, (line_size*y+x) << 1, color);
+    1e28:	e13ffd17 	ldw	r4,-12(fp)
+    1e2c:	e17fff17 	ldw	r5,-4(fp)
+    1e30:	00004dc0 	call	4dc <__mulsi3>
+    1e34:	e0fffe17 	ldw	r3,-8(fp)
+    1e38:	10c5883a 	add	r2,r2,r3
+    1e3c:	1085883a 	add	r2,r2,r2
+    1e40:	1007883a 	mov	r3,r2
+    1e44:	e0bffc17 	ldw	r2,-16(fp)
+    1e48:	1885883a 	add	r2,r3,r2
+    1e4c:	e0c00217 	ldw	r3,8(fp)
+    1e50:	10c0002d 	sthio	r3,0(r2)
+    1e54:	00000c06 	br	1e88 <helper_plot_pixel+0xc4>
+	else
+		IOWR_32DIRECT(buffer_start, (line_size*y+x) << 2, color);
+    1e58:	e13ffd17 	ldw	r4,-12(fp)
+    1e5c:	e17fff17 	ldw	r5,-4(fp)
+    1e60:	00004dc0 	call	4dc <__mulsi3>
+    1e64:	e0fffe17 	ldw	r3,-8(fp)
+    1e68:	10c5883a 	add	r2,r2,r3
+    1e6c:	1085883a 	add	r2,r2,r2
+    1e70:	1085883a 	add	r2,r2,r2
+    1e74:	1007883a 	mov	r3,r2
+    1e78:	e0bffc17 	ldw	r2,-16(fp)
+    1e7c:	1885883a 	add	r2,r3,r2
+    1e80:	e0c00217 	ldw	r3,8(fp)
+    1e84:	10c00035 	stwio	r3,0(r2)
+}
+    1e88:	e037883a 	mov	sp,fp
+    1e8c:	dfc00117 	ldw	ra,4(sp)
+    1e90:	df000017 	ldw	fp,0(sp)
+    1e94:	dec00204 	addi	sp,sp,8
+    1e98:	f800283a 	ret
+
+00001e9c <alt_up_pixel_buffer_dma_draw_line>:
+
+void alt_up_pixel_buffer_dma_draw_line(alt_up_pixel_buffer_dma_dev *pixel_buffer, int x0, int y0, int x1, int y1, int color, int backbuffer)
+/* This function draws a line between points (x0, y0) and (x1, y1). The function does not check if it draws a pixel within screen boundaries.
+ * users should ensure that the line is drawn within the screen boundaries. */
+{
+    1e9c:	deffe404 	addi	sp,sp,-112
+    1ea0:	dfc01b15 	stw	ra,108(sp)
+    1ea4:	df001a15 	stw	fp,104(sp)
+    1ea8:	df001a04 	addi	fp,sp,104
+    1eac:	e13fe815 	stw	r4,-96(fp)
+    1eb0:	e17fe915 	stw	r5,-92(fp)
+    1eb4:	e1bfea15 	stw	r6,-88(fp)
+    1eb8:	e1ffeb15 	stw	r7,-84(fp)
+	register int x_0 = x0;
+    1ebc:	e0bfe917 	ldw	r2,-92(fp)
+    1ec0:	e0bffa15 	stw	r2,-24(fp)
+	register int y_0 = y0;
+    1ec4:	e0ffea17 	ldw	r3,-88(fp)
+    1ec8:	e0fff915 	stw	r3,-28(fp)
+	register int x_1 = x1;
+    1ecc:	e13feb17 	ldw	r4,-84(fp)
+    1ed0:	e13ff815 	stw	r4,-32(fp)
+	register int y_1 = y1;
+    1ed4:	e0800217 	ldw	r2,8(fp)
+    1ed8:	e0bff715 	stw	r2,-36(fp)
+	register char steep = (ABS(y_1 - y_0) > ABS(x_1 - x_0)) ? 1 : 0;
+    1edc:	e0fff717 	ldw	r3,-36(fp)
+    1ee0:	e13ff917 	ldw	r4,-28(fp)
+    1ee4:	1905c83a 	sub	r2,r3,r4
+    1ee8:	e0bfff15 	stw	r2,-4(fp)
+    1eec:	e0ffff17 	ldw	r3,-4(fp)
+    1ef0:	1804403a 	cmpge	r2,r3,zero
+    1ef4:	1000031e 	bne	r2,zero,1f04 <alt_up_pixel_buffer_dma_draw_line+0x68>
+    1ef8:	e13fff17 	ldw	r4,-4(fp)
+    1efc:	0109c83a 	sub	r4,zero,r4
+    1f00:	e13fff15 	stw	r4,-4(fp)
+    1f04:	e0fff817 	ldw	r3,-32(fp)
+    1f08:	e13ffa17 	ldw	r4,-24(fp)
+    1f0c:	1905c83a 	sub	r2,r3,r4
+    1f10:	e0bffe15 	stw	r2,-8(fp)
+    1f14:	e0fffe17 	ldw	r3,-8(fp)
+    1f18:	1804403a 	cmpge	r2,r3,zero
+    1f1c:	1000031e 	bne	r2,zero,1f2c <alt_up_pixel_buffer_dma_draw_line+0x90>
+    1f20:	e13ffe17 	ldw	r4,-8(fp)
+    1f24:	0109c83a 	sub	r4,zero,r4
+    1f28:	e13ffe15 	stw	r4,-8(fp)
+    1f2c:	e0fffe17 	ldw	r3,-8(fp)
+    1f30:	e13fff17 	ldw	r4,-4(fp)
+    1f34:	1904803a 	cmplt	r2,r3,r4
+    1f38:	e0bff605 	stb	r2,-40(fp)
+	register int deltax, deltay, error, ystep, x, y;
+	register int color_mode =	(pixel_buffer->color_mode == ALT_UP_8BIT_COLOR_MODE) ? 0 :
+								(pixel_buffer->color_mode == ALT_UP_16BIT_COLOR_MODE) ? 1 : 2;
+    1f3c:	e0bfe817 	ldw	r2,-96(fp)
+    1f40:	10800e17 	ldw	r2,56(r2)
+    1f44:	10800060 	cmpeqi	r2,r2,1
+    1f48:	10000c1e 	bne	r2,zero,1f7c <alt_up_pixel_buffer_dma_draw_line+0xe0>
+    1f4c:	e0bfe817 	ldw	r2,-96(fp)
+    1f50:	10800e17 	ldw	r2,56(r2)
+    1f54:	10800098 	cmpnei	r2,r2,2
+    1f58:	1000031e 	bne	r2,zero,1f68 <alt_up_pixel_buffer_dma_draw_line+0xcc>
+    1f5c:	00800044 	movi	r2,1
+    1f60:	e0bffc15 	stw	r2,-16(fp)
+    1f64:	00000206 	br	1f70 <alt_up_pixel_buffer_dma_draw_line+0xd4>
+    1f68:	00c00084 	movi	r3,2
+    1f6c:	e0fffc15 	stw	r3,-16(fp)
+    1f70:	e13ffc17 	ldw	r4,-16(fp)
+    1f74:	e13ffd15 	stw	r4,-12(fp)
+    1f78:	00000106 	br	1f80 <alt_up_pixel_buffer_dma_draw_line+0xe4>
+    1f7c:	e03ffd15 	stw	zero,-12(fp)
+    1f80:	e0bffd17 	ldw	r2,-12(fp)
+    1f84:	e0bfef15 	stw	r2,-68(fp)
+	register int line_color = color;
+    1f88:	e0c00317 	ldw	r3,12(fp)
+    1f8c:	e0ffee15 	stw	r3,-72(fp)
+	register unsigned int buffer_start;
+	register int line_size = (pixel_buffer->addressing_mode == ALT_UP_PIXEL_BUFFER_XY_ADDRESS_MODE) ? (1 << (pixel_buffer->y_coord_offset-color_mode)) : pixel_buffer->x_resolution;
+    1f90:	e0bfe817 	ldw	r2,-96(fp)
+    1f94:	10800d17 	ldw	r2,52(r2)
+    1f98:	1004c03a 	cmpne	r2,r2,zero
+    1f9c:	1000091e 	bne	r2,zero,1fc4 <alt_up_pixel_buffer_dma_draw_line+0x128>
+    1fa0:	e0bfe817 	ldw	r2,-96(fp)
+    1fa4:	10c01317 	ldw	r3,76(r2)
+    1fa8:	e0bfef17 	ldw	r2,-68(fp)
+    1fac:	1885c83a 	sub	r2,r3,r2
+    1fb0:	1007883a 	mov	r3,r2
+    1fb4:	00800044 	movi	r2,1
+    1fb8:	10c4983a 	sll	r2,r2,r3
+    1fbc:	e0bffb15 	stw	r2,-20(fp)
+    1fc0:	00000306 	br	1fd0 <alt_up_pixel_buffer_dma_draw_line+0x134>
+    1fc4:	e0bfe817 	ldw	r2,-96(fp)
+    1fc8:	10800f17 	ldw	r2,60(r2)
+    1fcc:	e0bffb15 	stw	r2,-20(fp)
+    1fd0:	e13ffb17 	ldw	r4,-20(fp)
+    1fd4:	e13fec15 	stw	r4,-80(fp)
+
+	if (backbuffer == 1)
+    1fd8:	e0800417 	ldw	r2,16(fp)
+    1fdc:	10800058 	cmpnei	r2,r2,1
+    1fe0:	1000041e 	bne	r2,zero,1ff4 <alt_up_pixel_buffer_dma_draw_line+0x158>
+		buffer_start = pixel_buffer->back_buffer_start_address;
+    1fe4:	e0bfe817 	ldw	r2,-96(fp)
+    1fe8:	10800c17 	ldw	r2,48(r2)
+    1fec:	e0bfed15 	stw	r2,-76(fp)
+    1ff0:	00000306 	br	2000 <alt_up_pixel_buffer_dma_draw_line+0x164>
+	else
+		buffer_start = pixel_buffer->buffer_start_address;
+    1ff4:	e0bfe817 	ldw	r2,-96(fp)
+    1ff8:	10800b17 	ldw	r2,44(r2)
+    1ffc:	e0bfed15 	stw	r2,-76(fp)
+
+	/* Preprocessing inputs */
+	if (steep > 0) {
+    2000:	e0fff603 	ldbu	r3,-40(fp)
+    2004:	18803fcc 	andi	r2,r3,255
+    2008:	1080201c 	xori	r2,r2,128
+    200c:	10bfe004 	addi	r2,r2,-128
+    2010:	10800050 	cmplti	r2,r2,1
+    2014:	10000c1e 	bne	r2,zero,2048 <alt_up_pixel_buffer_dma_draw_line+0x1ac>
+		// Swap x_0 and y_0
+		error = x_0;
+    2018:	e13ffa17 	ldw	r4,-24(fp)
+    201c:	e13ff315 	stw	r4,-52(fp)
+		x_0 = y_0;
+    2020:	e0bff917 	ldw	r2,-28(fp)
+    2024:	e0bffa15 	stw	r2,-24(fp)
+		y_0 = error;
+    2028:	e0fff317 	ldw	r3,-52(fp)
+    202c:	e0fff915 	stw	r3,-28(fp)
+		// Swap x_1 and y_1
+		error = x_1;
+    2030:	e13ff817 	ldw	r4,-32(fp)
+    2034:	e13ff315 	stw	r4,-52(fp)
+		x_1 = y_1;
+    2038:	e0bff717 	ldw	r2,-36(fp)
+    203c:	e0bff815 	stw	r2,-32(fp)
+		y_1 = error;
+    2040:	e0fff317 	ldw	r3,-52(fp)
+    2044:	e0fff715 	stw	r3,-36(fp)
+	}
+	if (x_0 > x_1) {
+    2048:	e13ff817 	ldw	r4,-32(fp)
+    204c:	e0bffa17 	ldw	r2,-24(fp)
+    2050:	20800c0e 	bge	r4,r2,2084 <alt_up_pixel_buffer_dma_draw_line+0x1e8>
+		// Swap x_0 and x_1
+		error = x_0;
+    2054:	e0fffa17 	ldw	r3,-24(fp)
+    2058:	e0fff315 	stw	r3,-52(fp)
+		x_0 = x_1;
+    205c:	e13ff817 	ldw	r4,-32(fp)
+    2060:	e13ffa15 	stw	r4,-24(fp)
+		x_1 = error;
+    2064:	e0bff317 	ldw	r2,-52(fp)
+    2068:	e0bff815 	stw	r2,-32(fp)
+		// Swap y_0 and y_1
+		error = y_0;
+    206c:	e0fff917 	ldw	r3,-28(fp)
+    2070:	e0fff315 	stw	r3,-52(fp)
+		y_0 = y_1;
+    2074:	e13ff717 	ldw	r4,-36(fp)
+    2078:	e13ff915 	stw	r4,-28(fp)
+		y_1 = error;
+    207c:	e0bff317 	ldw	r2,-52(fp)
+    2080:	e0bff715 	stw	r2,-36(fp)
+	}
+
+	/* Setup local variables */
+	deltax = x_1 - x_0;
+    2084:	e0fff817 	ldw	r3,-32(fp)
+    2088:	e13ffa17 	ldw	r4,-24(fp)
+    208c:	1907c83a 	sub	r3,r3,r4
+    2090:	e0fff515 	stw	r3,-44(fp)
+	deltay = ABS(y_1 - y_0);
+    2094:	e0fff717 	ldw	r3,-36(fp)
+    2098:	e13ff917 	ldw	r4,-28(fp)
+    209c:	1905c83a 	sub	r2,r3,r4
+    20a0:	e0bff415 	stw	r2,-48(fp)
+    20a4:	e0fff417 	ldw	r3,-48(fp)
+    20a8:	1804403a 	cmpge	r2,r3,zero
+    20ac:	1000031e 	bne	r2,zero,20bc <alt_up_pixel_buffer_dma_draw_line+0x220>
+    20b0:	e13ff417 	ldw	r4,-48(fp)
+    20b4:	0109c83a 	sub	r4,zero,r4
+    20b8:	e13ff415 	stw	r4,-48(fp)
+	error = -(deltax / 2); 
+    20bc:	e0fff517 	ldw	r3,-44(fp)
+    20c0:	1804d7fa 	srli	r2,r3,31
+    20c4:	e13ff517 	ldw	r4,-44(fp)
+    20c8:	1105883a 	add	r2,r2,r4
+    20cc:	1005d07a 	srai	r2,r2,1
+    20d0:	0085c83a 	sub	r2,zero,r2
+    20d4:	e0bff315 	stw	r2,-52(fp)
+	y = y_0;
+    20d8:	e0bff917 	ldw	r2,-28(fp)
+    20dc:	e0bff015 	stw	r2,-64(fp)
+	if (y_0 < y_1)
+    20e0:	e0fff917 	ldw	r3,-28(fp)
+    20e4:	e13ff717 	ldw	r4,-36(fp)
+    20e8:	1900030e 	bge	r3,r4,20f8 <alt_up_pixel_buffer_dma_draw_line+0x25c>
+		ystep = 1;
+    20ec:	00800044 	movi	r2,1
+    20f0:	e0bff215 	stw	r2,-56(fp)
+    20f4:	00000206 	br	2100 <alt_up_pixel_buffer_dma_draw_line+0x264>
+	else
+		ystep = -1;
+    20f8:	00ffffc4 	movi	r3,-1
+    20fc:	e0fff215 	stw	r3,-56(fp)
+
+	/* Draw a line - either go along the x axis (steep = 0) or along the y axis (steep = 1). The code is replicated to
+	 * compile well on low optimization levels. */
+	if (steep == 1)
+    2100:	e13ff603 	ldbu	r4,-40(fp)
+    2104:	20803fcc 	andi	r2,r4,255
+    2108:	1080201c 	xori	r2,r2,128
+    210c:	10bfe004 	addi	r2,r2,-128
+    2110:	10800058 	cmpnei	r2,r2,1
+    2114:	1000221e 	bne	r2,zero,21a0 <alt_up_pixel_buffer_dma_draw_line+0x304>
+	{
+		for (x=x_0; x <= x_1; x++) {
+    2118:	e0bffa17 	ldw	r2,-24(fp)
+    211c:	e0bff115 	stw	r2,-60(fp)
+    2120:	00001b06 	br	2190 <alt_up_pixel_buffer_dma_draw_line+0x2f4>
+			helper_plot_pixel(buffer_start, line_size, y, x, line_color, color_mode);
+    2124:	e0ffee17 	ldw	r3,-72(fp)
+    2128:	d8c00015 	stw	r3,0(sp)
+    212c:	e13fef17 	ldw	r4,-68(fp)
+    2130:	d9000115 	stw	r4,4(sp)
+    2134:	e13fed17 	ldw	r4,-76(fp)
+    2138:	e17fec17 	ldw	r5,-80(fp)
+    213c:	e1bff017 	ldw	r6,-64(fp)
+    2140:	e1fff117 	ldw	r7,-60(fp)
+    2144:	0001dc40 	call	1dc4 <helper_plot_pixel>
+			error = error + deltay;
+    2148:	e0bff317 	ldw	r2,-52(fp)
+    214c:	e0fff417 	ldw	r3,-48(fp)
+    2150:	10c5883a 	add	r2,r2,r3
+    2154:	e0bff315 	stw	r2,-52(fp)
+			if (error > 0) {
+    2158:	e13ff317 	ldw	r4,-52(fp)
+    215c:	20800050 	cmplti	r2,r4,1
+    2160:	1000081e 	bne	r2,zero,2184 <alt_up_pixel_buffer_dma_draw_line+0x2e8>
+				y = y + ystep;
+    2164:	e0bff017 	ldw	r2,-64(fp)
+    2168:	e0fff217 	ldw	r3,-56(fp)
+    216c:	10c5883a 	add	r2,r2,r3
+    2170:	e0bff015 	stw	r2,-64(fp)
+				error = error - deltax;
+    2174:	e13ff317 	ldw	r4,-52(fp)
+    2178:	e0bff517 	ldw	r2,-44(fp)
+    217c:	2089c83a 	sub	r4,r4,r2
+    2180:	e13ff315 	stw	r4,-52(fp)
+
+	/* Draw a line - either go along the x axis (steep = 0) or along the y axis (steep = 1). The code is replicated to
+	 * compile well on low optimization levels. */
+	if (steep == 1)
+	{
+		for (x=x_0; x <= x_1; x++) {
+    2184:	e0fff117 	ldw	r3,-60(fp)
+    2188:	18c00044 	addi	r3,r3,1
+    218c:	e0fff115 	stw	r3,-60(fp)
+    2190:	e13ff817 	ldw	r4,-32(fp)
+    2194:	e0bff117 	ldw	r2,-60(fp)
+    2198:	20bfe20e 	bge	r4,r2,2124 <alt_up_pixel_buffer_dma_draw_line+0x288>
+    219c:	00002106 	br	2224 <alt_up_pixel_buffer_dma_draw_line+0x388>
+			}
+		}
+	}
+	else
+	{
+		for (x=x_0; x <= x_1; x++) {
+    21a0:	e0fffa17 	ldw	r3,-24(fp)
+    21a4:	e0fff115 	stw	r3,-60(fp)
+    21a8:	00001b06 	br	2218 <alt_up_pixel_buffer_dma_draw_line+0x37c>
+			helper_plot_pixel(buffer_start, line_size, x, y, line_color, color_mode);
+    21ac:	e13fee17 	ldw	r4,-72(fp)
+    21b0:	d9000015 	stw	r4,0(sp)
+    21b4:	e0bfef17 	ldw	r2,-68(fp)
+    21b8:	d8800115 	stw	r2,4(sp)
+    21bc:	e13fed17 	ldw	r4,-76(fp)
+    21c0:	e17fec17 	ldw	r5,-80(fp)
+    21c4:	e1bff117 	ldw	r6,-60(fp)
+    21c8:	e1fff017 	ldw	r7,-64(fp)
+    21cc:	0001dc40 	call	1dc4 <helper_plot_pixel>
+			error = error + deltay;
+    21d0:	e0fff317 	ldw	r3,-52(fp)
+    21d4:	e13ff417 	ldw	r4,-48(fp)
+    21d8:	1907883a 	add	r3,r3,r4
+    21dc:	e0fff315 	stw	r3,-52(fp)
+			if (error > 0) {
+    21e0:	e0fff317 	ldw	r3,-52(fp)
+    21e4:	18800050 	cmplti	r2,r3,1
+    21e8:	1000081e 	bne	r2,zero,220c <alt_up_pixel_buffer_dma_draw_line+0x370>
+				y = y + ystep;
+    21ec:	e13ff017 	ldw	r4,-64(fp)
+    21f0:	e0bff217 	ldw	r2,-56(fp)
+    21f4:	2089883a 	add	r4,r4,r2
+    21f8:	e13ff015 	stw	r4,-64(fp)
+				error = error - deltax;
+    21fc:	e0fff317 	ldw	r3,-52(fp)
+    2200:	e13ff517 	ldw	r4,-44(fp)
+    2204:	1907c83a 	sub	r3,r3,r4
+    2208:	e0fff315 	stw	r3,-52(fp)
+			}
+		}
+	}
+	else
+	{
+		for (x=x_0; x <= x_1; x++) {
+    220c:	e0bff117 	ldw	r2,-60(fp)
+    2210:	10800044 	addi	r2,r2,1
+    2214:	e0bff115 	stw	r2,-60(fp)
+    2218:	e0fff817 	ldw	r3,-32(fp)
+    221c:	e13ff117 	ldw	r4,-60(fp)
+    2220:	193fe20e 	bge	r3,r4,21ac <alt_up_pixel_buffer_dma_draw_line+0x310>
+				y = y + ystep;
+				error = error - deltax;
+			}
+		}
+	}
+}
+    2224:	e037883a 	mov	sp,fp
+    2228:	dfc00117 	ldw	ra,4(sp)
+    222c:	df000017 	ldw	fp,0(sp)
+    2230:	dec00204 	addi	sp,sp,8
+    2234:	f800283a 	ret
+
+00002238 <close>:
+ *
+ * ALT_CLOSE is mapped onto the close() system call in alt_syscall.h
+ */
+ 
+int ALT_CLOSE (int fildes)
+{
+    2238:	defff804 	addi	sp,sp,-32
+    223c:	dfc00715 	stw	ra,28(sp)
+    2240:	df000615 	stw	fp,24(sp)
+    2244:	df000604 	addi	fp,sp,24
+    2248:	e13ffc15 	stw	r4,-16(fp)
+   * A common error case is that when the file descriptor was created, the call
+   * to open() failed resulting in a negative file descriptor. This is trapped
+   * below so that we don't try and process an invalid file descriptor.
+   */
+
+  fd = (fildes < 0) ? NULL : &alt_fd_list[fildes];
+    224c:	e0bffc17 	ldw	r2,-16(fp)
+    2250:	1004803a 	cmplt	r2,r2,zero
+    2254:	1000091e 	bne	r2,zero,227c <close+0x44>
+    2258:	e13ffc17 	ldw	r4,-16(fp)
+    225c:	01400304 	movi	r5,12
+    2260:	00004dc0 	call	4dc <__mulsi3>
+    2264:	1007883a 	mov	r3,r2
+    2268:	00800034 	movhi	r2,0
+    226c:	108c6304 	addi	r2,r2,12684
+    2270:	1887883a 	add	r3,r3,r2
+    2274:	e0ffff15 	stw	r3,-4(fp)
+    2278:	00000106 	br	2280 <close+0x48>
+    227c:	e03fff15 	stw	zero,-4(fp)
+    2280:	e0bfff17 	ldw	r2,-4(fp)
+    2284:	e0bffb15 	stw	r2,-20(fp)
+
+  if (fd)
+    2288:	e0bffb17 	ldw	r2,-20(fp)
+    228c:	1005003a 	cmpeq	r2,r2,zero
+    2290:	10001d1e 	bne	r2,zero,2308 <close+0xd0>
+    /*
+     * If the associated file system/device has a close function, call it so 
+     * that any necessary cleanup code can run.
+     */
+
+    rval = (fd->dev->close) ? fd->dev->close(fd) : 0;
+    2294:	e0bffb17 	ldw	r2,-20(fp)
+    2298:	10800017 	ldw	r2,0(r2)
+    229c:	10800417 	ldw	r2,16(r2)
+    22a0:	1005003a 	cmpeq	r2,r2,zero
+    22a4:	1000071e 	bne	r2,zero,22c4 <close+0x8c>
+    22a8:	e0bffb17 	ldw	r2,-20(fp)
+    22ac:	10800017 	ldw	r2,0(r2)
+    22b0:	10800417 	ldw	r2,16(r2)
+    22b4:	e13ffb17 	ldw	r4,-20(fp)
+    22b8:	103ee83a 	callr	r2
+    22bc:	e0bffe15 	stw	r2,-8(fp)
+    22c0:	00000106 	br	22c8 <close+0x90>
+    22c4:	e03ffe15 	stw	zero,-8(fp)
+    22c8:	e0bffe17 	ldw	r2,-8(fp)
+    22cc:	e0bffa15 	stw	r2,-24(fp)
+
+    /* Free the file descriptor structure and return. */
+
+    alt_release_fd (fildes);
+    22d0:	e13ffc17 	ldw	r4,-16(fp)
+    22d4:	000266c0 	call	266c <alt_release_fd>
+    if (rval < 0)
+    22d8:	e0bffa17 	ldw	r2,-24(fp)
+    22dc:	1004403a 	cmpge	r2,r2,zero
+    22e0:	1000071e 	bne	r2,zero,2300 <close+0xc8>
+    {
+      ALT_ERRNO = -rval;
+    22e4:	00023380 	call	2338 <alt_get_errno>
+    22e8:	e0fffa17 	ldw	r3,-24(fp)
+    22ec:	00c7c83a 	sub	r3,zero,r3
+    22f0:	10c00015 	stw	r3,0(r2)
+      return -1;
+    22f4:	00bfffc4 	movi	r2,-1
+    22f8:	e0bffd15 	stw	r2,-12(fp)
+    22fc:	00000806 	br	2320 <close+0xe8>
+    }
+    return 0;
+    2300:	e03ffd15 	stw	zero,-12(fp)
+    2304:	00000606 	br	2320 <close+0xe8>
+  }
+  else
+  {
+    ALT_ERRNO = EBADFD;
+    2308:	00023380 	call	2338 <alt_get_errno>
+    230c:	1007883a 	mov	r3,r2
+    2310:	00801444 	movi	r2,81
+    2314:	18800015 	stw	r2,0(r3)
+    return -1;
+    2318:	00bfffc4 	movi	r2,-1
+    231c:	e0bffd15 	stw	r2,-12(fp)
+    2320:	e0bffd17 	ldw	r2,-12(fp)
+  }
+}
+    2324:	e037883a 	mov	sp,fp
+    2328:	dfc00117 	ldw	ra,4(sp)
+    232c:	df000017 	ldw	fp,0(sp)
+    2330:	dec00204 	addi	sp,sp,8
+    2334:	f800283a 	ret
+
+00002338 <alt_get_errno>:
+#undef errno
+
+extern int errno;
+
+static ALT_INLINE int* alt_get_errno(void)
+{
+    2338:	defffd04 	addi	sp,sp,-12
+    233c:	dfc00215 	stw	ra,8(sp)
+    2340:	df000115 	stw	fp,4(sp)
+    2344:	df000104 	addi	fp,sp,4
+  return ((alt_errno) ? alt_errno() : &errno);
+    2348:	00800034 	movhi	r2,0
+    234c:	108cca04 	addi	r2,r2,13096
+    2350:	10800017 	ldw	r2,0(r2)
+    2354:	1005003a 	cmpeq	r2,r2,zero
+    2358:	1000061e 	bne	r2,zero,2374 <alt_get_errno+0x3c>
+    235c:	00800034 	movhi	r2,0
+    2360:	108cca04 	addi	r2,r2,13096
+    2364:	10800017 	ldw	r2,0(r2)
+    2368:	103ee83a 	callr	r2
+    236c:	e0bfff15 	stw	r2,-4(fp)
+    2370:	00000306 	br	2380 <alt_get_errno+0x48>
+    2374:	00800034 	movhi	r2,0
+    2378:	108e6704 	addi	r2,r2,14748
+    237c:	e0bfff15 	stw	r2,-4(fp)
+    2380:	e0bfff17 	ldw	r2,-4(fp)
+}
+    2384:	e037883a 	mov	sp,fp
+    2388:	dfc00117 	ldw	ra,4(sp)
+    238c:	df000017 	ldw	fp,0(sp)
+    2390:	dec00204 	addi	sp,sp,8
+    2394:	f800283a 	ret
+
+00002398 <alt_dcache_flush_all>:
+/*
+ * alt_dcache_flush_all() is called to flush the entire data cache.
+ */
+
+void alt_dcache_flush_all (void)
+{
+    2398:	deffff04 	addi	sp,sp,-4
+    239c:	df000015 	stw	fp,0(sp)
+    23a0:	d839883a 	mov	fp,sp
+  for (i = (char*) 0; i < (char*) NIOS2_DCACHE_SIZE; i+= NIOS2_DCACHE_LINE_SIZE)
+  { 
+    __asm__ volatile ("flushd (%0)" :: "r" (i));
+  }
+#endif /* NIOS2_DCACHE_SIZE > 0 */
+}
+    23a4:	e037883a 	mov	sp,fp
+    23a8:	df000017 	ldw	fp,0(sp)
+    23ac:	dec00104 	addi	sp,sp,4
+    23b0:	f800283a 	ret
+
+000023b4 <alt_dev_null_write>:
+ * by the alt_dev_null device. It simple discards all data passed to it, and
+ * indicates that the data has been successfully transmitted.
+ */
+
+static int alt_dev_null_write (alt_fd* fd, const char* ptr, int len)
+{
+    23b4:	defffc04 	addi	sp,sp,-16
+    23b8:	df000315 	stw	fp,12(sp)
+    23bc:	df000304 	addi	fp,sp,12
+    23c0:	e13ffd15 	stw	r4,-12(fp)
+    23c4:	e17ffe15 	stw	r5,-8(fp)
+    23c8:	e1bfff15 	stw	r6,-4(fp)
+  return len;
+    23cc:	e0bfff17 	ldw	r2,-4(fp)
+}
+    23d0:	e037883a 	mov	sp,fp
+    23d4:	df000017 	ldw	fp,0(sp)
+    23d8:	dec00104 	addi	sp,sp,4
+    23dc:	f800283a 	ret
+
+000023e0 <alt_dev_llist_insert>:
+/*
+ *
+ */
+
+int alt_dev_llist_insert (alt_dev_llist* dev, alt_llist* list)
+{
+    23e0:	defff904 	addi	sp,sp,-28
+    23e4:	dfc00615 	stw	ra,24(sp)
+    23e8:	df000515 	stw	fp,20(sp)
+    23ec:	df000504 	addi	fp,sp,20
+    23f0:	e13ffd15 	stw	r4,-12(fp)
+    23f4:	e17ffe15 	stw	r5,-8(fp)
+  /*
+   * check that the device exists, and that it has a valid name.
+   */
+
+  if (!dev || !dev->name)
+    23f8:	e0bffd17 	ldw	r2,-12(fp)
+    23fc:	1005003a 	cmpeq	r2,r2,zero
+    2400:	1000041e 	bne	r2,zero,2414 <alt_dev_llist_insert+0x34>
+    2404:	e0bffd17 	ldw	r2,-12(fp)
+    2408:	10800217 	ldw	r2,8(r2)
+    240c:	1004c03a 	cmpne	r2,r2,zero
+    2410:	1000071e 	bne	r2,zero,2430 <alt_dev_llist_insert+0x50>
+  {
+    ALT_ERRNO = EINVAL;
+    2414:	00024940 	call	2494 <alt_get_errno>
+    2418:	1007883a 	mov	r3,r2
+    241c:	00800584 	movi	r2,22
+    2420:	18800015 	stw	r2,0(r3)
+    return -EINVAL;
+    2424:	00bffa84 	movi	r2,-22
+    2428:	e0bfff15 	stw	r2,-4(fp)
+    242c:	00001306 	br	247c <alt_dev_llist_insert+0x9c>
+  
+  /*
+   * register the device.
+   */
+  
+  alt_llist_insert(list, &dev->llist);
+    2430:	e0fffd17 	ldw	r3,-12(fp)
+    2434:	e0bffe17 	ldw	r2,-8(fp)
+    2438:	e0bffb15 	stw	r2,-20(fp)
+    243c:	e0fffc15 	stw	r3,-16(fp)
+ */
+
+static ALT_INLINE void ALT_ALWAYS_INLINE alt_llist_insert(alt_llist* list, 
+                alt_llist* entry)
+{
+  entry->previous = list;
+    2440:	e0fffc17 	ldw	r3,-16(fp)
+    2444:	e0bffb17 	ldw	r2,-20(fp)
+    2448:	18800115 	stw	r2,4(r3)
+  entry->next     = list->next;
+    244c:	e0bffb17 	ldw	r2,-20(fp)
+    2450:	10c00017 	ldw	r3,0(r2)
+    2454:	e0bffc17 	ldw	r2,-16(fp)
+    2458:	10c00015 	stw	r3,0(r2)
+
+  list->next->previous = entry;
+    245c:	e0bffb17 	ldw	r2,-20(fp)
+    2460:	10c00017 	ldw	r3,0(r2)
+    2464:	e0bffc17 	ldw	r2,-16(fp)
+    2468:	18800115 	stw	r2,4(r3)
+  list->next           = entry;
+    246c:	e0fffb17 	ldw	r3,-20(fp)
+    2470:	e0bffc17 	ldw	r2,-16(fp)
+    2474:	18800015 	stw	r2,0(r3)
+
+  return 0;  
+    2478:	e03fff15 	stw	zero,-4(fp)
+    247c:	e0bfff17 	ldw	r2,-4(fp)
+}
+    2480:	e037883a 	mov	sp,fp
+    2484:	dfc00117 	ldw	ra,4(sp)
+    2488:	df000017 	ldw	fp,0(sp)
+    248c:	dec00204 	addi	sp,sp,8
+    2490:	f800283a 	ret
+
+00002494 <alt_get_errno>:
+#undef errno
+
+extern int errno;
+
+static ALT_INLINE int* alt_get_errno(void)
+{
+    2494:	defffd04 	addi	sp,sp,-12
+    2498:	dfc00215 	stw	ra,8(sp)
+    249c:	df000115 	stw	fp,4(sp)
+    24a0:	df000104 	addi	fp,sp,4
+  return ((alt_errno) ? alt_errno() : &errno);
+    24a4:	00800034 	movhi	r2,0
+    24a8:	108cca04 	addi	r2,r2,13096
+    24ac:	10800017 	ldw	r2,0(r2)
+    24b0:	1005003a 	cmpeq	r2,r2,zero
+    24b4:	1000061e 	bne	r2,zero,24d0 <alt_get_errno+0x3c>
+    24b8:	00800034 	movhi	r2,0
+    24bc:	108cca04 	addi	r2,r2,13096
+    24c0:	10800017 	ldw	r2,0(r2)
+    24c4:	103ee83a 	callr	r2
+    24c8:	e0bfff15 	stw	r2,-4(fp)
+    24cc:	00000306 	br	24dc <alt_get_errno+0x48>
+    24d0:	00800034 	movhi	r2,0
+    24d4:	108e6704 	addi	r2,r2,14748
+    24d8:	e0bfff15 	stw	r2,-4(fp)
+    24dc:	e0bfff17 	ldw	r2,-4(fp)
+}
+    24e0:	e037883a 	mov	sp,fp
+    24e4:	dfc00117 	ldw	ra,4(sp)
+    24e8:	df000017 	ldw	fp,0(sp)
+    24ec:	dec00204 	addi	sp,sp,8
+    24f0:	f800283a 	ret
+
+000024f4 <_do_ctors>:
+/*
+ * Run the C++ static constructors.
+ */
+
+void _do_ctors(void)
+{
+    24f4:	defffd04 	addi	sp,sp,-12
+    24f8:	dfc00215 	stw	ra,8(sp)
+    24fc:	df000115 	stw	fp,4(sp)
+    2500:	df000104 	addi	fp,sp,4
+  constructor* ctor;
+
+  for (ctor = &__CTOR_END__[-1]; ctor >= __CTOR_LIST__; ctor--)
+    2504:	00bfff04 	movi	r2,-4
+    2508:	00c00034 	movhi	r3,0
+    250c:	18cb1004 	addi	r3,r3,11328
+    2510:	1885883a 	add	r2,r3,r2
+    2514:	e0bfff15 	stw	r2,-4(fp)
+    2518:	00000606 	br	2534 <_do_ctors+0x40>
+        (*ctor) (); 
+    251c:	e0bfff17 	ldw	r2,-4(fp)
+    2520:	10800017 	ldw	r2,0(r2)
+    2524:	103ee83a 	callr	r2
+
+void _do_ctors(void)
+{
+  constructor* ctor;
+
+  for (ctor = &__CTOR_END__[-1]; ctor >= __CTOR_LIST__; ctor--)
+    2528:	e0bfff17 	ldw	r2,-4(fp)
+    252c:	10bfff04 	addi	r2,r2,-4
+    2530:	e0bfff15 	stw	r2,-4(fp)
+    2534:	e0ffff17 	ldw	r3,-4(fp)
+    2538:	00800034 	movhi	r2,0
+    253c:	108b0f04 	addi	r2,r2,11324
+    2540:	18bff62e 	bgeu	r3,r2,251c <_do_ctors+0x28>
+        (*ctor) (); 
+}
+    2544:	e037883a 	mov	sp,fp
+    2548:	dfc00117 	ldw	ra,4(sp)
+    254c:	df000017 	ldw	fp,0(sp)
+    2550:	dec00204 	addi	sp,sp,8
+    2554:	f800283a 	ret
+
+00002558 <_do_dtors>:
+/*
+ * Run the C++ static destructors.
+ */
+
+void _do_dtors(void)
+{
+    2558:	defffd04 	addi	sp,sp,-12
+    255c:	dfc00215 	stw	ra,8(sp)
+    2560:	df000115 	stw	fp,4(sp)
+    2564:	df000104 	addi	fp,sp,4
+  destructor* dtor;
+
+  for (dtor = &__DTOR_END__[-1]; dtor >= __DTOR_LIST__; dtor--)
+    2568:	00bfff04 	movi	r2,-4
+    256c:	00c00034 	movhi	r3,0
+    2570:	18cb1004 	addi	r3,r3,11328
+    2574:	1885883a 	add	r2,r3,r2
+    2578:	e0bfff15 	stw	r2,-4(fp)
+    257c:	00000606 	br	2598 <_do_dtors+0x40>
+        (*dtor) (); 
+    2580:	e0bfff17 	ldw	r2,-4(fp)
+    2584:	10800017 	ldw	r2,0(r2)
+    2588:	103ee83a 	callr	r2
+
+void _do_dtors(void)
+{
+  destructor* dtor;
+
+  for (dtor = &__DTOR_END__[-1]; dtor >= __DTOR_LIST__; dtor--)
+    258c:	e0bfff17 	ldw	r2,-4(fp)
+    2590:	10bfff04 	addi	r2,r2,-4
+    2594:	e0bfff15 	stw	r2,-4(fp)
+    2598:	e0ffff17 	ldw	r3,-4(fp)
+    259c:	00800034 	movhi	r2,0
+    25a0:	108b1004 	addi	r2,r2,11328
+    25a4:	18bff62e 	bgeu	r3,r2,2580 <_do_dtors+0x28>
+        (*dtor) (); 
+}
+    25a8:	e037883a 	mov	sp,fp
+    25ac:	dfc00117 	ldw	ra,4(sp)
+    25b0:	df000017 	ldw	fp,0(sp)
+    25b4:	dec00204 	addi	sp,sp,8
+    25b8:	f800283a 	ret
+
+000025bc <alt_find_dev>:
+ * "name" must be an exact match for the devices registered name for a match to
+ * be found.
+ */
+ 
+alt_dev* alt_find_dev(const char* name, alt_llist* llist)
+{
+    25bc:	defff904 	addi	sp,sp,-28
+    25c0:	dfc00615 	stw	ra,24(sp)
+    25c4:	df000515 	stw	fp,20(sp)
+    25c8:	df000504 	addi	fp,sp,20
+    25cc:	e13ffd15 	stw	r4,-12(fp)
+    25d0:	e17ffe15 	stw	r5,-8(fp)
+  alt_dev* next = (alt_dev*) llist->next;
+    25d4:	e0bffe17 	ldw	r2,-8(fp)
+    25d8:	10800017 	ldw	r2,0(r2)
+    25dc:	e0bffc15 	stw	r2,-16(fp)
+  alt_32 len;
+
+  len  = strlen(name) + 1;
+    25e0:	e13ffd17 	ldw	r4,-12(fp)
+    25e4:	00028800 	call	2880 <strlen>
+    25e8:	10800044 	addi	r2,r2,1
+    25ec:	e0bffb15 	stw	r2,-20(fp)
+  /*
+   * Check each list entry in turn, until a match is found, or we reach the
+   * end of the list (i.e. next winds up pointing back to the list head).
+   */ 
+
+  while (next != (alt_dev*) llist)
+    25f0:	00000d06 	br	2628 <alt_find_dev+0x6c>
+    /* 
+     * memcmp() is used here rather than strcmp() in order to reduce the size
+     * of the executable.
+     */
+
+    if (!memcmp (next->name, name, len))
+    25f4:	e0bffc17 	ldw	r2,-16(fp)
+    25f8:	11000217 	ldw	r4,8(r2)
+    25fc:	e1bffb17 	ldw	r6,-20(fp)
+    2600:	e17ffd17 	ldw	r5,-12(fp)
+    2604:	00027500 	call	2750 <memcmp>
+    2608:	1004c03a 	cmpne	r2,r2,zero
+    260c:	1000031e 	bne	r2,zero,261c <alt_find_dev+0x60>
+    {
+      /* match found */
+
+      return next;
+    2610:	e0bffc17 	ldw	r2,-16(fp)
+    2614:	e0bfff15 	stw	r2,-4(fp)
+    2618:	00000706 	br	2638 <alt_find_dev+0x7c>
+    }
+    next = (alt_dev*) next->llist.next;
+    261c:	e0bffc17 	ldw	r2,-16(fp)
+    2620:	10800017 	ldw	r2,0(r2)
+    2624:	e0bffc15 	stw	r2,-16(fp)
+  /*
+   * Check each list entry in turn, until a match is found, or we reach the
+   * end of the list (i.e. next winds up pointing back to the list head).
+   */ 
+
+  while (next != (alt_dev*) llist)
+    2628:	e0fffe17 	ldw	r3,-8(fp)
+    262c:	e0bffc17 	ldw	r2,-16(fp)
+    2630:	10fff01e 	bne	r2,r3,25f4 <alt_find_dev+0x38>
+    next = (alt_dev*) next->llist.next;
+  }
+  
+  /* No match found */
+  
+  return NULL;
+    2634:	e03fff15 	stw	zero,-4(fp)
+    2638:	e0bfff17 	ldw	r2,-4(fp)
+}
+    263c:	e037883a 	mov	sp,fp
+    2640:	dfc00117 	ldw	ra,4(sp)
+    2644:	df000017 	ldw	fp,0(sp)
+    2648:	dec00204 	addi	sp,sp,8
+    264c:	f800283a 	ret
+
+00002650 <alt_icache_flush_all>:
+/*
+ * alt_icache_flush_all() is called to flush the entire instruction cache.
+ */
+
+void alt_icache_flush_all (void)
+{
+    2650:	deffff04 	addi	sp,sp,-4
+    2654:	df000015 	stw	fp,0(sp)
+    2658:	d839883a 	mov	fp,sp
+#if NIOS2_ICACHE_SIZE > 0
+  alt_icache_flush (0, NIOS2_ICACHE_SIZE);
+#endif
+}
+    265c:	e037883a 	mov	sp,fp
+    2660:	df000017 	ldw	fp,0(sp)
+    2664:	dec00104 	addi	sp,sp,4
+    2668:	f800283a 	ret
+
+0000266c <alt_release_fd>:
+ * File descriptors correcponding to standard in, standard out and standard 
+ * error cannont be released backed to the pool. They are always reserved.
+ */
+
+void alt_release_fd (int fd)
+{
+    266c:	defffc04 	addi	sp,sp,-16
+    2670:	dfc00315 	stw	ra,12(sp)
+    2674:	df000215 	stw	fp,8(sp)
+    2678:	dc000115 	stw	r16,4(sp)
+    267c:	df000104 	addi	fp,sp,4
+    2680:	e13fff15 	stw	r4,-4(fp)
+  if (fd > 2)
+    2684:	e0bfff17 	ldw	r2,-4(fp)
+    2688:	108000d0 	cmplti	r2,r2,3
+    268c:	10000f1e 	bne	r2,zero,26cc <alt_release_fd+0x60>
+  {
+    alt_fd_list[fd].fd_flags = 0;
+    2690:	e13fff17 	ldw	r4,-4(fp)
+    2694:	04000034 	movhi	r16,0
+    2698:	840c6304 	addi	r16,r16,12684
+    269c:	01400304 	movi	r5,12
+    26a0:	00004dc0 	call	4dc <__mulsi3>
+    26a4:	1405883a 	add	r2,r2,r16
+    26a8:	10800204 	addi	r2,r2,8
+    26ac:	10000015 	stw	zero,0(r2)
+    alt_fd_list[fd].dev      = 0;
+    26b0:	e13fff17 	ldw	r4,-4(fp)
+    26b4:	04000034 	movhi	r16,0
+    26b8:	840c6304 	addi	r16,r16,12684
+    26bc:	01400304 	movi	r5,12
+    26c0:	00004dc0 	call	4dc <__mulsi3>
+    26c4:	1405883a 	add	r2,r2,r16
+    26c8:	10000015 	stw	zero,0(r2)
+  }
+}
+    26cc:	e037883a 	mov	sp,fp
+    26d0:	dfc00217 	ldw	ra,8(sp)
+    26d4:	df000117 	ldw	fp,4(sp)
+    26d8:	dc000017 	ldw	r16,0(sp)
+    26dc:	dec00304 	addi	sp,sp,12
+    26e0:	f800283a 	ret
+
+000026e4 <altera_nios2_qsys_irq_init>:
+/*
+ * To initialize the internal interrupt controller, just clear the IENABLE
+ * register so that all possible IRQs are disabled.
+ */
+void altera_nios2_qsys_irq_init(void) 
+{
+    26e4:	deffff04 	addi	sp,sp,-4
+    26e8:	df000015 	stw	fp,0(sp)
+    26ec:	d839883a 	mov	fp,sp
+    NIOS2_WRITE_IENABLE(0);
+    26f0:	000170fa 	wrctl	ienable,zero
+}
+    26f4:	e037883a 	mov	sp,fp
+    26f8:	df000017 	ldw	fp,0(sp)
+    26fc:	dec00104 	addi	sp,sp,4
+    2700:	f800283a 	ret
+
+00002704 <atexit>:
+    2704:	200b883a 	mov	r5,r4
+    2708:	000d883a 	mov	r6,zero
+    270c:	0009883a 	mov	r4,zero
+    2710:	000f883a 	mov	r7,zero
+    2714:	00028f41 	jmpi	28f4 <__register_exitproc>
+
+00002718 <exit>:
+    2718:	defffe04 	addi	sp,sp,-8
+    271c:	000b883a 	mov	r5,zero
+    2720:	dc000015 	stw	r16,0(sp)
+    2724:	dfc00115 	stw	ra,4(sp)
+    2728:	2021883a 	mov	r16,r4
+    272c:	0002a2c0 	call	2a2c <__call_exitprocs>
+    2730:	00800034 	movhi	r2,0
+    2734:	108cc404 	addi	r2,r2,13072
+    2738:	11000017 	ldw	r4,0(r2)
+    273c:	20800f17 	ldw	r2,60(r4)
+    2740:	10000126 	beq	r2,zero,2748 <exit+0x30>
+    2744:	103ee83a 	callr	r2
+    2748:	8009883a 	mov	r4,r16
+    274c:	0002c1c0 	call	2c1c <_exit>
+
+00002750 <memcmp>:
+    2750:	00c000c4 	movi	r3,3
+    2754:	1980032e 	bgeu	r3,r6,2764 <memcmp+0x14>
+    2758:	2144b03a 	or	r2,r4,r5
+    275c:	10c4703a 	and	r2,r2,r3
+    2760:	10000f26 	beq	r2,zero,27a0 <memcmp+0x50>
+    2764:	31ffffc4 	addi	r7,r6,-1
+    2768:	3000061e 	bne	r6,zero,2784 <memcmp+0x34>
+    276c:	00000a06 	br	2798 <memcmp+0x48>
+    2770:	39ffffc4 	addi	r7,r7,-1
+    2774:	00bfffc4 	movi	r2,-1
+    2778:	21000044 	addi	r4,r4,1
+    277c:	29400044 	addi	r5,r5,1
+    2780:	38800526 	beq	r7,r2,2798 <memcmp+0x48>
+    2784:	20c00003 	ldbu	r3,0(r4)
+    2788:	28800003 	ldbu	r2,0(r5)
+    278c:	18bff826 	beq	r3,r2,2770 <memcmp+0x20>
+    2790:	1885c83a 	sub	r2,r3,r2
+    2794:	f800283a 	ret
+    2798:	0005883a 	mov	r2,zero
+    279c:	f800283a 	ret
+    27a0:	180f883a 	mov	r7,r3
+    27a4:	20c00017 	ldw	r3,0(r4)
+    27a8:	28800017 	ldw	r2,0(r5)
+    27ac:	18bfed1e 	bne	r3,r2,2764 <memcmp+0x14>
+    27b0:	31bfff04 	addi	r6,r6,-4
+    27b4:	21000104 	addi	r4,r4,4
+    27b8:	29400104 	addi	r5,r5,4
+    27bc:	39bff936 	bltu	r7,r6,27a4 <memcmp+0x54>
+    27c0:	003fe806 	br	2764 <memcmp+0x14>
+
+000027c4 <strcmp>:
+    27c4:	2144b03a 	or	r2,r4,r5
+    27c8:	108000cc 	andi	r2,r2,3
+    27cc:	10001d1e 	bne	r2,zero,2844 <strcmp+0x80>
+    27d0:	200f883a 	mov	r7,r4
+    27d4:	28800017 	ldw	r2,0(r5)
+    27d8:	21000017 	ldw	r4,0(r4)
+    27dc:	280d883a 	mov	r6,r5
+    27e0:	2080161e 	bne	r4,r2,283c <strcmp+0x78>
+    27e4:	023fbff4 	movhi	r8,65279
+    27e8:	423fbfc4 	addi	r8,r8,-257
+    27ec:	2207883a 	add	r3,r4,r8
+    27f0:	01602074 	movhi	r5,32897
+    27f4:	29602004 	addi	r5,r5,-32640
+    27f8:	1946703a 	and	r3,r3,r5
+    27fc:	0104303a 	nor	r2,zero,r4
+    2800:	10c4703a 	and	r2,r2,r3
+    2804:	10001c1e 	bne	r2,zero,2878 <strcmp+0xb4>
+    2808:	4013883a 	mov	r9,r8
+    280c:	2811883a 	mov	r8,r5
+    2810:	00000106 	br	2818 <strcmp+0x54>
+    2814:	1800181e 	bne	r3,zero,2878 <strcmp+0xb4>
+    2818:	39c00104 	addi	r7,r7,4
+    281c:	39000017 	ldw	r4,0(r7)
+    2820:	31800104 	addi	r6,r6,4
+    2824:	31400017 	ldw	r5,0(r6)
+    2828:	2245883a 	add	r2,r4,r9
+    282c:	1204703a 	and	r2,r2,r8
+    2830:	0106303a 	nor	r3,zero,r4
+    2834:	1886703a 	and	r3,r3,r2
+    2838:	217ff626 	beq	r4,r5,2814 <strcmp+0x50>
+    283c:	3809883a 	mov	r4,r7
+    2840:	300b883a 	mov	r5,r6
+    2844:	20c00007 	ldb	r3,0(r4)
+    2848:	1800051e 	bne	r3,zero,2860 <strcmp+0x9c>
+    284c:	00000606 	br	2868 <strcmp+0xa4>
+    2850:	21000044 	addi	r4,r4,1
+    2854:	20c00007 	ldb	r3,0(r4)
+    2858:	29400044 	addi	r5,r5,1
+    285c:	18000226 	beq	r3,zero,2868 <strcmp+0xa4>
+    2860:	28800007 	ldb	r2,0(r5)
+    2864:	18bffa26 	beq	r3,r2,2850 <strcmp+0x8c>
+    2868:	20c00003 	ldbu	r3,0(r4)
+    286c:	28800003 	ldbu	r2,0(r5)
+    2870:	1885c83a 	sub	r2,r3,r2
+    2874:	f800283a 	ret
+    2878:	0005883a 	mov	r2,zero
+    287c:	f800283a 	ret
+
+00002880 <strlen>:
+    2880:	208000cc 	andi	r2,r4,3
+    2884:	2011883a 	mov	r8,r4
+    2888:	1000161e 	bne	r2,zero,28e4 <strlen+0x64>
+    288c:	20c00017 	ldw	r3,0(r4)
+    2890:	017fbff4 	movhi	r5,65279
+    2894:	297fbfc4 	addi	r5,r5,-257
+    2898:	01e02074 	movhi	r7,32897
+    289c:	39e02004 	addi	r7,r7,-32640
+    28a0:	1945883a 	add	r2,r3,r5
+    28a4:	11c4703a 	and	r2,r2,r7
+    28a8:	00c6303a 	nor	r3,zero,r3
+    28ac:	1886703a 	and	r3,r3,r2
+    28b0:	18000c1e 	bne	r3,zero,28e4 <strlen+0x64>
+    28b4:	280d883a 	mov	r6,r5
+    28b8:	380b883a 	mov	r5,r7
+    28bc:	21000104 	addi	r4,r4,4
+    28c0:	20800017 	ldw	r2,0(r4)
+    28c4:	1187883a 	add	r3,r2,r6
+    28c8:	1946703a 	and	r3,r3,r5
+    28cc:	0084303a 	nor	r2,zero,r2
+    28d0:	10c4703a 	and	r2,r2,r3
+    28d4:	103ff926 	beq	r2,zero,28bc <strlen+0x3c>
+    28d8:	20800007 	ldb	r2,0(r4)
+    28dc:	10000326 	beq	r2,zero,28ec <strlen+0x6c>
+    28e0:	21000044 	addi	r4,r4,1
+    28e4:	20800007 	ldb	r2,0(r4)
+    28e8:	103ffd1e 	bne	r2,zero,28e0 <strlen+0x60>
+    28ec:	2205c83a 	sub	r2,r4,r8
+    28f0:	f800283a 	ret
+
+000028f4 <__register_exitproc>:
+    28f4:	defffa04 	addi	sp,sp,-24
+    28f8:	00800034 	movhi	r2,0
+    28fc:	108cc404 	addi	r2,r2,13072
+    2900:	dc000015 	stw	r16,0(sp)
+    2904:	14000017 	ldw	r16,0(r2)
+    2908:	dd000415 	stw	r20,16(sp)
+    290c:	2829883a 	mov	r20,r5
+    2910:	81405217 	ldw	r5,328(r16)
+    2914:	dcc00315 	stw	r19,12(sp)
+    2918:	dc800215 	stw	r18,8(sp)
+    291c:	dc400115 	stw	r17,4(sp)
+    2920:	dfc00515 	stw	ra,20(sp)
+    2924:	2023883a 	mov	r17,r4
+    2928:	3027883a 	mov	r19,r6
+    292c:	3825883a 	mov	r18,r7
+    2930:	28002526 	beq	r5,zero,29c8 <__register_exitproc+0xd4>
+    2934:	29000117 	ldw	r4,4(r5)
+    2938:	008007c4 	movi	r2,31
+    293c:	11002716 	blt	r2,r4,29dc <__register_exitproc+0xe8>
+    2940:	8800101e 	bne	r17,zero,2984 <__register_exitproc+0x90>
+    2944:	2105883a 	add	r2,r4,r4
+    2948:	1085883a 	add	r2,r2,r2
+    294c:	20c00044 	addi	r3,r4,1
+    2950:	1145883a 	add	r2,r2,r5
+    2954:	0009883a 	mov	r4,zero
+    2958:	15000215 	stw	r20,8(r2)
+    295c:	28c00115 	stw	r3,4(r5)
+    2960:	2005883a 	mov	r2,r4
+    2964:	dfc00517 	ldw	ra,20(sp)
+    2968:	dd000417 	ldw	r20,16(sp)
+    296c:	dcc00317 	ldw	r19,12(sp)
+    2970:	dc800217 	ldw	r18,8(sp)
+    2974:	dc400117 	ldw	r17,4(sp)
+    2978:	dc000017 	ldw	r16,0(sp)
+    297c:	dec00604 	addi	sp,sp,24
+    2980:	f800283a 	ret
+    2984:	29802204 	addi	r6,r5,136
+    2988:	00800044 	movi	r2,1
+    298c:	110e983a 	sll	r7,r2,r4
+    2990:	30c04017 	ldw	r3,256(r6)
+    2994:	2105883a 	add	r2,r4,r4
+    2998:	1085883a 	add	r2,r2,r2
+    299c:	1185883a 	add	r2,r2,r6
+    29a0:	19c6b03a 	or	r3,r3,r7
+    29a4:	14802015 	stw	r18,128(r2)
+    29a8:	14c00015 	stw	r19,0(r2)
+    29ac:	00800084 	movi	r2,2
+    29b0:	30c04015 	stw	r3,256(r6)
+    29b4:	88bfe31e 	bne	r17,r2,2944 <__register_exitproc+0x50>
+    29b8:	30804117 	ldw	r2,260(r6)
+    29bc:	11c4b03a 	or	r2,r2,r7
+    29c0:	30804115 	stw	r2,260(r6)
+    29c4:	003fdf06 	br	2944 <__register_exitproc+0x50>
+    29c8:	00800034 	movhi	r2,0
+    29cc:	108e6804 	addi	r2,r2,14752
+    29d0:	100b883a 	mov	r5,r2
+    29d4:	80805215 	stw	r2,328(r16)
+    29d8:	003fd606 	br	2934 <__register_exitproc+0x40>
+    29dc:	00800034 	movhi	r2,0
+    29e0:	10800004 	addi	r2,r2,0
+    29e4:	1000021e 	bne	r2,zero,29f0 <__register_exitproc+0xfc>
+    29e8:	013fffc4 	movi	r4,-1
+    29ec:	003fdc06 	br	2960 <__register_exitproc+0x6c>
+    29f0:	01006404 	movi	r4,400
+    29f4:	103ee83a 	callr	r2
+    29f8:	1007883a 	mov	r3,r2
+    29fc:	103ffa26 	beq	r2,zero,29e8 <__register_exitproc+0xf4>
+    2a00:	80805217 	ldw	r2,328(r16)
+    2a04:	180b883a 	mov	r5,r3
+    2a08:	18000115 	stw	zero,4(r3)
+    2a0c:	18800015 	stw	r2,0(r3)
+    2a10:	80c05215 	stw	r3,328(r16)
+    2a14:	18006215 	stw	zero,392(r3)
+    2a18:	18006315 	stw	zero,396(r3)
+    2a1c:	0009883a 	mov	r4,zero
+    2a20:	883fc826 	beq	r17,zero,2944 <__register_exitproc+0x50>
+    2a24:	003fd706 	br	2984 <__register_exitproc+0x90>
+
+00002a28 <register_fini>:
+    2a28:	f800283a 	ret
+
+00002a2c <__call_exitprocs>:
+    2a2c:	00800034 	movhi	r2,0
+    2a30:	108cc404 	addi	r2,r2,13072
+    2a34:	10800017 	ldw	r2,0(r2)
+    2a38:	defff304 	addi	sp,sp,-52
+    2a3c:	df000b15 	stw	fp,44(sp)
+    2a40:	d8800115 	stw	r2,4(sp)
+    2a44:	00800034 	movhi	r2,0
+    2a48:	10800004 	addi	r2,r2,0
+    2a4c:	1005003a 	cmpeq	r2,r2,zero
+    2a50:	d8800215 	stw	r2,8(sp)
+    2a54:	d8800117 	ldw	r2,4(sp)
+    2a58:	dd400815 	stw	r21,32(sp)
+    2a5c:	dd000715 	stw	r20,28(sp)
+    2a60:	10805204 	addi	r2,r2,328
+    2a64:	dfc00c15 	stw	ra,48(sp)
+    2a68:	ddc00a15 	stw	r23,40(sp)
+    2a6c:	dd800915 	stw	r22,36(sp)
+    2a70:	dcc00615 	stw	r19,24(sp)
+    2a74:	dc800515 	stw	r18,20(sp)
+    2a78:	dc400415 	stw	r17,16(sp)
+    2a7c:	dc000315 	stw	r16,12(sp)
+    2a80:	282b883a 	mov	r21,r5
+    2a84:	2039883a 	mov	fp,r4
+    2a88:	d8800015 	stw	r2,0(sp)
+    2a8c:	2829003a 	cmpeq	r20,r5,zero
+    2a90:	d8800117 	ldw	r2,4(sp)
+    2a94:	14405217 	ldw	r17,328(r2)
+    2a98:	88001026 	beq	r17,zero,2adc <__call_exitprocs+0xb0>
+    2a9c:	ddc00017 	ldw	r23,0(sp)
+    2aa0:	88800117 	ldw	r2,4(r17)
+    2aa4:	8c802204 	addi	r18,r17,136
+    2aa8:	143fffc4 	addi	r16,r2,-1
+    2aac:	80000916 	blt	r16,zero,2ad4 <__call_exitprocs+0xa8>
+    2ab0:	05bfffc4 	movi	r22,-1
+    2ab4:	a000151e 	bne	r20,zero,2b0c <__call_exitprocs+0xe0>
+    2ab8:	8409883a 	add	r4,r16,r16
+    2abc:	2105883a 	add	r2,r4,r4
+    2ac0:	1485883a 	add	r2,r2,r18
+    2ac4:	10c02017 	ldw	r3,128(r2)
+    2ac8:	a8c01126 	beq	r21,r3,2b10 <__call_exitprocs+0xe4>
+    2acc:	843fffc4 	addi	r16,r16,-1
+    2ad0:	85bff81e 	bne	r16,r22,2ab4 <__call_exitprocs+0x88>
+    2ad4:	d8800217 	ldw	r2,8(sp)
+    2ad8:	10003126 	beq	r2,zero,2ba0 <__call_exitprocs+0x174>
+    2adc:	dfc00c17 	ldw	ra,48(sp)
+    2ae0:	df000b17 	ldw	fp,44(sp)
+    2ae4:	ddc00a17 	ldw	r23,40(sp)
+    2ae8:	dd800917 	ldw	r22,36(sp)
+    2aec:	dd400817 	ldw	r21,32(sp)
+    2af0:	dd000717 	ldw	r20,28(sp)
+    2af4:	dcc00617 	ldw	r19,24(sp)
+    2af8:	dc800517 	ldw	r18,20(sp)
+    2afc:	dc400417 	ldw	r17,16(sp)
+    2b00:	dc000317 	ldw	r16,12(sp)
+    2b04:	dec00d04 	addi	sp,sp,52
+    2b08:	f800283a 	ret
+    2b0c:	8409883a 	add	r4,r16,r16
+    2b10:	88c00117 	ldw	r3,4(r17)
+    2b14:	2105883a 	add	r2,r4,r4
+    2b18:	1445883a 	add	r2,r2,r17
+    2b1c:	18ffffc4 	addi	r3,r3,-1
+    2b20:	11800217 	ldw	r6,8(r2)
+    2b24:	1c001526 	beq	r3,r16,2b7c <__call_exitprocs+0x150>
+    2b28:	10000215 	stw	zero,8(r2)
+    2b2c:	303fe726 	beq	r6,zero,2acc <__call_exitprocs+0xa0>
+    2b30:	00c00044 	movi	r3,1
+    2b34:	1c06983a 	sll	r3,r3,r16
+    2b38:	90804017 	ldw	r2,256(r18)
+    2b3c:	8cc00117 	ldw	r19,4(r17)
+    2b40:	1884703a 	and	r2,r3,r2
+    2b44:	10001426 	beq	r2,zero,2b98 <__call_exitprocs+0x16c>
+    2b48:	90804117 	ldw	r2,260(r18)
+    2b4c:	1884703a 	and	r2,r3,r2
+    2b50:	10000c1e 	bne	r2,zero,2b84 <__call_exitprocs+0x158>
+    2b54:	2105883a 	add	r2,r4,r4
+    2b58:	1485883a 	add	r2,r2,r18
+    2b5c:	11400017 	ldw	r5,0(r2)
+    2b60:	e009883a 	mov	r4,fp
+    2b64:	303ee83a 	callr	r6
+    2b68:	88800117 	ldw	r2,4(r17)
+    2b6c:	98bfc81e 	bne	r19,r2,2a90 <__call_exitprocs+0x64>
+    2b70:	b8800017 	ldw	r2,0(r23)
+    2b74:	147fd526 	beq	r2,r17,2acc <__call_exitprocs+0xa0>
+    2b78:	003fc506 	br	2a90 <__call_exitprocs+0x64>
+    2b7c:	8c000115 	stw	r16,4(r17)
+    2b80:	003fea06 	br	2b2c <__call_exitprocs+0x100>
+    2b84:	2105883a 	add	r2,r4,r4
+    2b88:	1485883a 	add	r2,r2,r18
+    2b8c:	11000017 	ldw	r4,0(r2)
+    2b90:	303ee83a 	callr	r6
+    2b94:	003ff406 	br	2b68 <__call_exitprocs+0x13c>
+    2b98:	303ee83a 	callr	r6
+    2b9c:	003ff206 	br	2b68 <__call_exitprocs+0x13c>
+    2ba0:	88800117 	ldw	r2,4(r17)
+    2ba4:	1000081e 	bne	r2,zero,2bc8 <__call_exitprocs+0x19c>
+    2ba8:	89000017 	ldw	r4,0(r17)
+    2bac:	20000726 	beq	r4,zero,2bcc <__call_exitprocs+0x1a0>
+    2bb0:	b9000015 	stw	r4,0(r23)
+    2bb4:	8809883a 	mov	r4,r17
+    2bb8:	00000000 	call	0 <__alt_mem_onchip_memory2_0>
+    2bbc:	bc400017 	ldw	r17,0(r23)
+    2bc0:	883fb71e 	bne	r17,zero,2aa0 <__call_exitprocs+0x74>
+    2bc4:	003fc506 	br	2adc <__call_exitprocs+0xb0>
+    2bc8:	89000017 	ldw	r4,0(r17)
+    2bcc:	882f883a 	mov	r23,r17
+    2bd0:	2023883a 	mov	r17,r4
+    2bd4:	883fb21e 	bne	r17,zero,2aa0 <__call_exitprocs+0x74>
+    2bd8:	003fc006 	br	2adc <__call_exitprocs+0xb0>
+
+00002bdc <alt_sim_halt>:
+
+/*
+ * Routine called on exit.
+ */
+static ALT_ALWAYS_INLINE void alt_sim_halt(int exit_code)
+{
+    2bdc:	defffd04 	addi	sp,sp,-12
+    2be0:	df000215 	stw	fp,8(sp)
+    2be4:	df000204 	addi	fp,sp,8
+    2be8:	e13fff15 	stw	r4,-4(fp)
+  int r2 = exit_code;
+    2bec:	e0bfff17 	ldw	r2,-4(fp)
+    2bf0:	e0bffe15 	stw	r2,-8(fp)
+  __asm__ volatile ("\n0:\n\taddi %0,%0, -1\n\tbgt %0,zero,0b" : : "r" (ALT_CPU_FREQ/100) ); /* Delay for >30ms */
+
+  __asm__ volatile ("break 2" : : "D02"(r2), "D03"(r3) ALT_GMON_DATA );
+
+#else /* !DEBUG_STUB */
+  if (r2) {
+    2bf4:	e0bffe17 	ldw	r2,-8(fp)
+    2bf8:	1005003a 	cmpeq	r2,r2,zero
+    2bfc:	1000021e 	bne	r2,zero,2c08 <alt_sim_halt+0x2c>
+    ALT_SIM_FAIL();
+    2c00:	002af070 	cmpltui	zero,zero,43969
+    2c04:	00000106 	br	2c0c <alt_sim_halt+0x30>
+  } else {
+    ALT_SIM_PASS();
+    2c08:	002af0b0 	cmpltui	zero,zero,43970
+  }
+#endif /* DEBUG_STUB */
+}
+    2c0c:	e037883a 	mov	sp,fp
+    2c10:	df000017 	ldw	fp,0(sp)
+    2c14:	dec00104 	addi	sp,sp,4
+    2c18:	f800283a 	ret
+
+00002c1c <_exit>:
+ *
+ * ALT_EXIT is mapped onto the _exit() system call in alt_syscall.h
+ */
+
+void ALT_EXIT (int exit_code)
+{
+    2c1c:	defffd04 	addi	sp,sp,-12
+    2c20:	dfc00215 	stw	ra,8(sp)
+    2c24:	df000115 	stw	fp,4(sp)
+    2c28:	df000104 	addi	fp,sp,4
+    2c2c:	e13fff15 	stw	r4,-4(fp)
+  ALT_OS_STOP();
+
+  /* Provide notification to the simulator that we've stopped */
+
+  ALT_LOG_PRINT_BOOT("[alt_exit.c] Calling ALT_SIM_HALT().\r\n");
+  ALT_SIM_HALT(exit_code);
+    2c30:	e13fff17 	ldw	r4,-4(fp)
+    2c34:	0002bdc0 	call	2bdc <alt_sim_halt>
+
+  /* spin forever, since there's no where to go back to */
+
+  ALT_LOG_PRINT_BOOT("[alt_exit.c] Spinning forever.\r\n");
+  while (1);
+    2c38:	003fff06 	br	2c38 <_exit+0x1c>
+    2c3c:	00002a28 	cmpgeui	zero,zero,168
