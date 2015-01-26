@@ -1,7 +1,10 @@
 #include <stdio.c>
+#include <draw.h>
+#include <util.h>
+#include <video.h>
 
-#define BLOCK_SIZE 10
-#define WINDOW_SIZE 200
+#define BLOCK_SIZE 50
+#define WINDOW_SIZE 100
 #define SEARCH_STEP 10
 #define BORDER_THICKNESS 2
 
