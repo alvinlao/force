@@ -7,13 +7,18 @@
 #ifndef VIDEO_H
 #define VIDEO_H
 
-typedef struct pixel {
+typedef struct coordinate {
     int x;
     int y;
+} Coordinate;
+
+typedef struct pixel {
+    Coordinate *coordinate;
     int rgb;
 } Pixel;
 
-Pixel * VideoGetPixel(int x, int y);
+
+Pixel * VideoGetPixel(Coordinate *coordinate);
 void VideoSetPixel(Pixel *pixel);
 
 #endif
