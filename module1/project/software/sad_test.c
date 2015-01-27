@@ -15,7 +15,7 @@ int main() {
     blockA = BlockCreate(0, 0);
     blockB = BlockCreate(50, 50);
     blockC = BlockCreate(100, 100);
-    emptyBlock = BlockCreate(0, 0);
+    emptyBlock = BlockCreate(1, 16);
     
     Block *w = BlockCreate(10, 10);
 
@@ -29,6 +29,7 @@ int main() {
     printf("AB: %d\n", SADBlock(blockA, blockB, pixelA, pixelB));
     printf("AC: %d\n", SADBlock(blockA, blockC, pixelA, pixelB));
     printf("BC: %d\n", SADBlock(blockB, blockC, pixelA, pixelB));
+    printf("C?: %d\n", SADBlock(blockC, emptyBlock, pixelA, pixelB));
 
     // Test SADCenterWindow
     printf("=======================\n");
