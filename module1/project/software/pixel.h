@@ -9,11 +9,14 @@
 
 typedef struct pixel {
     Coordinate *coordinate;
-    int rgb;
+    char r;
+    char g;
+    char b;
 } Pixel;
 
 
 Pixel *PixelCreate(int x, int y, int rgb);
 void PixelDestroy(Pixel *);
+void PixelSetRGB(Pixel *, int);
 
 #endif

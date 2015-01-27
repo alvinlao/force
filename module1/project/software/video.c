@@ -14,9 +14,10 @@
 Pixel * VideoGetPixel(Coordinate *coordinate) {
     // TODO: Access hardware
     // This is just test code
-    Pixel * pixel = malloc(sizeof(Pixel));
-    pixel->rgb = coordinate->x * coordinate->y;
-    return pixel;
+    int x = coordinate->x;
+    int y = coordinate->y;
+
+    return PixelCreate(x, y, x*y);
 }
 
 /*

@@ -10,7 +10,12 @@
  */
 
 int SADPixel(Pixel *prev, Pixel *cur) {
-    return abs(cur->rgb - prev->rgb);
+    char dr, dg, db;
+    dr = abs(prev->r - cur->r);
+    dg = abs(prev->g - cur->g);
+    db = abs(prev->b - cur->b);
+    
+    return dr + dg + db;
 }
 
 int SADBlock(Block *prev, Block *cur) {
