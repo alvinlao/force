@@ -1,2 +1,4 @@
 all:
-	gcc video.c util.c draw.c -o search.o
+	gcc accelerator.c draw.c sad.c util.c video.c -o sad.o
+clean:
+	rm sad.o

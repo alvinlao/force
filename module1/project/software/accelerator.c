@@ -1,4 +1,5 @@
 #include "accelerator.h"
+#include "util.h"
 
 /*
  * Get SAD for pixel

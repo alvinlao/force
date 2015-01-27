@@ -1,4 +1,9 @@
+/*
+ * video.c
+ */
+
 #include "video.h"
+#include "util.h"
 
 /*
  * Get the pixel at the given coordinate
@@ -7,6 +12,7 @@
  * @return Pixel* pointer to a pixel
  */
 Pixel * VideoGetPixel(Coordinate *coordinate) {
+    return NULL;
 }
 
 /*
