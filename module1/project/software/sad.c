@@ -9,71 +9,109 @@
  * N = BLOCK_SIZE
  */
 
-int SADPixel(Pixel *prev, Pixel *cur) {
-    return abs(cur->rgb - prev->rgb);
+/*
+ * Perform SAD on two pixels
+ * @param a pixel A
+ * @param b pixel B
+ * @return sum of absolute difference of all three color components
+ */
+int SADPixel(Pixel *a, Pixel *b) {
+    char dr, dg, db;
+    dr = abs(a->r - b->r);
+    dg = abs(a->g - b->g);
+    db = abs(a->b - b->b);
+    
+    return dr + dg + db;
 }
 
-int SADBlock(Block *prev, Block *cur) {
+/*
+ * Perform SAD on a block of pixels
+ * @param track The tracked block
+ * @param candidate The candidate block
+ * @param pixelA Empty pixel
+ * @param pixelB Empty pixel
+ * @return sum of absolute differences of the whole block
+ */
+int SADBlock(Block *track, Block *candidate, Pixel *pixelA, Pixel *pixelB) {
     int delta = 0;
     int i, j;
-    Pixel *prevPixel, *curPixel;
-    for(i=0; i < cur->width; ++i) {
-        for(j=0; j < cur->height; ++j) {
-            prevPixel = VideoGetPixel(prev->coord);
-            curPixel = VideoGetPixel(cur->coord);
-            delta += SADPixel(prevPixel, curPixel);
+    for(i = 0; i < BLOCK_WIDTH; ++i) {
+        for(j = 0; j < BLOCK_HEIGHT; ++j) {
+            PixelSetCoord(pixelA, track->coord);
+            PixelSetCoord(pixelB, candidate->coord);
+            
+            VideoGetPixel(pixelA);
+            VideoGetPixel(pixelB);
+
+            delta += SADPixel(pixelA, pixelB);
         }
     }
+
     return delta;
 }
 
-Block * SADTrack(Block *b, Window *w) {
-    int searchesX = ((WindowGetWidth(w) - BlockGetWidth(b)) / SEARCH_STEP) - 1;
-    int searchesY = ((WindowGetHeight(w) - BlockGetHeight(b)) / SEARCH_STEP) - 1;
+/*
+ * Given a target block, find minimal SAD block among all candidates inside window
+ *
+ * NOTE: The empty structs are to prevent dynamic allocation
+ *
+ * @param targetBlock The block we are comparing to
+ * @param resultBlock used for calculations. Holds final result
+ * @param window search window
+ * @param pixelA empty pixel for calculations
+ * @param pixelB empty pixel for calculations
+ * @return void
+ */
+void SADTrack(Block *targetBlock, Block *resultBlock, Block *window, Pixel *pixelA, Pixel *pixelB) {
+    int searchesX = ((WINDOW_WIDTH - BLOCK_WIDTH) / SEARCH_STEP) + 1;
+    int searchesY = ((WINDOW_HEIGHT - BLOCK_HEIGHT) / SEARCH_STEP) + 1;
 
-    // It would be cheaper to use primitives, but this is cleaner
-    Block *bestBlock = BlockCreate(0, 0, BLOCK_WIDTH, BLOCK_HEIGHT);
-    Block *curBlock = BlockCreate(0, 0, BLOCK_WIDTH, BLOCK_HEIGHT);
+    // Avoiding dynamic allocation in a hot path
+    int bestBlockX, bestBlockY;
     int bestBlockDelta = MAX_DELTA;
     int curBlockDelta = 0;
 
     int i, j, x, y;
-    int windowOriginX = WindowGetX(w);
-    int windowOriginY = WindowGetY(w);
+    int windowOriginX = BlockGetX(window);
+    int windowOriginY = BlockGetY(window);
     for(i = 0; i < searchesX; ++i) {
         for(j = 0; j < searchesY; ++j) {
             x = windowOriginX + (i * SEARCH_STEP);
             y = windowOriginY + (j * SEARCH_STEP);
-            BlockSetX(curBlock, x);
-            BlockSetY(curBlock, y);
+            BlockSetX(resultBlock, x);
+            BlockSetY(resultBlock, y);
 
-            curBlockDelta = SADBlock(b, curBlock);
+            curBlockDelta = SADBlock(targetBlock, resultBlock, pixelA, pixelB);
             if(curBlockDelta < bestBlockDelta) {
-                printf("%d, %d\n", x, y);
-                BlockSetX(bestBlock, x);
-                BlockSetY(bestBlock, y);
+                bestBlockX = x;
+                bestBlockY = y;
                 bestBlockDelta = curBlockDelta;
             }
         }
     }
-    return bestBlock;
+
+    // Place results in block
+    BlockSetX(resultBlock, bestBlockX);
+    BlockSetY(resultBlock, bestBlockY);
 }
 
-Window * SADCenterWindow(Block *b, Window *w) {
-    int blockXMid = BlockGetX(b) + (BlockGetWidth(b)/2);
-    int blockYMid = BlockGetY(b) + (BlockGetHeight(b)/2);
-    int newWindowX = blockXMid - (WindowGetWidth(w)/2);
-    int newWindowY = blockYMid - (WindowGetHeight(w)/2);
+/*
+ * @param b is the block we are centering on
+ * @param w is the window
+ */
+void SADCenterWindow(Block *b, Block *w) {
+    int blockXMid = BlockGetX(b) + (BLOCK_WIDTH/2);
+    int blockYMid = BlockGetY(b) + (BLOCK_HEIGHT/2);
+    int newWindowX = blockXMid - (WINDOW_WIDTH/2);
+    int newWindowY = blockYMid - (WINDOW_HEIGHT/2);
 
     // Assert bounds
     if(newWindowX < 0) newWindowX = 0;
     if(newWindowY < 0) newWindowY = 0;
-    if(newWindowX > FRAME_WIDTH) newWindowX = FRAME_WIDTH - WindowGetWidth(w);
-    if(newWindowY > FRAME_HEIGHT) newWindowY = FRAME_HEIGHT - WindowGetHeight(w);
+    if(newWindowX + WINDOW_WIDTH > FRAME_WIDTH) newWindowX = FRAME_WIDTH - WINDOW_WIDTH;
+    if(newWindowY + WINDOW_HEIGHT > FRAME_HEIGHT) newWindowY = FRAME_HEIGHT - WINDOW_HEIGHT;
 
-    // Update assertions
-    WindowSetX(w, newWindowX);
-    WindowSetY(w, newWindowY);
-    
-    return w;
+    // Place results in block
+    BlockSetX(w, newWindowX);
+    BlockSetY(w, newWindowY);
 }
