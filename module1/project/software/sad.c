@@ -9,15 +9,29 @@
  * N = BLOCK_SIZE
  */
 
-int SADPixel(Pixel *prev, Pixel *cur) {
+/*
+ * Perform SAD on two pixels
+ * @param a pixel A
+ * @param b pixel B
+ * @return sum of absolute difference of all three color components
+ */
+int SADPixel(Pixel *a, Pixel *b) {
     char dr, dg, db;
-    dr = abs(prev->r - cur->r);
-    dg = abs(prev->g - cur->g);
-    db = abs(prev->b - cur->b);
+    dr = abs(a->r - b->r);
+    dg = abs(a->g - b->g);
+    db = abs(a->b - b->b);
     
     return dr + dg + db;
 }
 
+/*
+ * Perform SAD on a block of pixels
+ * @param prev The comparate block
+ * @param cur The candidate block
+ * @param pixelA Empty pixel
+ * @param pixelB Empty pixel
+ * @return sum of absolute differences of the whole block
+ */
 int SADBlock(Block *prev, Block *cur, Pixel *pixelA, Pixel *pixelB) {
     int delta = 0;
     int i, j;
@@ -80,8 +94,8 @@ void SADTrack(Block *prevBlock, Block *resBlock, Block *window, Pixel *pixelA, P
 }
 
 /*
- * b is the block we are centering on
- * w is the window
+ * @param b is the block we are centering on
+ * @param w is the window
  */
 void SADCenterWindow(Block *b, Block *w) {
     int blockXMid = BlockGetX(b) + (BLOCK_WIDTH/2);
