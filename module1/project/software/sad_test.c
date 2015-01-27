@@ -53,8 +53,9 @@ int main() {
     printf("=======================\n");
     printf("Test SADTrack\n");
     printf("=======================\n");
-
     Block *trackBlock = blockC;
+    printf("X0: %d\n", BlockGetX(trackBlock));
+    printf("Y0: %d\n", BlockGetY(trackBlock));
     SADTrack(trackBlock, emptyBlock, w, pixelA, pixelB);
     printf("X: %d\n", BlockGetX(emptyBlock));
     printf("Y: %d\n", BlockGetY(emptyBlock));
