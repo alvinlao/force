@@ -12,13 +12,10 @@
  * @return Pixel* pointer to a pixel
  */
 Pixel * VideoGetPixel(Coordinate *coordinate) {
+    // TODO: Access hardware
+    // This is just test code
     Pixel * pixel = malloc(sizeof(Pixel));
-
-    if(coordinate->x > 10)
-        pixel->rgb = 20;
-    else
-        pixel->rgb = 10;
-
+    pixel->rgb = coordinate->x * coordinate->y;
     return pixel;
 }
 
@@ -28,4 +25,5 @@ Pixel * VideoGetPixel(Coordinate *coordinate) {
  * @param pixel desired pixel
  */
 void VideoSetPixel(Pixel *pixel) {
+    // TODO: Access hardware
 }

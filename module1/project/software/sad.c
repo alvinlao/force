@@ -9,16 +9,6 @@
  * N = BLOCK_SIZE
  */
 
-// width and height of tracking block
-#define BLOCK_WIDTH 50
-#define BLOCK_HEIGHT 50
-// width and height of window
-#define WINDOW_WIDTH 100
-#define WINDOW_HEIGHT 100
-// pixels to move block per step inside window
-#define SEARCH_STEP 10
-
-
 int SADPixel(Pixel *prev, Pixel *cur) {
     return abs(cur->rgb - prev->rgb);
 }
@@ -37,32 +27,53 @@ int SADBlock(Block *prev, Block *cur) {
     return delta;
 }
 
-Block * SADWindow(Block *prev, Window *w) {
-    return NULL;
+Block * SADTrack(Block *b, Window *w) {
+    int searchesX = ((WindowGetWidth(w) - BlockGetWidth(b)) / SEARCH_STEP) - 1;
+    int searchesY = ((WindowGetHeight(w) - BlockGetHeight(b)) / SEARCH_STEP) - 1;
+
+    // It would be cheaper to use primitives, but this is cleaner
+    Block *bestBlock = BlockCreate(0, 0, BLOCK_WIDTH, BLOCK_HEIGHT);
+    Block *curBlock = BlockCreate(0, 0, BLOCK_WIDTH, BLOCK_HEIGHT);
+    int bestBlockDelta = MAX_DELTA;
+    int curBlockDelta = 0;
+
+    int i, j, x, y;
+    int windowOriginX = WindowGetX(w);
+    int windowOriginY = WindowGetY(w);
+    for(i = 0; i < searchesX; ++i) {
+        for(j = 0; j < searchesY; ++j) {
+            x = windowOriginX + (i * SEARCH_STEP);
+            y = windowOriginY + (j * SEARCH_STEP);
+            BlockSetX(curBlock, x);
+            BlockSetY(curBlock, y);
+
+            curBlockDelta = SADBlock(b, curBlock);
+            if(curBlockDelta < bestBlockDelta) {
+                printf("%d, %d\n", x, y);
+                BlockSetX(bestBlock, x);
+                BlockSetY(bestBlock, y);
+                bestBlockDelta = curBlockDelta;
+            }
+        }
+    }
+    return bestBlock;
 }
 
-Window * SADCenterWindow(Window *w) {
-    return NULL;
-}
+Window * SADCenterWindow(Block *b, Window *w) {
+    int blockXMid = BlockGetX(b) + (BlockGetWidth(b)/2);
+    int blockYMid = BlockGetY(b) + (BlockGetHeight(b)/2);
+    int newWindowX = blockXMid - (WindowGetWidth(w)/2);
+    int newWindowY = blockYMid - (WindowGetHeight(w)/2);
 
-int main() {
-    int delta;
-    Block *prev, *cur;
-    prev = BlockCreate(0, 0, 10, 10);
-    cur = BlockCreate(20, 0, 10, 10);
+    // Assert bounds
+    if(newWindowX < 0) newWindowX = 0;
+    if(newWindowY < 0) newWindowY = 0;
+    if(newWindowX > FRAME_WIDTH) newWindowX = FRAME_WIDTH - WindowGetWidth(w);
+    if(newWindowY > FRAME_HEIGHT) newWindowY = FRAME_HEIGHT - WindowGetHeight(w);
 
-    delta = SADBlock(prev, cur);
-    printf("Delta: %d\n", delta);
-
-    BlockDestroy(prev);
-    BlockDestroy(cur);
-
-    Window *w = WindowCreate(1, 2, 3, 4, 5);
-    printf("X: %d\n", WindowGetX(w));
-    printf("Y: %d\n", WindowGetY(w));
-    printf("Width: %d\n", WindowGetWidth(w));
-    printf("Height :%d\n", WindowGetHeight(w));
+    // Update assertions
+    WindowSetX(w, newWindowX);
+    WindowSetY(w, newWindowY);
     
-    WindowDestroy(w);
-    return 0;
+    return w;
 }

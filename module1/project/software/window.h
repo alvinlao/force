@@ -17,5 +17,9 @@ int WindowGetWidth(Window *);
 int WindowGetHeight(Window *);
 int WindowGetX(Window *);
 int WindowGetY(Window *);
+void WindowSetX(Window *, int x);
+void WindowSetY(Window *, int y);
+void WindowSetWidth(Window *, int width);
+void WindowSetHeight(Window *, int height);
 
 #endif
