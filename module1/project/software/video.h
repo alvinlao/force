@@ -14,7 +14,10 @@
 #define FRAME_WIDTH 320
 #define FRAME_HEIGHT 160
 
-void VideoGetPixel(Pixel *pixel);
-void VideoSetPixel(Pixel *pixel);
+void VideoInitMemoryBlock(int width, int height);
+void VideoCopyBlock(int, int);
+void VideoGetPixelBlock(Pixel *);
+void VideoGetPixel(Pixel *);
+void VideoSetPixel(Pixel *);
 
 #endif

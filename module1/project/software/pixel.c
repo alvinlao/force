@@ -26,8 +26,12 @@ int PixelGetRGB(Pixel *p) {
     return rgb;
 }
 
-void PixelSetCoord(Pixel *p, Coordinate *c) {
-    p->coordinate = c;
+void PixelSetX(Pixel *p, int x) {
+    p->coordinate->x = x;
+}
+
+void PixelSetY(Pixel *p, int y) {
+    p->coordinate->y = y;
 }
 
 int PixelGetX(Pixel *p) {

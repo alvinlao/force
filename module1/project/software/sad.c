@@ -35,12 +35,16 @@ int SADPixel(Pixel *a, Pixel *b) {
 int SADBlock(Block *track, Block *candidate, Pixel *pixelA, Pixel *pixelB) {
     int delta = 0;
     int i, j;
+    int x = BlockGetX(candidate);
+    int y = BlockGetY(candidate);
     for(i = 0; i < BLOCK_WIDTH; ++i) {
         for(j = 0; j < BLOCK_HEIGHT; ++j) {
-            PixelSetCoord(pixelA, track->coord);
-            PixelSetCoord(pixelB, candidate->coord);
+            PixelSetX(pixelA, i);
+            PixelSetY(pixelA, j);
+            PixelSetX(pixelB, x + i);
+            PixelSetY(pixelB, y + j);
             
-            VideoGetPixel(pixelA);
+            VideoGetPixelBlock(pixelA);
             VideoGetPixel(pixelB);
 
             delta += SADPixel(pixelA, pixelB);
@@ -78,11 +82,14 @@ void SADTrack(Block *targetBlock, Block *resultBlock, Block *window, Pixel *pixe
         for(j = 0; j < searchesY; ++j) {
             x = windowOriginX + (i * SEARCH_STEP);
             y = windowOriginY + (j * SEARCH_STEP);
+
+            // Use result block for intermediate calculations
             BlockSetX(resultBlock, x);
             BlockSetY(resultBlock, y);
 
             curBlockDelta = SADBlock(targetBlock, resultBlock, pixelA, pixelB);
-            if(curBlockDelta < bestBlockDelta) {
+
+            if(curBlockDelta <= bestBlockDelta) {
                 bestBlockX = x;
                 bestBlockY = y;
                 bestBlockDelta = curBlockDelta;
@@ -93,6 +100,9 @@ void SADTrack(Block *targetBlock, Block *resultBlock, Block *window, Pixel *pixe
     // Place results in block
     BlockSetX(resultBlock, bestBlockX);
     BlockSetY(resultBlock, bestBlockY);
+
+    // Save best block to memory
+    VideoCopyBlock(bestBlockX, bestBlockY);
 }
 
 /*

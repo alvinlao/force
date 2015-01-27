@@ -20,8 +20,8 @@ void PixelDestroy(Pixel *);
 void PixelSetRGB(Pixel *, int);
 int PixelGetRGB(Pixel *);
 
-// There is no set X and Y because the coordinate should be immutable
-void PixelSetCoord(Pixel *, Coordinate *);
+void PixelSetX(Pixel *, int);
+void PixelSetY(Pixel *, int);
 int PixelGetX(Pixel *);
 int PixelGetY(Pixel *);
 
