@@ -45,33 +45,24 @@ Window * SADCenterWindow(Window *w) {
     return NULL;
 }
 
-Block * create_block(int x, int y, int width, int height) {
-    Block * block = malloc(sizeof(Block));
-    block->coord = malloc(sizeof(Coordinate));
-    block->coord->x = x;
-    block->coord->y = y;
-
-    block->width = width;
-    block->height = height;
-    return block;
-}
-
-void destroy_block(Block *block) {
-    free(block->coord);
-    free(block);
-}
-
 int main() {
     int delta;
     Block *prev, *cur;
-    prev = create_block(0, 0, 10, 10);
-    cur = create_block(20, 0, 10, 10);
+    prev = BlockCreate(0, 0, 10, 10);
+    cur = BlockCreate(20, 0, 10, 10);
 
     delta = SADBlock(prev, cur);
     printf("Delta: %d\n", delta);
 
-    destroy_block(prev);
-    destroy_block(cur);
+    BlockDestroy(prev);
+    BlockDestroy(cur);
 
+    Window *w = WindowCreate(1, 2, 3, 4, 5);
+    printf("X: %d\n", WindowGetX(w));
+    printf("Y: %d\n", WindowGetY(w));
+    printf("Width: %d\n", WindowGetWidth(w));
+    printf("Height :%d\n", WindowGetHeight(w));
+    
+    WindowDestroy(w);
     return 0;
 }

@@ -2,26 +2,9 @@
 #define SAD_H
 
 #include "video.h"
-
-typedef struct block {
-    // Top Left
-    Coordinate* coord;
-
-    int width;
-    int height;
-} Block;
-
-typedef struct window {
-    // Top Left
-    Coordinate* coord;
-
-    int width;
-    int height;
-    
-    // Size of a step
-    int stepSize;
-} Window;
-
+#include "pixel.h"
+#include "block.h"
+#include "window.h"
 
 int SADPixel(Pixel *, Pixel *);
 int SADBlock(Block *, Block *);

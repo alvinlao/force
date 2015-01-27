@@ -7,16 +7,8 @@
 #ifndef VIDEO_H
 #define VIDEO_H
 
-typedef struct coordinate {
-    int x;
-    int y;
-} Coordinate;
-
-typedef struct pixel {
-    Coordinate *coordinate;
-    int rgb;
-} Pixel;
-
+#include "coordinate.h"
+#include "pixel.h"
 
 Pixel * VideoGetPixel(Coordinate *coordinate);
 void VideoSetPixel(Pixel *pixel);
