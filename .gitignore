@@ -30,3 +30,6 @@
 *.pyc
 
 *.swp
+
+*db
+*.qws
