@@ -13,9 +13,6 @@
 #define WINDOW_HEIGHT 160
 // pixels to move block per step inside window
 #define SEARCH_STEP 1
-// width and height of camera frame
-#define FRAME_WIDTH 320
-#define FRAME_HEIGHT 160
 // max delta
 #define MAX_DELTA 1000000000
 

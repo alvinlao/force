@@ -3,6 +3,7 @@
  */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include "video.h"
 
 /*
@@ -16,6 +17,13 @@ void VideoGetPixel(Pixel *p) {
     // How to access coords
     int x = PixelGetX(p);
     int y = PixelGetY(p);
+
+    // Assert bounds
+    if(x < 0 || x > FRAME_WIDTH || y < 0 || y > FRAME_HEIGHT) {
+        fprintf(stderr, "VideoGetPixel: coordinates outside video bounds.");
+        PixelSetRGB(p, 0);
+        return;
+    }
 
     // How to set RGB
     int rgb = x*y;
@@ -33,6 +41,12 @@ void VideoSetPixel(Pixel *p) {
     // How to access coords
     int x = PixelGetX(p);
     int y = PixelGetY(p);
+
+    // Assert bounds
+    if(x < 0 || x > FRAME_WIDTH || y < 0 || y > FRAME_HEIGHT) {
+        fprintf(stderr, "VideoSetPixel: coordinates outside video bounds.");
+        return;
+    }
 
     // How to get rgb
     PixelGetRGB(p);
