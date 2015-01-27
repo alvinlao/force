@@ -6,6 +6,54 @@
 #include <stdio.h>
 #include "video.h"
 
+// TODO Replace with hardware
+int *mem;
+int BlockWidth, BlockHeight;
+
+/*
+ * Initialize memory for saving pixel block
+ * @param width 
+ */
+void VideoInitMemoryBlock(int width, int height) {
+    BlockWidth = width;
+    BlockHeight = height;
+    mem = malloc(sizeof(int) * width * height);
+}
+
+/*
+ * Copy a block of pixels from pixel buffer to static buffer
+ *
+ * @param x left coordinate
+ * @param y top coordinate
+ */
+void VideoCopyBlock(int x, int y) {
+    // TODO Access hardware
+    // TODO Copy pixel buffer block to static block
+    int i, j;
+    for(i=0; i<BlockWidth; ++i) {
+        for(j=0; j<BlockHeight; ++j) {
+            mem[i*BlockWidth + j] = (x + i) * (y + j);
+        }
+    }
+}
+
+/*
+ * Get pixel from static buffer
+ *
+ * @param pixel with target coordinates
+ * NOTE: 0 <= x <= BLOCK_WIDTH, 0 <= y <= BLOCK_HEIGHT
+ */
+void VideoGetPixelBlock(Pixel *p) {
+    // TODO Access hardware
+    // How to get coords
+    int x = PixelGetX(p);
+    int y = PixelGetY(p);
+
+    // How to set RGB
+    int rgb = mem[x*BlockWidth + y];
+    PixelSetRGB(p, rgb);
+}
+
 /*
  * Get the pixel at the given coordinate
  *
