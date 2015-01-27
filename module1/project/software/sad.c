@@ -47,6 +47,7 @@ int SADBlock(Block *prev, Block *cur, Pixel *pixelA, Pixel *pixelB) {
             delta += SADPixel(pixelA, pixelB);
         }
     }
+
     return delta;
 }
 
@@ -61,8 +62,8 @@ int SADBlock(Block *prev, Block *cur, Pixel *pixelA, Pixel *pixelB) {
  * @return void
  */
 void SADTrack(Block *prevBlock, Block *resBlock, Block *window, Pixel *pixelA, Pixel *pixelB) {
-    int searchesX = ((WINDOW_WIDTH - BLOCK_WIDTH) / SEARCH_STEP) - 1;
-    int searchesY = ((WINDOW_HEIGHT - BLOCK_HEIGHT) / SEARCH_STEP) - 1;
+    int searchesX = ((WINDOW_WIDTH - BLOCK_WIDTH) / SEARCH_STEP) + 1;
+    int searchesY = ((WINDOW_HEIGHT - BLOCK_HEIGHT) / SEARCH_STEP) + 1;
 
     // Avoiding dynamic allocation in a hot path
     int bestBlockX, bestBlockY;
