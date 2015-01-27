@@ -51,16 +51,18 @@ int SADBlock(Block *track, Block *candidate, Pixel *pixelA, Pixel *pixelB) {
 }
 
 /*
- * The empty structs are to prevent dynamic allocation
+ * Given a target block, find minimal SAD block among all candidates inside window
  *
- * @param prevBlock The block we are looking for
- * @param resBlock an empty block to hold the result
+ * NOTE: The empty structs are to prevent dynamic allocation
+ *
+ * @param targetBlock The block we are comparing to
+ * @param resultBlock used for calculations. Holds final result
  * @param window search window
  * @param pixelA empty pixel for calculations
  * @param pixelB empty pixel for calculations
  * @return void
  */
-void SADTrack(Block *prevBlock, Block *resBlock, Block *window, Pixel *pixelA, Pixel *pixelB) {
+void SADTrack(Block *targetBlock, Block *resultBlock, Block *window, Pixel *pixelA, Pixel *pixelB) {
     int searchesX = ((WINDOW_WIDTH - BLOCK_WIDTH) / SEARCH_STEP) + 1;
     int searchesY = ((WINDOW_HEIGHT - BLOCK_HEIGHT) / SEARCH_STEP) + 1;
 
@@ -76,10 +78,10 @@ void SADTrack(Block *prevBlock, Block *resBlock, Block *window, Pixel *pixelA, P
         for(j = 0; j < searchesY; ++j) {
             x = windowOriginX + (i * SEARCH_STEP);
             y = windowOriginY + (j * SEARCH_STEP);
-            BlockSetX(resBlock, x);
-            BlockSetY(resBlock, y);
+            BlockSetX(resultBlock, x);
+            BlockSetY(resultBlock, y);
 
-            curBlockDelta = SADBlock(prevBlock, resBlock, pixelA, pixelB);
+            curBlockDelta = SADBlock(targetBlock, resultBlock, pixelA, pixelB);
             if(curBlockDelta < bestBlockDelta) {
                 bestBlockX = x;
                 bestBlockY = y;
@@ -89,8 +91,8 @@ void SADTrack(Block *prevBlock, Block *resBlock, Block *window, Pixel *pixelA, P
     }
 
     // Place results in block
-    BlockSetX(resBlock, bestBlockX);
-    BlockSetY(resBlock, bestBlockY);
+    BlockSetX(resultBlock, bestBlockX);
+    BlockSetY(resultBlock, bestBlockY);
 }
 
 /*
