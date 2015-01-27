@@ -99,15 +99,15 @@ void SADTrack(Block *prevBlock, Block *resBlock, Block *window, Pixel *pixelA, P
  */
 void SADCenterWindow(Block *b, Block *w) {
     int blockXMid = BlockGetX(b) + (BLOCK_WIDTH/2);
-    int blockYMid = BlockGetY(b) + (BLOCK_WIDTH/2);
+    int blockYMid = BlockGetY(b) + (BLOCK_HEIGHT/2);
     int newWindowX = blockXMid - (WINDOW_WIDTH/2);
     int newWindowY = blockYMid - (WINDOW_HEIGHT/2);
 
     // Assert bounds
     if(newWindowX < 0) newWindowX = 0;
     if(newWindowY < 0) newWindowY = 0;
-    if(newWindowX > FRAME_WIDTH) newWindowX = FRAME_WIDTH - WINDOW_WIDTH;
-    if(newWindowY > FRAME_HEIGHT) newWindowY = FRAME_HEIGHT - WINDOW_HEIGHT;
+    if(newWindowX + WINDOW_WIDTH > FRAME_WIDTH) newWindowX = FRAME_WIDTH - WINDOW_WIDTH;
+    if(newWindowY + WINDOW_HEIGHT > FRAME_HEIGHT) newWindowY = FRAME_HEIGHT - WINDOW_HEIGHT;
 
     // Place results in block
     BlockSetX(w, newWindowX);

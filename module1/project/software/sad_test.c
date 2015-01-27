@@ -23,8 +23,12 @@ int main() {
     printf("=======================\n");
     printf("Test SADBlock\n");
     printf("=======================\n");
-    delta = SADBlock(blockA, blockC, pixelA, pixelB);
-    printf("Delta: %d\n", delta);
+    printf("AA: %d\n", SADBlock(blockA, blockA, pixelA, pixelB));
+    printf("BB: %d\n", SADBlock(blockB, blockB, pixelA, pixelB));
+    printf("CC: %d\n", SADBlock(blockC, blockC, pixelA, pixelB));
+    printf("AB: %d\n", SADBlock(blockA, blockB, pixelA, pixelB));
+    printf("AC: %d\n", SADBlock(blockA, blockC, pixelA, pixelB));
+    printf("BC: %d\n", SADBlock(blockB, blockC, pixelA, pixelB));
 
     // Test SADCenterWindow
     printf("=======================\n");
@@ -48,8 +52,6 @@ int main() {
     printf("=======================\n");
     printf("Test SADTrack\n");
     printf("=======================\n");
-    printf("AC: %d\n", SADBlock(blockA, blockC, pixelA, pixelB));
-    printf("BC: %d\n", SADBlock(blockB, blockC, pixelA, pixelB));
     SADTrack(blockC, emptyBlock, w, pixelA, pixelB);
     printf("X: %d\n", BlockGetX(emptyBlock));
     printf("Y: %d\n", BlockGetY(emptyBlock));
