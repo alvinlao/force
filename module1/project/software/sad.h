@@ -13,7 +13,7 @@
 #define WINDOW_WIDTH 100
 #define WINDOW_HEIGHT 100
 // pixels to move block per step inside window
-#define SEARCH_STEP 10
+#define SEARCH_STEP 1
 // width and height of camera frame
 #define FRAME_WIDTH 1000
 #define FRAME_HEIGHT 1000

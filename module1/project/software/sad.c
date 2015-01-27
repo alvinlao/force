@@ -49,7 +49,6 @@ Block * SADTrack(Block *b, Window *w) {
 
             curBlockDelta = SADBlock(b, curBlock);
             if(curBlockDelta < bestBlockDelta) {
-                printf("%d, %d\n", x, y);
                 BlockSetX(bestBlock, x);
                 BlockSetY(bestBlock, y);
                 bestBlockDelta = curBlockDelta;
