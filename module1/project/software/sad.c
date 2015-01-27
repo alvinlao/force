@@ -18,66 +18,84 @@ int SADPixel(Pixel *prev, Pixel *cur) {
     return dr + dg + db;
 }
 
-int SADBlock(Block *prev, Block *cur) {
+int SADBlock(Block *prev, Block *cur, Pixel *pixelA, Pixel *pixelB) {
     int delta = 0;
     int i, j;
     Pixel *prevPixel, *curPixel;
-    for(i=0; i < cur->width; ++i) {
-        for(j=0; j < cur->height; ++j) {
-            prevPixel = VideoGetPixel(prev->coord);
-            curPixel = VideoGetPixel(cur->coord);
-            delta += SADPixel(prevPixel, curPixel);
+    for(i=0; i < BLOCK_WIDTH; ++i) {
+        for(j=0; j < BLOCK_HEIGHT; ++j) {
+            PixelSetCoord(pixelA, prev->coord);
+            PixelSetCoord(pixelB, cur->coord);
+            
+            VideoGetPixel(pixelA);
+            VideoGetPixel(pixelB);
+
+            delta += SADPixel(pixelA, pixelB);
         }
     }
     return delta;
 }
 
-Block * SADTrack(Block *b, Window *w) {
-    int searchesX = ((WindowGetWidth(w) - BlockGetWidth(b)) / SEARCH_STEP) - 1;
-    int searchesY = ((WindowGetHeight(w) - BlockGetHeight(b)) / SEARCH_STEP) - 1;
+/*
+ * The empty structs are to prevent dynamic allocation
+ *
+ * @param prevBlock The block we are looking for
+ * @param resBlock an empty block to hold the result
+ * @param window search window
+ * @param pixelA empty pixel for calculations
+ * @param pixelB empty pixel for calculations
+ * @return void
+ */
+void SADTrack(Block *prevBlock, Block *resBlock, Block *window, Pixel *pixelA, Pixel *pixelB) {
+    int searchesX = ((WINDOW_WIDTH - BLOCK_WIDTH) / SEARCH_STEP) - 1;
+    int searchesY = ((WINDOW_HEIGHT - BLOCK_HEIGHT) / SEARCH_STEP) - 1;
 
-    // It would be cheaper to use primitives, but this is cleaner
-    Block *bestBlock = BlockCreate(0, 0, BLOCK_WIDTH, BLOCK_HEIGHT);
-    Block *curBlock = BlockCreate(0, 0, BLOCK_WIDTH, BLOCK_HEIGHT);
+    // Avoiding dynamic allocation in a hot path
+    int bestBlockX, bestBlockY;
     int bestBlockDelta = MAX_DELTA;
     int curBlockDelta = 0;
 
     int i, j, x, y;
-    int windowOriginX = WindowGetX(w);
-    int windowOriginY = WindowGetY(w);
+    int windowOriginX = BlockGetX(window);
+    int windowOriginY = BlockGetY(window);
     for(i = 0; i < searchesX; ++i) {
         for(j = 0; j < searchesY; ++j) {
             x = windowOriginX + (i * SEARCH_STEP);
             y = windowOriginY + (j * SEARCH_STEP);
-            BlockSetX(curBlock, x);
-            BlockSetY(curBlock, y);
+            BlockSetX(resBlock, x);
+            BlockSetY(resBlock, y);
 
-            curBlockDelta = SADBlock(b, curBlock);
+            curBlockDelta = SADBlock(prevBlock, resBlock, pixelA, pixelB);
             if(curBlockDelta < bestBlockDelta) {
-                BlockSetX(bestBlock, x);
-                BlockSetY(bestBlock, y);
+                bestBlockX = x;
+                bestBlockY = y;
                 bestBlockDelta = curBlockDelta;
             }
         }
     }
-    return bestBlock;
+
+    // Place results in block
+    BlockSetX(resBlock, bestBlockX);
+    BlockSetY(resBlock, bestBlockY);
 }
 
-Window * SADCenterWindow(Block *b, Window *w) {
-    int blockXMid = BlockGetX(b) + (BlockGetWidth(b)/2);
-    int blockYMid = BlockGetY(b) + (BlockGetHeight(b)/2);
-    int newWindowX = blockXMid - (WindowGetWidth(w)/2);
-    int newWindowY = blockYMid - (WindowGetHeight(w)/2);
+/*
+ * b is the block we are centering on
+ * w is the window
+ */
+void SADCenterWindow(Block *b, Block *w) {
+    int blockXMid = BlockGetX(b) + (BLOCK_WIDTH/2);
+    int blockYMid = BlockGetY(b) + (BLOCK_WIDTH/2);
+    int newWindowX = blockXMid - (WINDOW_WIDTH/2);
+    int newWindowY = blockYMid - (WINDOW_HEIGHT/2);
 
     // Assert bounds
     if(newWindowX < 0) newWindowX = 0;
     if(newWindowY < 0) newWindowY = 0;
-    if(newWindowX > FRAME_WIDTH) newWindowX = FRAME_WIDTH - WindowGetWidth(w);
-    if(newWindowY > FRAME_HEIGHT) newWindowY = FRAME_HEIGHT - WindowGetHeight(w);
+    if(newWindowX > FRAME_WIDTH) newWindowX = FRAME_WIDTH - WINDOW_WIDTH;
+    if(newWindowY > FRAME_HEIGHT) newWindowY = FRAME_HEIGHT - WINDOW_HEIGHT;
 
-    // Update assertions
-    WindowSetX(w, newWindowX);
-    WindowSetY(w, newWindowY);
-    
-    return w;
+    // Place results in block
+    BlockSetX(w, newWindowX);
+    BlockSetY(w, newWindowY);
 }

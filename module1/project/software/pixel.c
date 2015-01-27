@@ -20,3 +20,20 @@ void PixelSetRGB(Pixel *p, int rgb) {
     p->g = (char) (rgb & 0x3F);
     p->b = (char) (rgb & 0x1F);
 }
+
+int PixelGetRGB(Pixel *p) {
+    int rgb = (p->r << 11) | (p->g << 5) | (p->b);
+    return rgb;
+}
+
+void PixelSetCoord(Pixel *p, Coordinate *c) {
+    p->coordinate = c;
+}
+
+int PixelGetX(Pixel *p) {
+    return p->coordinate->x;
+}
+
+int PixelGetY(Pixel *p) {
+    return p->coordinate->y;
+}

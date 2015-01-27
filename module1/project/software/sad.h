@@ -4,7 +4,6 @@
 #include "video.h"
 #include "pixel.h"
 #include "block.h"
-#include "window.h"
 
 // width and height of tracking block
 #define BLOCK_WIDTH 50
@@ -21,8 +20,8 @@
 #define MAX_DELTA 1000000000
 
 int SADPixel(Pixel *, Pixel *);
-int SADBlock(Block *, Block *);
-Block * SADTrack(Block *prev, Window *);
-Window * SADCenterWindow(Block *, Window *);
+int SADBlock(Block *, Block *, Pixel *, Pixel *);
+void SADTrack(Block *, Block *, Block *, Pixel *, Pixel *);
+void SADCenterWindow(Block *, Block *);
 
 #endif

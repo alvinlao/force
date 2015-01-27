@@ -18,5 +18,11 @@ typedef struct pixel {
 Pixel *PixelCreate(int x, int y, int rgb);
 void PixelDestroy(Pixel *);
 void PixelSetRGB(Pixel *, int);
+int PixelGetRGB(Pixel *);
+
+// There is no set X and Y because the coordinate should be immutable
+void PixelSetCoord(Pixel *, Coordinate *);
+int PixelGetX(Pixel *);
+int PixelGetY(Pixel *);
 
 #endif

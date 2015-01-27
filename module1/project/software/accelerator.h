@@ -6,6 +6,6 @@
 
 int AcceleratorSADPixel(Pixel *, Pixel *);
 int AcceleratorSADBlock(Block *, Block *);
-Block * AcceleratorSADWindow(Block *prev, Window *w);
+Block * AcceleratorSADWindow(Block *prev, Block *w);
 
 #endif

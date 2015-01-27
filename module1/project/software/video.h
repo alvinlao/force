@@ -10,7 +10,7 @@
 #include "coordinate.h"
 #include "pixel.h"
 
-Pixel * VideoGetPixel(Coordinate *coordinate);
+void VideoGetPixel(Pixel *pixel);
 void VideoSetPixel(Pixel *pixel);
 
 #endif

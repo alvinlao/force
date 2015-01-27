@@ -27,6 +27,6 @@ int AcceleratorSADBlock(Block *prev, Block *cur) {
  * @param w The window
  * @return the minimum difference block
  */
-Block * AcceleratorSADWindow(Block *prev, Window *w) {
+Block * AcceleratorSADWindow(Block *prev, Block *w) {
     return NULL;
 }
