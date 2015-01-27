@@ -53,9 +53,12 @@ int main() {
     printf("=======================\n");
     printf("Test SADTrack\n");
     printf("=======================\n");
-    SADTrack(blockC, emptyBlock, w, pixelA, pixelB);
+
+    Block *trackBlock = blockC;
+    SADTrack(trackBlock, emptyBlock, w, pixelA, pixelB);
     printf("X: %d\n", BlockGetX(emptyBlock));
     printf("Y: %d\n", BlockGetY(emptyBlock));
+    printf("Delta: %d\n", SADBlock(trackBlock, emptyBlock, pixelA, pixelB));
 
     // Test destroys
     BlockDestroy(blockA);
