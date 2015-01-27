@@ -26,20 +26,19 @@ int SADPixel(Pixel *a, Pixel *b) {
 
 /*
  * Perform SAD on a block of pixels
- * @param prev The comparate block
- * @param cur The candidate block
+ * @param track The tracked block
+ * @param candidate The candidate block
  * @param pixelA Empty pixel
  * @param pixelB Empty pixel
  * @return sum of absolute differences of the whole block
  */
-int SADBlock(Block *prev, Block *cur, Pixel *pixelA, Pixel *pixelB) {
+int SADBlock(Block *track, Block *candidate, Pixel *pixelA, Pixel *pixelB) {
     int delta = 0;
     int i, j;
-    Pixel *prevPixel, *curPixel;
-    for(i=0; i < BLOCK_WIDTH; ++i) {
-        for(j=0; j < BLOCK_HEIGHT; ++j) {
-            PixelSetCoord(pixelA, prev->coord);
-            PixelSetCoord(pixelB, cur->coord);
+    for(i = 0; i < BLOCK_WIDTH; ++i) {
+        for(j = 0; j < BLOCK_HEIGHT; ++j) {
+            PixelSetCoord(pixelA, track->coord);
+            PixelSetCoord(pixelB, candidate->coord);
             
             VideoGetPixel(pixelA);
             VideoGetPixel(pixelB);
