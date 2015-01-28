@@ -3,4 +3,5 @@
 
 # Except our software files
 !.gitignore
-!custom_software/
+!/custom_software/
+!/custom_software/*
