@@ -20,5 +20,6 @@ int SADPixel(Pixel *, Pixel *);
 int SADBlock(Block *, Block *, Pixel *, Pixel *);
 void SADTrack(Block *, Block *, Block *, Pixel *, Pixel *);
 void SADCenterWindow(Block *, Block *);
+void SADInit(int, int, Block **, Block **, Block **, Pixel **, Pixel **);
 
 #endif
