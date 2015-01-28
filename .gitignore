@@ -48,8 +48,6 @@
 *.htm
 *.eqn
 *.pin
-*.sof
-*.pof
 *.summary
 *.done
 *.smsg
