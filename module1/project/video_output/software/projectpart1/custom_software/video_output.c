@@ -5,6 +5,7 @@
 #include <time.h>
 #include "altera_up_avalon_video_pixel_buffer_dma.h"
 #include <unistd.h>
+#include "sad.h"
 #define drawer_base (volatile int *) 0xb020
 #define UP 1
 #define DOWN 0
@@ -21,12 +22,6 @@ int main()
 		//printf("error initializing pixel buffer (check name in alt_up_pixel_buffer_dma_open_dev)\n");
 	}
 
-//	char *pixelEn = (char*) 0xb070;
-//	long *rgb = (long *) 0xb060;
-//	int *positionX = (int *) 0xb040;
-//	int *positionY = (int *) 0xb050;
-//	unsigned int addr = 0;
-
 	alt_up_pixel_buffer_dma_change_back_buffer_address(pixel_buffer, PIXEL_BUFFER_BASE);
 	alt_up_pixel_buffer_dma_swap_buffers(pixel_buffer);
 	while (alt_up_pixel_buffer_dma_check_swap_buffers_status(pixel_buffer));
@@ -40,19 +35,47 @@ int main()
 	int upDownDir = DOWN;
 	int colour = 0x0ff0;
 
-	while(1) {
+	Pixel *pixelA, *pixelB;
+	Block *blockToTrack, *resultBlockForTrack, *emptyBlock;
 
-//		alt_up_pixel_buffer_dma_change_back_buffer_address(pixel_buffer, PIXEL_BUFFER_BASE);
-//		alt_up_pixel_buffer_dma_swap_buffers(pixel_buffer);
-//		while (alt_up_pixel_buffer_dma_check_swap_buffers_status(pixel_buffer));
-//		alt_up_pixel_buffer_dma_clear_screen(pixel_buffer, 0);
+	// Init pixels
+	pixelA = PixelCreate(0, 0, 0);
+	pixelB = PixelCreate(0, 0, 0);
+
+	// Init blocks
+	blockToTrack = BlockCreate(160, 120);
+	resultBlockForTrack = BlockCreate(50, 50);
+	emptyBlock = BlockCreate(0, 0);
+
+	Block *w = BlockCreate(15, 15);
+
+	VideoInitMemoryBlock(BLOCK_WIDTH, BLOCK_HEIGHT);
+
+	unsigned int addr = 0;
+
+	unsigned int *curr_buffer_pixel_address;
+	unsigned int curr_buffer_pixel;
+	curr_buffer_pixel_address = &addr;
+	curr_buffer_pixel = *curr_buffer_pixel_address;
+
+
+	// Not sure how else to search thru the frame so saving to 2*2 array
+	int i, j;
+	unsigned int array[320][240];
+	for(j = 0; j < 239; j++){
+		for(i = 0; i < 319; i++){
+			addr |= ((i & pixel_buffer->x_coord_mask) << pixel_buffer->x_coord_offset);
+			addr |= ((j & pixel_buffer->y_coord_mask) << pixel_buffer->y_coord_offset);
+		//	array[i][j] = *addr;
+		}
+	}
+
+	while(1) {
 
 		int i = 0;
 		for (i = 0; i < 10000; i++) {
 			// Lazy wait
 		}
-
-//		alt_up_pixel_buffer_dma_draw_box(pixel_buffer, x1, y1, x2, y2, 0x0000, 0);
 
 		if (leftRightDir == RIGHT) {
 			if (x2 >= MAX_WIDTH) {
@@ -102,31 +125,19 @@ int main()
 			y1--;
 			y2--;
 		}
-
 		alt_up_pixel_buffer_dma_draw_box(pixel_buffer, x1, y1, x2, y2, colour, 0);
 
-//		int hw = 1;
-//
-//		if (*pixelEn > 0) {
-//			if (hw) {
-//				addr = 0;
-//				addr |= ((*positionX & pixel_buffer->x_coord_mask) << pixel_buffer->x_coord_offset);
-//				addr |= ((*positionY & pixel_buffer->y_coord_mask) << pixel_buffer->y_coord_offset);
-//				IOWR_16DIRECT(pixel_buffer->back_buffer_start_address, addr, *rgb);
-//				IOWR_32DIRECT(drawer_base,0,*positionX); // Set x1
-//				IOWR_32DIRECT(drawer_base,4,*positionY); // Set y1
-//				IOWR_32DIRECT(drawer_base,8,*positionX); // Set x2
-//				IOWR_32DIRECT(drawer_base,12,*positionY); // Set y2
-//				IOWR_32DIRECT(drawer_base,16,*rgb);  // Set colour
-//				IOWR_32DIRECT(drawer_base,20,1);  // Start drawing
-//				while(IORD_32DIRECT(drawer_base,20)==0); // wait until done
-//			} else {
-////				alt_up_pixel_buffer_dma_draw(pixel_buffer, 0xffff, 10, 10);
-//				alt_up_pixel_buffer_dma_draw(pixel_buffer, *rgb, *positionX, *positionY);
-//			}
-//		}
-//			alt_up_pixel_buffer_dma_draw(pixel_buffer, *rgb, *positionX, *positionY);
+
+
+		/* TODO: assign things from the saved array
+		 * write in order of operations for SAD to run
+		 *
+		 */
+//		SADTrack(blockToTrack, resultBlockForTrack, w, pixelA, pixelB);
+
+
 	}
+
     return 0;
 }
 
