@@ -15,6 +15,7 @@
 // Test box params
 #define BOX_X0 120
 #define BOX_Y0 120
+#define BOX_SPEED 5
 typedef struct box {
 	int x1, y1, x2, y2;
 	int color;
@@ -89,22 +90,23 @@ void drawBox(alt_up_pixel_buffer_dma_dev* pixel_buffer, Box *box) {
 
 	// Move box
 	if (box->horizontalDir == LEFT) {
-		box->x1--;
-		box->x2--;
+		box->x1 -= BOX_SPEED;
+		box->x2 -= BOX_SPEED;
 	} else {
-		box->x1++;
-		box->x2++;
+		box->x1 += BOX_SPEED;
+		box->x2 += BOX_SPEED;
 	}
 	if (box->verticalDir == DOWN) {
-		box->y1++;
-		box->y2++;
+		box->y1 += BOX_SPEED;
+		box->y2 += BOX_SPEED;
 	} else {
-		box->y1--;
-		box->y2--;
+		box->y1 -= BOX_SPEED;
+		box->y2 -= BOX_SPEED;
 	}
 
 
 	// Draw
+	alt_up_pixel_buffer_dma_clear_screen(pixel_buffer, 0);
 	alt_up_pixel_buffer_dma_draw_box(pixel_buffer, box->x1, box->y1, box->x2, box->y2, box->color, 0);
 }
 
@@ -130,7 +132,7 @@ int main()
 
 	// Main loop
 	while(1) {
-		int i = 0;
+		int i, j;
 		// Lazy wait
 		for (i = 0; i < 10000; i++);
 
