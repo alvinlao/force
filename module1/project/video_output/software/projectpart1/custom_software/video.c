@@ -5,10 +5,22 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "video.h"
+#include <io.h>
+#include "altera_up_avalon_video_pixel_buffer_dma.h"
+
 
 // TODO Replace with hardware
 int *mem;
 int BlockWidth, BlockHeight;
+alt_up_pixel_buffer_dma_dev *VideoPixelBuffer;
+
+
+/*
+ * Initialize video module
+ */
+void VideoInit(alt_up_pixel_buffer_dma_dev *pixelBuffer) {
+	VideoPixelBuffer = pixelBuffer;
+}
 
 /*
  * Initialize memory for saving pixel block
@@ -25,14 +37,16 @@ void VideoInitMemoryBlock(int width, int height) {
  *
  * @param x left coordinate
  * @param y top coordinate
+ * @param p pixel for intermediate calculations
  */
-void VideoCopyBlock(int x, int y) {
-    // TODO Access hardware
-    // TODO Copy pixel buffer block to static block
+void VideoCopyBlock(int x, int y, Pixel *p) {
     int i, j;
     for(i=0; i<BlockWidth; ++i) {
         for(j=0; j<BlockHeight; ++j) {
-            mem[i*BlockWidth + j] = (x + i) * (y + j);
+        	PixelSetX(p, x+i);
+        	PixelSetY(p, y+j);
+        	VideoGetPixel(p);
+            mem[i*BlockWidth + j] = PixelGetRGB(p);
         }
     }
 }
@@ -72,9 +86,12 @@ void VideoGetPixel(Pixel *p) {
         PixelSetRGB(p, 0);
         return;
     }
+    unsigned int addr = 0;
+	addr |= ((x & VideoPixelBuffer->x_coord_mask) << VideoPixelBuffer->x_coord_offset);
+	addr |= ((y & VideoPixelBuffer->y_coord_mask) << VideoPixelBuffer->y_coord_offset);
 
-    // How to set RGB
-    int rgb = x*y;
+	int rgb;
+    rgb = IORD_32DIRECT(VideoPixelBuffer->buffer_start_address, addr);
     PixelSetRGB(p, rgb);
 }
 

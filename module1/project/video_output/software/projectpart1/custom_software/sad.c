@@ -101,8 +101,11 @@ void SADTrack(Block *targetBlock, Block *resultBlock, Block *window, Pixel *pixe
     BlockSetX(resultBlock, bestBlockX);
     BlockSetY(resultBlock, bestBlockY);
 
+    // Center window
+    SADCenterWindow(resultBlock, window);
+
     // Save best block to memory
-    VideoCopyBlock(bestBlockX, bestBlockY);
+    VideoCopyBlock(bestBlockX, bestBlockY, pixelA);
 }
 
 /*
@@ -124,4 +127,23 @@ void SADCenterWindow(Block *b, Block *w) {
     // Place results in block
     BlockSetX(w, newWindowX);
     BlockSetY(w, newWindowY);
+}
+
+/*
+ * Initializes required data structures for SADTrack
+ * @param x0 target starting position x
+ * @param x1 target starting position y
+ */
+void SADInit(int x0, int y0, Block **targetBlock, Block **resultBlock, Block **window, Pixel **pixelA, Pixel **pixelB) {
+	// Create blocks
+	*targetBlock = BlockCreate(x0, y0);
+	*resultBlock = BlockCreate(0, 0);
+
+	// Create window
+	*window = BlockCreate(0, 0);
+	SADCenterWindow(*targetBlock, *window);
+
+	// Create pixels
+	*pixelA = PixelCreate(0, 0, 0);
+	*pixelB = PixelCreate(0, 0, 0);
 }
