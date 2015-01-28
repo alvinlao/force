@@ -54,6 +54,11 @@
    }
    element pixel_drawer_0.avalon_slave_0
    {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
       datum baseAddress
       {
          value = "45088";
@@ -169,6 +174,58 @@
          type = "String";
       }
    }
+   element v_in_position_y.s1
+   {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
+      datum baseAddress
+      {
+         value = "45136";
+         type = "String";
+      }
+   }
+   element v_in_rgb.s1
+   {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
+      datum baseAddress
+      {
+         value = "45152";
+         type = "String";
+      }
+   }
+   element v_in_position_x.s1
+   {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
+      datum baseAddress
+      {
+         value = "45120";
+         type = "String";
+      }
+   }
+   element v_in_pixel_enabled.s1
+   {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
+      datum baseAddress
+      {
+         value = "45168";
+         type = "String";
+      }
+   }
    element onchip_memory2_0.s1
    {
       datum _lockedAddress
@@ -179,38 +236,6 @@
       datum baseAddress
       {
          value = "0";
-         type = "String";
-      }
-   }
-   element v_in_position_x.s1
-   {
-      datum baseAddress
-      {
-         value = "45168";
-         type = "String";
-      }
-   }
-   element v_in_pixel_enabled.s1
-   {
-      datum baseAddress
-      {
-         value = "45136";
-         type = "String";
-      }
-   }
-   element v_in_rgb.s1
-   {
-      datum baseAddress
-      {
-         value = "45152";
-         type = "String";
-      }
-   }
-   element v_in_position_y.s1
-   {
-      datum baseAddress
-      {
-         value = "45120";
          type = "String";
       }
    }
@@ -293,7 +318,7 @@
  <parameter name="projectName" value="vga_graphics.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1422329316078" />
+ <parameter name="timeStamp" value="1422416530132" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
@@ -446,7 +471,7 @@
   <parameter name="tightlyCoupledInstructionMaster2AddrWidth" value="1" />
   <parameter name="tightlyCoupledInstructionMaster3AddrWidth" value="1" />
   <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='onchip_memory2_0.s1' start='0x0' end='0x7D00' /><slave name='nios2_qsys_0.jtag_debug_module' start='0xA800' end='0xB000' /><slave name='pixel_drawer_0.avalon_slave_0' start='0xB020' end='0xB040' /><slave name='sdram_controller.s1' start='0x1000000' end='0x1800000' /></address-map>]]></parameter>
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='onchip_memory2_0.s1' start='0x0' end='0x7D00' /><slave name='char_drawer.avalon_char_buffer_slave' start='0x8000' end='0xA000' /><slave name='nios2_qsys_0.jtag_debug_module' start='0xA800' end='0xB000' /><slave name='pixel_drawer_0.avalon_slave_0' start='0xB020' end='0xB040' /><slave name='v_in_position_y.s1' start='0xB040' end='0xB050' /><slave name='v_in_pixel_enabled.s1' start='0xB050' end='0xB060' /><slave name='v_in_rgb.s1' start='0xB060' end='0xB070' /><slave name='v_in_position_x.s1' start='0xB070' end='0xB080' /><slave name='pixel_buffer_dma.avalon_control_slave' start='0xB080' end='0xB090' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0xB090' end='0xB098' /><slave name='char_drawer.avalon_char_control_slave' start='0xB098' end='0xB0A0' /><slave name='pixel_buffer.avalon_sram_slave' start='0x80000' end='0x100000' /><slave name='sdram_controller.s1' start='0x1000000' end='0x1800000' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='onchip_memory2_0.s1' start='0x0' end='0x7D00' /><slave name='char_drawer.avalon_char_buffer_slave' start='0x8000' end='0xA000' /><slave name='nios2_qsys_0.jtag_debug_module' start='0xA800' end='0xB000' /><slave name='pixel_drawer_0.avalon_slave_0' start='0xB020' end='0xB040' /><slave name='v_in_position_x.s1' start='0xB040' end='0xB050' /><slave name='v_in_position_y.s1' start='0xB050' end='0xB060' /><slave name='v_in_rgb.s1' start='0xB060' end='0xB070' /><slave name='v_in_pixel_enabled.s1' start='0xB070' end='0xB080' /><slave name='pixel_buffer_dma.avalon_control_slave' start='0xB080' end='0xB090' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0xB090' end='0xB098' /><slave name='char_drawer.avalon_char_control_slave' start='0xB098' end='0xB0A0' /><slave name='pixel_buffer.avalon_sram_slave' start='0x80000' end='0x100000' /><slave name='sdram_controller.s1' start='0x1000000' end='0x1800000' /></address-map>]]></parameter>
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="deviceFamilyName" value="Cyclone II" />
   <parameter name="internalIrqMaskSystemInfo" value="32" />
@@ -1077,7 +1102,7 @@
    start="nios2_qsys_0.data_master"
    end="v_in_position_x.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0xb070" />
+  <parameter name="baseAddress" value="0xb040" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -1095,7 +1120,7 @@
    start="nios2_qsys_0.data_master"
    end="v_in_pixel_enabled.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0xb050" />
+  <parameter name="baseAddress" value="0xb070" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -1129,7 +1154,7 @@
    start="nios2_qsys_0.data_master"
    end="v_in_position_y.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0xb040" />
+  <parameter name="baseAddress" value="0xb050" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
