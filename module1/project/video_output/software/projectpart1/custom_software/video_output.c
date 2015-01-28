@@ -58,18 +58,6 @@ int main()
 	curr_buffer_pixel_address = &addr;
 	curr_buffer_pixel = *curr_buffer_pixel_address;
 
-
-	// Not sure how else to search thru the frame so saving to 2*2 array
-	int i, j;
-	unsigned int array[320][240];
-	for(j = 0; j < 239; j++){
-		for(i = 0; i < 319; i++){
-			addr |= ((i & pixel_buffer->x_coord_mask) << pixel_buffer->x_coord_offset);
-			addr |= ((j & pixel_buffer->y_coord_mask) << pixel_buffer->y_coord_offset);
-		//	array[i][j] = *addr;
-		}
-	}
-
 	while(1) {
 
 		int i = 0;
@@ -133,7 +121,20 @@ int main()
 		 * write in order of operations for SAD to run
 		 *
 		 */
+
+		// Not sure how else to search thru the frame so saving to 2*2 array
+		int i, j;
+		unsigned int array[320][240];
+		for(j = 0; j < 239; j++){
+			for(i = 0; i < 319; i++){
+				addr |= ((i & pixel_buffer->x_coord_mask) << pixel_buffer->x_coord_offset);
+				addr |= ((j & pixel_buffer->y_coord_mask) << pixel_buffer->y_coord_offset);
+			//	array[i][j] = *addr;
+			}
+		}
 //		SADTrack(blockToTrack, resultBlockForTrack, w, pixelA, pixelB);
+
+
 
 
 	}
