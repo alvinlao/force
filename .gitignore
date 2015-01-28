@@ -29,9 +29,18 @@
 *.hex
 *.pyc
 
+# OSX
 *.swp
 
+# Eclipse
+.project
+.cproject
+*.d
+*.map
+*.objdump
+
 # Quartus
+.qsys_edit
 *.rpt
 *.chg
 *.log
