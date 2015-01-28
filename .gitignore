@@ -38,6 +38,7 @@
 *.d
 *.map
 *.objdump
+*.bsp
 
 # Quartus
 .qsys_edit
