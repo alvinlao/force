@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "video.h"
+#include <io.h>
+#include "altera_up_avalon_video_pixel_buffer_dma.h"
 
 
 // TODO Replace with hardware
@@ -82,9 +84,12 @@ void VideoGetPixel(Pixel *p) {
         PixelSetRGB(p, 0);
         return;
     }
+    unsigned int addr = 0;
+	addr |= ((x & VideoPixelBuffer->x_coord_mask) << VideoPixelBuffer->x_coord_offset);
+	addr |= ((y & VideoPixelBuffer->y_coord_mask) << VideoPixelBuffer->y_coord_offset);
 
-    // How to set RGB
-    int rgb = x*y;
+	int rgb;
+    rgb = ((IORD_32DIRECT(VideoPixelBuffer, addr)) << 16);
     PixelSetRGB(p, rgb);
 }
 
