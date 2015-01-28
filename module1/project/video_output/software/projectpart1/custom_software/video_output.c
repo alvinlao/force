@@ -27,9 +27,6 @@ alt_up_pixel_buffer_dma_dev * initPixelBuffer();
 void initBox(Box *);
 void drawBox(alt_up_pixel_buffer_dma_dev *, Box *);
 
-void initTrack(Block *, Block *, Block *, Pixel *, Pixel *);
-void track();
-
 
 alt_up_pixel_buffer_dma_dev* initPixelBuffer() {
 	alt_up_pixel_buffer_dma_dev* pixel_buffer = alt_up_pixel_buffer_dma_open_dev("/dev/pixel_buffer_dma");
@@ -111,21 +108,6 @@ void drawBox(alt_up_pixel_buffer_dma_dev* pixel_buffer, Box *box) {
 	alt_up_pixel_buffer_dma_draw_box(pixel_buffer, box->x1, box->y1, box->x2, box->y2, box->color, 0);
 }
 
-void initTrack(Block *targetBlock, Block *resultBlock, Block *window, Pixel *pixelA, Pixel *pixelB) {
-	// Create blocks
-	targetBlock = BlockCreate(BOX_X0, BOX_Y0);
-	resultBlock = BlockCreate(0, 0);
-
-	// Create window
-	window = BlockCreate(0, 0);
-	SADCenterWindow(targetBlock, window);
-
-	// Create pixels
-	pixelA = PixelCreate(0, 0, 0);
-	pixelB = PixelCreate(0, 0, 0);
-}
-
-
 int main()
 {
 	// Setup pixel buffer
@@ -134,7 +116,7 @@ int main()
 	// Setup tracking algorithm
 	Block *targetBlock, *resultBlock, *window;
 	Pixel *pixelA, *pixelB;
-	initTrack(targetBlock, resultBlock, window, pixelA, pixelB);
+	SADInit(BOX_X0, BOX_Y0, &targetBlock, &resultBlock, &window, &pixelA, &pixelB);
 	VideoInit(pixel_buffer);
 	VideoInitMemoryBlock(BLOCK_WIDTH, BLOCK_HEIGHT);
 
@@ -142,6 +124,8 @@ int main()
 	Box box;
 	initBox(&box);
 
+	printf("Window: (%d, %d)\n", BlockGetX(window), BlockGetY(window));
+	printf("Block: (%d, %d)\n", BlockGetX(targetBlock), BlockGetY(targetBlock));
 	printf("Here we go...\n");
 
 	// Main loop
@@ -150,7 +134,13 @@ int main()
 		// Lazy wait
 		for (i = 0; i < 10000; i++);
 
+		// Move and draw box
 		drawBox(pixel_buffer, &box);
+
+		// Apply algorithm
+		SADTrack(targetBlock, resultBlock, window, pixelA, pixelB);
+
+		printf("Block: (%d, %d)\n", BlockGetX(resultBlock), BlockGetY(resultBlock));
 	}
 
     return 0;
