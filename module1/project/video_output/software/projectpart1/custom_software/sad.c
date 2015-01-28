@@ -105,7 +105,7 @@ void SADTrack(Block *targetBlock, Block *resultBlock, Block *window, Pixel *pixe
     SADCenterWindow(resultBlock, window);
 
     // Save best block to memory
-    VideoCopyBlock(bestBlockX, bestBlockY);
+    VideoCopyBlock(bestBlockX, bestBlockY, pixelA);
 }
 
 /*

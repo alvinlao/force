@@ -37,14 +37,16 @@ void VideoInitMemoryBlock(int width, int height) {
  *
  * @param x left coordinate
  * @param y top coordinate
+ * @param p pixel for intermediate calculations
  */
-void VideoCopyBlock(int x, int y) {
-    // TODO Access hardware
-    // TODO Copy pixel buffer block to static block
+void VideoCopyBlock(int x, int y, Pixel *p) {
     int i, j;
     for(i=0; i<BlockWidth; ++i) {
         for(j=0; j<BlockHeight; ++j) {
-            mem[i*BlockWidth + j] = (x + i) * (y + j);
+        	PixelSetX(p, x+i);
+        	PixelSetY(p, y+j);
+        	VideoGetPixel(p);
+            mem[i*BlockWidth + j] = PixelGetRGB(p);
         }
     }
 }

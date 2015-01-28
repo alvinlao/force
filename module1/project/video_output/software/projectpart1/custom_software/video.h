@@ -17,7 +17,7 @@
 
 void VideoInit(alt_up_pixel_buffer_dma_dev *pixelBuffer);
 void VideoInitMemoryBlock(int width, int height);
-void VideoCopyBlock(int, int);
+void VideoCopyBlock(int, int, Pixel *);
 void VideoGetPixelBlock(Pixel *);
 void VideoGetPixel(Pixel *);
 void VideoSetPixel(Pixel *);
