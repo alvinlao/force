@@ -1,0 +1,31 @@
+	component Video_System is
+		port (
+			VGA_CLK_from_the_VGA_Controller                 : out   std_logic;                                        -- CLK
+			VGA_HS_from_the_VGA_Controller                  : out   std_logic;                                        -- HS
+			VGA_VS_from_the_VGA_Controller                  : out   std_logic;                                        -- VS
+			VGA_BLANK_from_the_VGA_Controller               : out   std_logic;                                        -- BLANK
+			VGA_SYNC_from_the_VGA_Controller                : out   std_logic;                                        -- SYNC
+			VGA_R_from_the_VGA_Controller                   : out   std_logic_vector(9 downto 0);                     -- R
+			VGA_G_from_the_VGA_Controller                   : out   std_logic_vector(9 downto 0);                     -- G
+			VGA_B_from_the_VGA_Controller                   : out   std_logic_vector(9 downto 0);                     -- B
+			clk_0                                           : in    std_logic                     := 'X';             -- clk
+			reset_n                                         : in    std_logic                     := 'X';             -- reset_n
+			I2C_SDAT_to_and_from_the_AV_Config              : inout std_logic                     := 'X';             -- SDAT
+			I2C_SCLK_from_the_AV_Config                     : out   std_logic;                                        -- SCLK
+			SRAM_DQ_to_and_from_the_Pixel_Buffer            : inout std_logic_vector(15 downto 0) := (others => 'X'); -- DQ
+			SRAM_ADDR_from_the_Pixel_Buffer                 : out   std_logic_vector(17 downto 0);                    -- ADDR
+			SRAM_LB_N_from_the_Pixel_Buffer                 : out   std_logic;                                        -- LB_N
+			SRAM_UB_N_from_the_Pixel_Buffer                 : out   std_logic;                                        -- UB_N
+			SRAM_CE_N_from_the_Pixel_Buffer                 : out   std_logic;                                        -- CE_N
+			SRAM_OE_N_from_the_Pixel_Buffer                 : out   std_logic;                                        -- OE_N
+			SRAM_WE_N_from_the_Pixel_Buffer                 : out   std_logic;                                        -- WE_N
+			TD_CLK27_to_the_Video_In_Decoder                : in    std_logic                     := 'X';             -- TD_CLK27
+			TD_DATA_to_the_Video_In_Decoder                 : in    std_logic_vector(7 downto 0)  := (others => 'X'); -- TD_DATA
+			TD_HS_to_the_Video_In_Decoder                   : in    std_logic                     := 'X';             -- TD_HS
+			TD_VS_to_the_Video_In_Decoder                   : in    std_logic                     := 'X';             -- TD_VS
+			Video_In_Decoder_external_interface_clk27_reset : in    std_logic                     := 'X';             -- clk27_reset
+			TD_RESET_from_the_Video_In_Decoder              : out   std_logic;                                        -- TD_RESET
+			overflow_flag_from_the_Video_In_Decoder         : out   std_logic                                         -- overflow_flag
+		);
+	end component Video_System;
+
