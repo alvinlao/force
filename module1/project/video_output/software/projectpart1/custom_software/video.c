@@ -6,9 +6,19 @@
 #include <stdio.h>
 #include "video.h"
 
+
 // TODO Replace with hardware
 int *mem;
 int BlockWidth, BlockHeight;
+alt_up_pixel_buffer_dma_dev *VideoPixelBuffer;
+
+
+/*
+ * Initialize video module
+ */
+void VideoInit(alt_up_pixel_buffer_dma_dev *pixelBuffer) {
+	VideoPixelBuffer = pixelBuffer;
+}
 
 /*
  * Initialize memory for saving pixel block
