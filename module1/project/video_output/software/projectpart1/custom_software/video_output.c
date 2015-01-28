@@ -106,8 +106,12 @@ void drawBox(alt_up_pixel_buffer_dma_dev* pixel_buffer, Box *box) {
 
 
 	// Draw
-	alt_up_pixel_buffer_dma_clear_screen(pixel_buffer, 0);
-	alt_up_pixel_buffer_dma_draw_box(pixel_buffer, box->x1, box->y1, box->x2, box->y2, box->color, 0);
+	alt_up_pixel_buffer_dma_clear_screen(pixel_buffer, 1);
+	alt_up_pixel_buffer_dma_draw_box(pixel_buffer, box->x1, box->y1, box->x2, box->y2, box->color, 1);
+
+	// Swap buffers
+	alt_up_pixel_buffer_dma_swap_buffers(pixel_buffer);
+	while (alt_up_pixel_buffer_dma_check_swap_buffers_status(pixel_buffer));
 }
 
 int main()
