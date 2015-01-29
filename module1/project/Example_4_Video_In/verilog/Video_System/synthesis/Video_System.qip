@@ -2,7 +2,7 @@ set_global_assignment -entity "Video_System" -library "Video_System" -name IP_TO
 set_global_assignment -entity "Video_System" -library "Video_System" -name IP_TOOL_VERSION "13.0sp1"
 set_global_assignment -entity "Video_System" -library "Video_System" -name IP_TOOL_ENV "Qsys"
 set_global_assignment -library "Video_System" -name SOPCINFO_FILE [file join $::quartus(qip_path) "../../Video_System.sopcinfo"]
-set_instance_assignment -entity "Video_System" -library "Video_System" -name SLD_INFO "QSYS_NAME Video_System HAS_SOPCINFO 1 GENERATION_ID 1422514182"
+set_instance_assignment -entity "Video_System" -library "Video_System" -name SLD_INFO "QSYS_NAME Video_System HAS_SOPCINFO 1 GENERATION_ID 1422518381"
 set_global_assignment -library "Video_System" -name MISC_FILE [file join $::quartus(qip_path) "../../Video_System.cmp"]
 set_global_assignment -name SYNTHESIS_ONLY_QIP ON
 set_global_assignment -library "Video_System" -name MISC_FILE [file join $::quartus(qip_path) "../../Video_System.qsys"]

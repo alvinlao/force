@@ -16,6 +16,7 @@
 #define BOX_X0 120
 #define BOX_Y0 120
 #define BOX_SPEED 5
+#define MARKER_SIZE 10
 typedef struct box {
 	int x1, y1, x2, y2;
 	int color;
@@ -32,7 +33,7 @@ void drawBox(alt_up_pixel_buffer_dma_dev *, Box *);
 
 
 alt_up_pixel_buffer_dma_dev* initPixelBuffer() {
-	alt_up_pixel_buffer_dma_dev* pixel_buffer = alt_up_pixel_buffer_dma_open_dev("/dev/pixel_buffer_dma");
+	alt_up_pixel_buffer_dma_dev* pixel_buffer = alt_up_pixel_buffer_dma_open_dev("/dev/Pixel_Buffer_DMA");
 	if (pixel_buffer == 0) {
 		//printf("error initializing pixel buffer (check name in alt_up_pixel_buffer_dma_open_dev)\n");
 	}
@@ -105,7 +106,7 @@ void updateBox(Box *box) {
 }
 
 void drawBox(alt_up_pixel_buffer_dma_dev* pixel_buffer, Box *box) {
-	alt_up_pixel_buffer_dma_draw_box(pixel_buffer, box->x1, box->y1, box->x2, box->y2, box->color, 1);
+	alt_up_pixel_buffer_dma_draw_box(pixel_buffer, box->x1, box->y1, box->x2, box->y2, box->color, 0);
 }
 
 int main()
@@ -122,7 +123,7 @@ int main()
 
 	// Setup box
 	Box *box = initBox(BOX_X0, BOX_Y0, BLOCK_WIDTH, BLOCK_HEIGHT, BOX_SPEED, 0x0ff0);
-	Box *marker = initBox(0, 0, BLOCK_WIDTH, BLOCK_HEIGHT, 0, 0xf800);
+	Box *marker = initBox(0, 0, MARKER_SIZE, MARKER_SIZE, 0, 0xf800);
 
 	// Draw first frame and copy track block into memory
 	drawBox(pixel_buffer, box);
@@ -139,16 +140,13 @@ int main()
 
 	// Main loop
 	while(1) {
-		int i, j;
-		// Lazy wait
-		for (i = 0; i < 10000; i++);
-
-		// Clear back buffer
-		alt_up_pixel_buffer_dma_clear_screen(pixel_buffer, 1);
-
-		// Move and draw box
-		updateBox(box);
-		drawBox(pixel_buffer, box);
+		/*
+		 * Video in is drawing on the front buffer faster than our algorithm
+		 * We swap buffers so that the back buffer holds a static frame.
+		 * The algorithm runs on the back buffer.
+		 */
+		alt_up_pixel_buffer_dma_swap_buffers(pixel_buffer);
+		while (alt_up_pixel_buffer_dma_check_swap_buffers_status(pixel_buffer));
 
 		// Apply algorithm
 		SADTrack(targetBlock, resultBlock, window, pixelA, pixelB);
@@ -160,13 +158,9 @@ int main()
 		// Draw marker
 		marker->x1 = track_x;
 		marker->y1 = track_y;
-		marker->x2 = track_x + BLOCK_HEIGHT;
-		marker->y2 = track_y + BLOCK_HEIGHT;
+		marker->x2 = track_x + MARKER_SIZE;
+		marker->y2 = track_y + MARKER_SIZE;
 		drawBox(pixel_buffer, marker);
-
-		// Swap buffers
-		alt_up_pixel_buffer_dma_swap_buffers(pixel_buffer);
-		while (alt_up_pixel_buffer_dma_check_swap_buffers_status(pixel_buffer));
 	}
 
     return 0;
