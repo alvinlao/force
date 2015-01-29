@@ -30,11 +30,22 @@ entity Zebra is
 				
             TD_RESET              : out   std_logic;                                        -- TD_RESET
 				Video_In_Decoder_external_interface_clk27_reset : in    std_logic                     := 'X';             -- clk27_reset
-            overflow_flag_from_the_Video_In_Decoder         : out   std_logic                                         -- overflow_flag
+            overflow_flag_from_the_Video_In_Decoder         : out   std_logic;                                         -- overflow_flag
+
+-- sdram
+				DRAM_CLK, DRAM_CKE : OUT STD_LOGIC;
+				DRAM_ADDR : OUT STD_LOGIC_VECTOR(11 DOWNTO 0);
+				DRAM_BA_0, DRAM_BA_1 : BUFFER STD_LOGIC;
+				DRAM_CS_N, DRAM_CAS_N, DRAM_RAS_N, DRAM_WE_N : OUT STD_LOGIC;
+				DRAM_DQ : INOUT STD_LOGIC_VECTOR(15 DOWNTO 0);
+				DRAM_UDQM, DRAM_LDQM : BUFFER STD_LOGIC
 	);
 end Zebra;
 
 architecture rtl of Zebra is
+	signal DQM : STD_LOGIC_VECTOR(1 DOWNTO 0);
+	signal BA : STD_LOGIC_VECTOR(1 DOWNTO 0);
+
     component Video_System
         port (
             VGA_CLK_from_the_VGA_Controller                 : out   std_logic;                                        -- CLK
@@ -62,7 +73,17 @@ architecture rtl of Zebra is
             TD_VS_to_the_Video_In_Decoder                   : in    std_logic                     := 'X';             -- TD_VS
             Video_In_Decoder_external_interface_clk27_reset : in    std_logic                     := 'X';             -- clk27_reset
             TD_RESET_from_the_Video_In_Decoder              : out   std_logic;                                        -- TD_RESET
-            overflow_flag_from_the_Video_In_Decoder         : out   std_logic                                         -- overflow_flag
+            overflow_flag_from_the_Video_In_Decoder         : out   std_logic;                                         -- overflow_flag
+				sdram_controller_wire_addr                      : out   std_logic_vector(11 downto 0);                    -- addr
+            sdram_controller_wire_ba                        : out   std_logic_vector(1 downto 0);                     -- ba
+            sdram_controller_wire_cas_n                     : out   std_logic;                                        -- cas_n
+            sdram_controller_wire_cke                       : out   std_logic;                                        -- cke
+            sdram_controller_wire_cs_n                      : out   std_logic;                                        -- cs_n
+            sdram_controller_wire_dq                        : inout std_logic_vector(15 downto 0) := (others => 'X'); -- dq
+            sdram_controller_wire_dqm                       : out   std_logic_vector(1 downto 0);                     -- dqm
+            sdram_controller_wire_ras_n                     : out   std_logic;                                        -- ras_n
+            sdram_controller_wire_we_n                      : out   std_logic;                                         -- we_n
+				sdram_clk_clk : OUT STD_LOGIC
         );
     end component Video_System;
 	 
@@ -70,6 +91,11 @@ architecture rtl of Zebra is
 	 
 	 begin
 
+	 DRAM_BA_0 <= BA(0);
+	 DRAM_BA_1 <= BA(1);
+	 DRAM_UDQM <= DQM(1);
+	 DRAM_LDQM <= DQM(0);
+	 
     u0 : component Video_System
         port map (
             VGA_CLK_from_the_VGA_Controller                 => 	VGA_CLK,                 --   VGA_Controller_external_interface.CLK
@@ -98,8 +124,16 @@ architecture rtl of Zebra is
 				TD_RESET_from_the_Video_In_Decoder              => TDRESET,              --                                    .TD_RESET
             overflow_flag_from_the_Video_In_Decoder         => OVErflow_flag,          --                                    .overflow_flag
 				I2C_SDAT_to_and_from_the_AV_Config              => SDT,              --        AV_Config_external_interface.SDAT
-            I2C_SCLK_from_the_AV_Config                     => SCL                     --                                    .SCLK
-				
+            I2C_SCLK_from_the_AV_Config                     => SCL,                     --                                    .SCLK
+				sdram_controller_wire_addr                      => DRAM_ADDR,                      --               sdram_controller_wire.addr
+            sdram_controller_wire_ba                        => BA,                        --                                    .ba
+            sdram_controller_wire_cas_n                     => DRAM_CAS_N,                     --                                    .cas_n
+            sdram_controller_wire_cke                       => DRAM_CKE,                       --                                    .cke
+            sdram_controller_wire_cs_n                      => DRAM_CS_N,                      --                                    .cs_n
+            sdram_controller_wire_dq                        => DRAM_DQ,                        --                                    .dq
+            sdram_controller_wire_dqm                       => DQM,                       --                                    .dqm
+            sdram_controller_wire_ras_n                     => DRAM_RAS_N,                     --                                    .ras_n
+            sdram_controller_wire_we_n                      => DRAM_WE_N                       --                                    .we_n
         );
 
 		  TD_RESET <= '1';

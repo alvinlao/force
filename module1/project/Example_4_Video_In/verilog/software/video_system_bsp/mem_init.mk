@@ -155,7 +155,7 @@ ACDS_VERSION := 13.0sp1
 SIM_OPTIMIZE ?= 0
 
 # The CPU reset address as needed by elf2flash
-RESET_ADDRESS ?= 0x00084000
+RESET_ADDRESS ?= 0x01000000
 
 #-------------------------------------
 # Pre-Initialized Memory Descriptions
@@ -180,6 +180,23 @@ $(MEM_0)_CREATE_LANES := 0
 
 .PHONY: Onchip_Memory
 Onchip_Memory: check_elf_exists $(MEM_INIT_DIR)/$(MEM_0).hex $(HDL_SIM_DIR)/$(MEM_0).dat $(HDL_SIM_DIR)/$(MEM_0).sym
+
+# Memory: sdram_controller
+MEM_1 := sdram_controller
+$(MEM_1)_NAME := sdram_controller
+DAT_FILES += $(HDL_SIM_DIR)/$(MEM_1).dat
+HDL_SIM_INSTALL_FILES += $(HDL_SIM_INSTALL_DIR)/$(MEM_1).dat
+SYM_FILES += $(HDL_SIM_DIR)/$(MEM_1).sym
+HDL_SIM_INSTALL_FILES += $(HDL_SIM_INSTALL_DIR)/$(MEM_1).sym
+$(MEM_1)_START := 0x01000000
+$(MEM_1)_END := 0x017fffff
+$(MEM_1)_HIERARCHICAL_PATH := sdram_controller
+$(MEM_1)_WIDTH := 16
+$(MEM_1)_ENDIANNESS := --little-endian-mem
+$(MEM_1)_CREATE_LANES := 0
+
+.PHONY: sdram_controller
+sdram_controller: check_elf_exists $(HDL_SIM_DIR)/$(MEM_1).dat $(HDL_SIM_DIR)/$(MEM_1).sym
 
 
 #END OF BSP SPECIFIC

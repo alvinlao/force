@@ -142,7 +142,15 @@ ACDS_VERSION := 13.0sp1
 ELF := video_system.elf
 
 # Paths to C, C++, and assembly source files.
-C_SRCS := video_output.c
+C_SRCS += custom_software/accelerator.c
+C_SRCS += custom_software/block.c
+C_SRCS += custom_software/coordinate.c
+C_SRCS += custom_software/draw.c
+C_SRCS += custom_software/pixel.c
+C_SRCS += custom_software/sad.c
+C_SRCS += custom_software/util.c
+C_SRCS += custom_software/video.c
+C_SRCS += custom_software/video_output.c
 CXX_SRCS :=
 ASM_SRCS :=
 

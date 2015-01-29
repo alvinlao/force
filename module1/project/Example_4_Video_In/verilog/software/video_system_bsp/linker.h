@@ -2,9 +2,9 @@
  * linker.h - Linker script mapping information
  *
  * Machine generated for CPU 'CPU' in SOPC Builder design 'Video_System'
- * SOPC Builder design path: E:/Example_4_Video_In/verilog/Video_System.sopcinfo
+ * SOPC Builder design path: E:/project/force/module1/project/Example_4_Video_In/verilog/Video_System.sopcinfo
  *
- * Generated: Tue Jan 27 10:47:38 PST 2015
+ * Generated: Wed Jan 28 20:06:29 PST 2015
  */
 
 /*
@@ -65,10 +65,12 @@
  *
  */
 
-#define ONCHIP_MEMORY_REGION_BASE 0x84020
-#define ONCHIP_MEMORY_REGION_SPAN 16352
-#define RESET_REGION_BASE 0x84000
+#define ONCHIP_MEMORY_REGION_BASE 0x84000
+#define ONCHIP_MEMORY_REGION_SPAN 16384
+#define RESET_REGION_BASE 0x1000000
 #define RESET_REGION_SPAN 32
+#define SDRAM_CONTROLLER_REGION_BASE 0x1000020
+#define SDRAM_CONTROLLER_REGION_SPAN 8388576
 
 
 /*
@@ -76,11 +78,11 @@
  *
  */
 
-#define ALT_EXCEPTIONS_DEVICE ONCHIP_MEMORY
-#define ALT_RESET_DEVICE ONCHIP_MEMORY
-#define ALT_RODATA_DEVICE ONCHIP_MEMORY
-#define ALT_RWDATA_DEVICE ONCHIP_MEMORY
-#define ALT_TEXT_DEVICE ONCHIP_MEMORY
+#define ALT_EXCEPTIONS_DEVICE SDRAM_CONTROLLER
+#define ALT_RESET_DEVICE SDRAM_CONTROLLER
+#define ALT_RODATA_DEVICE SDRAM_CONTROLLER
+#define ALT_RWDATA_DEVICE SDRAM_CONTROLLER
+#define ALT_TEXT_DEVICE SDRAM_CONTROLLER
 
 
 /*

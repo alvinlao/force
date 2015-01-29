@@ -2,9 +2,9 @@
  * linker.x - Linker script
  *
  * Machine generated for CPU 'CPU' in SOPC Builder design 'Video_System'
- * SOPC Builder design path: E:/Example_4_Video_In/verilog/Video_System.sopcinfo
+ * SOPC Builder design path: E:/project/force/module1/project/Example_4_Video_In/verilog/Video_System.sopcinfo
  *
- * Generated: Tue Jan 27 10:47:38 PST 2015
+ * Generated: Wed Jan 28 20:06:29 PST 2015
  */
 
 /*
@@ -50,12 +50,14 @@
 
 MEMORY
 {
-    reset : ORIGIN = 0x84000, LENGTH = 32
-    Onchip_Memory : ORIGIN = 0x84020, LENGTH = 16352
+    Onchip_Memory : ORIGIN = 0x84000, LENGTH = 16384
+    reset : ORIGIN = 0x1000000, LENGTH = 32
+    sdram_controller : ORIGIN = 0x1000020, LENGTH = 8388576
 }
 
 /* Define symbols for each memory base-address */
 __alt_mem_Onchip_Memory = 0x84000;
+__alt_mem_sdram_controller = 0x1000000;
 
 OUTPUT_FORMAT( "elf32-littlenios2",
                "elf32-littlenios2",
@@ -110,7 +112,7 @@ SECTIONS
         KEEP (*(.exceptions.exit));
         KEEP (*(.exceptions));
         PROVIDE (__ram_exceptions_end = ABSOLUTE(.));
-    } > Onchip_Memory
+    } > sdram_controller
 
     PROVIDE (__flash_exceptions_start = LOADADDR(.exceptions));
 
@@ -206,7 +208,7 @@ SECTIONS
         PROVIDE (__DTOR_END__ = ABSOLUTE(.));
         KEEP (*(.jcr))
         . = ALIGN(4);
-    } > Onchip_Memory = 0x3a880100 /* Nios II NOP instruction */
+    } > sdram_controller = 0x3a880100 /* Nios II NOP instruction */
 
     .rodata :
     {
@@ -216,7 +218,7 @@ SECTIONS
         *(.rodata1)
         . = ALIGN(4);
         PROVIDE (__ram_rodata_end = ABSOLUTE(.));
-    } > Onchip_Memory
+    } > sdram_controller
 
     PROVIDE (__flash_rodata_start = LOADADDR(.rodata));
 
@@ -250,7 +252,7 @@ SECTIONS
         _edata = ABSOLUTE(.);
         PROVIDE (edata = ABSOLUTE(.));
         PROVIDE (__ram_rwdata_end = ABSOLUTE(.));
-    } > Onchip_Memory
+    } > sdram_controller
 
     PROVIDE (__flash_rwdata_start = LOADADDR(.rwdata));
 
@@ -281,7 +283,7 @@ SECTIONS
 
         . = ALIGN(4);
         __bss_end = ABSOLUTE(.);
-    } > Onchip_Memory
+    } > sdram_controller
 
     /*
      *
@@ -306,18 +308,35 @@ SECTIONS
      *
      */
 
-    .Onchip_Memory LOADADDR (.bss) + SIZEOF (.bss) : AT ( LOADADDR (.bss) + SIZEOF (.bss) )
+    .Onchip_Memory : AT ( LOADADDR (.bss) + SIZEOF (.bss) )
     {
         PROVIDE (_alt_partition_Onchip_Memory_start = ABSOLUTE(.));
         *(.Onchip_Memory. Onchip_Memory.*)
         . = ALIGN(4);
         PROVIDE (_alt_partition_Onchip_Memory_end = ABSOLUTE(.));
-        _end = ABSOLUTE(.);
-        end = ABSOLUTE(.);
-        __alt_stack_base = ABSOLUTE(.);
     } > Onchip_Memory
 
     PROVIDE (_alt_partition_Onchip_Memory_load_addr = LOADADDR(.Onchip_Memory));
+
+    /*
+     *
+     * This section's LMA is set to the .text region.
+     * crt0 will copy to this section's specified mapped region virtual memory address (VMA)
+     *
+     */
+
+    .sdram_controller LOADADDR (.Onchip_Memory) + SIZEOF (.Onchip_Memory) : AT ( LOADADDR (.Onchip_Memory) + SIZEOF (.Onchip_Memory) )
+    {
+        PROVIDE (_alt_partition_sdram_controller_start = ABSOLUTE(.));
+        *(.sdram_controller. sdram_controller.*)
+        . = ALIGN(4);
+        PROVIDE (_alt_partition_sdram_controller_end = ABSOLUTE(.));
+        _end = ABSOLUTE(.);
+        end = ABSOLUTE(.);
+        __alt_stack_base = ABSOLUTE(.);
+    } > sdram_controller
+
+    PROVIDE (_alt_partition_sdram_controller_load_addr = LOADADDR(.sdram_controller));
 
     /*
      * Stabs debugging sections.
@@ -366,7 +385,7 @@ SECTIONS
 /*
  * Don't override this, override the __alt_stack_* symbols instead.
  */
-__alt_data_end = 0x88000;
+__alt_data_end = 0x1800000;
 
 /*
  * The next two symbols define the location of the default stack.  You can
@@ -382,4 +401,4 @@ PROVIDE( __alt_stack_limit   = __alt_stack_base );
  * Override this symbol to put the heap in a different memory.
  */
 PROVIDE( __alt_heap_start    = end );
-PROVIDE( __alt_heap_limit    = 0x88000 );
+PROVIDE( __alt_heap_limit    = 0x1800000 );

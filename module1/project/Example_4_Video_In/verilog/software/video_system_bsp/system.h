@@ -2,9 +2,9 @@
  * system.h - SOPC Builder system and BSP software package information
  *
  * Machine generated for CPU 'CPU' in SOPC Builder design 'Video_System'
- * SOPC Builder design path: E:/Example_4_Video_In/verilog/Video_System.sopcinfo
+ * SOPC Builder design path: E:/project/force/module1/project/Example_4_Video_In/verilog/Video_System.sopcinfo
  *
- * Generated: Tue Jan 27 10:47:38 PST 2015
+ * Generated: Wed Jan 28 16:41:05 PST 2015
  */
 
 /*
@@ -61,7 +61,7 @@
  */
 
 #define ALT_MODULE_CLASS_AV_Config altera_up_avalon_audio_and_video_config
-#define AV_CONFIG_BASE 0x89000
+#define AV_CONFIG_BASE 0x89020
 #define AV_CONFIG_IRQ -1
 #define AV_CONFIG_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define AV_CONFIG_NAME "/dev/AV_Config"
@@ -81,11 +81,11 @@
 #define ALT_CPU_CPU_ID_SIZE 1
 #define ALT_CPU_CPU_ID_VALUE 0x00000000
 #define ALT_CPU_CPU_IMPLEMENTATION "fast"
-#define ALT_CPU_DATA_ADDR_WIDTH 0x14
+#define ALT_CPU_DATA_ADDR_WIDTH 0x19
 #define ALT_CPU_DCACHE_LINE_SIZE 32
 #define ALT_CPU_DCACHE_LINE_SIZE_LOG2 5
 #define ALT_CPU_DCACHE_SIZE 2048
-#define ALT_CPU_EXCEPTION_ADDR 0x84020
+#define ALT_CPU_EXCEPTION_ADDR 0x1000020
 #define ALT_CPU_FLUSHDA_SUPPORTED
 #define ALT_CPU_FREQ 50000000
 #define ALT_CPU_HARDWARE_DIVIDE_PRESENT 0
@@ -98,10 +98,10 @@
 #define ALT_CPU_ICACHE_LINE_SIZE_LOG2 5
 #define ALT_CPU_ICACHE_SIZE 4096
 #define ALT_CPU_INITDA_SUPPORTED
-#define ALT_CPU_INST_ADDR_WIDTH 0x14
+#define ALT_CPU_INST_ADDR_WIDTH 0x19
 #define ALT_CPU_NAME "CPU"
 #define ALT_CPU_NUM_OF_SHADOW_REG_SETS 0
-#define ALT_CPU_RESET_ADDR 0x84000
+#define ALT_CPU_RESET_ADDR 0x1000000
 
 
 /*
@@ -115,11 +115,11 @@
 #define NIOS2_CPU_ID_SIZE 1
 #define NIOS2_CPU_ID_VALUE 0x00000000
 #define NIOS2_CPU_IMPLEMENTATION "fast"
-#define NIOS2_DATA_ADDR_WIDTH 0x14
+#define NIOS2_DATA_ADDR_WIDTH 0x19
 #define NIOS2_DCACHE_LINE_SIZE 32
 #define NIOS2_DCACHE_LINE_SIZE_LOG2 5
 #define NIOS2_DCACHE_SIZE 2048
-#define NIOS2_EXCEPTION_ADDR 0x84020
+#define NIOS2_EXCEPTION_ADDR 0x1000020
 #define NIOS2_FLUSHDA_SUPPORTED
 #define NIOS2_HARDWARE_DIVIDE_PRESENT 0
 #define NIOS2_HARDWARE_MULTIPLY_PRESENT 1
@@ -131,9 +131,9 @@
 #define NIOS2_ICACHE_LINE_SIZE_LOG2 5
 #define NIOS2_ICACHE_SIZE 4096
 #define NIOS2_INITDA_SUPPORTED
-#define NIOS2_INST_ADDR_WIDTH 0x14
+#define NIOS2_INST_ADDR_WIDTH 0x19
 #define NIOS2_NUM_OF_SHADOW_REG_SETS 0
-#define NIOS2_RESET_ADDR 0x84000
+#define NIOS2_RESET_ADDR 0x1000000
 
 
 /*
@@ -141,6 +141,8 @@
  *
  */
 
+#define __ALTERA_AVALON_JTAG_UART
+#define __ALTERA_AVALON_NEW_SDRAM_CONTROLLER
 #define __ALTERA_AVALON_ONCHIP_MEMORY2
 #define __ALTERA_NIOS2_QSYS
 #define __ALTERA_UP_AVALON_AUDIO_AND_VIDEO_CONFIG
@@ -198,7 +200,7 @@
  */
 
 #define ALT_MODULE_CLASS_Pixel_Buffer_DMA altera_up_avalon_video_pixel_buffer_dma
-#define PIXEL_BUFFER_DMA_BASE 0x89020
+#define PIXEL_BUFFER_DMA_BASE 0x89000
 #define PIXEL_BUFFER_DMA_IRQ -1
 #define PIXEL_BUFFER_DMA_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define PIXEL_BUFFER_DMA_NAME "/dev/Pixel_Buffer_DMA"
@@ -212,6 +214,7 @@
  */
 
 #define ALT_DEVICE_FAMILY "Cyclone II"
+#define ALT_ENHANCED_INTERRUPT_API_PRESENT
 #define ALT_IRQ_BASE NULL
 #define ALT_LOG_PORT "/dev/null"
 #define ALT_LOG_PORT_BASE 0x0
@@ -220,18 +223,24 @@
 #define ALT_NUM_EXTERNAL_INTERRUPT_CONTROLLERS 0
 #define ALT_NUM_INTERNAL_INTERRUPT_CONTROLLERS 1
 #define ALT_NUM_INTERRUPT_CONTROLLERS 1
-#define ALT_STDERR "/dev/null"
-#define ALT_STDERR_BASE 0x0
-#define ALT_STDERR_DEV null
-#define ALT_STDERR_TYPE ""
-#define ALT_STDIN "/dev/null"
-#define ALT_STDIN_BASE 0x0
-#define ALT_STDIN_DEV null
-#define ALT_STDIN_TYPE ""
-#define ALT_STDOUT "/dev/null"
-#define ALT_STDOUT_BASE 0x0
-#define ALT_STDOUT_DEV null
-#define ALT_STDOUT_TYPE ""
+#define ALT_STDERR "/dev/jtag_uart"
+#define ALT_STDERR_BASE 0x89030
+#define ALT_STDERR_DEV jtag_uart
+#define ALT_STDERR_IS_JTAG_UART
+#define ALT_STDERR_PRESENT
+#define ALT_STDERR_TYPE "altera_avalon_jtag_uart"
+#define ALT_STDIN "/dev/jtag_uart"
+#define ALT_STDIN_BASE 0x89030
+#define ALT_STDIN_DEV jtag_uart
+#define ALT_STDIN_IS_JTAG_UART
+#define ALT_STDIN_PRESENT
+#define ALT_STDIN_TYPE "altera_avalon_jtag_uart"
+#define ALT_STDOUT "/dev/jtag_uart"
+#define ALT_STDOUT_BASE 0x89030
+#define ALT_STDOUT_DEV jtag_uart
+#define ALT_STDOUT_IS_JTAG_UART
+#define ALT_STDOUT_PRESENT
+#define ALT_STDOUT_TYPE "altera_avalon_jtag_uart"
 #define ALT_SYSTEM_NAME "Video_System"
 
 
@@ -257,5 +266,62 @@
 #define ALT_MAX_FD 32
 #define ALT_SYS_CLK none
 #define ALT_TIMESTAMP_CLK none
+
+
+/*
+ * jtag_uart configuration
+ *
+ */
+
+#define ALT_MODULE_CLASS_jtag_uart altera_avalon_jtag_uart
+#define JTAG_UART_BASE 0x89030
+#define JTAG_UART_IRQ 5
+#define JTAG_UART_IRQ_INTERRUPT_CONTROLLER_ID 0
+#define JTAG_UART_NAME "/dev/jtag_uart"
+#define JTAG_UART_READ_DEPTH 64
+#define JTAG_UART_READ_THRESHOLD 8
+#define JTAG_UART_SPAN 8
+#define JTAG_UART_TYPE "altera_avalon_jtag_uart"
+#define JTAG_UART_WRITE_DEPTH 64
+#define JTAG_UART_WRITE_THRESHOLD 8
+
+
+/*
+ * sdram_controller configuration
+ *
+ */
+
+#define ALT_MODULE_CLASS_sdram_controller altera_avalon_new_sdram_controller
+#define SDRAM_CONTROLLER_BASE 0x1000000
+#define SDRAM_CONTROLLER_CAS_LATENCY 3
+#define SDRAM_CONTROLLER_CONTENTS_INFO
+#define SDRAM_CONTROLLER_INIT_NOP_DELAY 0.0
+#define SDRAM_CONTROLLER_INIT_REFRESH_COMMANDS 2
+#define SDRAM_CONTROLLER_IRQ -1
+#define SDRAM_CONTROLLER_IRQ_INTERRUPT_CONTROLLER_ID -1
+#define SDRAM_CONTROLLER_IS_INITIALIZED 1
+#define SDRAM_CONTROLLER_NAME "/dev/sdram_controller"
+#define SDRAM_CONTROLLER_POWERUP_DELAY 100.0
+#define SDRAM_CONTROLLER_REFRESH_PERIOD 15.625
+#define SDRAM_CONTROLLER_REGISTER_DATA_IN 1
+#define SDRAM_CONTROLLER_SDRAM_ADDR_WIDTH 0x16
+#define SDRAM_CONTROLLER_SDRAM_BANK_WIDTH 2
+#define SDRAM_CONTROLLER_SDRAM_COL_WIDTH 8
+#define SDRAM_CONTROLLER_SDRAM_DATA_WIDTH 16
+#define SDRAM_CONTROLLER_SDRAM_NUM_BANKS 4
+#define SDRAM_CONTROLLER_SDRAM_NUM_CHIPSELECTS 1
+#define SDRAM_CONTROLLER_SDRAM_ROW_WIDTH 12
+#define SDRAM_CONTROLLER_SHARED_DATA 0
+#define SDRAM_CONTROLLER_SIM_MODEL_BASE 0
+#define SDRAM_CONTROLLER_SPAN 8388608
+#define SDRAM_CONTROLLER_STARVATION_INDICATOR 0
+#define SDRAM_CONTROLLER_TRISTATE_BRIDGE_SLAVE ""
+#define SDRAM_CONTROLLER_TYPE "altera_avalon_new_sdram_controller"
+#define SDRAM_CONTROLLER_T_AC 5.5
+#define SDRAM_CONTROLLER_T_MRD 3
+#define SDRAM_CONTROLLER_T_RCD 20.0
+#define SDRAM_CONTROLLER_T_RFC 70.0
+#define SDRAM_CONTROLLER_T_RP 20.0
+#define SDRAM_CONTROLLER_T_WR 14.0
 
 #endif /* __SYSTEM_H_ */

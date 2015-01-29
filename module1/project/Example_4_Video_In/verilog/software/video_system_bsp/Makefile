@@ -103,7 +103,7 @@ ACDS_VERSION := 13.0sp1
 # BUILD_NUMBER: 232
 
 SETTINGS_FILE := settings.bsp
-SOPC_FILE := E:/Example_4_Video_In/verilog/Video_System.sopcinfo
+SOPC_FILE := E:/project/force/module1/project/Example_4_Video_In/verilog/Video_System.sopcinfo
 
 #-------------------------------------------------------------------------------
 #                             TOOL & COMMAND DEFINITIONS
@@ -217,6 +217,17 @@ Avalon_Audio_and_Video_driver_SRCS_ROOT := drivers
 Avalon_Audio_and_Video_driver_C_LIB_SRCS := \
 	$(Avalon_Audio_and_Video_driver_SRCS_ROOT)/src/altera_up_avalon_audio_and_video_config.c
 
+# altera_avalon_jtag_uart_driver sources root 
+altera_avalon_jtag_uart_driver_SRCS_ROOT := drivers
+
+# altera_avalon_jtag_uart_driver sources 
+altera_avalon_jtag_uart_driver_C_LIB_SRCS := \
+	$(altera_avalon_jtag_uart_driver_SRCS_ROOT)/src/altera_avalon_jtag_uart_init.c \
+	$(altera_avalon_jtag_uart_driver_SRCS_ROOT)/src/altera_avalon_jtag_uart_read.c \
+	$(altera_avalon_jtag_uart_driver_SRCS_ROOT)/src/altera_avalon_jtag_uart_write.c \
+	$(altera_avalon_jtag_uart_driver_SRCS_ROOT)/src/altera_avalon_jtag_uart_ioctl.c \
+	$(altera_avalon_jtag_uart_driver_SRCS_ROOT)/src/altera_avalon_jtag_uart_fd.c
+
 # altera_nios2_qsys_hal_driver sources root 
 altera_nios2_qsys_hal_driver_SRCS_ROOT := HAL
 
@@ -321,6 +332,7 @@ hal_C_LIB_SRCS := \
 # Assemble all component C source files 
 COMPONENT_C_LIB_SRCS += \
 	$(Avalon_Audio_and_Video_driver_C_LIB_SRCS) \
+	$(altera_avalon_jtag_uart_driver_C_LIB_SRCS) \
 	$(altera_nios2_qsys_hal_driver_C_LIB_SRCS) \
 	$(avalon_video_pixel_buffer_dma_driver_C_LIB_SRCS) \
 	$(hal_C_LIB_SRCS)
