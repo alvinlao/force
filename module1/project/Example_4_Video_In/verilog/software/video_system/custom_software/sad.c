@@ -89,7 +89,7 @@ void SADTrack(Block *targetBlock, Block *resultBlock, Block *window, Pixel *pixe
 
             curBlockDelta = SADBlock(targetBlock, resultBlock, pixelA, pixelB);
 
-            if(curBlockDelta <= bestBlockDelta) {
+            if(curBlockDelta < bestBlockDelta) {
                 bestBlockX = x;
                 bestBlockY = y;
                 bestBlockDelta = curBlockDelta;
