@@ -161,6 +161,19 @@
          type = "int";
       }
    }
+   element v_in_position_x.s1
+   {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
+      datum baseAddress
+      {
+         value = "45120";
+         type = "String";
+      }
+   }
    element sdram_controller.s1
    {
       datum _lockedAddress
@@ -200,7 +213,7 @@
          type = "String";
       }
    }
-   element v_in_position_x.s1
+   element onchip_memory2_0.s1
    {
       datum _lockedAddress
       {
@@ -209,7 +222,7 @@
       }
       datum baseAddress
       {
-         value = "45120";
+         value = "0";
          type = "String";
       }
    }
@@ -223,19 +236,6 @@
       datum baseAddress
       {
          value = "45168";
-         type = "String";
-      }
-   }
-   element onchip_memory2_0.s1
-   {
-      datum _lockedAddress
-      {
-         value = "1";
-         type = "boolean";
-      }
-      datum baseAddress
-      {
-         value = "0";
          type = "String";
       }
    }
@@ -318,7 +318,7 @@
  <parameter name="projectName" value="vga_graphics.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1422416530132" />
+ <parameter name="timeStamp" value="1422443816390" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
@@ -538,8 +538,8 @@
    enabled="1"
    name="pixel_buffer_dma">
   <parameter name="addr_mode" value="X-Y" />
-  <parameter name="start_address" value="0" />
-  <parameter name="back_start_address" value="0" />
+  <parameter name="start_address" value="524288" />
+  <parameter name="back_start_address" value="786431" />
   <parameter name="image_width" value="320" />
   <parameter name="image_height" value="240" />
   <parameter name="color_space" value="16-bit RGB" />

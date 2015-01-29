@@ -91,7 +91,7 @@ void VideoGetPixel(Pixel *p) {
 	addr |= ((y & VideoPixelBuffer->y_coord_mask) << VideoPixelBuffer->y_coord_offset);
 
 	int rgb;
-    rgb = IORD_32DIRECT(VideoPixelBuffer->buffer_start_address, addr);
+    rgb = IORD_32DIRECT(VideoPixelBuffer->back_buffer_start_address, addr);
     PixelSetRGB(p, rgb);
 }
 
