@@ -83,7 +83,7 @@ architecture rtl of Zebra is
             sdram_controller_wire_dqm                       : out   std_logic_vector(1 downto 0);                     -- dqm
             sdram_controller_wire_ras_n                     : out   std_logic;                                        -- ras_n
             sdram_controller_wire_we_n                      : out   std_logic;                                         -- we_n
-				sdram_clk_clk : OUT STD_LOGIC
+				sdram_clk_clk												: OUT STD_LOGIC
         );
     end component Video_System;
 	 
@@ -133,7 +133,8 @@ architecture rtl of Zebra is
             sdram_controller_wire_dq                        => DRAM_DQ,                        --                                    .dq
             sdram_controller_wire_dqm                       => DQM,                       --                                    .dqm
             sdram_controller_wire_ras_n                     => DRAM_RAS_N,                     --                                    .ras_n
-            sdram_controller_wire_we_n                      => DRAM_WE_N                       --                                    .we_n
+            sdram_controller_wire_we_n                      => DRAM_WE_N,                       --                                    .we_n
+				sdram_clk_clk												=> DRAM_CLK
         );
 
 		  TD_RESET <= '1';
