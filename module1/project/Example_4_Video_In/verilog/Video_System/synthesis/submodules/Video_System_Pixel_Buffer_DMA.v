@@ -85,7 +85,7 @@ module Video_System_Pixel_Buffer_DMA (
 
 // Parameters
 parameter DEFAULT_BUFFER_ADDRESS		= 32'd0;
-parameter DEFAULT_BACK_BUF_ADDRESS	= 32'd0;
+parameter DEFAULT_BACK_BUF_ADDRESS	= 32'd262143;
 
 parameter WW						= 8;  // Image width's address width
 parameter HW						= 7;  // Image height's address width
