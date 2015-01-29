@@ -203,7 +203,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "0";
+         value = "1";
          type = "boolean";
       }
    }
@@ -357,7 +357,7 @@
  <parameter name="projectName">Example_4_Video_In.qpf</parameter>
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1422488735234" />
+ <parameter name="timeStamp" value="1422509362951" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface
@@ -489,7 +489,7 @@
    name="Pixel_Buffer_DMA">
   <parameter name="addr_mode" value="X-Y" />
   <parameter name="start_address" value="0" />
-  <parameter name="back_start_address" value="0" />
+  <parameter name="back_start_address" value="262143" />
   <parameter name="image_width" value="320" />
   <parameter name="image_height" value="240" />
   <parameter name="color_space" value="16-bit RGB" />
