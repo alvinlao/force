@@ -38,7 +38,12 @@ entity video is
 				DRAM_BA_0, DRAM_BA_1 : BUFFER STD_LOGIC;
 				DRAM_CS_N, DRAM_CAS_N, DRAM_RAS_N, DRAM_WE_N : OUT STD_LOGIC;
 				DRAM_DQ : INOUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-				DRAM_UDQM, DRAM_LDQM : BUFFER STD_LOGIC
+				DRAM_UDQM, DRAM_LDQM : BUFFER STD_LOGIC;
+-- sdCard
+				b_SD_DAT : INOUT STD_LOGIC;
+				b_SD_CMD : INOUT STD_LOGIC;
+				b_SD_DAT3 : INOUT STD_LOGIC;
+				o_SD_CLOCK : OUT STD_LOGIC
 	);
 end video;
 
@@ -83,7 +88,11 @@ architecture rtl of video is
             sdram_controller_wire_dqm                       : out   std_logic_vector(1 downto 0);                     -- dqm
             sdram_controller_wire_ras_n                     : out   std_logic;                                        -- ras_n
             sdram_controller_wire_we_n                      : out   std_logic;                                         -- we_n
-				sdram_clk_clk												: OUT STD_LOGIC
+				sdram_clk_clk												: OUT STD_LOGIC;
+				sd_card_b_SD_cmd   : inout std_logic ; -- b_SD_cmd
+            sd_card_b_SD_dat   : inout std_logic ; -- b_SD_dat
+            sd_card_b_SD_dat3  : inout std_logic ; -- b_SD_dat3
+            sd_card_o_SD_clock : out   std_logic         -- o_SD_clock
         );
     end component video_system;
 	 
@@ -134,7 +143,11 @@ architecture rtl of video is
             sdram_controller_wire_dqm                       => DQM,                       --                                    .dqm
             sdram_controller_wire_ras_n                     => DRAM_RAS_N,                     --                                    .ras_n
             sdram_controller_wire_we_n                      => DRAM_WE_N,                       --                                    .we_n
-				sdram_clk_clk												=> DRAM_CLK
+				sdram_clk_clk												=> DRAM_CLK,
+				sd_card_b_SD_cmd   => b_SD_CMD,   -- sd_card.b_SD_cmd
+            sd_card_b_SD_dat   => b_SD_dat,   --        .b_SD_dat
+            sd_card_b_SD_dat3  => b_SD_dat3,  --        .b_SD_dat3
+            sd_card_o_SD_clock => o_SD_clock  --        .o_SD_clock
         );
 
 		  TD_RESET <= '1';
