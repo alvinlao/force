@@ -46,18 +46,18 @@ architecture bhv of sad is
 	type SadWindowType 			is array (0 to ((win_size_x - block_size_x)/step_x), 0 to (win_size_y - block_size_y)/step_y) of SadBlockType;
 	type SADForEachBlocksType	is array (0 to ((win_size_x - block_size_x)/step_x), 0 to (win_size_y - block_size_y)/step_y) of integer range 0 to SAD_SIZE;
 	
-    signal current_state 	: StatesType := Standby;
+	signal current_state 	: StatesType := Standby;
 	signal next_state 		: StatesType := Standby;
 	
 	signal Window 			: WindowType;
 	
 	signal windowStartX 	: integer range 0 to (SCREEN_WIDTH - win_size_x);
 	signal windowStartY 	: integer range 0 to (SCREEN_HEIGHT - win_size_y);
-	
 	signal ReferenceBlock 	: BlockType;
+	
 	signal SADForEachBlock 	: SADForEachBlocksType;	
 	signal SADCollection 	: SadWindowType;
-	
+		
 	begin
 	  
 	process (clk, reset_n)
@@ -132,9 +132,9 @@ architecture bhv of sad is
 							for BLK_ROW in 0 to (block_size_x-1) loop
 								for BLK_COL in 0 to (block_size_y-1) loop
 									SADCollection(WIN_ROW,WIN_COL)(BLK_ROW,BLK_COL) <= to_integer(
-										(unsigned((signed('0'&Window((WIN_ROW*step_x)+BLK_ROW,(WIN_COL*step_y)+BLK_COL)(15 downto 11)) - signed('0'&ReferenceBlock(WIN_ROW+BLK_ROW,WIN_COL+BLK_COL)(15 downto 11)))) and B"01_1111") + 
-										(unsigned((signed('0'&Window((WIN_ROW*step_x)+BLK_ROW,(WIN_COL*step_y)+BLK_COL)(10 downto 5)) - signed('0'&ReferenceBlock(WIN_ROW+BLK_ROW,WIN_COL+BLK_COL)(10 downto 5)))) and B"011_1111" ) + 
-										(unsigned((signed('0'&Window((WIN_ROW*step_x)+BLK_ROW,(WIN_COL*step_y)+BLK_COL)(4 downto 0)) - signed('0'&ReferenceBlock(WIN_ROW+BLK_ROW,WIN_COL+BLK_COL)(4 downto 0)))) and B"01_1111")
+										(unsigned((signed('0'&Window((WIN_ROW*step_x)+BLK_ROW,(WIN_COL*step_y)+BLK_COL)(15 downto 11)) - signed('0'&ReferenceBlock(BLK_ROW,BLK_COL)(15 downto 11)))) and B"01_1111") + 
+										(unsigned((signed('0'&Window((WIN_ROW*step_x)+BLK_ROW,(WIN_COL*step_y)+BLK_COL)(10 downto 5)) - signed('0'&ReferenceBlock(BLK_ROW,BLK_COL)(10 downto 5)))) and B"011_1111" ) + 
+										(unsigned((signed('0'&Window((WIN_ROW*step_x)+BLK_ROW,(WIN_COL*step_y)+BLK_COL)(4 downto 0)) - signed('0'&ReferenceBlock(BLK_ROW,BLK_COL)(4 downto 0)))) and B"01_1111")
 										);
 								end loop;																
 							end loop;													
@@ -180,11 +180,22 @@ architecture bhv of sad is
 							
 						end loop;						
 					end loop;
-
-					posX <= std_logic_vector(to_unsigned((candidateRow*step_x)+(block_size_x/2),9));
-					posY <= std_logic_vector(to_unsigned((candidateCol*step_y)+(block_size_y/2),8));
+					
+					posX <= std_logic_vector(to_unsigned(windowStartX + (candidateRow*step_x) + (block_size_x/2),9));
+					posY <= std_logic_vector(to_unsigned(windowStartY + (candidateCol*step_y) + (block_size_y/2),8));					
 					acc <= std_logic_vector(to_unsigned(candidateSAD,16));
 					ready <= '1';
+					
+					windowStartX <= windowStartX + (candidateRow*step_x);
+					windowStartY <= windowStartY + (candidateCol*step_y);
+					
+					for BLK_ROW in 0 to block_size_x-1 loop
+						for BLK_COL in 0 to block_size_y-1 loop
+							ReferenceBlock(BLK_ROW,BLK_COL) <= Window((candidateRow*step_x)+BLK_ROW,(candidateCol*step_y)+BLK_COL);
+						end loop;
+					end loop;					
+					
+					
 					next_state <= Standby;
 					
 				when others=>
