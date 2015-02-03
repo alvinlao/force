@@ -1,0 +1,9 @@
+# Ignored directories
+Video_System/output_files
+
+# Ignored files
+*.ncf
+*.bsf
+*.txt
+*.html
+*.rpt
