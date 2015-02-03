@@ -2,6 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
+
 entity sad is
 	generic(
 		pixel_buffer_base : std_logic_vector := x"00000000";
@@ -21,15 +22,8 @@ entity sad is
 		
 		posX 	: out std_logic_vector(8 downto 0);
 		posY 	: out std_logic_vector(7 downto 0);
-		acc		: out std_logic_vector(5 downto 0);
-		
-		
-		slave_addr: in std_logic_vector(2 downto 0);
-		slave_rd_en: in std_logic;
-		slave_wr_en: in std_logic;
-		slave_readdata: out std_logic_vector(31 downto 0);
-		slave_writedata: in std_logic_vector(31 downto 0);
-		
+		acc		: out std_logic_vector(15 downto 0);
+				
 		master_addr : out std_logic_vector(31 downto 0);
 		master_rd_en : out std_logic;
 		master_wr_en : out std_logic;
@@ -41,171 +35,163 @@ entity sad is
 end sad;
 
 architecture bhv of sad is
-	type States is (Standby,Loading,CalculatingSAD, AddingSAD,Picking);
-	type WindowType is array (0 to win_size_x, 0 to win_size_y) of std_logic_vector(15 downto 0);
-	type BlockType is array (0 to block_size_x, 0 to block_size_y) of std_logic_vector(15 downto 0);
-	type SadBlockType is array (0 to block_size_x-1, 0 to block_size_y-1) of integer range 0 to 65536;
-	type SadWindowType is array (0 to (win_size_x - block_size_x)/step_x, 0 to (win_size_y - block_size_y)/step_y) of SadBlockType;
-	type SADForEachBlocksType is array (0 to (win_size_x - block_size_x)/step_x, 0 to (win_size_y - block_size_y)/step_y) of integer range 0 to 65536;
+	constant SCREEN_WIDTH 	: integer := 320;
+	constant SCREEN_HEIGHT 	: integer := 240;
+	constant SAD_SIZE 		: integer := 65536;
 	
-    signal current_state : States := Standby;
-	signal next_state : States := Standby;
+	type StatesType				is (Standby,Loading,CalculatingSAD, AddingSAD,Picking);
+	type WindowType 			is array (0 to win_size_x, 0 to win_size_y) of std_logic_vector(15 downto 0);
+	type BlockType 				is array (0 to block_size_x, 0 to block_size_y) of std_logic_vector(15 downto 0);
+	type SadBlockType 			is array (0 to block_size_x-1, 0 to block_size_y-1) of integer range 0 to SAD_SIZE;
+	type SadWindowType 			is array (0 to ((win_size_x - block_size_x)/step_x), 0 to (win_size_y - block_size_y)/step_y) of SadBlockType;
+	type SADForEachBlocksType	is array (0 to ((win_size_x - block_size_x)/step_x), 0 to (win_size_y - block_size_y)/step_y) of integer range 0 to SAD_SIZE;
 	
-	signal Window : WindowType;
-	signal nextLoadX : integer range 0 to win_size_x;
-	signal nextLoadY : integer range 0 to win_size_y;
+    signal current_state 	: StatesType := Standby;
+	signal next_state 		: StatesType := Standby;
 	
+	signal Window 			: WindowType;
 	
-	signal lastPosX : integer range 0 to 320;
-	signal lastPosY : integer range 0 to 240;
-	signal windowStartX : integer range 0 to (320 - win_size_x);
-	signal windowStartY : integer range 0 to (240 - win_size_y);
+	signal windowStartX 	: integer range 0 to (SCREEN_WIDTH - win_size_x);
+	signal windowStartY 	: integer range 0 to (SCREEN_HEIGHT - win_size_y);
 	
-	signal ReferenceBlock : BlockType;
-	signal SADForEachBlock :SADForEachBlocksType;
-
-	signal lastAddX : integer range 0 to 320;
-	signal lastAddY : integer range 0 to 240;
-	
+	signal ReferenceBlock 	: BlockType;
+	signal SADForEachBlock 	: SADForEachBlocksType;	
+	signal SADCollection 	: SadWindowType;
 	
 	begin
-	
-		--state machine process;
-		process(clk, reset_n)
-		begin
-			if (reset_n = '0') then
-				current_state <= Standby;
-				next_state <= Standby;
-			elsif rising_edge(clk) then
+	  
+	process (clk, reset_n)
+
+	variable nextX : integer range 0 to SCREEN_WIDTH;
+		variable nextY : integer range 0 to SCREEN_HEIGHT;
+		variable candidateRow : integer range 0 to ((win_size_x - block_size_x)/step_x);
+		variable candidateCol : integer range 0 to ((win_size_y - block_size_y)/step_y);
+		variable candidateSAD : integer range 0 to SAD_SIZE := SAD_SIZE;
+		variable load_waiting : std_logic;
+
+	begin
+		if (reset_n = '0') then
+			current_state <= Standby;
+			next_state <= Standby;
+			ready <= '0';
+		elsif rising_edge(clk) then
 			next_state <= current_state;
-				case current_state is
-					when Standby => 
+			master_wr_en <= '0';
+			master_rd_en <= '0';
+						
+			case (current_state) is
+				when Standby => 
 						if (start = '1') then
 							next_state <= Loading;
-							nextLoadX <= 0;
-							nextLoadY <= 0;
+							nextX := 0;
+							nextY := 0;
+							load_waiting := '0';
+							ready <= '0';
 						end if;
-					when Loading => 
-					
-					when CalculatingSAD => 
-					
-					when AddingSAD => 
-					
-					when Picking => 
-					
-					when others =>
-						next_state <= current_state;
-				end case;
-			end if;
-		end process;	  
-	   
-		--do some shit - loading
-		process(clk)
-		begin
-			if(rising_edge(clk)) then
-				if (current_state = Loading) then
-				
-						-- this section needs more work
-						master_addr <= std_logic_vector(unsigned(pixel_buffer_base) + unsigned(to_unsigned(windowStartX + nextLoadX, 9)) & unsigned(to_unsigned(windowStartY + nextLoadY, 8)) & '0');	
+
+				when Loading =>
+					ready <= '0';
+					if (load_waiting = '1') then
+						if (master_waitrequest = '0') then
+							load_waiting := '0';
+							master_wr_en <= '0';
+							master_rd_en <= '0';
+
+							Window(nextX,nextY) <= master_readdata;
+							
+							nextX := nextX+1;
+							if(nextX = block_size_x) then
+								nextX := 0;
+								nextY := nextY +1;
+								
+								if (nextY = block_size_y) then
+									next_state <= CalculatingSAD;
+									load_waiting := '1';
+								end if;
+							end if;
+						else
+							master_addr <= std_logic_vector(unsigned(pixel_buffer_base) + unsigned(to_unsigned(windowStartX + nextX, 9)) & unsigned(to_unsigned(windowStartY + nextY, 8)) & '0');	
+							master_be <= "11";  -- byte enable
+							master_wr_en <= '0';
+							master_rd_en <= '1';
+						end if;
+					else
+						master_addr <= std_logic_vector(unsigned(pixel_buffer_base) + unsigned(to_unsigned(windowStartX + nextX, 9)) & unsigned(to_unsigned(windowStartY + nextY, 8)) & '0');	
 						master_be <= "11";  -- byte enable
 						master_wr_en <= '0';
 						master_rd_en <= '1';
-						  
-						Window(nextLoadX,nextLoadY) <= master_readdata;
-						--
-				end if;
-			end if;
-		end process;
+						
+						load_waiting := '1';
+					end if;
 		
-		
-		--generate some shit - calculating sad for blocks
-		
-GEN_WIN_ROW:
-    for WIN_ROW in 0 to ((win_size_x - block_size_x)/step_x) generate
-    begin
-GEN_WIN_COL:
-        for WIN_COL in 0 to ((win_size_y - block_size_y)/step_y) generate
-        begin
-GEN_BLK_ROW:
-			for BLK_ROW in 0 to (block_size_x-1) generate
-			begin
-GEN_BLK_ROW:
-				for BLK_COL in 0 to (block_size_y-1) generate
-				begin
-					process(current_state, clk)
-					begin
-						if(rising_edge(clk)) then
-							if (current_state = CalculatingSAD) then
-							SADCollection(WIN_ROW,WIN_COL)(BLK_ROW,BLK_COL) <= to_integer(
-								(unsigned((signed('0'&Window((WIN_ROW*step_x)+BLK_ROW,(WIN_COL*step_y)+BLK_COL)(15 downto 11)) - signed('0'&ReferenceBlock(WIN_ROW+BLK_ROW,WIN_COL+BLK_COL)(15 downto 11)))) and B"01_1111") + 
-								(unsigned((signed('0'&Window((WIN_ROW*step_x)+BLK_ROW,(WIN_COL*step_y)+BLK_COL)(10 downto 5)) - signed('0'&ReferenceBlock(WIN_ROW+BLK_ROW,WIN_COL+BLK_COL)(10 downto 5)))) and B"011_1111" ) + 
-								(unsigned((signed('0'&Window((WIN_ROW*step_x)+BLK_ROW,(WIN_COL*step_y)+BLK_COL)(4 downto 0)) - signed('0'&ReferenceBlock(WIN_ROW+BLK_ROW,WIN_COL+BLK_COL)(4 downto 0)))) and B"01_1111")
-								);
-							end if;
-							next_state <= AddingSAD;
-						end if;
-					end process;
-				end generate;				
-			end generate;
-			
-			
-			
-        end generate;	
-  end generate;
-	
-	   
-	   -- generate some more shit  - add 
-gen_win_row_2:
-    for win_row in 0 to ((win_size_x - block_size_x)/step_x) generate
-    begin
-gen_win_col_2:
-        for win_col in 0 to ((win_size_y - block_size_y)/step_y) generate
-        begin
-			process(current_state, clk)
-			begin
-				if(rising_edge(clk)) then
-					if (current_state = AddingSAD) then
-						SADForEachBlock(win_row,win_col) = SADForEachBlock(win_row,win_col) + SADCollection(win_row,win_col)(lastAddX,lastAddY);
-						lastAddX <= lastAddX+1;
-						if(lastAddX = 320) then
-							lastAddX <= 0;
-							lastAddY <= lastAddY +1
+				when CalculatingSAD =>
+					ready <= '0';
+					
+					for WIN_ROW in 0 to ((win_size_x - block_size_x)/step_x) loop
+						for WIN_COL in 0 to ((win_size_y - block_size_y)/step_y) loop
+							for BLK_ROW in 0 to (block_size_x-1) loop
+								for BLK_COL in 0 to (block_size_y-1) loop
+									SADCollection(WIN_ROW,WIN_COL)(BLK_ROW,BLK_COL) <= to_integer(
+										(unsigned((signed('0'&Window((WIN_ROW*step_x)+BLK_ROW,(WIN_COL*step_y)+BLK_COL)(15 downto 11)) - signed('0'&ReferenceBlock(WIN_ROW+BLK_ROW,WIN_COL+BLK_COL)(15 downto 11)))) and B"01_1111") + 
+										(unsigned((signed('0'&Window((WIN_ROW*step_x)+BLK_ROW,(WIN_COL*step_y)+BLK_COL)(10 downto 5)) - signed('0'&ReferenceBlock(WIN_ROW+BLK_ROW,WIN_COL+BLK_COL)(10 downto 5)))) and B"011_1111" ) + 
+										(unsigned((signed('0'&Window((WIN_ROW*step_x)+BLK_ROW,(WIN_COL*step_y)+BLK_COL)(4 downto 0)) - signed('0'&ReferenceBlock(WIN_ROW+BLK_ROW,WIN_COL+BLK_COL)(4 downto 0)))) and B"01_1111")
+										);
+								end loop;																
+							end loop;													
+						end loop;						
+					end loop;
+					
+					nextX := 0;
+					nextY := 0;
+					next_state <= AddingSAD;
+					
+				when AddingSAD =>
+					ready <= '0';
+				
+					for WIN_ROW in 0 to ((win_size_x - block_size_x)/step_x) loop
+						for WIN_COL in 0 to ((win_size_y - block_size_y)/step_y) loop
+						
+							SADForEachBlock(WIN_ROW,WIN_COL) <= SADForEachBlock(WIN_ROW,WIN_COL) + SADCollection(WIN_ROW,WIN_COL)(nextX,nextY);
 							
-							if (lastAddY = 240) then
-								next_state <= Picking;
-							end if;
+						end loop;						
+					end loop;
+					
+					nextX := nextX+1;
+					if(nextX = block_size_x) then
+						nextX := 0;
+						nextY := nextY +1;
+						
+						if (nextY = block_size_y) then
+							candidateSAD := SAD_SIZE;
+							next_state <= Picking;
 						end if;
 					end if;
-				end if;
-			end process;			
-		end generate;				
-	end generate;
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-		  
-	process (slave_rd_en, slave_addr)
-   begin	       
-      slave_readdata <= (others => '-');
-      if (slave_rd_en = '1') then
-          case slave_addr is
-              when "000" => slave_readdata <= "00000000000000000000000";
-              when "001" => slave_readdata <= "000000000000000000000000";
-              when "010" => slave_readdata <= "00000000000000000000000";
-              when "011" => slave_readdata <= "000000000000000000000000";
-              when "100" => slave_readdata <= "0000000000000000";
-              when "101" => slave_readdata <= "0000";
-              when others => null;
-            end case;
-         end if;
-    end process;						
+					
+				when Picking =>
+					
+					for WIN_ROW in 0 to ((win_size_x - block_size_x)/step_x) loop
+						for WIN_COL in 0 to ((win_size_y - block_size_y)/step_y) loop
+						
+							if (SADForEachBlock(WIN_ROW,WIN_COL) < candidateSAD) then
+								candidateSAD := SADForEachBlock(WIN_ROW,WIN_COL);
+								candidateRow := WIN_ROW;
+								candidateCol := WIN_COL;
+							end if;
+							
+						end loop;						
+					end loop;
+
+					posX <= std_logic_vector(to_unsigned((candidateRow*step_x)+(block_size_x/2),9));
+					posY <= std_logic_vector(to_unsigned((candidateCol*step_y)+(block_size_y/2),8));
+					acc <= std_logic_vector(to_unsigned(candidateSAD,16));
+					ready <= '1';
+					next_state <= Standby;
+					
+				when others=>
+					-- why are we here?
+					next_state <= Standby;
+			end case;
+		end if;	
+	end process;	
 				
 end bhv;
