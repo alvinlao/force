@@ -13,12 +13,15 @@
 # applicable agreement for further details.
 
 # Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
-# File: E:\project\force\module1\project\Example_4_Video_In.csv
-# Generated on: Tue Feb 03 03:49:18 2015
+# File: E:\project\force\module1\project\video_system_sprint_1\verilog\video_system_pin_assignments.csv
+# Generated on: Wed Feb 04 15:36:00 2015
 
 # Note: The column header names should not be changed if you wish to import this .csv file into the Quartus II software.
 
 To,Direction,Location,I/O Bank,VREF Group,Fitter Location,I/O Standard,Reserved,Current Strength,Differential Pair
+b_SD_CMD,Bidir,PIN_Y21,6,B6_N1,PIN_Y21,,,,
+b_SD_DAT,Bidir,PIN_AD24,6,B6_N1,PIN_AD24,,,,
+b_SD_DAT3,Bidir,PIN_AC23,6,B6_N1,PIN_AC23,,,,
 CLOCK_50,Input,PIN_N2,2,B2_N1,PIN_N2,,,,
 DRAM_ADDR[11],Output,PIN_V5,1,B1_N1,PIN_V5,,,,
 DRAM_ADDR[10],Output,PIN_Y1,1,B1_N1,PIN_Y1,,,,
@@ -58,13 +61,14 @@ DRAM_LDQM,Output,PIN_AD2,1,B1_N1,PIN_AD2,,,,
 DRAM_RAS_N,Output,PIN_AB4,1,B1_N1,PIN_AB4,,,,
 DRAM_UDQM,Output,PIN_Y5,1,B1_N1,PIN_Y5,,,,
 DRAM_WE_N,Output,PIN_AD3,1,B1_N1,PIN_AD3,,,,
-I2C_SCLK,Output,PIN_A6,3,B3_N1,PIN_A6,,,Maximum Current,
-I2C_SDAT,Bidir,PIN_B6,3,B3_N1,PIN_B6,,,Maximum Current,
+I2C_SCLK,Output,PIN_A6,3,B3_N1,PIN_A6,,,,
+I2C_SDAT,Bidir,PIN_B6,3,B3_N1,PIN_B6,,,,
 KEY[3],Input,PIN_W26,6,B6_N1,PIN_W26,,,,
 KEY[2],Input,PIN_P23,6,B6_N0,PIN_P23,,,,
 KEY[1],Input,PIN_N23,5,B5_N1,PIN_N23,,,,
 KEY[0],Input,PIN_G26,5,B5_N0,PIN_G26,,,,
-overflow_flag_from_the_Video_In_Decoder,Output,,,,PIN_G17,,,,
+o_SD_CLOCK,Output,PIN_AD25,6,B6_N1,PIN_AD25,,,,
+overflow_flag_from_the_Video_In_Decoder,Output,,,,PIN_AA26,,,,
 SRAM_ADDR[17],Output,PIN_AC8,8,B8_N1,PIN_AC8,,,,
 SRAM_ADDR[16],Output,PIN_AB8,8,B8_N1,PIN_AB8,,,,
 SRAM_ADDR[15],Output,PIN_Y10,8,B8_N1,PIN_Y10,,,,
@@ -371,10 +375,6 @@ ENET_WR_N,Unknown,PIN_B22,4,B4_N0,,,,,
 ENET_RST_N,Unknown,PIN_B23,4,B4_N0,,,,,
 IRDA_TXD,Unknown,PIN_AE24,6,B6_N1,,,,,
 IRDA_RXD,Unknown,PIN_AE25,6,B6_N1,,,,,
-SD_DAT,Unknown,PIN_AD24,6,B6_N1,,,,,
-SD_DAT3,Unknown,PIN_AC23,6,B6_N1,,,,,
-SD_CMD,Unknown,PIN_Y21,6,B6_N1,,,,,
-SD_CLK,Unknown,PIN_AD25,6,B6_N1,,,,,
 GPIO_0[0],Unknown,PIN_D25,5,B5_N0,,,,,
 GPIO_0[1],Unknown,PIN_J22,5,B5_N0,,,,,
 GPIO_0[2],Unknown,PIN_E26,5,B5_N0,,,,,
@@ -447,4 +447,4 @@ GPIO_1[32],Unknown,PIN_V24,6,B6_N0,,,,,
 GPIO_1[33],Unknown,PIN_V23,6,B6_N0,,,,,
 GPIO_1[34],Unknown,PIN_W25,6,B6_N1,,,,,
 GPIO_1[35],Unknown,PIN_W23,6,B6_N1,,,,,
-*,Unknown,,,,,,,Minimum Current,
+SD_CLK,Unknown,,,,,,,,
