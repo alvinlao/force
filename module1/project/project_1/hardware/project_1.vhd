@@ -51,7 +51,7 @@ architecture rtl of project_1 is
 	signal DQM : STD_LOGIC_VECTOR(1 DOWNTO 0);
 	signal BA : STD_LOGIC_VECTOR(1 DOWNTO 0);
 
-    component video_system
+    component project_1_qsys
         port (
             VGA_CLK_from_the_VGA_Controller                 : out   std_logic;                                        -- CLK
             VGA_HS_from_the_VGA_Controller                  : out   std_logic;                                        -- HS
@@ -94,7 +94,7 @@ architecture rtl of project_1 is
             sd_card_b_SD_dat3  : inout std_logic ; -- b_SD_dat3
             sd_card_o_SD_clock : out   std_logic         -- o_SD_clock
         );
-    end component video_system;
+    end component project_1_qsys;
 	 
 	 SIGNAL TDRESET,overflow_flag,SCL,SDT : STD_logic;
 	 
@@ -105,7 +105,7 @@ architecture rtl of project_1 is
 	 DRAM_UDQM <= DQM(1);
 	 DRAM_LDQM <= DQM(0);
 	 
-    u0 : component video_system
+    u0 : component project_1_qsys
         port map (
             VGA_CLK_from_the_VGA_Controller                 => 	VGA_CLK,                 --   VGA_Controller_external_interface.CLK
             VGA_HS_from_the_VGA_Controller                  => VGA_HS,                  --                                    .HS

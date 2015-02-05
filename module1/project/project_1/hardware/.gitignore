@@ -1,9 +1,9 @@
 # Ignore these
 software
 db
-Video_System/synthesis
-Video_System.html
-Video_System.sopcinfo
+*/synthesis
+*.html
+*.sopcinfo
 *.ncf
 *.bsf
 *.cmp
@@ -11,3 +11,5 @@ Video_System.sopcinfo
 *.qsf
 *.bak
 *.txt
+*.sof
+*.pof
