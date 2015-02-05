@@ -38,12 +38,12 @@ entity sad is
 		clk		: in std_logic;
 		reset_n	: in std_logic;
 		
-		start 	: in std_logic;
-		ready 	: out std_logic;
+		-- start 	: in std_logic;
+		-- ready 	: out std_logic;
 		
-		posX 	: out std_logic_vector(8 downto 0);
-		posY 	: out std_logic_vector(7 downto 0);
-		acc		: out std_logic_vector(15 downto 0);
+		-- posX 	: out std_logic_vector(8 downto 0);
+		-- posY 	: out std_logic_vector(7 downto 0);
+		-- acc		: out std_logic_vector(15 downto 0);
 				
 		master_addr : out std_logic_vector(31 downto 0);
 		master_rd_en : out std_logic;
@@ -51,7 +51,14 @@ entity sad is
 		master_be : out std_logic_vector(1 downto 0);
 		master_readdata : in std_logic_vector(15 downto 0);
 		master_writedata: out  std_logic_vector(15 downto 0);
-		master_waitrequest : in std_logic
+		master_waitrequest : in std_logic;
+		
+		slave_addr: in std_logic_vector(2 downto 0);
+		slave_rd_en: in std_logic;
+		slave_wr_en: in std_logic;
+		slave_readdata: out std_logic_vector(31 downto 0);
+		slave_writedata: in std_logic_vector(31 downto 0);
+		slave_waitrequest : out std_logic
 	);
 end sad;
 
@@ -66,6 +73,12 @@ architecture bhv of sad is
 	type SadBlockType 			is array (0 to block_size_x-1, 0 to block_size_y-1) of integer range 0 to SAD_SIZE;
 	type SadWindowType 			is array (0 to ((win_size_x - block_size_x)/step_x), 0 to (win_size_y - block_size_y)/step_y) of SadBlockType;
 	type SADForEachBlocksType	is array (0 to ((win_size_x - block_size_x)/step_x), 0 to (win_size_y - block_size_y)/step_y) of integer range 0 to SAD_SIZE;
+	
+	signal ready 			: std_logic := '0';
+	signal processing 		: std_logic;
+	signal posX				: std_logic_vector(8 downto 0);
+	signal posY				: std_logic_vector(7 downto 0);
+	signal acc				: std_logic_vector(15 downto 0);
 	
 	signal current_state 	: StatesType := Standby;
 	signal next_state 		: StatesType := Standby;
@@ -99,15 +112,21 @@ architecture bhv of sad is
 			next_state <= current_state;
 			master_wr_en <= '0';
 			master_rd_en <= '0';
-						
+			processing <=  '1';
+			
 			case (current_state) is
 				when Standby => 
-						if (start = '1') then
-							next_state <= Loading;
-							nextX := 0;
-							nextY := 0;
-							load_waiting := '0';
-							ready <= '0';
+						processing <= '0';
+						if (slave_wr_en = '1') then
+							if (slave_addr="000") then
+								if (slave_writedata(0) = '1') then
+									next_state <= Loading;
+									nextX := 0;
+									nextY := 0;
+									load_waiting := '0';
+									ready <= '0';
+								end if;
+							end if;
 						end if;
 
 				when Loading =>
@@ -223,7 +242,24 @@ architecture bhv of sad is
 					-- why are we here?
 					next_state <= Standby;
 			end case;
+			
 		end if;	
 	end process;	
+	
+
+   process (slave_rd_en, slave_addr)
+   begin	       
+		slave_readdata <= (others => '-');
+		if (slave_rd_en = '1') then
+			case slave_addr is
+				when "000" => slave_readdata <= "000";
+				when "001" => slave_readdata <= posX;
+				when "010" => slave_readdata <= posY;
+				when "011" => slave_readdata <= acc;
+				when "111" => slave_readdata <= "000"&ready;
+				when others => null;
+			end case;
+		end if;
+    end process;
 				
 end bhv;
