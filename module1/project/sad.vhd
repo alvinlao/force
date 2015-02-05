@@ -1,3 +1,24 @@
+-- Author	:	Jae Yeong Bae
+-- Team		:	EECE 381 Group 18
+-- Date		:	Feb 5 2015
+--
+-- File		:	Sum of Absolute Differences Hardware Accelorator
+-- 				to be used with Quartus II Qsys System and Avalon Memory Mapping interface
+--
+-- Usage	:	pixel_buffer_base 	= pixel buffer base as defined in Pixel Buffer core
+--				win_size			= search window size in pixels
+--				block_size_x		= reference block size in pixels
+--				steps				= how many pixels to be searched for
+--				screen_width		= constant value of 320
+--				screen_height		= constant value of 240
+--
+-- Timing	:	(2w)+(1)+(2(w-b)/s) clocks
+--				w = win_size_x * win_size_y
+--				b = block_size_x * block_size_y-1
+--				s = steps
+--
+-- Memory	:	a lot
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
