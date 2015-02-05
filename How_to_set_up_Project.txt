@@ -1,0 +1,28 @@
+Setting Up Project
+1. Open a terminal.
+2. Create a new directory.
+3. Go into created directory.
+4. git init
+--Optional--
+This sets it up so that you only pull the project files.
+4a. git remote add -f origin https://github.com/alvinlao/force.git
+4b. git config core.sparsecheckout true
+4c. echo "module1/project/video_system_sprint_1/" >> .git/info/sparse-checkout
+4d. git pull origin master
+----
+5. git clone https://github.com/alvinlao/force.git
+6. Open Quartus II
+7. Create a New Project
+8. For working directory, navigate to the "verilog" directory that you just cloned/pulled.
+9. Name the project "video" and hit "Next >".
+10. Add the "video_system.vhd" file and hit "Next >".
+11. Set the device family to "Cyclone II".
+12. Choose "EP2C35F672C6" from the available devices.
+13. Press Finish.
+14. Open Qsys. Open the ".qsys" file in the stuff you cloned/pulled.
+15. Generate it.
+16. Go back to Quartus when generating is finished.
+17. Click "Project" -> "Add/Remove Files in Project...".
+18. Add the generated ".qip" file. Make sure you select the "IP Variation Files" file type from the drop down (default is set to "Design Files"). This will make the ".qip" file visible in the window.
+19. Import the pin assignments from the CSV file (in the "verilog" directory you cloned/pulled). To import, press "Assignments" -> "Import Assignments...".
+20. Compile it. You should get ~400-430 warnings.
