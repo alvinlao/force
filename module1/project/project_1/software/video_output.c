@@ -12,6 +12,9 @@
 #define RIGHT 3
 #define LEFT 4
 
+#define KEY3 (char *) 0x00089410
+#define KEY2 (char *) 0x00089400
+
 // Test box params
 #define BOX_X0 120
 #define BOX_Y0 120
@@ -161,6 +164,12 @@ int main()
 		marker->x2 = track_x + MARKER_SIZE;
 		marker->y2 = track_y + MARKER_SIZE;
 		drawBox(pixel_buffer, marker);
+
+		if (!*KEY3) {
+			printf("KEY3 Pressed.\n");
+		} else if (!*KEY2) {
+			printf("KEY2 Pressed.\n");
+		}
 	}
 
     return 0;
