@@ -3,10 +3,18 @@
 #include "screenshot.h"
 #include <io.h>
 #include "altera_up_avalon_video_pixel_buffer_dma.h"
+#include <altera_up_sd_card_avalon_interface.h>
+
+alt_up_pixel_buffer_dma_dev *ScreenShotPixelBuffer;
+
 
 char screenCapture[FRAME_WIDTH*FRAME_HEIGHT];
 char bmpArray[54 + FRAME_WIDTH*FRAME_HEIGHT];
 int bmpCount = 0;
+
+void ScreenShotInit(alt_up_pixel_buffer_dma_dev *pixelBuffer) {
+	ScreenShotPixelBuffer = pixelBuffer;
+}
 
 void SavePixelArray(){
 	int i,j;
@@ -15,16 +23,19 @@ void SavePixelArray(){
 	for (i = 1; i < FRAME_WIDTH; i++){
 		for (j = 1; j < FRAME_HEIGHT; i++){
 			addr = 0;
-			addr |= ((i & VideoPixelBuffer->x_coord_mask) << VideoPixelBuffer->x_coord_offset);
-			addr |= ((j & VideoPixelBuffer->y_coord_mask) << VideoPixelBuffer->y_coord_offset);
+			addr |= ((i & ScreenShotPixelBuffer->x_coord_mask) << ScreenShotPixelBuffer->x_coord_offset);
+			addr |= ((j & ScreenShotPixelBuffer->y_coord_mask) << ScreenShotPixelBuffer->y_coord_offset);
 
-			screenCapture[count] = IORD_32DIRECT(VideoPixelBuffer->buffer_start_address, addr);
+			screenCapture[count] = IORD_32DIRECT(ScreenShotPixelBuffer->buffer_start_address, addr);
 			count++;
 		}
 	}
 }
 
 void SaveBmpSDCARD(){
+
+
+
 	SavePixelArray();
 	
 	alt_up_sd_card_dev *device_reference = NULL;
