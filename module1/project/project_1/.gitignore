@@ -1,8 +1,8 @@
-#Ignoring the following directories
+# Ignoring the following files/directories that
+# are generated when creating a project in Eclipse.
 [a-zA-Z0-9]*_bsp
 [a-zA-Z0-9]*/.force_relink
 [a-zA-Z0-9]*/Makefile
 [a-zA-Z0-9]*/create-this-app
 [a-zA-Z0-9]*/obj/
 [a-zA-Z0-9]*/readme.txt
-.txt
