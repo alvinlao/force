@@ -1,0 +1,7 @@
+obj/
+
+Makefile
+create-this-app
+readme.txt
+project_1_bsp/
+.force_relink
