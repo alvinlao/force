@@ -13,7 +13,7 @@
 
 // width and height of camera frame
 #define FRAME_WIDTH 320
-#define FRAME_HEIGHT 160
+#define FRAME_HEIGHT 240
 
 void VideoInit(alt_up_pixel_buffer_dma_dev *pixelBuffer);
 void VideoInitMemoryBlock(int width, int height);
