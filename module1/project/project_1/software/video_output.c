@@ -206,14 +206,11 @@ int main()
 //		marker->y2 = track_y + MARKER_SIZE;
 //		drawBox(pixel_buffer, 0);
 
-		plotLine(pixel_buffer, FRAME_WIDTH/2 - 20, 0, FRAME_WIDTH/2 + 20, FRAME_HEIGHT, 0xffff, 1);
-		plotLine(pixel_buffer, FRAME_WIDTH/2 - 20, FRAME_HEIGHT, FRAME_WIDTH/2 + 20, 0, 0xffff, 1);
-
 		plotLine(pixel_buffer, 0, FRAME_HEIGHT/2, FRAME_WIDTH, FRAME_HEIGHT/2, 0xffff, 1);
 		plotLine(pixel_buffer, FRAME_WIDTH/2, 0, FRAME_WIDTH/2, FRAME_HEIGHT, 0xffff, 1);
 		plotLine(pixel_buffer, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, 0xffff, 1);
 		plotLine(pixel_buffer, 0, FRAME_HEIGHT, FRAME_WIDTH, 0, 0xffff, 1);
-		plotLine(pixel_buffer, 0, FRAME_HEIGHT/2, FRAME_WIDTH/2, 0, 0xffff, 1);
+		plotLine(pixel_buffer, 0, FRAME_HEIGHT, FRAME_WIDTH, 0, 0xffff, 1);
 //		drawBox(pixel_buffer, marker);
 	}
 

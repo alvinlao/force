@@ -54,14 +54,12 @@ begin
     variable y1_local,y2_local : std_logic_vector(7 downto 0);
     variable colour_local : std_logic_vector(15 downto 0);	 
 	 
+	 variable sx, sy : integer;
 	 variable dx : signed(10 downto 0);
 	 variable dy : signed(9 downto 0);
 	 variable error : signed(18 downto 0);
 	 variable e2 : signed(37 downto 0);
-	 
-    -- This is used to remember the left-most x point as we draw the box.
-    variable savedx : std_logic_vector(8 downto 0);
-	 
+	  
     begin
        if (reset_n = '0') then
           master_wr_en<= '0';
@@ -110,12 +108,12 @@ begin
 							-- Keep going
 							if (e2 >= dy) then
 								error := error + dy;
-								x1_local := std_logic_vector(unsigned(x1_local)+1);
+								x1_local := std_logic_vector(unsigned(x1_local)+sx);
 							end if;
 							
 							if (e2 <= dx) then
 								error := error + dx;
-								y1_local := std_logic_vector(unsigned(y1_local)+1);								 
+								y1_local := std_logic_vector(unsigned(y1_local)+sy);								 
 							end if;
 						end if;
 						
@@ -161,22 +159,21 @@ begin
                           -- while a drawing is occurring, it continues to draw the box
                           -- as originally requested.
 
+								  x1_local := x1;
+								  x2_local := x2;
+								  y1_local := y1;
+								  y2_local := y2;
+								  
                           if (x1 < x2) then
-                             x1_local := x1;
-                             savedx := x1;
-                             x2_local := x2;
+                             sx := 1;
                           else
-                             x2_local := x1;
-                             savedx := x2;
-                             x1_local := x2;
+									  sx := -1;
                           end if;
 								
                           if (y1 < y2) then
-                             y1_local := y1;
-                             y2_local := y2;
+                             sy := 1;
                           else
-                             y2_local := y1;
-                             y1_local := y2;
+                             sy := -1;
                           end if;									
 
 								  dx := abs(signed("00" & x2_local) - signed("00" & x1_local));
