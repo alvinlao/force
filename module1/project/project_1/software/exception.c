@@ -5,14 +5,6 @@
 
 volatile int edge_capture;
 
-static void init_button_pio(){
-	void* edge_capture_ptr = (void*) &edge_capture;
-	
-	IOWR_ALTERA_AVALON_PIO_IRQ_MASK(BUTTON_PIO_BASE, 0xf);
-	IOWR_ALTERA_AVALON_PIO_EDGE_CAP(BUTTON_PIO_BASE, 0x0);
-	alt_irq_resgister(BUTTON_PIO_IQR, edge_capture_ptr, hande_button_interrupts);
-}
-
 static void handle_button_interrupts(void* context, alt_u32 id){
 	
 	//cast the context pointer to an integer pointer
@@ -41,4 +33,12 @@ static void handle_button_interrupts(void* context, alt_u32 id){
 	if(*edge_capture_ptr == 4){
 		// do things
 	}
+}
+
+static void init_button_pio(){
+	void* edge_capture_ptr = (void*) &edge_capture;
+
+	IOWR_ALTERA_AVALON_PIO_IRQ_MASK(BUTTON_PIO_BASE, 0xf);
+	IOWR_ALTERA_AVALON_PIO_EDGE_CAP(BUTTON_PIO_BASE, 0x0);
+	alt_irq_register(BUTTON_PIO_IRQ, edge_capture_ptr, handle_button_interrupts);
 }

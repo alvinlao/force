@@ -289,6 +289,14 @@
          type = "String";
       }
    }
+   element button_pio
+   {
+      datum _sortIndex
+      {
+         value = "21";
+         type = "int";
+      }
+   }
    element clk_0
    {
       datum _sortIndex
@@ -318,12 +326,12 @@
          type = "int";
       }
    }
-   element pio_0
+   element sdram_controller.s1
    {
-      datum _sortIndex
+      datum baseAddress
       {
-         value = "21";
-         type = "int";
+         value = "16777216";
+         type = "String";
       }
    }
    element Onchip_Memory.s1
@@ -334,19 +342,11 @@
          type = "String";
       }
    }
-   element pio_0.s1
+   element button_pio.s1
    {
       datum baseAddress
       {
          value = "562176";
-         type = "String";
-      }
-   }
-   element sdram_controller.s1
-   {
-      datum baseAddress
-      {
-         value = "16777216";
          type = "String";
       }
    }
@@ -389,7 +389,7 @@
  <parameter name="projectName" value="project_1.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1423263493366" />
+ <parameter name="timeStamp" value="1423374828165" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface
@@ -468,7 +468,7 @@
    dir="end" />
  <interface
    name="keys"
-   internal="pio_0.external_connection"
+   internal="button_pio.external_connection"
    type="conduit"
    dir="end" />
  <module kind="clock_source" version="13.0" enabled="1" name="clk_0">
@@ -778,7 +778,7 @@
   <parameter name="tightlyCoupledInstructionMaster2AddrWidth" value="1" />
   <parameter name="tightlyCoupledInstructionMaster3AddrWidth" value="1" />
   <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='Onchip_Memory.s1' start='0x84000' end='0x88000' /><slave name='CPU.jtag_debug_module' start='0x88800' end='0x89000' /><slave name='sdram_controller.s1' start='0x1000000' end='0x1800000' /></address-map>]]></parameter>
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='Pixel_Buffer.avalon_sram_slave' start='0x0' end='0x80000' /><slave name='Onchip_Memory.s1' start='0x84000' end='0x88000' /><slave name='CPU.jtag_debug_module' start='0x88800' end='0x89000' /><slave name='SD_CARD_INTERFACE.avalon_sdcard_slave' start='0x89000' end='0x89400' /><slave name='pio_0.s1' start='0x89400' end='0x89410' /><slave name='Pixel_Buffer_DMA.avalon_control_slave' start='0x89410' end='0x89420' /><slave name='Video_DMA.avalon_dma_control_slave' start='0x89420' end='0x89430' /><slave name='AV_Config.avalon_av_config_slave' start='0x89430' end='0x89440' /><slave name='jtag_uart.avalon_jtag_slave' start='0x89440' end='0x89448' /><slave name='sdram_controller.s1' start='0x1000000' end='0x1800000' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='Pixel_Buffer.avalon_sram_slave' start='0x0' end='0x80000' /><slave name='Onchip_Memory.s1' start='0x84000' end='0x88000' /><slave name='CPU.jtag_debug_module' start='0x88800' end='0x89000' /><slave name='SD_CARD_INTERFACE.avalon_sdcard_slave' start='0x89000' end='0x89400' /><slave name='button_pio.s1' start='0x89400' end='0x89410' /><slave name='Pixel_Buffer_DMA.avalon_control_slave' start='0x89410' end='0x89420' /><slave name='Video_DMA.avalon_dma_control_slave' start='0x89420' end='0x89430' /><slave name='AV_Config.avalon_av_config_slave' start='0x89430' end='0x89440' /><slave name='jtag_uart.avalon_jtag_slave' start='0x89440' end='0x89448' /><slave name='sdram_controller.s1' start='0x1000000' end='0x1800000' /></address-map>]]></parameter>
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="deviceFamilyName" value="Cyclone II" />
   <parameter name="internalIrqMaskSystemInfo" value="33" />
@@ -880,7 +880,7 @@
    kind="altera_avalon_pio"
    version="13.0.1.99.2"
    enabled="1"
-   name="pio_0">
+   name="button_pio">
   <parameter name="bitClearingEdgeCapReg" value="false" />
   <parameter name="bitModifyingOutReg" value="false" />
   <parameter name="captureEdge" value="true" />
@@ -1384,23 +1384,35 @@
    version="13.0"
    start="Clock_Signals.sys_clk"
    end="SD_CARD_INTERFACE.clock_sink" />
- <connection kind="reset" version="13.0" start="clk_0.clk_reset" end="pio_0.reset" />
+ <connection
+   kind="reset"
+   version="13.0"
+   start="clk_0.clk_reset"
+   end="button_pio.reset" />
  <connection
    kind="reset"
    version="13.0"
    start="CPU.jtag_debug_module_reset"
-   end="pio_0.reset" />
+   end="button_pio.reset" />
  <connection
    kind="clock"
    version="13.0"
    start="Clock_Signals.sys_clk"
-   end="pio_0.clk" />
- <connection kind="avalon" version="13.0" start="CPU.data_master" end="pio_0.s1">
+   end="button_pio.clk" />
+ <connection
+   kind="avalon"
+   version="13.0"
+   start="CPU.data_master"
+   end="button_pio.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x00089400" />
   <parameter name="defaultConnection" value="false" />
  </connection>
- <connection kind="interrupt" version="13.0" start="CPU.d_irq" end="pio_0.irq">
+ <connection
+   kind="interrupt"
+   version="13.0"
+   start="CPU.d_irq"
+   end="button_pio.irq">
   <parameter name="irqNumber" value="0" />
  </connection>
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
