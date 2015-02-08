@@ -53,7 +53,12 @@ begin
     variable x1_local,x2_local : std_logic_vector(8 downto 0);
     variable y1_local,y2_local : std_logic_vector(7 downto 0);
     variable colour_local : std_logic_vector(15 downto 0);	 
-
+	 
+	 variable dx : signed(10 downto 0);
+	 variable dy : signed(9 downto 0);
+	 variable error : signed(18 downto 0);
+	 variable e2 : signed(37 downto 0);
+	 
     -- This is used to remember the left-most x point as we draw the box.
     variable savedx : std_logic_vector(8 downto 0);
 	 
@@ -95,17 +100,36 @@ begin
                elsif state = 1 and master_waitrequest = '0' then
                   master_wr_en  <= '0';
                   state := 0;
-                  if (x1_local = x2_local) then
-                     if (y1_local = y2_local) then 
-                        done <= '1';   -- box is done
-                        processing := '0';
-                     else
-                        x1_local := savedx;
-                        y1_local := std_logic_vector(unsigned(y1_local)+1);								 
-                     end if;
-                  else 
-                        x1_local := std_logic_vector(unsigned(x1_local)+1);
-                  end if;						
+						e2 := error * 2;
+						
+						if (x1_local = x2_local) and (y1_local = y2_local) then
+							-- Done
+							done <= '1';
+                     processing := '0';
+						else 
+							-- Keep going
+							if (e2 >= dy) then
+								error := error + dy;
+								x1_local := std_logic_vector(unsigned(x1_local)+1);
+							end if;
+							
+							if (e2 <= dx) then
+								error := error + dx;
+								y1_local := std_logic_vector(unsigned(y1_local)+1);								 
+							end if;
+						end if;
+						
+                  --if (x1_local = x2_local) then
+                    -- if (y1_local = y2_local) then 
+                    --    done <= '1';   -- box is done
+                    --    processing := '0';
+                    -- else
+                    --    x1_local := savedx;
+                    --    y1_local := std_logic_vector(unsigned(y1_local)+1);								 
+                    -- end if;
+                  --else 
+                    --    x1_local := std_logic_vector(unsigned(x1_local)+1);
+                  --end if;						
                end if;
              end if;					
 
@@ -129,7 +153,7 @@ begin
                           processing := '1';  -- start drawing on next rising clk edge
                           state := 0;
                           done <= '0';
-
+																		
                           -- The above drawing code assumes x1<x2 and y1<y2, however the
                           -- user may give us points with x1>x2 or y1>y2.  If so, swap
                           -- the x and y values.  In any case, copy to our internal _local
@@ -155,6 +179,11 @@ begin
                              y1_local := y2;
                           end if;									
 
+								  dx := abs(signed("00" & x2_local) - signed("00" & x1_local));
+								  -- Negative
+								  dy := -abs(signed("00" & y2_local) - signed("00" & y1_local));
+								  error := resize(dx + dy, error'length);
+								  
                           colour_local := colour;
                         end if;
 		

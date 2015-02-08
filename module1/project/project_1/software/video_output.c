@@ -124,7 +124,7 @@ void setPixel(int buffer_start, int line_size, int x, int y, int color) {
 
 void plotLine(alt_up_pixel_buffer_dma_dev* pixel_buffer, int x0, int y0, int x1, int y1, int color, int backbuffer)
 {
-	int buffer_start;
+/*	int buffer_start;
 	int color_mode = 1;
 	register int line_size = (pixel_buffer->addressing_mode == ALT_UP_PIXEL_BUFFER_XY_ADDRESS_MODE) ? (1 << (pixel_buffer->y_coord_offset-color_mode)) : pixel_buffer->x_resolution;
 
@@ -143,7 +143,14 @@ void plotLine(alt_up_pixel_buffer_dma_dev* pixel_buffer, int x0, int y0, int x1,
 		e2 = 2*err;
 		if (e2 >= dy) { err += dy; x0 += sx; } // e_xy+e_x > 0;
 		if (e2 <= dx) { err += dx; y0 += sy; } // e_xy+e_y < 0;
-   }
+   }*/
+	IOWR_32DIRECT(draw_base, 0, x0);
+	IOWR_32DIRECT(draw_base, 4, y0);
+	IOWR_32DIRECT(draw_base, 8, x1);
+	IOWR_32DIRECT(draw_base, 12, y1);
+	IOWR_32DIRECT(draw_base, 16, color);
+	IOWR_32DIRECT(draw_base, 20, 1);
+	while(IORD_32DIRECT(draw_base, 20) == 0);
 }
 
 int main()
@@ -197,11 +204,16 @@ int main()
 //		marker->y1 = track_y;
 //		marker->x2 = track_x + MARKER_SIZE;
 //		marker->y2 = track_y + MARKER_SIZE;
-		drawBox(pixel_buffer, 0);
+//		drawBox(pixel_buffer, 0);
+
+		plotLine(pixel_buffer, FRAME_WIDTH/2 - 20, 0, FRAME_WIDTH/2 + 20, FRAME_HEIGHT, 0xffff, 1);
+		plotLine(pixel_buffer, FRAME_WIDTH/2 - 20, FRAME_HEIGHT, FRAME_WIDTH/2 + 20, 0, 0xffff, 1);
+
 		plotLine(pixel_buffer, 0, FRAME_HEIGHT/2, FRAME_WIDTH, FRAME_HEIGHT/2, 0xffff, 1);
-		plotLine(pixel_buffer, FRAME_WIDTH/2, 0, FRAME_WIDTH/2, FRAME_HEIGHT, 0, 1);
+		plotLine(pixel_buffer, FRAME_WIDTH/2, 0, FRAME_WIDTH/2, FRAME_HEIGHT, 0xffff, 1);
 		plotLine(pixel_buffer, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, 0xffff, 1);
 		plotLine(pixel_buffer, 0, FRAME_HEIGHT, FRAME_WIDTH, 0, 0xffff, 1);
+		plotLine(pixel_buffer, 0, FRAME_HEIGHT/2, FRAME_WIDTH/2, 0, 0xffff, 1);
 //		drawBox(pixel_buffer, marker);
 	}
 
