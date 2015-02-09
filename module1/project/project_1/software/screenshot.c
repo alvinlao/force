@@ -21,7 +21,7 @@ void SavePixelArray(){
 	Pixel p;
 	unsigned int addr;
 	int count = 0;
-	printf("test sd\n");
+	char highbyte, lowbyte;
 	for (i = 1; i < FRAME_WIDTH; i++){
 		for (j = 1; j < FRAME_HEIGHT; j++){
 
@@ -32,19 +32,35 @@ void SavePixelArray(){
 			int rgb;
 			rgb = IORD_32DIRECT(ScreenShotPixelBuffer->buffer_start_address, addr);
 			PixelSetRGB(&p, rgb);
-			screenCapture[count] = p.r;
+
+			/*
+			lowbyte = (p.g << 3) | p.b;
+			highbyte = (p.r << 3) | p.g;
+
+			screenCapture[count] = highbyte;
 			count++;
-			screenCapture[count] = p.g;
+			screenCapture[count] = lowbyte;
 			count++;
-			screenCapture[count] = p.b;
+			*/
+			p.r = 31;
+			p.g = 0;
+			p.b = 0;
+
+			screenCapture[count] = p.r * (255 / 31);
 			count++;
+			screenCapture[count] = p.g * (255 / 63);
+			count++;
+			screenCapture[count] = p.b * (255 /31);
+			count++;
+
 		}
 	}
 }
 
 void SaveBmpSDCARD(){
+	printf("before pixel array\n");
 	SavePixelArray();
-	printf("after savepixelarray\n");
+	printf("after pixel array\n");
 	int count, width, height;
 	width = FRAME_WIDTH;
 	height = FRAME_HEIGHT;
@@ -57,7 +73,6 @@ void SaveBmpSDCARD(){
     a = "";
 	
 	device_reference = alt_up_sd_card_open_dev("/dev/SD_CARD_INTERFACE");
-	printf("device ref: %s\n", device_reference);
 	if (device_reference != NULL) {
 		if ((connected == 0) && (alt_up_sd_card_is_Present())) {
 			printf("Card connected.\n");
@@ -85,7 +100,7 @@ void SaveBmpSDCARD(){
 				    bmph.biWidth = width;
 				    bmph.biHeight = height;
 				    bmph.biPlanes = 1;
-				    bmph.biBitCount = 16;
+				    bmph.biBitCount = 24;
 				    bmph.biCompression = 0;
 				    bmph.biSizeImage = bytesPerLine * height;
 				    bmph.biXPelsPerMeter = 0;
@@ -129,10 +144,16 @@ void SaveBmpSDCARD(){
 				    {
 				        for (j = 0; j < width; j++)
 				        {
+
 				            ipos = 3 * (width * i + j);
 				            line[3*j] = screenCapture[ipos + 2];
 				            line[3*j+1] = screenCapture[ipos + 1];
 				            line[3*j+2] = screenCapture[ipos];
+
+				        	/*
+				        	ipos = 3 * (width *i +j);
+				        	line[3*j] = screenCapture[ipos];
+				        	*/
 				        }
 				        fwritecustom(line, bytesPerLine, 1, file);
 				    }
