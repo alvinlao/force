@@ -290,7 +290,7 @@
       }
       datum baseAddress
       {
-         value = "562208";
+         value = "562176";
          type = "String";
       }
    }
@@ -298,12 +298,12 @@
    {
       datum _lockedAddress
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
       datum baseAddress
       {
-         value = "562176";
+         value = "562208";
          type = "String";
       }
    }
@@ -804,7 +804,7 @@
   <parameter name="tightlyCoupledInstructionMaster2AddrWidth" value="1" />
   <parameter name="tightlyCoupledInstructionMaster3AddrWidth" value="1" />
   <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='Onchip_Memory.s1' start='0x84000' end='0x88000' /><slave name='CPU.jtag_debug_module' start='0x88800' end='0x89000' /><slave name='sdram_controller.s1' start='0x1000000' end='0x1800000' /></address-map>]]></parameter>
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='Pixel_Buffer.avalon_sram_slave' start='0x0' end='0x80000' /><slave name='Onchip_Memory.s1' start='0x84000' end='0x88000' /><slave name='CPU.jtag_debug_module' start='0x88800' end='0x89000' /><slave name='SD_CARD_INTERFACE.avalon_sdcard_slave' start='0x89000' end='0x89400' /><slave name='pixel_drawer_0.avalon_slave_0' start='0x89400' end='0x89420' /><slave name='sad_0.avalon_slave' start='0x89420' end='0x89440' /><slave name='Pixel_Buffer_DMA.avalon_control_slave' start='0x89440' end='0x89450' /><slave name='Video_DMA.avalon_dma_control_slave' start='0x89450' end='0x89460' /><slave name='AV_Config.avalon_av_config_slave' start='0x89460' end='0x89470' /><slave name='jtag_uart.avalon_jtag_slave' start='0x89470' end='0x89478' /><slave name='sdram_controller.s1' start='0x1000000' end='0x1800000' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='Pixel_Buffer.avalon_sram_slave' start='0x0' end='0x80000' /><slave name='Onchip_Memory.s1' start='0x84000' end='0x88000' /><slave name='CPU.jtag_debug_module' start='0x88800' end='0x89000' /><slave name='SD_CARD_INTERFACE.avalon_sdcard_slave' start='0x89000' end='0x89400' /><slave name='sad_0.avalon_slave' start='0x89400' end='0x89420' /><slave name='pixel_drawer_0.avalon_slave_0' start='0x89420' end='0x89440' /><slave name='Pixel_Buffer_DMA.avalon_control_slave' start='0x89440' end='0x89450' /><slave name='Video_DMA.avalon_dma_control_slave' start='0x89450' end='0x89460' /><slave name='AV_Config.avalon_av_config_slave' start='0x89460' end='0x89470' /><slave name='jtag_uart.avalon_jtag_slave' start='0x89470' end='0x89478' /><slave name='sdram_controller.s1' start='0x1000000' end='0x1800000' /></address-map>]]></parameter>
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="deviceFamilyName" value="Cyclone II" />
   <parameter name="internalIrqMaskSystemInfo" value="32" />
@@ -1412,7 +1412,7 @@
    start="CPU.data_master"
    end="pixel_drawer_0.avalon_slave_0">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00089400" />
+  <parameter name="baseAddress" value="0x00089420" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -1450,7 +1450,7 @@
    start="CPU.data_master"
    end="sad_0.avalon_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00089420" />
+  <parameter name="baseAddress" value="0x00089400" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection kind="reset" version="13.0" start="clk_0.clk_reset" end="sad_0.reset" />

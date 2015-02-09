@@ -77,9 +77,9 @@ architecture bhv of sad is
 	
 	signal ready 			: std_logic := '0';
 	signal processing 	: std_logic;
-	signal posX				: std_logic_vector(8 downto 0);
-	signal posY				: std_logic_vector(7 downto 0);
-	signal acc				: std_logic_vector(15 downto 0);
+	signal posX				: integer range 0 to SCREEN_WIDTH;
+	signal posY				: integer range 0 to SCREEN_HEIGHT;
+	signal acc				: integer range 0 to SAD_SIZE;
 	
 	signal current_state 	: StatesType := Initialize;
 	--signal next_state 		: StatesType := Standby;
@@ -94,12 +94,19 @@ architecture bhv of sad is
 	signal SADCollection 	: SadWindowType;
 	
 	
-	
 	--debug stuff
 	
 	signal debug_state_in_vector : std_logic_vector(3 downto 0);
+	signal debug_what : std_logic_vector(31 downto 0);
+	signal debug_sad_1_1 :integer range 0 to SAD_SIZE;
+	signal debug_sad_1_2 :integer range 0 to SAD_SIZE;
+	signal debug_sad_1_3 :integer range 0 to SAD_SIZE;
+	signal debug_sad_2_1 :integer range 0 to SAD_SIZE;
+	signal debug_sad_2_2 :integer range 0 to SAD_SIZE;
+	signal debug_sad_2_3 :integer range 0 to SAD_SIZE;
 	
-	signal debug_what : std_logic_vector(15 downto 0);
+	signal debug_row : integer range 0 to ((win_size_x - block_size_x)/step_x);
+	signal debug_col : integer range 0 to ((win_size_y - block_size_y)/step_y);
 		
 	begin
 	
@@ -108,15 +115,26 @@ architecture bhv of sad is
 	  
 	process (clk, reset_n)
 
-	variable nextX : integer range 0 to SCREEN_WIDTH;
+		variable nextX : integer range 0 to SCREEN_WIDTH;
 		variable nextY : integer range 0 to SCREEN_HEIGHT;
 		variable candidateRow : integer range 0 to ((win_size_x - block_size_x)/step_x);
 		variable candidateCol : integer range 0 to ((win_size_y - block_size_y)/step_y);
 		variable candidateSAD : integer range 0 to SAD_SIZE := SAD_SIZE;
 		variable load_waiting : std_logic;
+		variable var_posX : integer range 0 to SCREEN_WIDTH;
+		variable var_posY : integer range 0 to SCREEN_HEIGHT;
+		
+		variable next_win_x_tmp : integer range -(SCREEN_WIDTH/2) to SCREEN_WIDTH := (SCREEN_WIDTH/2)-(win_size_x/2);
+		variable next_win_y_tmp : integer range -(SCREEN_HEIGHT/2) to SCREEN_HEIGHT := (SCREEN_HEIGHT/2)-(win_size_y/2);
 		
 	begin
-		if (reset_n = '0') then
+		if (reset_n = '0') then			
+
+			next_win_x_tmp := (SCREEN_WIDTH/2)-(win_size_x/2);
+			next_win_y_tmp := (SCREEN_HEIGHT/2)-(win_size_y/2);
+			windowStartX <= next_win_x_tmp;
+			windowStartY <= next_win_y_tmp;
+
 			current_state <= Initialize;
 			ready <= '0';
 		elsif rising_edge(clk) then
@@ -130,6 +148,29 @@ architecture bhv of sad is
 				when Initialize =>
 					debug_state_in_vector <= "1001";
 					--TODO: Initialize
+					next_win_x_tmp := (SCREEN_WIDTH/2)-(win_size_x/2);
+					next_win_y_tmp := (SCREEN_HEIGHT/2)-(win_size_y/2);
+					windowStartX <= next_win_x_tmp;
+					windowStartY <= next_win_y_tmp;
+					nextX := 0;
+					nextY := 0;
+					var_posX := 0;
+					var_posY := 0;
+					candidateSAD := SAD_SIZE;
+					candidateRow := 0;
+					candidateCol := 0;
+					acc <= SAD_SIZE;
+					load_waiting := '0';
+					
+					for WIN_ROW in 0 to ((win_size_x - block_size_x)/step_x) loop
+						for WIN_COL in 0 to ((win_size_y - block_size_y)/step_y) loop
+						
+							SADForEachBlock(WIN_ROW,WIN_COL) <= 0;
+							
+						end loop;						
+					end loop;
+
+					
 					slave_waitrequest <= '1';
 					current_state <= Standby;
 			
@@ -171,7 +212,7 @@ architecture bhv of sad is
 								nextY := nextY +1;
 								
 								if (nextY = block_size_y) then
-									debug_what <= Window(block_size_x/2,block_size_y/2);
+									--debug_what <= Window(block_size_x/2,block_size_y/2);
 									current_state <= CalculatingSAD;
 									load_waiting := '1';
 								end if;
@@ -232,6 +273,8 @@ architecture bhv of sad is
 						
 						if (nextY = block_size_y) then
 							candidateSAD := SAD_SIZE;
+							candidateRow := 0;
+							candidateCol := 0;
 							current_state <= Picking;
 						end if;
 					end if;
@@ -251,14 +294,49 @@ architecture bhv of sad is
 						end loop;						
 					end loop;
 					
-					posX <= std_logic_vector(to_unsigned(windowStartX + (candidateRow*step_x) + (block_size_x/2),9));
-					posY <= std_logic_vector(to_unsigned(windowStartY + (candidateCol*step_y) + (block_size_y/2),8));					
-					acc <= std_logic_vector(to_unsigned(candidateSAD,16));
+					var_posX := windowStartX + (candidateRow*step_x) + (block_size_x/2);
+					var_posY := windowStartY + (candidateCol*step_y) + (block_size_y/2);
+					
+					acc <= candidateSAD;
 					ready <= '1';
 					
-					windowStartX <= windowStartX + (candidateRow*step_x);
-					windowStartY <= windowStartY + (candidateCol*step_y);
+					next_win_x_tmp := var_posX - win_size_x/2;
+					next_win_y_tmp := var_posY - win_size_y/2;
 					
+					debug_col <= candidateCol;
+					debug_row <= candidateRow;
+					
+--					debug_what <= std_logic_vector(to_unsigned(next_win_x_tmp,32));
+
+					 debug_sad_1_1 <= SADForEachBlock(0,0);
+					 debug_sad_1_2 <= SADForEachBlock(0,1);
+					-- debug_sad_1_3 <= SADForEachBlock(2,2);
+					-- debug_sad_2_1 <= SADForEachBlock(1,0);
+					-- debug_sad_2_2 <= SADForEachBlock(1,1);
+					-- debug_sad_2_3 <= SADForEachBlock(1,2);
+					
+					--check bound x
+						if (next_win_x_tmp < 0) then
+							windowStartX <= 0;
+						elsif (next_win_x_tmp > SCREEN_WIDTH - win_size_x) then
+							windowStartX <= SCREEN_WIDTH - win_size_x;
+						else
+							windowStartX <= next_win_x_tmp;
+						end if;
+					
+					--check bound y
+						if (next_win_y_tmp < 0) then
+							windowStartY <= 0;
+						elsif (next_win_y_tmp > SCREEN_HEIGHT - win_size_y) then
+							windowStartY <= SCREEN_HEIGHT - win_size_y;
+						else
+							windowStartY <= next_win_y_tmp;
+						end if;
+						
+					posX <= var_posX;
+					posY <= var_posY;
+					
+					-- Copy reference block
 					for BLK_ROW in 0 to block_size_x-1 loop
 						for BLK_COL in 0 to block_size_y-1 loop
 							ReferenceBlock(BLK_ROW,BLK_COL) <= Window((candidateRow*step_x)+BLK_ROW,(candidateCol*step_y)+BLK_COL);
@@ -266,7 +344,7 @@ architecture bhv of sad is
 					end loop;					
 					
 					
-					current_state <= Standby;
+					current_state <= Initialize;
 				-- when AddingSAD=>
 					-- debug_state_in_vector <= "0110";
 				-- when Picking=>
@@ -286,13 +364,17 @@ architecture bhv of sad is
 		if (slave_rd_en = '1') then
 			case slave_addr is
 				when "000" => slave_readdata <= b"0000_0000_0000_0000_0000_0000_0000_0000";
-				when "001" => slave_readdata <= b"0000_0000_0000_0000_0000_000" & posX;
-				when "010" => slave_readdata <= b"0000_0000_0000_0000_0000_0000" & posY;
-				when "011" => slave_readdata <= b"0000_0000_0000_0000" & acc;
+				when "001" => slave_readdata <= std_logic_vector(to_unsigned(posX,32));
+				when "010" => slave_readdata <= std_logic_vector(to_unsigned(posY,32));
+				when "011" => slave_readdata <= std_logic_vector(to_unsigned(acc,32));
 				when "100" => slave_readdata <= b"0000_0000_0000_0000_0000_0000_0000_000" & ready;
-				when "101" => slave_readdata <= b"0000_0000_0000_0000_0000_0000_0000" & debug_state_in_vector;
-				when "110" => slave_readdata <= std_logic_vector(to_unsigned(windowStartX,32));
-				when "111" => slave_readdata <= b"0000_0000_0000_0000"& debug_what;
+				--debug stuff
+				--20
+				when "101" => slave_readdata <= std_logic_vector(to_unsigned(debug_row,32));
+				--24
+				when "110" => slave_readdata <= std_logic_vector(to_unsigned(debug_col,32));
+				--28
+				when "111" => slave_readdata <= std_logic_vector(to_unsigned(debug_sad_1_1,16)) & std_logic_vector(to_unsigned(debug_sad_1_2,16));
 				when others => slave_readdata <= b"0000_0000_0000_0000_0000_0000_0001_0000"; --address x - 16
 			end case;
 		end if;
