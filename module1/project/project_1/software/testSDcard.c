@@ -16,10 +16,6 @@ int main(void) {
 
 	alt_up_pixel_buffer_dma_dev* pixel_buffer = initPixelBuffer();
 	ScreenShotInit(pixel_buffer);
-
-	/*
-	SaveBmpSDCARD();
-	*/
 	while (1) {
 
 	}

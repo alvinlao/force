@@ -3,7 +3,6 @@
 volatile int edge_capture;
 
 void handle_button_interrupts(void* context, alt_u32 id){
-	
 	//cast the context pointer to an integer pointer
 	volatile int* edge_capture_ptr = (volatile int*) context;
 	
