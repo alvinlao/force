@@ -245,7 +245,7 @@
    {
       datum baseAddress
       {
-         value = "562240";
+         value = "562272";
          type = "String";
       }
    }
@@ -253,7 +253,7 @@
    {
       datum baseAddress
       {
-         value = "562208";
+         value = "562240";
          type = "String";
       }
    }
@@ -261,7 +261,7 @@
    {
       datum baseAddress
       {
-         value = "562224";
+         value = "562256";
          type = "String";
       }
    }
@@ -269,7 +269,7 @@
    {
       datum baseAddress
       {
-         value = "562256";
+         value = "562288";
          type = "String";
       }
    }
@@ -278,6 +278,19 @@
       datum baseAddress
       {
          value = "561152";
+         type = "String";
+      }
+   }
+   element sad_0.avalon_slave
+   {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
+      datum baseAddress
+      {
+         value = "562208";
          type = "String";
       }
    }
@@ -344,6 +357,14 @@
          type = "int";
       }
    }
+   element sdram_controller.s1
+   {
+      datum baseAddress
+      {
+         value = "16777216";
+         type = "String";
+      }
+   }
    element Onchip_Memory.s1
    {
       datum baseAddress
@@ -352,12 +373,12 @@
          type = "String";
       }
    }
-   element sdram_controller.s1
+   element sad_0
    {
-      datum baseAddress
+      datum _sortIndex
       {
-         value = "16777216";
-         type = "String";
+         value = "22";
+         type = "int";
       }
    }
    element sdram_controller
@@ -399,7 +420,7 @@
  <parameter name="projectName" value="project_1.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1423370506369" />
+ <parameter name="timeStamp" value="1423465120402" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface
@@ -783,7 +804,7 @@
   <parameter name="tightlyCoupledInstructionMaster2AddrWidth" value="1" />
   <parameter name="tightlyCoupledInstructionMaster3AddrWidth" value="1" />
   <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='Onchip_Memory.s1' start='0x84000' end='0x88000' /><slave name='CPU.jtag_debug_module' start='0x88800' end='0x89000' /><slave name='sdram_controller.s1' start='0x1000000' end='0x1800000' /></address-map>]]></parameter>
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='Pixel_Buffer.avalon_sram_slave' start='0x0' end='0x80000' /><slave name='Onchip_Memory.s1' start='0x84000' end='0x88000' /><slave name='CPU.jtag_debug_module' start='0x88800' end='0x89000' /><slave name='SD_CARD_INTERFACE.avalon_sdcard_slave' start='0x89000' end='0x89400' /><slave name='pixel_drawer_0.avalon_slave_0' start='0x89400' end='0x89420' /><slave name='Pixel_Buffer_DMA.avalon_control_slave' start='0x89420' end='0x89430' /><slave name='Video_DMA.avalon_dma_control_slave' start='0x89430' end='0x89440' /><slave name='AV_Config.avalon_av_config_slave' start='0x89440' end='0x89450' /><slave name='jtag_uart.avalon_jtag_slave' start='0x89450' end='0x89458' /><slave name='sdram_controller.s1' start='0x1000000' end='0x1800000' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='Pixel_Buffer.avalon_sram_slave' start='0x0' end='0x80000' /><slave name='Onchip_Memory.s1' start='0x84000' end='0x88000' /><slave name='CPU.jtag_debug_module' start='0x88800' end='0x89000' /><slave name='SD_CARD_INTERFACE.avalon_sdcard_slave' start='0x89000' end='0x89400' /><slave name='pixel_drawer_0.avalon_slave_0' start='0x89400' end='0x89420' /><slave name='sad_0.avalon_slave' start='0x89420' end='0x89440' /><slave name='Pixel_Buffer_DMA.avalon_control_slave' start='0x89440' end='0x89450' /><slave name='Video_DMA.avalon_dma_control_slave' start='0x89450' end='0x89460' /><slave name='AV_Config.avalon_av_config_slave' start='0x89460' end='0x89470' /><slave name='jtag_uart.avalon_jtag_slave' start='0x89470' end='0x89478' /><slave name='sdram_controller.s1' start='0x1000000' end='0x1800000' /></address-map>]]></parameter>
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="deviceFamilyName" value="Cyclone II" />
   <parameter name="internalIrqMaskSystemInfo" value="32" />
@@ -885,6 +906,16 @@
   <parameter name="pixel_buffer_base" value="0" />
   <parameter name="AUTO_CLOCK_CLOCK_RATE" value="50000000" />
  </module>
+ <module kind="sad" version="1.0" enabled="1" name="sad_0">
+  <parameter name="pixel_buffer_base" value="0" />
+  <parameter name="win_size_x" value="3" />
+  <parameter name="win_size_y" value="3" />
+  <parameter name="block_size_x" value="1" />
+  <parameter name="block_size_y" value="1" />
+  <parameter name="step_x" value="1" />
+  <parameter name="step_y" value="1" />
+  <parameter name="AUTO_CLOCK_CLOCK_RATE" value="50000000" />
+ </module>
  <connection
    kind="avalon"
    version="13.0"
@@ -979,7 +1010,7 @@
    start="CPU.data_master"
    end="AV_Config.avalon_av_config_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00089440" />
+  <parameter name="baseAddress" value="0x00089460" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -988,7 +1019,7 @@
    start="CPU.data_master"
    end="Video_DMA.avalon_dma_control_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00089430" />
+  <parameter name="baseAddress" value="0x00089450" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -997,7 +1028,7 @@
    start="CPU.data_master"
    end="Pixel_Buffer_DMA.avalon_control_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00089420" />
+  <parameter name="baseAddress" value="0x00089440" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -1330,7 +1361,7 @@
    start="CPU.data_master"
    end="jtag_uart.avalon_jtag_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00089450" />
+  <parameter name="baseAddress" value="0x00089470" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -1403,6 +1434,35 @@
    kind="avalon"
    version="13.0"
    start="pixel_drawer_0.avalon_master"
+   end="Pixel_Buffer.avalon_sram_slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="reset"
+   version="13.0"
+   start="CPU.jtag_debug_module_reset"
+   end="sad_0.reset" />
+ <connection
+   kind="avalon"
+   version="13.0"
+   start="CPU.data_master"
+   end="sad_0.avalon_slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x00089420" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection kind="reset" version="13.0" start="clk_0.clk_reset" end="sad_0.reset" />
+ <connection
+   kind="clock"
+   version="13.0"
+   start="Clock_Signals.sys_clk"
+   end="sad_0.clock" />
+ <connection
+   kind="avalon"
+   version="13.0"
+   start="sad_0.avalon_master"
    end="Pixel_Buffer.avalon_sram_slave">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0000" />
