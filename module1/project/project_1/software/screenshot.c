@@ -40,7 +40,7 @@ void SaveBmpSDCARD(){
 	
 	alt_up_sd_card_dev *device_reference = NULL;
 	int connected = 0;
-	char a;
+	char *a;
     char name = "scrnshot.bmp";
 	
 	device_reference = alt_up_sd_card_open_dev("/dev/SD_CARD_INTERFACE");
@@ -52,13 +52,13 @@ void SaveBmpSDCARD(){
 				if (alt_up_sd_card_is_FAT16()) {
 					printf("FAT16 file system detected.\n");
 					alt_up_sd_card_find_first(device_reference, a);
-					if(a == "scrnshot.bmp"){
+					if(a == name){
 						printf("FILE FOUND: %s\n", a);
 						write_bmp(name, FRAME_WIDTH, FRAME_HEIGHT, screenCapture);
 					}
 					else {
 						while(alt_up_sd_card_find_next(a) != -1) {
-							if(a == "scrnshot.bmp"){
+							if(a == name){
 								printf("FILE FOUND: %s\n", a);
 								write_bmp(name, FRAME_WIDTH, FRAME_HEIGHT, screenCapture);
 							}
