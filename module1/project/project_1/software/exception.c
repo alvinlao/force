@@ -13,7 +13,9 @@ void handle_button_interrupts(void* context, alt_u32 id){
 	//check which button was pressed
 	if(*edge_capture_ptr == 0x2){
 		// take screenshot
+		printf("Screenshot started.\n");
 		SaveBmpSDCARD();
+		printf("Screenshot finished.\n");
 		printf("Button 1\n");
 	} else if(*edge_capture_ptr == 0x4){
 		// do things

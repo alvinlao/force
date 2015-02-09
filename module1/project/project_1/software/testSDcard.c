@@ -12,11 +12,14 @@ alt_up_pixel_buffer_dma_dev* initPixelBuffer() {
 
 int main(void) {
 	// Set up interrupts
-	//init_button_pio();
+	init_button_pio();
 
 	alt_up_pixel_buffer_dma_dev* pixel_buffer = initPixelBuffer();
 	ScreenShotInit(pixel_buffer);
+
+	/*
 	SaveBmpSDCARD();
+	*/
 	while (1) {
 
 	}

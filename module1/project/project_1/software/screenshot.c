@@ -7,24 +7,35 @@
 #include <altera_up_sd_card_avalon_interface.h>
 #include "pixel.h"
 
+alt_up_sd_card_dev *device_reference;
 alt_up_pixel_buffer_dma_dev *ScreenShotPixelBuffer;
+int screenshots_taken;
 
-//char screenCapture[width*height];
 char screenCapture[FRAME_WIDTH*FRAME_HEIGHT*3];
 
+/**
+ * Sets up the variables needed to save a screenshot to the SD card.
+ */
 void ScreenShotInit(alt_up_pixel_buffer_dma_dev *pixelBuffer) {
 	ScreenShotPixelBuffer = pixelBuffer;
+	screenshots_taken = 0;
+	device_reference = NULL;
+
+	device_reference = alt_up_sd_card_open_dev("/dev/SD_CARD_INTERFACE");
+	CountFilesOnSDCard();
 }
 
+/**
+ * Grabs the current data in the pixel buffer and stores it in a global char array.
+ */
 void SavePixelArray(){
 	int i,j;
 	Pixel p;
 	unsigned int addr;
 	int count = 0;
-	printf("test sd\n");
+
 	for (i = 1; i < FRAME_WIDTH; i++){
 		for (j = 1; j < FRAME_HEIGHT; j++){
-
 			addr = 0;
 			addr |= ((i & ScreenShotPixelBuffer->x_coord_mask) << ScreenShotPixelBuffer->x_coord_offset);
 			addr |= ((j & ScreenShotPixelBuffer->y_coord_mask) << ScreenShotPixelBuffer->y_coord_offset);
@@ -42,22 +53,26 @@ void SavePixelArray(){
 	}
 }
 
+/**
+ * Saves a screenshot of the pixel buffer data to the SD Card in BMP format.
+ */
 void SaveBmpSDCARD(){
 	SavePixelArray();
-	printf("after savepixelarray\n");
 	int count, width, height;
 	width = FRAME_WIDTH;
 	height = FRAME_HEIGHT;
 
-	alt_up_sd_card_dev *device_reference = NULL;
 	int connected = 0;
-	char *a;
-    char *name = "SCRNSHOT.BMP";
 
-    a = "";
+	// Whatever you do, don't change the initial value of name...
+	// if you do, the file naming will give some garbage value.
+    char *name = "SHOT_";
+
+    sprintf(name, "%i", screenshots_taken);
+    strcat(name, ".BMP");
+    printf("Filename: %s\n", name);
 	
-	device_reference = alt_up_sd_card_open_dev("/dev/SD_CARD_INTERFACE");
-	printf("device ref: %s\n", device_reference);
+	//device_reference = alt_up_sd_card_open_dev("/dev/SD_CARD_INTERFACE");
 	if (device_reference != NULL) {
 		if ((connected == 0) && (alt_up_sd_card_is_Present())) {
 			printf("Card connected.\n");
@@ -65,7 +80,6 @@ void SaveBmpSDCARD(){
 				printf("FAT16 file system detected.\n");
 
 				short int file = alt_up_sd_card_fopen(name, 1);
-				printf("file: %i\n", file);
 				//write_bmp(name, width, height, screenCapture, file);
 				int i, j, ipos;
 				    int bytesPerLine;
@@ -92,11 +106,6 @@ void SaveBmpSDCARD(){
 				    bmph.biYPelsPerMeter = 0;
 				    bmph.biClrUsed = 0;
 				    bmph.biClrImportant = 0;
-
-				    //short int file = alt_up_sd_card_fopen(name, 1);
-
-				    printf("file handle: %i\n", file);
-				    printf("name: %s\n", name);
 
 				   // if (file == NULL) return(0);
 
@@ -139,25 +148,7 @@ void SaveBmpSDCARD(){
 
 				    free(line);
 				alt_up_sd_card_fclose(file);
-				printf("file closed\n");
-
-				/*
-				alt_up_sd_card_find_first(device_reference, a);
-				printf("a: %s name: %s\n", a, name);
-				if(strcmp(a, name) == 0){
-					printf("FILE FOUND: %s\n", a);
-					write_bmp(a, width, height, screenCapture);
-				}
-				else {
-					while(alt_up_sd_card_find_next(a) != -1) {
-						printf("a: %s name: %s\n", a, name);
-						if(strcmp(a, name) == 0){
-							printf("FILE FOUND: %s\n", a);
-							write_bmp(a, width, height, screenCapture);
-						}
-					}
-				}
-				*/
+				printf("File Closed\n");
 			} else {
 				printf("Unknown file system.\n");
 			}
@@ -166,8 +157,33 @@ void SaveBmpSDCARD(){
 			printf("Card disconnected.\n");
 			connected = 0;
 		}
+		screenshots_taken++;
 	}
 	else{
 		printf("twas null\n");
+	}
+}
+
+/**
+ * Counts the number of files on the SD card and sets the "screenshots_taken" variable
+ * to the number of files + 1.
+ */
+void CountFilesOnSDCard() {
+	char *a = "";
+
+	if (device_reference != NULL) {
+		if (alt_up_sd_card_is_Present()) {
+			printf("Card connected.\n");
+			if (alt_up_sd_card_is_FAT16()) {
+				printf("FAT16 file system detected.\n");
+				alt_up_sd_card_find_first("", a);
+				printf("FILE FOUND: %s\n", a);
+				screenshots_taken++;
+				while(alt_up_sd_card_find_next(a) != -1) {
+					printf("FILE FOUND: %s\n", a);
+					screenshots_taken++;
+				}
+			}
+		}
 	}
 }
