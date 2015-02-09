@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stddef.h>
 
 #include "bmp.h"
 
@@ -81,7 +82,7 @@ int write_bmp(const char *name, int width, int height, char *rgb)
     return(1);
 }
 
-void fwritecustom(const void *ptr, size_t size, size_t nmemb, short int file_handle){
+void fwritecustom(const void *ptr, unsigned int size, unsigned int nmemb, short int file_handle){
 	int i;
 	for (i = 0; i < size; i++){
 		alt_up_sd_card_write(file_handle, (ptr+i));

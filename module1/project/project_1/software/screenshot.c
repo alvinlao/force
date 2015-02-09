@@ -46,6 +46,7 @@ void SaveBmpSDCARD(){
 	device_reference = alt_up_sd_card_open_dev("/dev/SD_CARD_INTERFACE");
 	if (device_reference != NULL) {
 		while(1) {
+			printf("in while loop\n");
 			if ((connected == 0) && (alt_up_sd_card_is_Present())) {
 				printf("Card connected.\n");
 				if (alt_up_sd_card_is_FAT16()) {

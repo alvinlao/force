@@ -1,6 +1,8 @@
 #ifndef BMP_H
 #define BMP_H
 
+#include <stddef.h>
+
 struct BMPHeader
 {
     char bfType[2];       /* "BM" */
@@ -26,6 +28,6 @@ int read_bmp(const char *filename, int *width, int *height, unsigned char *rgb);
 
 int write_bmp(const char *filename, int width, int height, char *rgb);
 
-void fwritecustom(const void *ptr, size_t size, size_t nmemb, short int file_handle);
+void fwritecustom(const void *ptr, unsigned int size, unsigned int nmemb, short int file_handle);
 
 #endif
