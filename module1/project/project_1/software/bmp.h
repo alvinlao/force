@@ -2,6 +2,7 @@
 #define BMP_H
 
 #include <stddef.h>
+//#include <altera_up_sd_card_avalon_interface.h>
 
 struct BMPHeader
 {

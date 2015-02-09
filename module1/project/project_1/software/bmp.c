@@ -8,6 +8,7 @@
 int read_bmp(const char *filename, int *width, int *height, unsigned char *rgb)
 {
     // Not implemented
+	return 0;
 }
 
 int write_bmp(const char *name, int width, int height, char *rgb)
@@ -39,6 +40,10 @@ int write_bmp(const char *name, int width, int height, char *rgb)
     bmph.biClrImportant = 0; 
 
     short int file = alt_up_sd_card_fopen(name, 1);
+
+    printf("file handle: %i\n", file);
+    printf("name: %s\n", name);
+
     if (file == NULL) return(0);
   
     fwritecustom(&bmph.bfType, 2, 1, file);
