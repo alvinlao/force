@@ -51,6 +51,14 @@ void SaveBmpSDCARD(){
 			printf("Card connected.\n");
 			if (alt_up_sd_card_is_FAT16()) {
 				printf("FAT16 file system detected.\n");
+
+				short int file = alt_up_sd_card_fopen(name, 1);
+				printf("file: %i\n", file);
+				write_bmp(name, FRAME_WIDTH, FRAME_HEIGHT, screenCapture, file);
+				alt_up_sd_card_fclose(file);
+				printf("file closed\n");
+
+				/*
 				alt_up_sd_card_find_first(device_reference, a);
 				printf("a: %s name: %s\n", a, name);
 				if(strcmp(a, name) == 0){
@@ -66,6 +74,7 @@ void SaveBmpSDCARD(){
 						}
 					}
 				}
+				*/
 			} else {
 				printf("Unknown file system.\n");
 			}

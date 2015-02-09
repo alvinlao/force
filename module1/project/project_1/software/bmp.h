@@ -2,7 +2,7 @@
 #define BMP_H
 
 #include <stddef.h>
-//#include <altera_up_sd_card_avalon_interface.h>
+#include <altera_up_sd_card_avalon_interface.h>
 
 struct BMPHeader
 {
@@ -27,7 +27,7 @@ struct BMPHeader
 
 int read_bmp(const char *filename, int *width, int *height, unsigned char *rgb);
 
-int write_bmp(const char *filename, int width, int height, char *rgb);
+int write_bmp(const char *filename, int width, int height, char *rgb, short int file);
 
 void fwritecustom(const void *ptr, unsigned int size, unsigned int nmemb, short int file_handle);
 

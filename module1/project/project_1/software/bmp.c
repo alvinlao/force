@@ -11,7 +11,7 @@ int read_bmp(const char *filename, int *width, int *height, unsigned char *rgb)
 	return 0;
 }
 
-int write_bmp(const char *name, int width, int height, char *rgb)
+int write_bmp(const char *name, int width, int height, char *rgb, short int file)
 {
     int i, j, ipos;
     int bytesPerLine;
@@ -39,7 +39,7 @@ int write_bmp(const char *name, int width, int height, char *rgb)
     bmph.biClrUsed = 0;       
     bmph.biClrImportant = 0; 
 
-    short int file = alt_up_sd_card_fopen(name, 1);
+    //short int file = alt_up_sd_card_fopen(name, 1);
 
     printf("file handle: %i\n", file);
     printf("name: %s\n", name);
@@ -82,7 +82,7 @@ int write_bmp(const char *name, int width, int height, char *rgb)
     }
 
     free(line);
-    alt_up_sd_card_fclose(file);
+    //alt_up_sd_card_fclose(file);
 
     return(1);
 }
