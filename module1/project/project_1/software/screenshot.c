@@ -10,7 +10,7 @@
 alt_up_pixel_buffer_dma_dev *ScreenShotPixelBuffer;
 
 //char screenCapture[width*height];
-short screenCapture[FRAME_WIDTH*FRAME_HEIGHT*3];
+char screenCapture[FRAME_WIDTH*FRAME_HEIGHT*3];
 
 void ScreenShotInit(alt_up_pixel_buffer_dma_dev *pixelBuffer) {
 	ScreenShotPixelBuffer = pixelBuffer;
