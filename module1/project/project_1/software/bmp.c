@@ -88,8 +88,16 @@ int write_bmp(const char *name, int width, int height, char *rgb, short int file
 }
 
 void fwritecustom(const void *ptr, unsigned int size, unsigned int nmemb, short int file_handle){
-	int i;
+	int i, j;
+	char* array2write;
+	array2write = (char*)calloc(size, sizeof(char));
+	for (j = 0; j < size; j++) {
+		array2write[j] = *(((char*) ptr) + j);
+		//printf("byte: %c\n", array2write[j]);
+		//printf("byte: %s\n", array2write[j]);
+	}
 	for (i = 0; i < size; i++){
-		alt_up_sd_card_write(file_handle, (ptr+i));
+		//printf("byte to write: %c\n", array2write[i]);
+		alt_up_sd_card_write(file_handle, array2write[i]);
 	}
 }
