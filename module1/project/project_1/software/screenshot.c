@@ -42,13 +42,13 @@ void SavePixelArray(){
 
 			int rgb;
 			rgb = IORD_32DIRECT(ScreenShotPixelBuffer->buffer_start_address, addr);
-			PixelSetRGB(&p, rgb);
+			PixelSetRGB2(&p, rgb);
 
-			screenCapture[count] = p.r * (255 / 31);
+			screenCapture[count] = p.b * 8;
 			count++;
-			screenCapture[count] = p.g * (255 / 31);
+			screenCapture[count] = p.g * 4;
 			count++;
-			screenCapture[count] = p.b * (255 /31);
+			screenCapture[count] = p.r * 8;
 			count++;
 		}
 	}
@@ -100,7 +100,7 @@ void SaveBmpSDCARD(){
 				    bmph.biSizeImage = bytesPerLine * height;
 				    bmph.biXPelsPerMeter = 0;
 				    bmph.biYPelsPerMeter = 0;
-				    bmph.biClrUsed = 65535;
+				    bmph.biClrUsed = 0;
 				    bmph.biClrImportant = 0;
 
 				   // if (file == NULL) return(0);
