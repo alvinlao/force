@@ -81,13 +81,9 @@ void SaveBmpSDCARD(){
 
 	int connected = 0;
 
-	// Whatever you do, don't change the initial value of name...
-	// if you do, the file naming will give some garbage value.
-    char *name = "SHOT_";
-
-    sprintf(name, "%i", screenshots_taken);
-    strcat(name, ".BMP");
-    printf("Filename: %s\n", name);
+    char filename[12];
+    sprintf(filename, "%s%i%s", "SHOT_", screenshots_taken, ".bmp");
+    printf("Filename: %s\n", filename);
 	
 	if (device_reference != NULL) {
 		if ((connected == 0) && (alt_up_sd_card_is_Present())) {
@@ -95,7 +91,7 @@ void SaveBmpSDCARD(){
 			if (alt_up_sd_card_is_FAT16()) {
 				printf("FAT16 file system detected.\n");
 
-				short int file = alt_up_sd_card_fopen(name, 1);
+				short int file = alt_up_sd_card_fopen(filename, 1);
 				//write_bmp(name, width, height, screenCapture, file);
 				int i, j, ipos;
 				    int bytesPerLine;
@@ -191,7 +187,7 @@ void SaveBmpSDCARD(){
  * to the number of files + 1.
  */
 void CountFilesOnSDCard() {
-	char *a = "";
+	char *a = malloc(12*sizeof(char));
 
 	if (device_reference != NULL) {
 		if (alt_up_sd_card_is_Present()) {
@@ -208,4 +204,6 @@ void CountFilesOnSDCard() {
 			}
 		}
 	}
+
+	free(a);
 }
