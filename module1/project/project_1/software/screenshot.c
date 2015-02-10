@@ -34,8 +34,8 @@ void SavePixelArray(){
 	unsigned int addr;
 	int count = 0;
 
-	for (i = 1; i < FRAME_WIDTH; i++){
-		for (j = 1; j < FRAME_HEIGHT; j++){
+	for (j = 0; j < FRAME_HEIGHT; j++){
+		for (i = 0; i < FRAME_WIDTH; i++){
 			addr = 0;
 			addr |= ((i & ScreenShotPixelBuffer->x_coord_mask) << ScreenShotPixelBuffer->x_coord_offset);
 			addr |= ((j & ScreenShotPixelBuffer->y_coord_mask) << ScreenShotPixelBuffer->y_coord_offset);
@@ -44,28 +44,12 @@ void SavePixelArray(){
 			rgb = IORD_32DIRECT(ScreenShotPixelBuffer->buffer_start_address, addr);
 			PixelSetRGB(&p, rgb);
 
-			/*
-			lowbyte = (p.g << 3) | p.b;
-			highbyte = (p.r << 3) | p.g;
-
-			screenCapture[count] = highbyte;
-			count++;
-			screenCapture[count] = lowbyte;
-			count++;
-			*/
-			/*
-			p.r = 31;
-			p.g = 0;
-			p.b = 0;
-			*/
-
 			screenCapture[count] = p.r * (255 / 31);
 			count++;
-			screenCapture[count] = p.g * (255 / 63);
+			screenCapture[count] = p.g * (255 / 31);
 			count++;
 			screenCapture[count] = p.b * (255 /31);
 			count++;
-
 		}
 	}
 }
@@ -116,7 +100,7 @@ void SaveBmpSDCARD(){
 				    bmph.biSizeImage = bytesPerLine * height;
 				    bmph.biXPelsPerMeter = 0;
 				    bmph.biYPelsPerMeter = 0;
-				    bmph.biClrUsed = 0;
+				    bmph.biClrUsed = 65535;
 				    bmph.biClrImportant = 0;
 
 				   // if (file == NULL) return(0);
