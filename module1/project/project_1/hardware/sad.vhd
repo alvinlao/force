@@ -54,7 +54,7 @@ entity sad is
 		master_writedata: out  std_logic_vector(15 downto 0);
 		master_waitrequest : in std_logic;
 		
-		slave_addr: in std_logic_vector(2 downto 0);
+		slave_addr: in std_logic_vector(3 downto 0);
 		slave_rd_en: in std_logic;
 		slave_wr_en: in std_logic;
 		slave_readdata: out std_logic_vector(31 downto 0);
@@ -96,17 +96,12 @@ architecture bhv of sad is
 	
 	--debug stuff
 	
-	signal debug_state_in_vector : std_logic_vector(3 downto 0);
-	signal debug_what : std_logic_vector(31 downto 0);
-	signal debug_sad_1_1 :integer range 0 to SAD_SIZE;
-	signal debug_sad_1_2 :integer range 0 to SAD_SIZE;
-	signal debug_sad_1_3 :integer range 0 to SAD_SIZE;
-	signal debug_sad_2_1 :integer range 0 to SAD_SIZE;
-	signal debug_sad_2_2 :integer range 0 to SAD_SIZE;
-	signal debug_sad_2_3 :integer range 0 to SAD_SIZE;
-	
+	--signal debug_state_in_vector : std_logic_vector(3 downto 0);
+	type debug_SADs_Type	is array (0 to 2, 0 to 2) of integer range 0 to SAD_SIZE;
+	signal debug_what : integer range 0 to SCREEN_WIDTH;
 	signal debug_row : integer range 0 to ((win_size_x - block_size_x)/step_x);
 	signal debug_col : integer range 0 to ((win_size_y - block_size_y)/step_y);
+	signal debug_sads : debug_SADs_Type;
 		
 	begin
 	
@@ -127,6 +122,8 @@ architecture bhv of sad is
 		variable next_win_x_tmp : integer range -(SCREEN_WIDTH/2) to SCREEN_WIDTH := (SCREEN_WIDTH/2)-(win_size_x/2);
 		variable next_win_y_tmp : integer range -(SCREEN_HEIGHT/2) to SCREEN_HEIGHT := (SCREEN_HEIGHT/2)-(win_size_y/2);
 		
+		--variable debug_count : integer range 0 to 100;
+		
 	begin
 		if (reset_n = '0') then			
 
@@ -146,21 +143,21 @@ architecture bhv of sad is
 			
 			case (current_state) is
 				when Initialize =>
-					debug_state_in_vector <= "1001";
+					--debug_state_in_vector <= "1001";
 					--TODO: Initialize
-					next_win_x_tmp := (SCREEN_WIDTH/2)-(win_size_x/2);
-					next_win_y_tmp := (SCREEN_HEIGHT/2)-(win_size_y/2);
-					windowStartX <= next_win_x_tmp;
-					windowStartY <= next_win_y_tmp;
-					nextX := 0;
-					nextY := 0;
-					var_posX := 0;
-					var_posY := 0;
-					candidateSAD := SAD_SIZE;
-					candidateRow := 0;
-					candidateCol := 0;
-					acc <= SAD_SIZE;
-					load_waiting := '0';
+					-- next_win_x_tmp := (SCREEN_WIDTH/2)-(win_size_x/2);
+					-- next_win_y_tmp := (SCREEN_HEIGHT/2)-(win_size_y/2);
+					-- windowStartX <= next_win_x_tmp;
+					-- windowStartY <= next_win_y_tmp;
+					-- nextX := 0;
+					-- nextY := 0;
+					-- var_posX := 0;
+					-- var_posY := 0;
+					-- candidateSAD := SAD_SIZE;
+					-- candidateRow := 0;
+					-- candidateCol := 0;
+					-- acc <= SAD_SIZE;
+					-- load_waiting := '0';
 					
 					for WIN_ROW in 0 to ((win_size_x - block_size_x)/step_x) loop
 						for WIN_COL in 0 to ((win_size_y - block_size_y)/step_y) loop
@@ -175,11 +172,11 @@ architecture bhv of sad is
 					current_state <= Standby;
 			
 				when Standby => 
-					debug_state_in_vector <= "1111";
+					--debug_state_in_vector <= "1111";
 					processing <= '0';
 					if (slave_wr_en = '1') then
 						slave_waitrequest <= '1';
-						if (slave_addr="000") then
+						if (slave_addr="0000") then
 							if (slave_writedata(0) = '1') then
 								current_state <= Loading;
 								nextX := 0;
@@ -195,7 +192,7 @@ architecture bhv of sad is
 					end if;
 
 				when Loading =>
-					debug_state_in_vector <= "0001";
+					--debug_state_in_vector <= "0001";
 					ready <= '0';
 					if (load_waiting = '1') then
 						if (master_waitrequest = '0') then
@@ -207,11 +204,11 @@ architecture bhv of sad is
 							--debug_what <= master_readdata;
 							
 							nextX := nextX+1;
-							if(nextX = block_size_x) then
+							if(nextX = win_size_x) then
 								nextX := 0;
 								nextY := nextY +1;
 								
-								if (nextY = block_size_y) then
+								if (nextY = win_size_y) then
 									--debug_what <= Window(block_size_x/2,block_size_y/2);
 									current_state <= CalculatingSAD;
 									load_waiting := '1';
@@ -233,13 +230,14 @@ architecture bhv of sad is
 					end if;
 		
 				when CalculatingSAD =>
-					debug_state_in_vector <= "0010";
+					--debug_state_in_vector <= "0010";
 					ready <= '0';
 					
 					for WIN_ROW in 0 to ((win_size_x - block_size_x)/step_x) loop
 						for WIN_COL in 0 to ((win_size_y - block_size_y)/step_y) loop
 							for BLK_ROW in 0 to (block_size_x-1) loop
 								for BLK_COL in 0 to (block_size_y-1) loop
+--									debug_sads(WIN_ROW,WIN_COL)<=to_integer(unsigned(Window(WIN_ROW,WIN_COL)));
 									SADCollection(WIN_ROW,WIN_COL)(BLK_ROW,BLK_COL) <= to_integer(
 										(unsigned((signed('0'&Window((WIN_ROW*step_x)+BLK_ROW,(WIN_COL*step_y)+BLK_COL)(15 downto 11)) - signed('0'&ReferenceBlock(BLK_ROW,BLK_COL)(15 downto 11)))) and B"01_1111") + 
 										(unsigned((signed('0'&Window((WIN_ROW*step_x)+BLK_ROW,(WIN_COL*step_y)+BLK_COL)(10 downto 5)) - signed('0'&ReferenceBlock(BLK_ROW,BLK_COL)(10 downto 5)))) and B"011_1111" ) + 
@@ -252,20 +250,22 @@ architecture bhv of sad is
 					
 					nextX := 0;
 					nextY := 0;
+					
+					--debug_count := 0;
 					current_state <= AddingSAD;
 					
 				when AddingSAD =>
-					debug_state_in_vector <= "0011";
+					--debug_state_in_vector <= "0011";
 					ready <= '0';
-				
+					
 					for WIN_ROW in 0 to ((win_size_x - block_size_x)/step_x) loop
 						for WIN_COL in 0 to ((win_size_y - block_size_y)/step_y) loop
 						
 							SADForEachBlock(WIN_ROW,WIN_COL) <= SADForEachBlock(WIN_ROW,WIN_COL) + SADCollection(WIN_ROW,WIN_COL)(nextX,nextY);
-							
 						end loop;						
 					end loop;
 					
+					--debug_count	:= debug_count + 1;
 					nextX := nextX+1;
 					if(nextX = block_size_x) then
 						nextX := 0;
@@ -280,11 +280,10 @@ architecture bhv of sad is
 					end if;
 					
 				when Picking =>
-					debug_state_in_vector <= "0100";
+					--debug_state_in_vector <= "0100";
 					
 					for WIN_ROW in 0 to ((win_size_x - block_size_x)/step_x) loop
 						for WIN_COL in 0 to ((win_size_y - block_size_y)/step_y) loop
-						
 							if (SADForEachBlock(WIN_ROW,WIN_COL) < candidateSAD) then
 								candidateSAD := SADForEachBlock(WIN_ROW,WIN_COL);
 								candidateRow := WIN_ROW;
@@ -305,15 +304,8 @@ architecture bhv of sad is
 					
 					debug_col <= candidateCol;
 					debug_row <= candidateRow;
-					
---					debug_what <= std_logic_vector(to_unsigned(next_win_x_tmp,32));
-
-					 debug_sad_1_1 <= SADForEachBlock(0,0);
-					 debug_sad_1_2 <= SADForEachBlock(0,1);
-					-- debug_sad_1_3 <= SADForEachBlock(2,2);
-					-- debug_sad_2_1 <= SADForEachBlock(1,0);
-					-- debug_sad_2_2 <= SADForEachBlock(1,1);
-					-- debug_sad_2_3 <= SADForEachBlock(1,2);
+					-- debug_what <= debug_count;
+					--debug_sads <= SADForEachBlock;
 					
 					--check bound x
 						if (next_win_x_tmp < 0) then
@@ -322,6 +314,7 @@ architecture bhv of sad is
 							windowStartX <= SCREEN_WIDTH - win_size_x;
 						else
 							windowStartX <= next_win_x_tmp;
+							--debug_what <= 33;
 						end if;
 					
 					--check bound y
@@ -332,7 +325,7 @@ architecture bhv of sad is
 						else
 							windowStartY <= next_win_y_tmp;
 						end if;
-						
+											
 					posX <= var_posX;
 					posY <= var_posY;
 					
@@ -340,41 +333,51 @@ architecture bhv of sad is
 					for BLK_ROW in 0 to block_size_x-1 loop
 						for BLK_COL in 0 to block_size_y-1 loop
 							ReferenceBlock(BLK_ROW,BLK_COL) <= Window((candidateRow*step_x)+BLK_ROW,(candidateCol*step_y)+BLK_COL);
+							debug_sads(BLK_ROW,BLK_COL) <= to_integer(unsigned(Window((candidateRow*step_x)+BLK_ROW,(candidateCol*step_y)+BLK_COL)));
 						end loop;
 					end loop;					
 					
-					
 					current_state <= Initialize;
-				-- when AddingSAD=>
-					-- debug_state_in_vector <= "0110";
-				-- when Picking=>
-					-- debug_state_in_vector <= "0111";
 					
 				when others=>
-					debug_state_in_vector <= "0101";
+					--debug_state_in_vector <= "0101";
 					-- why are we here?
 					current_state <= Initialize;
 			end case;
 		end if;	
 	end process;	
 	
-   process (slave_rd_en, slave_addr)
+   process (slave_rd_en, slave_addr,posX,posY,acc,debug_sads)
    begin	       
 		slave_readdata <= (others => '-');
 		if (slave_rd_en = '1') then
 			case slave_addr is
-				when "000" => slave_readdata <= b"0000_0000_0000_0000_0000_0000_0000_0000";
-				when "001" => slave_readdata <= std_logic_vector(to_unsigned(posX,32));
-				when "010" => slave_readdata <= std_logic_vector(to_unsigned(posY,32));
-				when "011" => slave_readdata <= std_logic_vector(to_unsigned(acc,32));
-				when "100" => slave_readdata <= b"0000_0000_0000_0000_0000_0000_0000_000" & ready;
+				when "0000" => slave_readdata <= b"0000_0000_0000_0000_0000_0000_0000_0000";
+				when "0001" => slave_readdata <= std_logic_vector(to_unsigned(posX,32));
+				when "0010" => slave_readdata <= std_logic_vector(to_unsigned(posY,32));
+				when "0011" => slave_readdata <= std_logic_vector(to_unsigned(acc,32));
+				when "0100" => slave_readdata <= b"0000_0000_0000_0000_0000_0000_0000_000" & ready;
 				--debug stuff
 				--20
-				when "101" => slave_readdata <= std_logic_vector(to_unsigned(debug_row,32));
+				when "0101" => slave_readdata <= std_logic_vector(to_unsigned(0,32));
 				--24
-				when "110" => slave_readdata <= std_logic_vector(to_unsigned(debug_col,32));
+				when "0110" => slave_readdata <= std_logic_vector(to_unsigned(debug_sads(0,0),32));
 				--28
-				when "111" => slave_readdata <= std_logic_vector(to_unsigned(debug_sad_1_1,16)) & std_logic_vector(to_unsigned(debug_sad_1_2,16));
+				when "0111" => slave_readdata <= std_logic_vector(to_unsigned(debug_sads(0,1),32));
+				--32
+				when "1000" => slave_readdata <= std_logic_vector(to_unsigned(debug_sads(0,2),32));
+				--36
+				when "1001" => slave_readdata <= std_logic_vector(to_unsigned(debug_sads(1,0),32));
+				--40
+				when "1010" => slave_readdata <= std_logic_vector(to_unsigned(debug_sads(1,1),32));
+				--44
+				when "1011" => slave_readdata <= std_logic_vector(to_unsigned(debug_sads(1,2),32));
+				--48
+				when "1100" => slave_readdata <= std_logic_vector(to_unsigned(debug_sads(2,0),32));
+				--52
+				when "1101" => slave_readdata <= std_logic_vector(to_unsigned(debug_sads(2,1),32));
+				--56
+				when "1110" => slave_readdata <= std_logic_vector(to_unsigned(debug_sads(2,2),32));
 				when others => slave_readdata <= b"0000_0000_0000_0000_0000_0000_0001_0000"; --address x - 16
 			end case;
 		end if;
