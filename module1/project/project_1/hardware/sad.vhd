@@ -68,7 +68,7 @@ architecture bhv of sad is
 	constant SCREEN_HEIGHT 	: integer := 240;
 	constant SAD_SIZE 		: integer := 65536;
 	
-	type StatesType				is (Initialize,Standby,Loading,CalculatingSAD, AddingSAD,Picking);
+	type StatesType				is (Initialize,Standby,Loading,CalculatingSAD, AddingSAD,Picking, DrawingBox);
 	type WindowType 				is array (0 to win_size_x, 0 to win_size_y) of std_logic_vector(15 downto 0);
 	type BlockType 				is array (0 to block_size_x, 0 to block_size_y) of std_logic_vector(15 downto 0);
 	type SadBlockType 			is array (0 to block_size_x-1, 0 to block_size_y-1) of integer range 0 to SAD_SIZE;
@@ -200,7 +200,16 @@ architecture bhv of sad is
 							master_wr_en <= '0';
 							master_rd_en <= '0';
 
-							Window(nextX,nextY) <= master_readdata;
+							
+							--Window(nextX,nextY) <= master_readdata;
+							
+							Window(nextX,nextY) <= b"11111_000000_00000";
+							if(nextX = 160) then
+							if(nextY = 120) then
+							
+								Window(nextX,nextY) <= b"00000_111111_00000";
+							end if;
+							end if;
 							--debug_what <= master_readdata;
 							
 							nextX := nextX+1;
@@ -337,8 +346,9 @@ architecture bhv of sad is
 						end loop;
 					end loop;					
 					
+					load_waiting := '0';
 					current_state <= Initialize;
-					
+			
 				when others=>
 					--debug_state_in_vector <= "0101";
 					-- why are we here?
@@ -359,23 +369,23 @@ architecture bhv of sad is
 				when "0100" => slave_readdata <= b"0000_0000_0000_0000_0000_0000_0000_000" & ready;
 				--debug stuff
 				--20
-				when "0101" => slave_readdata <= std_logic_vector(to_unsigned(0,32));
+				when "0101" => slave_readdata <= b"0000_0000_0000_0000" & Window(posX-1, posY-1); --std_logic_vector(to_unsigned(Window(posX-1, posY-1),32));
 				--24
-				when "0110" => slave_readdata <= std_logic_vector(to_unsigned(debug_sads(0,0),32));
+				when "0110" => slave_readdata <= b"0000_0000_0000_0000" & Window(posX, posY-1); --std_logic_vector(to_unsigned(debug_row,32));
 				--28
-				when "0111" => slave_readdata <= std_logic_vector(to_unsigned(debug_sads(0,1),32));
+				when "0111" => slave_readdata <= b"0000_0000_0000_0000" & Window(posX+1, posY-1); --std_logic_vector(to_unsigned(debug_col,32));
 				--32
-				when "1000" => slave_readdata <= std_logic_vector(to_unsigned(debug_sads(0,2),32));
+				when "1000" => slave_readdata <= b"0000_0000_0000_0000" & Window(posX-1, posY); --std_logic_vector(to_unsigned(debug_sads(0,2),32));
 				--36
-				when "1001" => slave_readdata <= std_logic_vector(to_unsigned(debug_sads(1,0),32));
+				when "1001" => slave_readdata <= b"0000_0000_0000_0000" & Window(posX, posY); --std_logic_vector(to_unsigned(debug_sads(1,0),32));
 				--40
-				when "1010" => slave_readdata <= std_logic_vector(to_unsigned(debug_sads(1,1),32));
+				when "1010" => slave_readdata <= b"0000_0000_0000_0000" & Window(posX+1, posY); --std_logic_vector(to_unsigned(debug_sads(1,1),32));
 				--44
-				when "1011" => slave_readdata <= std_logic_vector(to_unsigned(debug_sads(1,2),32));
+				when "1011" => slave_readdata <= b"0000_0000_0000_0000" & Window(posX-1, posY+1); --std_logic_vector(to_unsigned(debug_sads(1,2),32));
 				--48
-				when "1100" => slave_readdata <= std_logic_vector(to_unsigned(debug_sads(2,0),32));
+				when "1100" => slave_readdata <= b"0000_0000_0000_0000" & Window(posX, posY+1); --std_logic_vector(to_unsigned(debug_sads(2,0),32));
 				--52
-				when "1101" => slave_readdata <= std_logic_vector(to_unsigned(debug_sads(2,1),32));
+				when "1101" => slave_readdata <= b"0000_0000_0000_0000" & Window(posX+1, posY+1); --std_logic_vector(to_unsigned(debug_sads(2,1),32));
 				--56
 				when "1110" => slave_readdata <= std_logic_vector(to_unsigned(debug_sads(2,2),32));
 				when others => slave_readdata <= b"0000_0000_0000_0000_0000_0000_0001_0000"; --address x - 16
