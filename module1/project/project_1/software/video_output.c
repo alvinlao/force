@@ -149,8 +149,15 @@ void plotLine(alt_up_pixel_buffer_dma_dev* pixel_buffer, int x0, int y0, int x1,
 	IOWR_32DIRECT(draw_base, 8, x1);
 	IOWR_32DIRECT(draw_base, 12, y1);
 	IOWR_32DIRECT(draw_base, 16, color);
+	IOWR_32DIRECT(draw_base, 24, 1); // Data bit to hold the line
 	IOWR_32DIRECT(draw_base, 20, 1);
 	while(IORD_32DIRECT(draw_base, 20) == 0);
+	int i = 0;
+	for (i = 0; i < 10000; i++) {
+		// There should be a wait here or else the line will never move because it is being released
+		// too quickly. You can replace this with our SAD algorithm (or other search algorithm).
+	}
+	IOWR_32DIRECT(draw_base, 24, 0); // Data bit to release the line
 }
 
 int main()
@@ -182,8 +189,23 @@ int main()
 
 	printf("Here we go...\n");
 
+//	plotLine(pixel_buffer, 0, FRAME_HEIGHT/2, FRAME_WIDTH, FRAME_HEIGHT/2, 0xffff, 1);
+//	plotLine(pixel_buffer, FRAME_WIDTH/2, 0, FRAME_WIDTH/2, FRAME_HEIGHT, 0xffff, 1);
+//	plotLine(pixel_buffer, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, 0xffff, 1);
+//	plotLine(pixel_buffer, 0, FRAME_HEIGHT, FRAME_WIDTH, 0, 0xffff, 1);
+//	plotLine(pixel_buffer, 0, FRAME_HEIGHT, FRAME_WIDTH, 0, 0xffff, 1);
+
+	int i, j, l, m;
 	// Main loop
 	while(1) {
+		m = FRAME_HEIGHT;
+		for (j = 0; j < FRAME_HEIGHT; j++) {
+			l = FRAME_WIDTH;
+			for (i = 0; i < FRAME_WIDTH; i++) {
+				plotLine(pixel_buffer, i, j, l--, m--, 0x663399, 1);
+			}
+		}
+
 		/*
 		 * Video in is drawing on the front buffer faster than our algorithm
 		 * We swap buffers so that the back buffer holds a static frame.
@@ -206,11 +228,6 @@ int main()
 //		marker->y2 = track_y + MARKER_SIZE;
 //		drawBox(pixel_buffer, 0);
 
-		plotLine(pixel_buffer, 0, FRAME_HEIGHT/2, FRAME_WIDTH, FRAME_HEIGHT/2, 0xffff, 1);
-		plotLine(pixel_buffer, FRAME_WIDTH/2, 0, FRAME_WIDTH/2, FRAME_HEIGHT, 0xffff, 1);
-		plotLine(pixel_buffer, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, 0xffff, 1);
-		plotLine(pixel_buffer, 0, FRAME_HEIGHT, FRAME_WIDTH, 0, 0xffff, 1);
-		plotLine(pixel_buffer, 0, FRAME_HEIGHT, FRAME_WIDTH, 0, 0xffff, 1);
 //		drawBox(pixel_buffer, marker);
 	}
 
