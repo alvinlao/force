@@ -955,10 +955,10 @@
  </module>
  <module kind="sad_track" version="1.0" enabled="1" name="sad_track_0">
   <parameter name="pixel_buffer_base" value="0" />
-  <parameter name="winSizeX" value="3" />
-  <parameter name="winSizeY" value="3" />
-  <parameter name="blockSizeX" value="1" />
-  <parameter name="blockSizeY" value="1" />
+  <parameter name="winSizeX" value="20" />
+  <parameter name="winSizeY" value="20" />
+  <parameter name="blockSizeX" value="5" />
+  <parameter name="blockSizeY" value="5" />
   <parameter name="strideX" value="1" />
   <parameter name="strideY" value="1" />
   <parameter name="AUTO_CLOCK_CLOCK_RATE" value="50000000" />

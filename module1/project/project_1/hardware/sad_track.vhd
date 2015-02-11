@@ -211,7 +211,7 @@ begin
 						master_rd_en <= '0';
 						window(nextX, nextY) <= master_readdata;
 						
-						-- Need to intialize reference block
+						-- Need to initialize reference block
 						if(intializedRefBlock = '0') then
 							if(nextX < blockSizeX) and (nextY < blockSizeY) then
 								refBlock(nextX, nextY) <= master_readdata;
@@ -250,7 +250,7 @@ begin
 					
 					SADBlockStart <= '1';
 				elsif(SADBlockDone = '1') then
-					if(SADBlockResult < minSADValue) then
+					if(SADBlockResult <= minSADValue) then
 						-- Absolute co-ords
 						x_local := curWinX + curX;
 						y_local := curWinY + curY;
