@@ -4,7 +4,7 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Cfg)
-		Device PartName(EP2C35F672) Path("C:/altera/force/module1/project/project_1/hardware/output_files/") File("project_1.sof") MfrSpec(OpMask(1));
+		Device PartName(EP2C35F672) Path("C:/force/module1/project/project_1/hardware/output_files/") File("project_1.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 

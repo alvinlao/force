@@ -69,16 +69,16 @@ architecture bhv of sad is
 	constant SAD_SIZE 		: integer := 65536;
 	
 	type StatesType				is (Initialize,Standby,Loading,CalculatingSAD, AddingSAD,Picking, DrawingBox);
-	type WindowType 				is array (0 to win_size_x, 0 to win_size_y) of std_logic_vector(15 downto 0);
-	type BlockType 				is array (0 to block_size_x, 0 to block_size_y) of std_logic_vector(15 downto 0);
+	type WindowType 			is array (0 to win_size_x-1, 0 to win_size_y-1) of std_logic_vector(15 downto 0);
+	type BlockType 				is array (0 to block_size_x-1, 0 to block_size_y-1) of std_logic_vector(15 downto 0);
 	type SadBlockType 			is array (0 to block_size_x-1, 0 to block_size_y-1) of integer range 0 to SAD_SIZE;
 	type SadWindowType 			is array (0 to ((win_size_x - block_size_x)/step_x), 0 to (win_size_y - block_size_y)/step_y) of SadBlockType;
 	type SADForEachBlocksType	is array (0 to ((win_size_x - block_size_x)/step_x), 0 to (win_size_y - block_size_y)/step_y) of integer range 0 to SAD_SIZE;
 	
 	signal ready 			: std_logic := '0';
-	signal processing 	: std_logic;
-	signal posX				: integer range 0 to SCREEN_WIDTH;
-	signal posY				: integer range 0 to SCREEN_HEIGHT;
+	signal processing 		: std_logic;
+	signal posX				: integer range 0 to SCREEN_WIDTH-1;
+	signal posY				: integer range 0 to SCREEN_HEIGHT-1;
 	signal acc				: integer range 0 to SAD_SIZE;
 	
 	signal current_state 	: StatesType := Initialize;
@@ -203,13 +203,10 @@ architecture bhv of sad is
 							
 							--Window(nextX,nextY) <= master_readdata;
 							
-							Window(nextX,nextY) <= b"11111_000000_00000";
-							if(nextX = 160) then
-							if(nextY = 120) then
-							
-								Window(nextX,nextY) <= b"00000_111111_00000";
-							end if;
-							end if;
+							Window(nextX,nextY) <= std_logic_vector(to_unsigned(nextX, 12)) & std_logic_vector(to_unsigned(nextY, 12));
+							-- if(nextX = 159) and (nextY = 119) then							
+								-- Window(nextX,nextY) <= b"0000_0000_1111_1111";
+							-- end if;
 							--debug_what <= master_readdata;
 							
 							nextX := nextX+1;
