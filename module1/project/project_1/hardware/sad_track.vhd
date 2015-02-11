@@ -154,7 +154,6 @@ begin
 		case current_state is
 			when INIT =>
 				current_state_std <= b"0000_0000_0000_0000_0000_0000_0000_0000";
-				counter <= counter + 1;
 				
 				-- Initialize window and block to the center
 				curWinX := SCREEN_CENTERED_WINDOW_X;
@@ -251,23 +250,23 @@ begin
 					end if;
 					
 					SADBlockStart <= '0';
-				end if;
-				
-				-- Iterator
-				nextX := nextX + 1;
-				if(nextX = NUM_SAD_BLOCKS_X+1) then
-					nextX := 0;
-					nextY := nextY + 1;
 					
-					if(nextY = NUM_SAD_BLOCKS_Y+1) then
+					-- Iterator
+					nextX := nextX + 1;
+					if(nextX = NUM_SAD_BLOCKS_X+1) then
 						nextX := 0;
-						nextY := 0;
+						nextY := nextY + 1;
 						
-						-- All done
-						current_state <= SAVE_REF;
+						if(nextY = NUM_SAD_BLOCKS_Y+1) then
+							nextX := 0;
+							nextY := 0;
+							
+							-- All done
+							current_state <= SAVE_REF;
+						end if;
 					end if;
 				end if;
-				
+
 			when SAVE_REF =>
 				current_state_std <= b"0000_0000_0000_0000_0000_0000_0000_0100";
 				refBlock(nextX, nextY) <= window(x_local - curWinX + nextX, y_local - curWinY + nextY);
@@ -343,6 +342,18 @@ begin
 			when "1001" => slave_readdata <= std_logic_vector(counter);
 			-- 40: refblock
 			when "1010" => slave_readdata <= b"0000_0000_0000_0000" & refblock(0, 0);
+			
+			-- 44: window A, B
+			when "1011" => slave_readdata <= window(0, 0) & window(1, 0);
+			-- 48: window C, D
+			when "1100" => slave_readdata <= window(2, 0) & window(0, 1);
+			-- 52: window E, F
+			when "1101" => slave_readdata <= window(1, 1) & window(2, 1);
+			-- 56: window G, H
+			when "1110" => slave_readdata <= window(0, 2) & window(1, 2);
+			-- 60: window I
+			when "1111" => slave_readdata <= b"0000_0000_0000_0000" & window(2, 2);
+
 			
 			-- INVALID
 			when others => slave_readdata <= b"0000_0000_0000_0000_0000_0000_0000_0000";
