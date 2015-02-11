@@ -3,6 +3,10 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;
 use IEEE.Numeric_Std.all;
+	
+library work;
+use work.my_types.all;
+
 
 entity sad_block is
 	generic (
@@ -13,83 +17,111 @@ entity sad_block is
 	port (
 		reset	: in std_logic;
 		clock	: in std_logic;
-		en		: in std_logic;
-		x, y	: in std_logic;
-		
-		master_rd_en	: out std_logic;
-		master_readdata	: in std_logic_vector(15 downto 0);
 		
 		ready	: out std_logic;
+		ready_block : out std_logic;
 		done	: out std_logic;
-		sad_val	: out std_logic_vector;
+		start	: in std_logic;
+		start_block : in std_logic;
+		block_read_en : in std_logic;
+
+		ref_block : in BlockType(sizeX-1 downto 0, sizeY-1 downto 0);
+		can_block : in BlockType(sizeX-1 downto 0, sizeY-1 downto 0);
+		
+		sad : out unsigned(31 downto 0)
 	);
 end entity sad_block;
 
-architecture Behavioural of sad_block is
-	component sync_ram 
+architecture Behavioural of sad_block is	
+	component sad_pixel
 	port (
-		clock	: in std_logic;
-		we		: in std_logic;
-		address	: in std_logic_vector;
-		datain	: in std_logic_vector;
-		dataout	: out std_logic_vector
+		ref_rgb	: in std_logic_vector(15 downto 0);
+		can_rgb	: in std_logic_vector(15 downto 0);
+		sad		: out unsigned(7 downto 0)
 	);
+	end component;
 	
-	type state is (READY, LOAD, SUM, DONE);
-	
-	signal we	: std_logic;
-	signal address, datain, dataout	: std_logic;
-	
-	-- State machine
-	signal current_state : state <= state;
+	type state is (IDLE, LOADREF, IDLEBLOCK, LOADBLOCK, SADPIXEL, SUMSAD, FINISH);
+	signal current_state : state := IDLE;
 
-	-- SAD control
-	signal sum : unsigned
-	signal x, y	: integer;
+	signal can : BlockType(sizeX-1 downto 0, sizeY-1 downto 0);
+	signal ref : BlockType(sizeX-1 downto 0, sizeY-1 downto 0);
+	signal sads : SADBlockType(sizeX-1 downto 0, sizeY-1 downto 0);
 	
 begin
-	R: sync_ram port map (clock, we, address, datain, dataout);
+	-- One SAD_pixel for each pixel
+	GX: for i in 0 to sizeX-1 generate
+		GY: for j in 0 to sizeY-1 generate
+			SP: sad_pixel port map(
+				ref_rgb => can(i, j),
+				can_rgb => ref(i, j),
+				sad 	=> sads(i, j)
+			);
+		end generate GY;
+	end generate GX;
 	
+
 	process(clock, reset)
+		-- Final sad
+		variable sad_var : unsigned(31 downto 0);	
 	begin
-		if(reset = '0') then
-			current_state <= READY;
+
+		if(reset = '1') then
+			current_state <= IDLE;
 		elsif(rising_edge(clock)) then
+			done <= '0';
+			ready <= '0';
+			ready_block <= '0';
+			
 			case current_state is
-				when READY => 
-					if(en = '1') then
-						current_state <= LOAD;
-					end if;
-				when LOAD => 
+				when IDLE =>
+					ready <= '1';
+					sad_var := b"0000_0000_0000_0000_0000_0000_0000_0000";
+					sad <= sad_var;
 					
-				when SUM =>
-					if(x = sizeX) and (y = sizeY) then
-						current_state <= DONE;
+					if(start = '1') then
+						current_state <= LOADREF;
 					end if;
-				when DONE =>
-					if(en = '0') then
-						current_state <= READY;
+				when LOADREF =>
+					if(block_read_en = '1') then
+						ref <= ref_block;
+						current_state <= IDLEBLOCK;
 					end if;
-				when others => null;
+				when IDLEBLOCK =>
+					ready_block <= '1';
+					sad_var := b"0000_0000_0000_0000_0000_0000_0000_0000";
+					sad <= sad_var;
+					
+					if(start_block = '1') then
+						current_state <= LOADBLOCK;
+					end if;
+				when LOADBLOCK =>
+					if(block_read_en = '1') then
+						can <= can_block;
+						current_state <= SADPIXEL;
+					end if;
+				when SADPIXEL =>
+					-- Done instantly
+					current_state <= SUMSAD;
+				when SUMSAD =>
+					for i in 0 to sizeX-1 loop
+						for j in 0 to sizeY-1 loop
+							sad_var := sad_var + sads(i, j);
+						end loop;
+					end loop;
+					
+					sad <= sad_var;
+					current_state <= FINISH;
+				when FINISH =>
+					done <= '1';
+					
+					if(start_block = '0') then
+						current_state <= IDLEBLOCK;
+					elsif (start = '0') then 
+						current_state <= IDLE;
+					end if;
 			end case;
 		end if;
 	end process;
-	
-	process(current_state)
-	begin
-		case current_state is
-			ready <= '0';
-			done <= '0';
-			
-			when READY =>
-				ready <= '1';
-			when LOAD =>
-			when SUM =>
-			when DONE =>
-				done <= '1';
-			when others => null;
-		end case;
-	end process;
-	
 	
 end architecture Behavioural;
