@@ -370,19 +370,19 @@
          type = "int";
       }
    }
-   element sdram_controller.s1
-   {
-      datum baseAddress
-      {
-         value = "16777216";
-         type = "String";
-      }
-   }
    element Onchip_Memory.s1
    {
       datum baseAddress
       {
          value = "540672";
+         type = "String";
+      }
+   }
+   element sdram_controller.s1
+   {
+      datum baseAddress
+      {
+         value = "16777216";
          type = "String";
       }
    }
@@ -441,7 +441,7 @@
  <parameter name="projectName" value="project_1.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1423633328037" />
+ <parameter name="timeStamp" value="1423642699740" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface
@@ -939,12 +939,12 @@
  </module>
  <module kind="sad_track" version="1.0" enabled="1" name="sad_track_0">
   <parameter name="pixel_buffer_base" value="0" />
-  <parameter name="win_size_x" value="20" />
-  <parameter name="win_size_y" value="20" />
-  <parameter name="block_size_x" value="7" />
-  <parameter name="block_size_y" value="7" />
-  <parameter name="step_x" value="1" />
-  <parameter name="step_y" value="1" />
+  <parameter name="winSizeX" value="3" />
+  <parameter name="winSizeY" value="3" />
+  <parameter name="blockSizeX" value="1" />
+  <parameter name="blockSizeY" value="1" />
+  <parameter name="strideX" value="1" />
+  <parameter name="strideY" value="1" />
   <parameter name="AUTO_CLOCK_CLOCK_RATE" value="50000000" />
  </module>
  <connection
@@ -1519,11 +1519,6 @@
    start="Clock_Signals.sys_clk"
    end="sad_track_0.clock" />
  <connection
-   kind="reset"
-   version="13.0"
-   start="clk_0.clk_reset"
-   end="sad_track_0.reset" />
- <connection
    kind="avalon"
    version="13.0"
    start="sad_track_0.avalon_master"
@@ -1532,6 +1527,11 @@
   <parameter name="baseAddress" value="0x0000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
+ <connection
+   kind="reset"
+   version="13.0"
+   start="clk_0.clk_reset"
+   end="sad_track_0.reset" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="0" />
 </system>

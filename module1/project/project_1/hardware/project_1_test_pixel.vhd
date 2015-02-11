@@ -21,7 +21,7 @@ architecture Behavioural of project_1_test_pixel is
 	end component;
 
 	signal output : unsigned(7 downto 0);
-	signal c			: std_logic_vector(15 downto 0) := "0000000000000000";
+	signal c			: std_logic_vector(15 downto 0) := "1111111111111111";
 begin
 	SP : sad_pixel port map (
 		ref_rgb => SW(15 downto 0),

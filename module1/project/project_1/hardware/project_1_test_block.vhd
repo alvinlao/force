@@ -2,7 +2,6 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.all;
 use IEEE.Numeric_Std.all;
 
-	
 library work;
 use work.my_types.all;
 
@@ -87,16 +86,13 @@ begin
 		
 			for i in 0 to winSizeX-1 loop
 				for j in 0 to winSizeY-1 loop
-					window(i, j) <= b"0000_0000_0000_0000";
-					if(i = 0) and (j = 0) then
-						window(i, j) <= b"0000_0000_0000_0001";
-					end if;
+					window(i, j) <= b"1111_1111_1111_1111";
 				end loop;
 			end loop;
 			
 			for i in 0 to sizeX-1 loop
 				for j in 0 to sizeY-1 loop
-					ref(i, j) <= b"0000_0000_0000_0000";
+					ref(i, j) <= b"0000_1000_1111_0101";
 				end loop;
 			end loop;
 			

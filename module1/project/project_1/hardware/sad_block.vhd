@@ -24,7 +24,7 @@ entity sad_block is
 		start	: in std_logic;
 		done	: out std_logic;
 
-		-- Absolute x, y offsets
+		-- Window relative x, y offsets
 		x0			: in integer;
 		y0			: in integer;
 		
