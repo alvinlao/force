@@ -129,7 +129,9 @@ SB : sad_block
 	);
 
 
-process(clk, reset_n)		
+process(clk, reset_n)	
+	variable wait_data : std_logic := '0';
+	
 	-- Iterator
 	variable nextX, nextY : integer;
 	-- Window location
@@ -154,6 +156,8 @@ begin
 		case current_state is
 			when INIT =>
 				current_state_std <= b"0000_0000_0000_0000_0000_0000_0000_0000";
+				
+				wait_data := '0';
 				
 				-- Initialize window and block to the center
 				curWinX := SCREEN_CENTERED_WINDOW_X;
@@ -192,41 +196,45 @@ begin
 				current_state_std <= b"0000_0000_0000_0000_0000_0000_0000_0010";
 				
 				-- Read pixels from pixel buffer into window
-				if(master_waitrequest = '0') then
+				if(wait_data = '0') then
+					wait_data := '1';
 					-- Request next color from pixel buffer
 					master_addr <= std_logic_vector(unsigned(pixel_buffer_base) + unsigned(to_unsigned(curWinY + nextY, 8) & unsigned(to_unsigned(curWinX + nextX, 9)) & '0'));	
 					master_be <= "11";  -- byte enable
 					master_wr_en <= '0';
 					master_rd_en <= '1';
 				else
-					-- Data available
-					master_wr_en <= '0';
-					master_rd_en <= '0';
-					window(nextX, nextY) <= master_readdata;
-					
-					-- Need to intialize reference block
-					if(intializedRefBlock = '0') then
-						if(nextX < blockSizeX) and (nextY < blockSizeY) then
-							refBlock(nextX, nextY) <= master_readdata;
+					if(master_waitrequest = '0') then
+						-- Data available
+						wait_data := '0';
+						master_wr_en <= '0';
+						master_rd_en <= '0';
+						window(nextX, nextY) <= master_readdata;
+						
+						-- Need to intialize reference block
+						if(intializedRefBlock = '0') then
+							if(nextX < blockSizeX) and (nextY < blockSizeY) then
+								refBlock(nextX, nextY) <= master_readdata;
+							end if;
+							
+							if(nextX = blockSizeX-1) and (nextY = blockSizeY-1) then
+								intializedRefBlock <= '1';
+							end if;
 						end if;
 						
-						if(nextX = blockSizeX-1) and (nextY = blockSizeY-1) then
-							intializedRefBlock <= '1';
-						end if;
-					end if;
-					
-					-- Iterator
-					nextX := nextX + 1;
-					if(nextX = winSizeX) then
-						nextX := 0;
-						nextY := nextY + 1;
-						
-						if(nextY = winSizeY) then
-							-- All loaded up
-							minSADValue <= to_unsigned(MAX_INT, 32);
+						-- Iterator
+						nextX := nextX + 1;
+						if(nextX = winSizeX) then
 							nextX := 0;
-							nextY := 0;
-							current_state <= CALCULATE;
+							nextY := nextY + 1;
+							
+							if(nextY = winSizeY) then
+								-- All loaded up
+								minSADValue <= to_unsigned(MAX_INT, 32);
+								nextX := 0;
+								nextY := 0;
+								current_state <= CALCULATE;
+							end if;
 						end if;
 					end if;
 				end if;

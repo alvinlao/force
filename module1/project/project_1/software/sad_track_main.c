@@ -4,9 +4,14 @@
 #include <time.h>
 #include "altera_up_avalon_video_pixel_buffer_dma.h"
 #include <unistd.h>
+#include "sys/alt_timestamp.h"
 
 #define draw_base (volatile int*) 0x00089480
 #define SAD_TRACK_BASE (volatile int *) 0x00089440
+
+#define TIMER_BASE (volatile int *) 0x00089400
+// About 30 ms
+#define DELAY_TICKS 1500000
 
 alt_up_pixel_buffer_dma_dev* pixel_buffer;
 void drawBox(int x1, int y1, int x2, int y2, int color) {
@@ -134,14 +139,17 @@ int main()
 	// Main loop
 	while(1) {
 		// Lazy delay
-		for(i=0;i<5000000;i++);
+//		for(i=0;i<5000000;i++);
 
-		drawBox(150, 100, 170, 140, 0xfffff);
+		// Reset timer
+		alt_timestamp_start();
 
+		// Main loop
+		printRefBlock();
 		runSAD();
 		printWindow();
-		printRefBlock();
 		printXY();
+		printSAD();
 
 		// Move box
 //		drawBox(x1, y1, x2, y2, 0xffffff);
@@ -153,7 +161,6 @@ int main()
 
 		// Yawn
 //		startSAD();
-//		waitSAD();
 //		printRefBlock();
 //		printSAD();
 //		printXY();
@@ -162,8 +169,13 @@ int main()
 		x = IORD_32DIRECT(SAD_TRACK_BASE, 4);
 		y = IORD_32DIRECT(SAD_TRACK_BASE, 8);
 		drawBox(x, y, x+10, y+10, 0xff000);
+
 //		printPixel();
 //		printXY();
+
+		// Delay with timer
+		while (alt_timestamp() < DELAY_TICKS);
+		alt_timestamp_start();
 	}
 
     return 0;
