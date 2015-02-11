@@ -30,6 +30,7 @@ entity sad is
 		pixel_buffer_base : std_logic_vector := x"00000000";
 		find_color : integer := 0;
 		block_size : integer := 2;
+		window_size : integer := 10;
 		score_factor: integer := 2
 	);	
 	port (

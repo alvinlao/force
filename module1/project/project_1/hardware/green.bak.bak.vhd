@@ -6,14 +6,14 @@
 -- 				to be used with Quartus II Qsys System and Avalon Memory Mapping interface
 --
 -- Usage	:	pixel_buffer_base 	= pixel buffer base as defined in Pixel Buffer core
---				win_size			= search window size in pixels
+--				window_size			= search window size in pixels
 --				block_size_x		= reference block size in pixels
 --				steps				= how many pixels to be searched for
 --				screen_width		= CONSTANT value of 320
 --				screen_height		= CONSTANT value of 240
 --
 -- Timing	:	(2w)+(1)+(2(w-b)/s) clocks
---				w = win_size_x * win_size_y
+--				w = window_size_x * window_size_y
 --				b = block_size_x * block_size_y-1
 --				s = steps
 --
@@ -30,6 +30,7 @@ entity sad is
 		pixel_buffer_base : std_logic_vector := x"00000000";
 		find_color : integer := 0;
 		block_size : integer := 2;
+		window_size : integer := 10;
 		score_factor: integer := 2
 	);	
 	port (
@@ -65,6 +66,8 @@ architecture bhv of sad is
 	SIGNAL posX				: integer range 0 to SCREEN_WIDTH;
 	SIGNAL posY				: integer range 0 to SCREEN_HEIGHT;
 	SIGNAL acc				: integer range 0 to 64;
+	SIGNAL WinStartX		: integer range 0 to SCREEN_WIDTH-(window_size/2) := 160-(window_size/2);
+	SIGNAL WinStartY		: integer range 0 to SCREEN_HEIGHT-(window_size/2) := 120-(window_size/2);
 	
 	BEGIN
 	  
@@ -87,6 +90,9 @@ architecture bhv of sad is
 		VARIABLE tempScoreTotal 	: 	integer range -(score_factor+1)*64*block_size*block_size to (score_factor+1)*64*block_size*block_size;
 		VARIABLE tempSecondaryScoreForPixel	: integer range 0 to 64;
 		
+		VARIABLE tempWinStartX		: integer range -window_size/2 to SCREEN_WIDTH;
+		VARIABLE tempWinStartY		: integer range -window_size/2 to SCREEN_HEIGHT;
+		
 	BEGIN
 		--following variables are not required to be saved across clock cycles
 		tempRed := 0;
@@ -106,8 +112,8 @@ architecture bhv of sad is
 			
 			case (current_state) is
 				when Initialize =>
-					nextX := 0;
-					nextY := 0;
+					nextX := WinStartX;
+					nextY := WinStartY;
 					nextBlockX := 0;
 					nextBlockY := 0;
 					candidateX := 0;
@@ -181,37 +187,59 @@ architecture bhv of sad is
 								tempScoreTotal := tempScoreTotal + (tempScoreForPixel*score_factor) + tempSecondaryScoreForPixel;
 							--
 							
-							nextBlockX := nextBlockX + 1;
-							if (nextBlockX = block_size) then
-								nextBlockX := 0;
-								nextBlockY := nextBlockY + 1;
-								if (nextBlockY = block_size) then
-									nextBlockY := 0;
-									--done computing for the block;
-									
-									if (candidateScore < tempScoreTotal) then
-										candidateX := nextX;
-										candidateY := nextY;
-										candidateScore := tempScoreTotal;
-									end if;
-									
-									tempScoreTotal := 0;
-								
-								
-									nextX := nextX+1;
-									if(nextX = (SCREEN_WIDTH-block_size)) then
-										nextX := 0;
-										nextY := nextY +1;
+								nextBlockX := nextBlockX + 1;
+								if (nextBlockX = block_size) then
+									nextBlockX := 0;
+									nextBlockY := nextBlockY + 1;
+									if (nextBlockY = block_size) then
+										nextBlockY := 0;
+										--done computing for the block;
 										
-										if (nextY = (SCREEN_HEIGHT-block_size)) then
-											-- DONE COMPUTATION
-											ready <= '1';
-											posX <= candidateX+(block_size/2);
-											posY <= candidateY+(block_size/2);
-											acc <= candidateScore;
+										if (candidateScore < tempScoreTotal) then
+											candidateX := nextX;
+											candidateY := nextY;
+											candidateScore := tempScoreTotal;
+										end if;
+										
+										tempScoreTotal := 0;
+									
+									
+										nextX := nextX+1;
+										if(nextX = (WinStartX + window_size-block_size)) then
+											nextX := WinStartX;
+											nextY := nextY +1;
 											
-											current_state <= Initialize;
-											load_waiting := '1';
+											if (nextY = (WinStartY + window_size-block_size)) then
+												-- DONE COMPUTATION
+												ready <= '1';
+												posX <= candidateX+(block_size/2);
+												posY <= candidateY+(block_size/2);
+												acc <= candidateScore;
+												
+												tempWinStartX := posX - (window_size/2);
+												tempWinStartY := posY - (window_size/2);
+												
+												-- Check Bounds
+												if (tempWinStartX < 0) then
+													WinStartX <= 0;
+												else if (tempWinStartX > (SCREEN_WIDTH-(window_size/2))) then
+													WinStartX <= SCREEN_WIDTH-window_size/2;
+												else
+													WinStartX <= tempWinStartX;
+												end if;
+												
+												if (tempWinStartY < 0) then
+													WinStartY <= 0;
+												else if (tempWinStartY > (SCREEN_HEIGHT-(window_size/2))) then
+													WinStartY <= SCREEN_HEIGHT-window_size/2;
+												else
+													WinStartY <= tempWinStartY;
+												end if;
+												
+												current_state <= Initialize;
+												load_waiting := '1';
+											end if;
+											end if;
 										end if;
 									end if;
 								end if;
@@ -254,9 +282,9 @@ architecture bhv of sad is
 				
 				--debug stuff
 				--20
-				when "0101" => slave_readdata <= std_logic_vector(to_unsigned(find_color,32));
+				when "0101" => slave_readdata <= std_logic_vector(to_unsigned(WinStartX,32));
 				--24
-				when "0110" => slave_readdata <= std_logic_vector(to_unsigned(0,32));
+				when "0110" => slave_readdata <= std_logic_vector(to_unsigned(WinStartY,32));
 				--28
 				when "0111" => slave_readdata <= std_logic_vector(to_unsigned(0,32));
 				--32

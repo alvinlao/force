@@ -930,12 +930,14 @@
  <module kind="color_search" version="1.0" enabled="1" name="color_search_0">
   <parameter name="pixel_buffer_base" value="0" />
   <parameter name="find_color" value="0" />
-  <parameter name="block_size" value="3" />
+  <parameter name="block_size" value="2" />
+  <parameter name="score_factor" value="2" />
  </module>
  <module kind="color_search" version="1.0" enabled="1" name="color_search_1">
   <parameter name="pixel_buffer_base" value="0" />
   <parameter name="find_color" value="2" />
   <parameter name="block_size" value="2" />
+  <parameter name="score_factor" value="2" />
  </module>
  <connection
    kind="avalon"
@@ -1463,43 +1465,10 @@
  <connection
    kind="avalon"
    version="13.0"
-   start="color_search_0.avalon_master"
-   end="Pixel_Buffer.avalon_sram_slave">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="13.0"
    start="CPU.data_master"
    end="color_search_0.avalon_slave">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x00089400" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="reset"
-   version="13.0"
-   start="clk_0.clk_reset"
-   end="color_search_0.reset" />
- <connection
-   kind="reset"
-   version="13.0"
-   start="CPU.jtag_debug_module_reset"
-   end="color_search_0.reset" />
- <connection
-   kind="clock"
-   version="13.0"
-   start="Clock_Signals.sys_clk"
-   end="color_search_0.clock" />
- <connection
-   kind="avalon"
-   version="13.0"
-   start="color_search_1.avalon_master"
-   end="Pixel_Buffer.avalon_sram_slave">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -1515,7 +1484,17 @@
    kind="reset"
    version="13.0"
    start="CPU.jtag_debug_module_reset"
+   end="color_search_0.reset" />
+ <connection
+   kind="reset"
+   version="13.0"
+   start="CPU.jtag_debug_module_reset"
    end="color_search_1.reset" />
+ <connection
+   kind="reset"
+   version="13.0"
+   start="clk_0.clk_reset"
+   end="color_search_0.reset" />
  <connection
    kind="reset"
    version="13.0"
@@ -1526,6 +1505,29 @@
    version="13.0"
    start="Clock_Signals.sys_clk"
    end="color_search_1.clock" />
+ <connection
+   kind="clock"
+   version="13.0"
+   start="Clock_Signals.sys_clk"
+   end="color_search_0.clock" />
+ <connection
+   kind="avalon"
+   version="13.0"
+   start="color_search_0.avalon_master"
+   end="Pixel_Buffer.avalon_sram_slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="13.0"
+   start="color_search_1.avalon_master"
+   end="Pixel_Buffer.avalon_sram_slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="0" />
 </system>
