@@ -28,6 +28,7 @@ architecture rtl of pixel_drawer is
     signal y1,y2 : std_logic_vector(7 downto 0);
     signal colour : std_logic_vector(15 downto 0);	 
     signal done : std_logic := '0';
+	 signal hold_position : std_logic := '0';
 	 
 --	 constant pixel_buffer_base : std_logic_vector(31 downto 0) :=  x"00080000";
 	 
@@ -47,12 +48,17 @@ begin
     -- starts a drawing operation, we immediately copy the coordinates here, so that
     -- if the user tries to change the coordinates while the draw operation is running,
     -- the draw operation completes with the old value of the coordinates.  This is
-    -- not strictly required, but perhaps provides a more “natural” operation for
+    -- not strictly required, but perhaps provides a more â€œnaturalâ€ operation for
     -- whoever is writing the C code.
 
     variable x1_local,x2_local : std_logic_vector(8 downto 0);
     variable y1_local,y2_local : std_logic_vector(7 downto 0);
-    variable colour_local : std_logic_vector(15 downto 0);	 
+    variable colour_local : std_logic_vector(15 downto 0);
+	 
+	  -- The original values of the line
+	variable x1_original,x2_original : std_logic_vector(8 downto 0);
+	variable y1_original,y2_original : std_logic_vector(7 downto 0);
+	variable error_original : signed(18 downto 0);
 	 
 	 variable sx, sy : integer;
 	 variable dx : signed(10 downto 0);
@@ -67,6 +73,7 @@ begin
           processing := '0';
           state := 0;
           done <= '0';
+			 hold_position <= '0';
 
         elsif rising_edge(clk) then
 
@@ -74,16 +81,13 @@ begin
            -- drawing operation, step through the drawing state machine.
 
            if processing = '1' then
-
                -- Initiate a write operation on the master bus.  The address of
                -- of the write operation points to the pixel buffer plus an offset
-               -- that is computed from the x1_local and y1_local.  The final ‘0’
+               -- that is computed from the x1_local and y1_local.  The final â€˜0â€™
                -- is because each pixel takes 16 bits in memory.  The data of the
                -- write operation is the colour value (16 bits).
 
-               if state = 0 then	
---                  master_addr <= std_logic_vector(unsigned(pixel_buffer_base) + steve +
---						                   unsigned( y1_local & x1_local & '0'));		  				   	          
+               if state = 0 then
                   master_addr <= std_logic_vector(unsigned(pixel_buffer_base) +
  						                   unsigned( y1_local & x1_local & '0'));	
                   master_writedata <= colour_local;
@@ -91,6 +95,7 @@ begin
                   master_wr_en <= '1';
                   master_rd_en <= '0';
                   state := 1; -- on the next rising clock edge, do state 1 operations
+						done <= '0';
 
                -- After starting a write operation, we need to wait until
                -- master_waitrequest is 0.  If it is 1, stay in state 1.
@@ -104,6 +109,15 @@ begin
 							-- Done
 							done <= '1';
                      processing := '0';
+							if (hold_position = '1') then
+								state := 0;
+								processing := '1';
+								x1_local := x1_original;
+								x2_local := x2_original;
+								y1_local := y1_original;
+								y2_local := y2_original;
+								error := error_original;
+							end if;
 						else 
 							-- Keep going
 							if (e2 >= dy) then
@@ -116,21 +130,8 @@ begin
 								y1_local := std_logic_vector(unsigned(y1_local)+sy);								 
 							end if;
 						end if;
-						
-                  --if (x1_local = x2_local) then
-                    -- if (y1_local = y2_local) then 
-                    --    done <= '1';   -- box is done
-                    --    processing := '0';
-                    -- else
-                    --    x1_local := savedx;
-                    --    y1_local := std_logic_vector(unsigned(y1_local)+1);								 
-                    -- end if;
-                  --else 
-                    --    x1_local := std_logic_vector(unsigned(x1_local)+1);
-                  --end if;						
                end if;
              end if;					
-
 
              -- We should also check if there is a write on the slave bus.  If so, copy the
              -- written value into one of our internal registers.
@@ -182,8 +183,14 @@ begin
 								  error := resize(dx + dy, error'length);
 								  
                           colour_local := colour;
+								  
+								  x1_original := x1_local;
+								  x2_original := x2_local;
+								  y1_original := y1_local;
+								  y2_original := y2_local;
+								  error_original := error;
                         end if;
-		
+						 when "110" => hold_position <= slave_writedata(0);
                    when others => null;
                 end case;
             end if;
@@ -191,11 +198,11 @@ begin
    end process;	  
 		  
 	
-   -- This process is used to describe what to do when a “read” operation occurs on the
+   -- This process is used to describe what to do when a â€œreadâ€ operation occurs on the
    -- slave interface (this is because the C program does a memory read).  Depending
    -- on the address read, we return x1, x2, y1, y2, the colour, or the done flag.
 
-   process (slave_rd_en, slave_addr, x1,x2,y1,y2,colour,done)
+   process (slave_rd_en, slave_addr, x1, x2, y1, y2, colour, done, hold_position)
    begin	       
       slave_readdata <= (others => '-');
       if (slave_rd_en = '1') then
@@ -206,6 +213,7 @@ begin
               when "011" => slave_readdata <= "000000000000000000000000" & y2;
               when "100" => slave_readdata <= "0000000000000000" & colour;
               when "101" => slave_readdata <= (0=>done, others=>'0');
+				  when "110" => slave_readdata <= (0=>hold_position, others=>'0');
               when others => null;
             end case;
          end if;

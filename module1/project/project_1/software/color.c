@@ -4,15 +4,34 @@
 #include <time.h>
 #include <unistd.h>
 #include "altera_up_avalon_video_pixel_buffer_dma.h"
+#include "coordinate.h"
 
 #define tracker_1_base (volatile int*) 0x00089400
 #define tracker_2_base (volatile int*) 0x00089440
 int outline_width = 0;
 
 
-#define draw_base (volatile int*) 0x00089440
+#define draw_base (volatile int*) 0x00089480
 
 alt_up_pixel_buffer_dma_dev* pixel_buffer;
+
+
+
+void plotLine(int x0, int y0, int x1, int y1, int color)
+{
+	IOWR_32DIRECT(draw_base, 0, x0);
+	IOWR_32DIRECT(draw_base, 4, y0);
+	IOWR_32DIRECT(draw_base, 8, x1);
+	IOWR_32DIRECT(draw_base, 12, y1);
+	IOWR_32DIRECT(draw_base, 16, color);
+	IOWR_32DIRECT(draw_base, 24, 1);
+	IOWR_32DIRECT(draw_base, 20, 1);
+	while(IORD_32DIRECT(draw_base, 20) == 0);
+	int i = 0;
+	for(i = 0; i < 10000; i ++) {
+
+	}
+}
 
 void drawBoxOutline (int x1, int y1, int x2, int y2, int color);
 
@@ -52,6 +71,14 @@ void drawBoxOutline (int x1, int y1, int x2, int y2, int color){
 	alt_up_pixel_buffer_dma_draw_box(pixel_buffer, rightRecX1, rightRecY1, rightRecX2, rightRecY2, color, 0);
 }
 
+void getTrackPosition(int tracker_base, Coordinate * c) {
+	IOWR_32DIRECT(tracker_base, 0, 0xffffffff);
+	while(IORD_32DIRECT(tracker_base, 16) != 0);
+
+	c->x = IORD_32DIRECT(tracker_base, 4);
+	c->y = IORD_32DIRECT(tracker_base, 8);
+//	int accuracy = IORD_32DIRECT(base, 12);
+}
 
 void GetPos(base, color) {
 	IOWR_32DIRECT(base, 0, 0xffffffff);
@@ -70,14 +97,28 @@ void GetPos(base, color) {
 
 
 int main() {
+	printf("Here we goo....\n");
 
-	printf("Entered main000\n");
+	Coordinate* a = CoordinateCreate(0, 0);
+	Coordinate* b = CoordinateCreate(0, 0);
+
 	pixel_buffer = alt_up_pixel_buffer_dma_open_dev("/dev/Pixel_Buffer_DMA");
 
-	printf("hello\n");
 	while(1) {
-		GetPos(tracker_1_base,0);
-		GetPos(tracker_2_base,0xffff);
+		IOWR_32DIRECT(draw_base, 24, 0);
+		getTrackPosition(tracker_1_base, a);
+		getTrackPosition(tracker_2_base, b);
+
+		drawBoxOutline(a->x, a->y, a->x+15, a->y+15, 0xffff);
+		drawBoxOutline(b->x, b->y, b->x+15, b->y+15, 0xffff);
+
+//		printf("(%d, %d), (%d, %d)\n", a->x, a->y, b->x, b->y);
+		plotLine(a->x, a->y, b->x, b->y, 0xffff);
+
+
+//		GetPos(tracker_1_base, 0);
+//		GetPos(tracker_2_base, 0xffff);
+
 	}
 	return 0;
 }
