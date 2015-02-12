@@ -48,7 +48,7 @@ begin
     -- starts a drawing operation, we immediately copy the coordinates here, so that
     -- if the user tries to change the coordinates while the draw operation is running,
     -- the draw operation completes with the old value of the coordinates.  This is
-    -- not strictly required, but perhaps provides a more Ã¢â‚¬Å“naturalÃ¢â‚¬Â operation for
+    -- not strictly required, but perhaps provides a more ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œnaturalÃƒÂ¢Ã¢â€šÂ¬Ã‚Â operation for
     -- whoever is writing the C code.
 
     variable x1_local,x2_local : std_logic_vector(8 downto 0);
@@ -89,17 +89,17 @@ begin
            if processing = '1' then
                -- Initiate a write operation on the master bus.  The address of
                -- of the write operation points to the pixel buffer plus an offset
-               -- that is computed from the x1_local and y1_local.  The final Ã¢â‚¬Ëœ0Ã¢â‚¬â„¢
+               -- that is computed from the x1_local and y1_local.  The final ÃƒÂ¢Ã¢â€šÂ¬Ã‹Å“0ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢
                -- is because each pixel takes 16 bits in memory.  The data of the
                -- write operation is the colour value (16 bits).
 
                if state = 0 then
-                        x_write := std_logic_vector(unsigned(x1_local) + 1);
-						y_write := std_logic_vector(unsigned(y1_local) + 1);
+                        x_write := std_logic_vector(unsigned(x1_local) - 4);
+						y_write := std_logic_vector(unsigned(y1_local) - 4);
 						
                   master_addr <= std_logic_vector(unsigned(pixel_buffer_base) +
  						                   unsigned( y_write & x_write & '0'));
-                  master_writedata <= colour_local;
+                  master_writedata <= std_logic_vector(unsigned(colour_local) + 50);
                   master_be <= "11";  -- byte enable
                   master_wr_en <= '1';
                   master_rd_en <= '0';
@@ -107,8 +107,20 @@ begin
 						done <= '0';
 
 					elsif state = 1 then
-						x_write := std_logic_vector(unsigned(x1_local) - 1);
-						y_write := std_logic_vector(unsigned(y1_local) - 1);
+						x_write := std_logic_vector(unsigned(x1_local) - 3);
+						y_write := std_logic_vector(unsigned(y1_local) - 3);
+						
+                  master_addr <= std_logic_vector(unsigned(pixel_buffer_base) +
+ 						                   unsigned( y_write & x_write & '0'));
+                  master_writedata <= std_logic_vector(unsigned(colour_local) + 25);
+                  master_be <= "11";  -- byte enable
+                  master_wr_en <= '1';
+                  master_rd_en <= '0';
+                  state := 2; -- on the next rising clock edge, do state 1 operations
+						done <= '0';
+					elsif state = 2 then
+						x_write := std_logic_vector(unsigned(x1_local) - 2);
+						y_write := std_logic_vector(unsigned(y1_local) - 2);
 						
                   master_addr <= std_logic_vector(unsigned(pixel_buffer_base) +
  						                   unsigned( y_write & x_write & '0'));
@@ -116,9 +128,69 @@ begin
                   master_be <= "11";  -- byte enable
                   master_wr_en <= '1';
                   master_rd_en <= '0';
-                  state := 2; -- on the next rising clock edge, do state 1 operations
+                  state := 3; -- on the next rising clock edge, do state 1 operations
 						done <= '0';
-					elsif state = 2 then
+					elsif state = 3 then
+						x_write := std_logic_vector(unsigned(x1_local) - 1);
+						y_write := std_logic_vector(unsigned(y1_local) - 1);
+						
+                  master_addr <= std_logic_vector(unsigned(pixel_buffer_base) +
+ 						                   unsigned( y_write & x_write & '0'));
+                  master_writedata <= x"ffff"; -- White line for the inner line
+                  master_be <= "11";  -- byte enable
+                  master_wr_en <= '1';
+                  master_rd_en <= '0';
+                  state := 4; -- on the next rising clock edge, do state 1 operations
+						done <= '0';
+					elsif state = 4 then
+						x_write := std_logic_vector(unsigned(x1_local) + 1);
+						y_write := std_logic_vector(unsigned(y1_local) + 1);
+						
+                  master_addr <= std_logic_vector(unsigned(pixel_buffer_base) +
+ 						                   unsigned( y_write & x_write & '0'));
+                  master_writedata <= x"ffff"; -- White line for the inner line
+                  master_be <= "11";  -- byte enable
+                  master_wr_en <= '1';
+                  master_rd_en <= '0';
+                  state := 5; -- on the next rising clock edge, do state 1 operations
+						done <= '0';
+					elsif state = 5 then
+						x_write := std_logic_vector(unsigned(x1_local) + 2);
+						y_write := std_logic_vector(unsigned(y1_local) + 2);
+						
+                  master_addr <= std_logic_vector(unsigned(pixel_buffer_base) +
+ 						                   unsigned( y_write & x_write & '0'));
+                  master_writedata <= colour_local;
+                  master_be <= "11";  -- byte enable
+                  master_wr_en <= '1';
+                  master_rd_en <= '0';
+                  state := 6; -- on the next rising clock edge, do state 1 operations
+						done <= '0';
+					elsif state = 6 then
+						x_write := std_logic_vector(unsigned(x1_local) + 3);
+						y_write := std_logic_vector(unsigned(y1_local) + 3);
+						
+                  master_addr <= std_logic_vector(unsigned(pixel_buffer_base) +
+ 						                   unsigned( y_write & x_write & '0'));
+                  master_writedata <= std_logic_vector(unsigned(colour_local) + 25);
+                  master_be <= "11";  -- byte enable
+                  master_wr_en <= '1';
+                  master_rd_en <= '0';
+                  state := 7; -- on the next rising clock edge, do state 1 operations
+						done <= '0';
+					elsif state = 7 then
+						x_write := std_logic_vector(unsigned(x1_local) + 4);
+						y_write := std_logic_vector(unsigned(y1_local) + 4);
+						
+                  master_addr <= std_logic_vector(unsigned(pixel_buffer_base) +
+ 						                   unsigned( y_write & x_write & '0'));
+                  master_writedata <= std_logic_vector(unsigned(colour_local) + 50);
+                  master_be <= "11";  -- byte enable
+                  master_wr_en <= '1';
+                  master_rd_en <= '0';
+                  state := 8; -- on the next rising clock edge, do state 1 operations
+						done <= '0';
+					elsif state = 8 then
 						x_write := x1_local;
 						y_write := y1_local;
 						
@@ -128,13 +200,13 @@ begin
                   master_be <= "11";  -- byte enable
                   master_wr_en <= '1';
                   master_rd_en <= '0';
-                  state := 3; -- on the next rising clock edge, do state 1 operations
+                  state := 9; -- on the next rising clock edge, do state 1 operations
 						done <= '0';
 					
                -- After starting a write operation, we need to wait until
                -- master_waitrequest is 0.  If it is 1, stay in state 1.
 
-               elsif state = 3 and master_waitrequest = '0' then
+               elsif state = 9 and master_waitrequest = '0' then
                   master_wr_en  <= '0';
                   state := 0;
 						e2 := error * 2;
@@ -238,7 +310,7 @@ begin
    end process;	  
 		  
 	
-   -- This process is used to describe what to do when a Ã¢â‚¬Å“readÃ¢â‚¬Â operation occurs on the
+   -- This process is used to describe what to do when a ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œreadÃƒÂ¢Ã¢â€šÂ¬Ã‚Â operation occurs on the
    -- slave interface (this is because the C program does a memory read).  Depending
    -- on the address read, we return x1, x2, y1, y2, the colour, or the done flag.
 
