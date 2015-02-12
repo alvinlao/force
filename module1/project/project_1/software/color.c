@@ -9,6 +9,7 @@
 #include "exception.h"
 #include "sad.h"
 
+
 #define tracker_1_base (volatile int*) 0x00089400
 #define tracker_2_base (volatile int*) 0x00089440
 
@@ -26,6 +27,7 @@ int outline_width = 0;
 #define draw_base (volatile int*) 0x00089480
 
 alt_up_pixel_buffer_dma_dev* pixel_buffer;
+
 
 void initPixelBuffer() {
 	pixel_buffer = alt_up_pixel_buffer_dma_open_dev("/dev/Pixel_Buffer_DMA");
@@ -86,6 +88,7 @@ void drawBoxOutline (int x1, int y1, int x2, int y2, int color){
 	alt_up_pixel_buffer_dma_draw_box(pixel_buffer, rightRecX1, rightRecY1, rightRecX2, rightRecY2, color, 0);
 }
 
+
 void getTrackPosition(int tracker_base, Coordinate * c) {
 	IOWR_32DIRECT(tracker_base, 0, 0xffffffff);
 	while(IORD_32DIRECT(tracker_base, 16) != 0);
@@ -112,9 +115,54 @@ void GetPos(base, color) {
 	printf("%3d, %3d acc:%3d \n", x, y,accuracy);
 }
 
+char isBounded(Coordinate * c) {
+	return 0 <= c->x && c->x < FRAME_WIDTH && 0 <= c->y && c->y < FRAME_HEIGHT;
+}
+
+char violateTopBound(Coordinate * c) {
+	return c->y < 0;
+}
+
+char violateRightBound(Coordinate * c) {
+	return c->x > FRAME_WIDTH;
+}
+
+char violateBottomBound(Coordinate * c) {
+	return c->y > FRAME_HEIGHT;
+}
+
+char violateLeftBound(Coordinate * c) {
+	return c->x < 0;
+}
+
 void extend(Coordinate * fromCoord, Coordinate * toCoord, Coordinate * rayEndCoord) {
 	rayEndCoord->x = toCoord->x + EXTEND_MULTIPLIER * (toCoord->x - fromCoord->x);
 	rayEndCoord->y = toCoord->y + EXTEND_MULTIPLIER * (toCoord->y - fromCoord->y);
+
+	char vertical = fromCoord->x == toCoord->x;
+	float m, b;
+	if(!vertical) {
+		m = (toCoord->y - fromCoord->y) / (float) (toCoord->x - fromCoord->x);
+		b = rayEndCoord->y - (m * rayEndCoord->x);
+	}
+
+	if(violateTopBound(rayEndCoord)) {
+		rayEndCoord->y = 0;
+		if(!vertical) {
+			rayEndCoord->x = (rayEndCoord->y - b) / m;
+		}
+	} else if(violateRightBound(rayEndCoord)) {
+		rayEndCoord->x = FRAME_WIDTH;
+		rayEndCoord->y = (m * rayEndCoord->x) + b;
+	} else if(violateBottomBound(rayEndCoord)) {
+		rayEndCoord->y = FRAME_HEIGHT;
+		if(!vertical) {
+			rayEndCoord->x = (rayEndCoord->y - b) / m;
+		}
+	} else if(violateLeftBound(rayEndCoord)) {
+		rayEndCoord->x = 0;
+		rayEndCoord->y = (m * rayEndCoord->x) + b;
+	}
 }
 
 
