@@ -13,7 +13,7 @@
 #define tracker_2_base (volatile int*) 0x00089440
 
 // About 30 ms
-#define TIMER_DELAY 80000000
+#define TIMER_DELAY 3000000
 // Extend
 #define EXTEND_MULTIPLIER 3
 
@@ -127,7 +127,6 @@ int main() {
 	Coordinate* b = CoordinateCreate(0, 0);
 	Coordinate* c = CoordinateCreate(0, 0);
 
-	printf("%d\n", alt_timestamp_freq());
 	int i, j;
 	while(1) {
 		alt_timestamp_start();
