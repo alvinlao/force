@@ -20,7 +20,7 @@
 // Number of range pixels to stabilize the colour tracking algorithm
 #define ERROR 10
 
-#define threshold 17
+#define threshold 23
 
 int outline_width = 0;
 
