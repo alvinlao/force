@@ -12,6 +12,8 @@
 
 // About 30 ms
 #define TIMER_DELAY 1500000
+// Extend
+#define EXTEND_MULTIPLIER 3
 
 int outline_width = 0;
 
@@ -100,12 +102,18 @@ void GetPos(base, color) {
 	printf("%3d, %3d acc:%3d \n", x, y,accuracy);
 }
 
+void extend(Coordinate * a, Coordinate * b, Coordinate * c) {
+	c->x = a->x + EXTEND_MULTIPLIER * (b->x - a->x);
+	c->y = a->y + EXTEND_MULTIPLIER * (b->y - a->y);
+}
+
 
 int main() {
 	printf("Here we goo....\n");
 
 	Coordinate* a = CoordinateCreate(0, 0);
 	Coordinate* b = CoordinateCreate(0, 0);
+	Coordinate* c = CoordinateCreate(0, 0);
 
 	pixel_buffer = alt_up_pixel_buffer_dma_open_dev("/dev/Pixel_Buffer_DMA");
 
@@ -116,7 +124,12 @@ int main() {
 		getTrackPosition(tracker_1_base, a);
 		getTrackPosition(tracker_2_base, b);
 
-		plotLine(a->x, a->y, b->x, b->y, 0xffff);
+		extend(a, b, c);
+
+		drawBoxOutline(a->x, a->y, a->x+10, a->y+10, 0);
+		drawBoxOutline(b->x, b->y, b->x+10, b->y+10, 0xffff);
+		plotLine(a->x, a->y, c->x, c->y, 0xffff);
+//		plotLine(100, 100, 200, 100, 0xffff);
 		while(alt_timestamp() < TIMER_DELAY);
 	}
 	return 0;
