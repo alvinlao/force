@@ -94,8 +94,8 @@ begin
                -- write operation is the colour value (16 bits).
 
                if state = 0 then
-						x_write := x1_local;
-						y_write := y1_local;
+                        x_write := std_logic_vector(unsigned(x1_local) + 1);
+						y_write := std_logic_vector(unsigned(y1_local) + 1);
 						
                   master_addr <= std_logic_vector(unsigned(pixel_buffer_base) +
  						                   unsigned( y_write & x_write & '0'));
@@ -119,12 +119,12 @@ begin
                   state := 2; -- on the next rising clock edge, do state 1 operations
 						done <= '0';
 					elsif state = 2 then
-						x_write := std_logic_vector(unsigned(x1_local) + 1);
-						y_write := std_logic_vector(unsigned(y1_local) + 1);
+						x_write := x1_local;
+						y_write := y1_local;
 						
                   master_addr <= std_logic_vector(unsigned(pixel_buffer_base) +
  						                   unsigned( y_write & x_write & '0'));
-                  master_writedata <= colour_local;
+                  master_writedata <= x"ffff"; -- White line for the inner line
                   master_be <= "11";  -- byte enable
                   master_wr_en <= '1';
                   master_rd_en <= '0';
