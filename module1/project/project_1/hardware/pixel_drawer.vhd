@@ -99,7 +99,7 @@ begin
 						
                   master_addr <= std_logic_vector(unsigned(pixel_buffer_base) +
  						                   unsigned( y_write & x_write & '0'));
-                  master_writedata <= std_logic_vector(unsigned(colour_local) + 50);
+                  master_writedata <= std_logic_vector(unsigned(colour_local) + 14);
                   master_be <= "11";  -- byte enable
                   master_wr_en <= '1';
                   master_rd_en <= '0';
@@ -112,7 +112,7 @@ begin
 						
                   master_addr <= std_logic_vector(unsigned(pixel_buffer_base) +
  						                   unsigned( y_write & x_write & '0'));
-                  master_writedata <= std_logic_vector(unsigned(colour_local) + 25);
+                  master_writedata <= std_logic_vector(unsigned(colour_local) + 7);
                   master_be <= "11";  -- byte enable
                   master_wr_en <= '1';
                   master_rd_en <= '0';
@@ -172,7 +172,7 @@ begin
 						
                   master_addr <= std_logic_vector(unsigned(pixel_buffer_base) +
  						                   unsigned( y_write & x_write & '0'));
-                  master_writedata <= std_logic_vector(unsigned(colour_local) + 25);
+                  master_writedata <= std_logic_vector(unsigned(colour_local) + 7);
                   master_be <= "11";  -- byte enable
                   master_wr_en <= '1';
                   master_rd_en <= '0';
@@ -184,7 +184,7 @@ begin
 						
                   master_addr <= std_logic_vector(unsigned(pixel_buffer_base) +
  						                   unsigned( y_write & x_write & '0'));
-                  master_writedata <= std_logic_vector(unsigned(colour_local) + 50);
+                  master_writedata <= std_logic_vector(unsigned(colour_local) + 14);
                   master_be <= "11";  -- byte enable
                   master_wr_en <= '1';
                   master_rd_en <= '0';
