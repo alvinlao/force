@@ -15,7 +15,7 @@
 // 16.8 MHz clock
 #define TIMER_DELAY 440000
 // Extend
-#define EXTEND_MULTIPLIER 3
+#define EXTEND_MULTIPLIER 1.5
 // Number of range pixels to stabilize the colour tracking algorithm
 #define ERROR 10
 
@@ -93,7 +93,7 @@ void getTrackPosition(int tracker_base, Coordinate * c) {
 	c->x = IORD_32DIRECT(tracker_base, 4);
 	c->y = IORD_32DIRECT(tracker_base, 8);
 	c->acc = IORD_32DIRECT(tracker_base, 12);
-	printf("%3d, %3d acc:%3d \n", c->x, c->y,c->acc);
+	//printf("%3d, %3d acc:%3d \n", c->x, c->y,c->acc);
 
 }
 
@@ -112,9 +112,9 @@ void GetPos(base, color) {
 	printf("%3d, %3d acc:%3d \n", x, y,accuracy);
 }
 
-void extend(Coordinate * a, Coordinate * b, Coordinate * c) {
-	c->x = a->x + EXTEND_MULTIPLIER * (b->x - a->x);
-	c->y = a->y + EXTEND_MULTIPLIER * (b->y - a->y);
+void extend(Coordinate * fromCoord, Coordinate * toCoord, Coordinate * rayEndCoord) {
+	rayEndCoord->x = toCoord->x + EXTEND_MULTIPLIER * (toCoord->x - fromCoord->x);
+	rayEndCoord->y = toCoord->y + EXTEND_MULTIPLIER * (toCoord->y - fromCoord->y);
 }
 
 
@@ -127,18 +127,18 @@ int main() {
 	initPixelBuffer();
 	ScreenShotInit(pixel_buffer);
 
-	Coordinate* a = CoordinateCreate(0, 0);
-	Coordinate* b = CoordinateCreate(0, 0);
-	Coordinate* c = CoordinateCreate(0, 0);
+	Coordinate* fromCoord = CoordinateCreate(0, 0);
+	Coordinate* toCoord = CoordinateCreate(0, 0);
+	Coordinate* rayEndCoord = CoordinateCreate(0, 0);
 
 	Coordinate* tmpFrom = CoordinateCreate(0,0);
 	Coordinate* tmpTo= CoordinateCreate(0,0);
 
 	printf("%d\n", alt_timestamp_freq);
 	int i, j;
-	int prev_ax, prev_ay, prev_bx, prev_by;
-	getTrackPosition(tracker_1_base, a);
-	getTrackPosition(tracker_2_base, b);
+	//int prev_ax, prev_ay, prev_bx, prev_by;
+	getTrackPosition(tracker_1_base, fromCoord);
+	getTrackPosition(tracker_2_base, toCoord);
 
 /*	if (tmpFrom->acc > threshold){
 		a = tmpFrom;
@@ -159,18 +159,18 @@ int main() {
 		getTrackPosition(tracker_2_base, tmpTo);
 
 		if (tmpFrom->acc > threshold){
-			a->x = tmpFrom->x;
-			a->y = tmpFrom->y;
-			a->acc = tmpFrom->acc;
+			fromCoord->x = tmpFrom->x;
+			fromCoord->y = tmpFrom->y;
+			fromCoord->acc = tmpFrom->acc;
 		}
 		if (tmpTo->acc > threshold){
-			b->x = tmpTo->x;
-			b->y = tmpTo->y;
-			b->acc = tmpTo->acc;
+			toCoord->x = tmpTo->x;
+			toCoord->y = tmpTo->y;
+			toCoord->acc = tmpTo->acc;
 		}
 
 		IOWR_32DIRECT(draw_base, 24, 0);
-		extend(a, b, c);
+		extend(fromCoord, toCoord, rayEndCoord);
 
 
 /*		if (abs(prev_ax - a->x) > ERROR) {
@@ -189,7 +189,7 @@ int main() {
 //		drawBoxOutline(prev_ax, prev_ay, prev_ax+10, prev_ay+10, 0);
 //		drawBoxOutline(prev_bx, prev_by, prev_bx+10, prev_by+10, 0xffff);
 
-		plotLine(a->x, a->y, b->x, b->y, 0xffff);
+		plotLine(toCoord->x, toCoord->y, rayEndCoord->x, rayEndCoord->y, 0x07E0);
 
 //		drawBoxOutline(a->x, a->y, a->x+10, a->y+10, 0);
 //		drawBoxOutline(b->x, b->y, b->x+10, b->y+10, 0xffff);
