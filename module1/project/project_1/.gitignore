@@ -3,5 +3,5 @@ obj/
 Makefile
 create-this-app
 readme.txt
-project_1_bsp/
+[a-zA-Z0-9]*bsp/
 .force_relink

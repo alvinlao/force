@@ -29,8 +29,6 @@ entity project_1 is
             TD_VS                   : in    std_logic                     := 'X';             -- TD_VS
 				
             TD_RESET              : out   std_logic;                                        -- TD_RESET
-				Video_In_Decoder_external_interface_clk27_reset : in    std_logic                     := 'X';             -- clk27_reset
-            overflow_flag_from_the_Video_In_Decoder         : out   std_logic;                                         -- overflow_flag
 
 -- sdram
 				DRAM_CLK, DRAM_CKE : OUT STD_LOGIC;
@@ -76,9 +74,7 @@ architecture rtl of project_1 is
             TD_DATA_to_the_Video_In_Decoder                 : in    std_logic_vector(7 downto 0)  := (others => 'X'); -- TD_DATA
             TD_HS_to_the_Video_In_Decoder                   : in    std_logic                     := 'X';             -- TD_HS
             TD_VS_to_the_Video_In_Decoder                   : in    std_logic                     := 'X';             -- TD_VS
-            Video_In_Decoder_external_interface_clk27_reset : in    std_logic                     := 'X';             -- clk27_reset
             TD_RESET_from_the_Video_In_Decoder              : out   std_logic;                                        -- TD_RESET
-            overflow_flag_from_the_Video_In_Decoder         : out   std_logic;                                         -- overflow_flag
 				sdram_controller_wire_addr                      : out   std_logic_vector(11 downto 0);                    -- addr
             sdram_controller_wire_ba                        : out   std_logic_vector(1 downto 0);                     -- ba
             sdram_controller_wire_cas_n                     : out   std_logic;                                        -- cas_n
@@ -130,9 +126,7 @@ architecture rtl of project_1 is
             TD_HS_to_the_Video_In_Decoder                   => TD_HS,                   --                                    .TD_HS
             TD_VS_to_the_Video_In_Decoder                   => TD_VS,                   --                                    .TD_VS
 
-            Video_In_Decoder_external_interface_clk27_reset => '0', --                                    .clk27_reset
 				TD_RESET_from_the_Video_In_Decoder              => TDRESET,              --                                    .TD_RESET
-            overflow_flag_from_the_Video_In_Decoder         => OVErflow_flag,          --                                    .overflow_flag
 				I2C_SDAT_to_and_from_the_AV_Config              => SDT,              --        AV_Config_external_interface.SDAT
             I2C_SCLK_from_the_AV_Config                     => SCL,                     --                                    .SCLK
 				sdram_controller_wire_addr                      => DRAM_ADDR,                      --               sdram_controller_wire.addr
