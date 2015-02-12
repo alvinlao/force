@@ -13,9 +13,13 @@
 #define tracker_2_base (volatile int*) 0x00089440
 
 // 16.8 MHz clock
-#define TIMER_DELAY 840000
+#define TIMER_DELAY 440000
 // Extend
 #define EXTEND_MULTIPLIER 3
+// Number of range pixels to stabilize the colour tracking algorithm
+#define ERROR 10
+
+#define threshold 17
 
 int outline_width = 0;
 
@@ -88,7 +92,9 @@ void getTrackPosition(int tracker_base, Coordinate * c) {
 
 	c->x = IORD_32DIRECT(tracker_base, 4);
 	c->y = IORD_32DIRECT(tracker_base, 8);
-//	int accuracy = IORD_32DIRECT(base, 12);
+	c->acc = IORD_32DIRECT(tracker_base, 12);
+	printf("%3d, %3d acc:%3d \n", c->x, c->y,c->acc);
+
 }
 
 void GetPos(base, color) {
@@ -125,20 +131,69 @@ int main() {
 	Coordinate* b = CoordinateCreate(0, 0);
 	Coordinate* c = CoordinateCreate(0, 0);
 
+	Coordinate* tmpFrom = CoordinateCreate(0,0);
+	Coordinate* tmpTo= CoordinateCreate(0,0);
+
 	printf("%d\n", alt_timestamp_freq);
 	int i, j;
+	int prev_ax, prev_ay, prev_bx, prev_by;
+	getTrackPosition(tracker_1_base, a);
+	getTrackPosition(tracker_2_base, b);
+
+/*	if (tmpFrom->acc > threshold){
+		a = tmpFrom;
+	}
+	if (tmpTo->acc > threshold){
+			b = tmpTo;
+		}*/
+
+//	prev_ax = a->x;
+//	prev_ay = a->y;
+//	prev_bx = b->x;
+//	prev_by = b->y;
+
 	while(1) {
 		alt_timestamp_start();
 
-		IOWR_32DIRECT(draw_base, 24, 0);
-		getTrackPosition(tracker_1_base, a);
-		getTrackPosition(tracker_2_base, b);
+		getTrackPosition(tracker_1_base, tmpFrom);
+		getTrackPosition(tracker_2_base, tmpTo);
 
+		if (tmpFrom->acc > threshold){
+			a->x = tmpFrom->x;
+			a->y = tmpFrom->y;
+			a->acc = tmpFrom->acc;
+		}
+		if (tmpTo->acc > threshold){
+			b->x = tmpTo->x;
+			b->y = tmpTo->y;
+			b->acc = tmpTo->acc;
+		}
+
+		IOWR_32DIRECT(draw_base, 24, 0);
 		extend(a, b, c);
 
-		drawBoxOutline(a->x, a->y, a->x+10, a->y+10, 0);
-		drawBoxOutline(b->x, b->y, b->x+10, b->y+10, 0xffff);
-		plotLine(a->x, a->y, c->x, c->y, 0xffff);
+
+/*		if (abs(prev_ax - a->x) > ERROR) {
+			prev_ax = a->x;
+		}
+		if (abs(prev_ay - a->y) > ERROR) {
+			prev_ay = a->y;
+		}
+		if (abs(prev_bx - b->x) > ERROR) {
+			prev_bx = b->x;
+		}
+		if (abs(prev_by - b->y) > ERROR) {
+			prev_by = b->y;
+		}*/
+
+//		drawBoxOutline(prev_ax, prev_ay, prev_ax+10, prev_ay+10, 0);
+//		drawBoxOutline(prev_bx, prev_by, prev_bx+10, prev_by+10, 0xffff);
+
+		plotLine(a->x, a->y, b->x, b->y, 0xffff);
+
+//		drawBoxOutline(a->x, a->y, a->x+10, a->y+10, 0);
+//		drawBoxOutline(b->x, b->y, b->x+10, b->y+10, 0xffff);
+//		plotLine(a->x, a->y, c->x, c->y, 0xffff);
 
 		while(alt_timestamp() < TIMER_DELAY);
 	}

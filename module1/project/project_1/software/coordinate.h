@@ -8,6 +8,7 @@
 typedef struct coordinate {
     int x;
     int y;
+    int acc;
 } Coordinate;
 
 
