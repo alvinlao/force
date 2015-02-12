@@ -61,6 +61,10 @@ begin
 	variable x1_original,x2_original : std_logic_vector(8 downto 0);
 	variable y1_original,y2_original : std_logic_vector(7 downto 0);
 	variable error_original : signed(18 downto 0);
+	
+	-- Variables that hold the pixel to write out.
+	variable x_write : std_logic_vector(8 downto 0);
+	variable y_write : std_logic_vector(7 downto 0);
 	 
 	 variable sx, sy : integer;
 	 variable dx : signed(10 downto 0);
@@ -90,8 +94,11 @@ begin
                -- write operation is the colour value (16 bits).
 
                if state = 0 then
+						x_write := x1_local;
+						y_write := y1_local;
+						
                   master_addr <= std_logic_vector(unsigned(pixel_buffer_base) +
- 						                   unsigned( y1_local & x1_local & '0'));	
+ 						                   unsigned( y_write & x_write & '0'));
                   master_writedata <= colour_local;
                   master_be <= "11";  -- byte enable
                   master_wr_en <= '1';
@@ -99,10 +106,35 @@ begin
                   state := 1; -- on the next rising clock edge, do state 1 operations
 						done <= '0';
 
+					elsif state = 1 then
+						x_write := std_logic_vector(unsigned(x1_local) - 1);
+						y_write := std_logic_vector(unsigned(y1_local) - 1);
+						
+                  master_addr <= std_logic_vector(unsigned(pixel_buffer_base) +
+ 						                   unsigned( y_write & x_write & '0'));
+                  master_writedata <= colour_local;
+                  master_be <= "11";  -- byte enable
+                  master_wr_en <= '1';
+                  master_rd_en <= '0';
+                  state := 2; -- on the next rising clock edge, do state 1 operations
+						done <= '0';
+					elsif state = 2 then
+						x_write := std_logic_vector(unsigned(x1_local) + 1);
+						y_write := std_logic_vector(unsigned(y1_local) + 1);
+						
+                  master_addr <= std_logic_vector(unsigned(pixel_buffer_base) +
+ 						                   unsigned( y_write & x_write & '0'));
+                  master_writedata <= colour_local;
+                  master_be <= "11";  -- byte enable
+                  master_wr_en <= '1';
+                  master_rd_en <= '0';
+                  state := 3; -- on the next rising clock edge, do state 1 operations
+						done <= '0';
+					
                -- After starting a write operation, we need to wait until
                -- master_waitrequest is 0.  If it is 1, stay in state 1.
 
-               elsif state = 1 and master_waitrequest = '0' then
+               elsif state = 3 and master_waitrequest = '0' then
                   master_wr_en  <= '0';
                   state := 0;
 						e2 := error * 2;
@@ -112,7 +144,7 @@ begin
 							done <= '1';
                      processing := '0';
 							if (hold_position = '1') then
-								state := 2;
+								state := 4;
 								processing := '1';
 								x1_local := x1_original;
 								x2_local := x2_original;
@@ -132,7 +164,7 @@ begin
 								y1_local := std_logic_vector(unsigned(y1_local)+sy);								 
 							end if;
 						end if;
-					elsif state = 2 then
+					elsif state = 4 then
 						if (counter = 1000) then
 							state := 0;
 							counter := 0;
