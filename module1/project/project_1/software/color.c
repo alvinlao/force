@@ -17,10 +17,8 @@
 #define TIMER_DELAY 440000
 // Extend
 #define EXTEND_MULTIPLIER 1.5
-// Number of range pixels to stabilize the colour tracking algorithm
-#define ERROR 10
 
-#define threshold 23
+#define threshold 30
 
 int outline_width = 0;
 
@@ -96,8 +94,6 @@ void getTrackPosition(int tracker_base, Coordinate * c) {
 	c->x = IORD_32DIRECT(tracker_base, 4);
 	c->y = IORD_32DIRECT(tracker_base, 8);
 	c->acc = IORD_32DIRECT(tracker_base, 12);
-	//printf("%3d, %3d acc:%3d \n", c->x, c->y,c->acc);
-
 }
 
 void GetPos(base, color) {
@@ -111,7 +107,6 @@ void GetPos(base, color) {
 	int y = IORD_32DIRECT(base, 8);
 	int accuracy = IORD_32DIRECT(base, 12);
 	outLine(x,y,color);
-	//drawBoxOutline(winstartx,winstarty,winstartx+15,winstarty+15,0xfff0);
 	printf("%3d, %3d acc:%3d \n", x, y,accuracy);
 }
 
@@ -188,18 +183,6 @@ int main() {
 	getTrackPosition(tracker_1_base, fromCoord);
 	getTrackPosition(tracker_2_base, toCoord);
 
-/*	if (tmpFrom->acc > threshold){
-		a = tmpFrom;
-	}
-	if (tmpTo->acc > threshold){
-			b = tmpTo;
-		}*/
-
-//	prev_ax = a->x;
-//	prev_ay = a->y;
-//	prev_bx = b->x;
-//	prev_by = b->y;
-
 	while(1) {
 		alt_timestamp_start();
 
@@ -220,28 +203,7 @@ int main() {
 		IOWR_32DIRECT(draw_base, 24, 0);
 		extend(fromCoord, toCoord, rayEndCoord);
 
-
-/*		if (abs(prev_ax - a->x) > ERROR) {
-			prev_ax = a->x;
-		}
-		if (abs(prev_ay - a->y) > ERROR) {
-			prev_ay = a->y;
-		}
-		if (abs(prev_bx - b->x) > ERROR) {
-			prev_bx = b->x;
-		}
-		if (abs(prev_by - b->y) > ERROR) {
-			prev_by = b->y;
-		}*/
-
-//		drawBoxOutline(prev_ax, prev_ay, prev_ax+10, prev_ay+10, 0);
-//		drawBoxOutline(prev_bx, prev_by, prev_bx+10, prev_by+10, 0xffff);
-
 		plotLine(toCoord->x, toCoord->y, rayEndCoord->x, rayEndCoord->y, 0x07E0);
-
-//		drawBoxOutline(a->x, a->y, a->x+10, a->y+10, 0);
-//		drawBoxOutline(b->x, b->y, b->x+10, b->y+10, 0xffff);
-//		plotLine(a->x, a->y, c->x, c->y, 0xffff);
 
 		while(alt_timestamp() < TIMER_DELAY);
 	}
