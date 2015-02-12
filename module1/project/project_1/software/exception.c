@@ -17,7 +17,7 @@ void handle_button_interrupts(void* context, alt_u32 id){
 		printf("Screenshot finished.\n");
 		printf("Button 1\n");
 	} else if(*edge_capture_ptr == 0x4){
-		// do things
+		RayTurnOnOff();
 		printf("Button 2\n");
 	} else if(*edge_capture_ptr == 0x8){
 		// do things

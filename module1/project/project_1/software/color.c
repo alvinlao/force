@@ -21,6 +21,16 @@
 #define threshold 30
 
 int outline_width = 0;
+int rayColor = 0;
+double ray_TurnOnOff_Effect = 0.05;
+// lower number is faster
+
+double ray_scale_factor = 0;
+unsigned char rayStatus = 0;
+// 0 = Off
+// 1 = Turning On
+// 2 On
+// 3 = Turning Off
 
 #define draw_base (volatile int*) 0x00089480
 
@@ -131,8 +141,8 @@ char violateLeftBound(Coordinate * c) {
 }
 
 void extend(Coordinate * fromCoord, Coordinate * toCoord, Coordinate * rayEndCoord) {
-	rayEndCoord->x = toCoord->x + EXTEND_MULTIPLIER * (toCoord->x - fromCoord->x);
-	rayEndCoord->y = toCoord->y + EXTEND_MULTIPLIER * (toCoord->y - fromCoord->y);
+	rayEndCoord->x = toCoord->x + ray_scale_factor * (toCoord->x - fromCoord->x);
+	rayEndCoord->y = toCoord->y + ray_scale_factor * (toCoord->y - fromCoord->y);
 
 	char vertical = fromCoord->x == toCoord->x;
 	float m, b;
@@ -160,6 +170,17 @@ void extend(Coordinate * fromCoord, Coordinate * toCoord, Coordinate * rayEndCoo
 	}
 }
 
+void RayTurnOnOff(){
+	if(rayStatus == 0 || rayStatus == 3){
+		//turn on
+		rayStatus = 1;
+
+	}else{
+		//turn off
+		rayStatus = 3;
+	}
+}
+
 
 int main() {
 	printf("Here we goo....\n");
@@ -178,17 +199,48 @@ int main() {
 	Coordinate* tmpTo= CoordinateCreate(0,0);
 
 	printf("%d\n", alt_timestamp_freq);
-	int i, j;
-	//int prev_ax, prev_ay, prev_bx, prev_by;
+	//int i, j;
+	/*//int prev_ax, prev_ay, prev_bx, prev_by;
 	getTrackPosition(tracker_1_base, fromCoord);
-	getTrackPosition(tracker_2_base, toCoord);
+	getTrackPosition(tracker_2_base, toCoord);*/
 
 	while(1) {
 		alt_timestamp_start();
 
+		if(rayStatus==0){
+			//ray is turned off
+			ray_scale_factor = 0;
+		}
+		else if (rayStatus == 1){
+			//ray is turning on
+			ray_scale_factor = ray_scale_factor + ray_TurnOnOff_Effect;
+			if(ray_scale_factor >= EXTEND_MULTIPLIER)
+			{
+				rayStatus=2;
+			}
+		}
+		else if (rayStatus == 2){
+			//ray is turned on
+			ray_scale_factor = EXTEND_MULTIPLIER;
+		}else{
+			//ray is turning off
+			ray_scale_factor = ray_scale_factor - ray_TurnOnOff_Effect;
+			if(ray_scale_factor <= 0)
+			{
+				rayStatus=0;
+			}
+		}
+
+//		//rainbow Effect
+//		rayColor += 123 ;
+//		if(rayColor >= 65535){
+//			rayColor -= 65535;
+//		}
+
 		getTrackPosition(tracker_1_base, tmpFrom);
 		getTrackPosition(tracker_2_base, tmpTo);
 
+		//Skip Low Accuracy Reads
 		if (tmpFrom->acc > threshold){
 			fromCoord->x = tmpFrom->x;
 			fromCoord->y = tmpFrom->y;
@@ -202,8 +254,7 @@ int main() {
 
 		IOWR_32DIRECT(draw_base, 24, 0);
 		extend(fromCoord, toCoord, rayEndCoord);
-
-		plotLine(toCoord->x, toCoord->y, rayEndCoord->x, rayEndCoord->y, 0x07E0);
+		plotLine(toCoord->x, toCoord->y, rayEndCoord->x, rayEndCoord->y, 0x7f00);
 
 		while(alt_timestamp() < TIMER_DELAY);
 	}
