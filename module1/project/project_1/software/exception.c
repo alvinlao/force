@@ -8,7 +8,7 @@ void handle_button_interrupts(void* context, alt_u32 id){
 	
 	//read the edge capture register on the button PIO and store value
 	*edge_capture_ptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(BUTTON_PIO_BASE);
-printf("button pressed\n");
+
 	//check which button was pressed
 	if(*edge_capture_ptr == 0x2){
 		// take screenshot
