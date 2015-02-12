@@ -6,12 +6,13 @@
 #include "altera_up_avalon_video_pixel_buffer_dma.h"
 #include "sys/alt_timestamp.h"
 #include "coordinate.h"
+#include "sad.h"
 
 #define tracker_1_base (volatile int*) 0x00089400
 #define tracker_2_base (volatile int*) 0x00089440
 
 // About 30 ms
-#define TIMER_DELAY 1500000
+#define TIMER_DELAY 3000000
 // Extend
 #define EXTEND_MULTIPLIER 3
 
@@ -117,6 +118,7 @@ int main() {
 
 	pixel_buffer = alt_up_pixel_buffer_dma_open_dev("/dev/Pixel_Buffer_DMA");
 
+	int i, j;
 	while(1) {
 		alt_timestamp_start();
 
@@ -129,7 +131,7 @@ int main() {
 		drawBoxOutline(a->x, a->y, a->x+10, a->y+10, 0);
 		drawBoxOutline(b->x, b->y, b->x+10, b->y+10, 0xffff);
 		plotLine(a->x, a->y, c->x, c->y, 0xffff);
-//		plotLine(100, 100, 200, 100, 0xffff);
+
 		while(alt_timestamp() < TIMER_DELAY);
 	}
 	return 0;

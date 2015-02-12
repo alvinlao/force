@@ -48,12 +48,14 @@ begin
     -- starts a drawing operation, we immediately copy the coordinates here, so that
     -- if the user tries to change the coordinates while the draw operation is running,
     -- the draw operation completes with the old value of the coordinates.  This is
-    -- not strictly required, but perhaps provides a more â€œnaturalâ€ operation for
+    -- not strictly required, but perhaps provides a more Ã¢â‚¬Å“naturalÃ¢â‚¬Â operation for
     -- whoever is writing the C code.
 
     variable x1_local,x2_local : std_logic_vector(8 downto 0);
     variable y1_local,y2_local : std_logic_vector(7 downto 0);
     variable colour_local : std_logic_vector(15 downto 0);
+	 
+	 variable counter : integer := 0; -- Counter used for a quick wait
 	 
 	  -- The original values of the line
 	variable x1_original,x2_original : std_logic_vector(8 downto 0);
@@ -83,7 +85,7 @@ begin
            if processing = '1' then
                -- Initiate a write operation on the master bus.  The address of
                -- of the write operation points to the pixel buffer plus an offset
-               -- that is computed from the x1_local and y1_local.  The final â€˜0â€™
+               -- that is computed from the x1_local and y1_local.  The final Ã¢â‚¬Ëœ0Ã¢â‚¬â„¢
                -- is because each pixel takes 16 bits in memory.  The data of the
                -- write operation is the colour value (16 bits).
 
@@ -110,7 +112,7 @@ begin
 							done <= '1';
                      processing := '0';
 							if (hold_position = '1') then
-								state := 0;
+								state := 2;
 								processing := '1';
 								x1_local := x1_original;
 								x2_local := x2_original;
@@ -130,6 +132,12 @@ begin
 								y1_local := std_logic_vector(unsigned(y1_local)+sy);								 
 							end if;
 						end if;
+					elsif state = 2 then
+						if (counter = 1000) then
+							state := 0;
+							counter := 0;
+						end if;
+						counter := counter + 1;
                end if;
              end if;					
 
@@ -198,7 +206,7 @@ begin
    end process;	  
 		  
 	
-   -- This process is used to describe what to do when a â€œreadâ€ operation occurs on the
+   -- This process is used to describe what to do when a Ã¢â‚¬Å“readÃ¢â‚¬Â operation occurs on the
    -- slave interface (this is because the C program does a memory read).  Depending
    -- on the address read, we return x1, x2, y1, y2, the colour, or the done flag.
 
