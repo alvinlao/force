@@ -4,10 +4,15 @@
 #include <time.h>
 #include <unistd.h>
 #include "altera_up_avalon_video_pixel_buffer_dma.h"
+#include "sys/alt_timestamp.h"
 #include "coordinate.h"
 
 #define tracker_1_base (volatile int*) 0x00089400
 #define tracker_2_base (volatile int*) 0x00089440
+
+// About 30 ms
+#define TIMER_DELAY 1500000
+
 int outline_width = 0;
 
 
@@ -105,20 +110,14 @@ int main() {
 	pixel_buffer = alt_up_pixel_buffer_dma_open_dev("/dev/Pixel_Buffer_DMA");
 
 	while(1) {
+		alt_timestamp_start();
+
 		IOWR_32DIRECT(draw_base, 24, 0);
 		getTrackPosition(tracker_1_base, a);
 		getTrackPosition(tracker_2_base, b);
 
-		drawBoxOutline(a->x, a->y, a->x+15, a->y+15, 0xffff);
-		drawBoxOutline(b->x, b->y, b->x+15, b->y+15, 0xffff);
-
-//		printf("(%d, %d), (%d, %d)\n", a->x, a->y, b->x, b->y);
 		plotLine(a->x, a->y, b->x, b->y, 0xffff);
-
-
-//		GetPos(tracker_1_base, 0);
-//		GetPos(tracker_2_base, 0xffff);
-
+		while(alt_timestamp() < TIMER_DELAY);
 	}
 	return 0;
 }
