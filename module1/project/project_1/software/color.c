@@ -1,11 +1,12 @@
 #include "sys/alt_stdio.h"
+#include "sys/alt_timestamp.h"
 #include "io.h"
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
 #include "altera_up_avalon_video_pixel_buffer_dma.h"
-#include "sys/alt_timestamp.h"
 #include "coordinate.h"
+#include "exception.h"
 #include "sad.h"
 
 #define tracker_1_base (volatile int*) 0x00089400
@@ -18,12 +19,16 @@
 
 int outline_width = 0;
 
-
 #define draw_base (volatile int*) 0x00089480
 
 alt_up_pixel_buffer_dma_dev* pixel_buffer;
 
+void initPixelBuffer();
 
+void initPixelBuffer() {
+	pixel_buffer = alt_up_pixel_buffer_dma_open_dev("/dev/Pixel_Buffer_DMA");
+	alt_up_pixel_buffer_dma_clear_screen(pixel_buffer, 0);
+}
 
 void plotLine(int x0, int y0, int x1, int y1, int color)
 {
@@ -112,11 +117,15 @@ void extend(Coordinate * a, Coordinate * b, Coordinate * c) {
 int main() {
 	printf("Here we goo....\n");
 
+	// Set up interrupts
+	init_button_pio();
+
+	initPixelBuffer();
+	ScreenShotInit(pixel_buffer);
+
 	Coordinate* a = CoordinateCreate(0, 0);
 	Coordinate* b = CoordinateCreate(0, 0);
 	Coordinate* c = CoordinateCreate(0, 0);
-
-	pixel_buffer = alt_up_pixel_buffer_dma_open_dev("/dev/Pixel_Buffer_DMA");
 
 	int i, j;
 	while(1) {

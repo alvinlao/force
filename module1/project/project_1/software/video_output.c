@@ -165,6 +165,9 @@ int main()
 	VideoInit(pixel_buffer);
 	VideoInitMemoryBlock(BLOCK_WIDTH, BLOCK_HEIGHT);
 
+	ScreenShotInit(pixel_buffer);
+
+
 	// Setup box
 	Box *box = initBox(BOX_X0, BOX_Y0, BLOCK_WIDTH, BLOCK_HEIGHT, BOX_SPEED, 0x0ff0);
 	Box *marker = initBox(0, 0, MARKER_SIZE, MARKER_SIZE, 0, 0xf000);

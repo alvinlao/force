@@ -92,7 +92,8 @@ architecture rtl of project_1 is
 				sd_card_b_SD_cmd   : inout std_logic ; -- b_SD_cmd
             sd_card_b_SD_dat   : inout std_logic ; -- b_SD_dat
             sd_card_b_SD_dat3  : inout std_logic ; -- b_SD_dat3
-            sd_card_o_SD_clock : out   std_logic         -- o_SD_clock
+            sd_card_o_SD_clock : out   std_logic ;        -- o_SD_clock
+				keys_export : in    std_logic_vector(3 downto 0)  := (others => 'X')  -- export
         );
     end component project_1_qsys;
 	 
@@ -147,7 +148,8 @@ architecture rtl of project_1 is
 				sd_card_b_SD_cmd   => b_SD_CMD,   -- sd_card.b_SD_cmd
             sd_card_b_SD_dat   => b_SD_dat,   --        .b_SD_dat
             sd_card_b_SD_dat3  => b_SD_dat3,  --        .b_SD_dat3
-            sd_card_o_SD_clock => o_SD_clock  --        .o_SD_clock
+            sd_card_o_SD_clock => o_SD_clock,  --        .o_SD_clock
+				keys_export                                     => KEY -- keys.export
         );
 
 		  TD_RESET <= '1';

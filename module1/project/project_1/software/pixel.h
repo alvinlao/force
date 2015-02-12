@@ -18,6 +18,7 @@ typedef struct pixel {
 Pixel *PixelCreate(int x, int y, int rgb);
 void PixelDestroy(Pixel *);
 void PixelSetRGB(Pixel *, int);
+void PixelSetRGB2(Pixel *p, int rgb);
 int PixelGetRGB(Pixel *);
 
 void PixelSetX(Pixel *, int);
