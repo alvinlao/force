@@ -12,8 +12,8 @@
 #define tracker_1_base (volatile int*) 0x00089400
 #define tracker_2_base (volatile int*) 0x00089440
 
-// About 30 ms
-#define TIMER_DELAY 3000000
+// 16.8 MHz clock
+#define TIMER_DELAY 840000
 // Extend
 #define EXTEND_MULTIPLIER 3
 
@@ -22,8 +22,6 @@ int outline_width = 0;
 #define draw_base (volatile int*) 0x00089480
 
 alt_up_pixel_buffer_dma_dev* pixel_buffer;
-
-void initPixelBuffer();
 
 void initPixelBuffer() {
 	pixel_buffer = alt_up_pixel_buffer_dma_open_dev("/dev/Pixel_Buffer_DMA");
@@ -127,6 +125,7 @@ int main() {
 	Coordinate* b = CoordinateCreate(0, 0);
 	Coordinate* c = CoordinateCreate(0, 0);
 
+	printf("%d\n", alt_timestamp_freq);
 	int i, j;
 	while(1) {
 		alt_timestamp_start();
