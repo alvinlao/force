@@ -15,13 +15,13 @@ void handle_button_interrupts(void* context, alt_u32 id){
 		printf("Screenshot started.\n");
 		SaveBmpSDCARD();
 		printf("Screenshot finished.\n");
-		printf("Button 1\n");
+		printf("Screenshot taken.\n");
 	} else if(*edge_capture_ptr == 0x4){
 		RayTurnOnOff();
-		printf("Button 2\n");
+		printf("Ray turned on/off.\n");
 	} else if(*edge_capture_ptr == 0x8){
-		// do things
-		printf("Button 3\n");
+		ChangeRayColor();
+		printf("Ray colour changed.\n");
 	} else {
 		printf("Something pressed.\n");
 	}

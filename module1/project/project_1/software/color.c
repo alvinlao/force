@@ -36,7 +36,6 @@ unsigned char rayStatus = 0;
 
 alt_up_pixel_buffer_dma_dev* pixel_buffer;
 
-
 void initPixelBuffer() {
 	pixel_buffer = alt_up_pixel_buffer_dma_open_dev("/dev/Pixel_Buffer_DMA");
 	alt_up_pixel_buffer_dma_clear_screen(pixel_buffer, 0);
@@ -63,7 +62,6 @@ void drawBoxOutline (int x1, int y1, int x2, int y2, int color);
 void outLine(int x,int y, int color){
 	drawBoxOutline(x-5,y-5,x+5,y+5,color);
 }
-
 
 void drawBoxOutline (int x1, int y1, int x2, int y2, int color){
 	int topRecX1 = x1;
@@ -170,6 +168,9 @@ void extend(Coordinate * fromCoord, Coordinate * toCoord, Coordinate * rayEndCoo
 	}
 }
 
+/**
+ * Turns on and off the ray.
+ */
 void RayTurnOnOff(){
 	if(rayStatus == 0 || rayStatus == 3){
 		//turn on
@@ -181,6 +182,17 @@ void RayTurnOnOff(){
 	}
 }
 
+/**
+ * Changes the colour of the ray.
+ */
+void ChangeRayColor() {
+	int temp = 0;
+	rayColor = rayColor + 123;
+	if (rayColor >= 0xffff) {
+		temp = rayColor - 0xffff;
+	}
+
+}
 
 int main() {
 	printf("Here we goo....\n");
@@ -199,6 +211,8 @@ int main() {
 	Coordinate* tmpTo= CoordinateCreate(0,0);
 
 	printf("%d\n", alt_timestamp_freq);
+
+	rayColor = 0x7f00;
 	//int i, j;
 	/*//int prev_ax, prev_ay, prev_bx, prev_by;
 	getTrackPosition(tracker_1_base, fromCoord);
@@ -231,12 +245,6 @@ int main() {
 			}
 		}
 
-//		//rainbow Effect
-//		rayColor += 123 ;
-//		if(rayColor >= 65535){
-//			rayColor -= 65535;
-//		}
-
 		getTrackPosition(tracker_1_base, tmpFrom);
 		getTrackPosition(tracker_2_base, tmpTo);
 
@@ -254,7 +262,7 @@ int main() {
 
 		IOWR_32DIRECT(draw_base, 24, 0);
 		extend(fromCoord, toCoord, rayEndCoord);
-		plotLine(toCoord->x, toCoord->y, rayEndCoord->x, rayEndCoord->y, 0x7f00);
+		plotLine(toCoord->x, toCoord->y, rayEndCoord->x, rayEndCoord->y, rayColor);
 
 		while(alt_timestamp() < TIMER_DELAY);
 	}
