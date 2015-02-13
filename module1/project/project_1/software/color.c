@@ -9,15 +9,18 @@
 #include "exception.h"
 #include "sad.h"
 
-
+// Hardware memory locations of the two track hardware accelerators
 #define tracker_1_base (volatile int*) 0x00089400
 #define tracker_2_base (volatile int*) 0x00089440
 
 // 16.8 MHz clock
+// Delay to run algorithms once per frame
 #define TIMER_DELAY 440000
-// Extend
+
+// lightsaber length = length of handle * EXTEND MULTIPLIER
 #define EXTEND_MULTIPLIER 1.5
 
+// Tracking confidence threshold
 #define threshold 30
 
 int outline_width = 0;
@@ -36,11 +39,22 @@ unsigned char rayStatus = 0;
 
 alt_up_pixel_buffer_dma_dev* pixel_buffer;
 
+/*
+ * Initialize the pixel buffer
+ */
 void initPixelBuffer() {
 	pixel_buffer = alt_up_pixel_buffer_dma_open_dev("/dev/Pixel_Buffer_DMA");
 	alt_up_pixel_buffer_dma_clear_screen(pixel_buffer, 0);
 }
 
+/*
+ * Plots a line using the hardware accelerator
+ * @param x0
+ * @param y0
+ * @param x1
+ * @param y1
+ * @param color 16 bit color (r, g, b)
+ */
 void plotLine(int x0, int y0, int x1, int y1, int color)
 {
 	IOWR_32DIRECT(draw_base, 0, x0);
@@ -52,17 +66,31 @@ void plotLine(int x0, int y0, int x1, int y1, int color)
 	IOWR_32DIRECT(draw_base, 20, 1);
 	while(IORD_32DIRECT(draw_base, 20) == 0);
 	int i = 0;
-	for(i = 0; i < 10000; i ++) {
-
-	}
+	for(i = 0; i < 10000; i ++);
 }
+
 
 void drawBoxOutline (int x1, int y1, int x2, int y2, int color);
 
+/*
+ * Helper function
+ * Draw a box outline around a point
+ * @param x
+ * @param y
+ * @param color
+ */
 void outLine(int x,int y, int color){
 	drawBoxOutline(x-5,y-5,x+5,y+5,color);
 }
 
+/*
+ * Draws a box outline
+ * @param x1 
+ * @param y1
+ * @param x2
+ * @param y2 
+ * @param color 16 bit color (r 5bits, g 6bits, b 5bits)
+ */
 void drawBoxOutline (int x1, int y1, int x2, int y2, int color){
 	int topRecX1 = x1;
 	int topRecX2 = x2;
@@ -94,7 +122,11 @@ void drawBoxOutline (int x1, int y1, int x2, int y2, int color){
 	alt_up_pixel_buffer_dma_draw_box(pixel_buffer, rightRecX1, rightRecY1, rightRecX2, rightRecY2, color, 0);
 }
 
-
+/*
+ * Read tracking hardware accelerator output
+ * @param memory address of the tracker
+ * @param Coordinate a pointer to store the results
+ */
 void getTrackPosition(int tracker_base, Coordinate * c) {
 	IOWR_32DIRECT(tracker_base, 0, 0xffffffff);
 	while(IORD_32DIRECT(tracker_base, 16) != 0);
@@ -104,6 +136,10 @@ void getTrackPosition(int tracker_base, Coordinate * c) {
 	c->acc = IORD_32DIRECT(tracker_base, 12);
 }
 
+/*
+ * Get tracking position from hardware accelerator
+ * @deprecated
+ */
 void GetPos(base, color) {
 	IOWR_32DIRECT(base, 0, 0xffffffff);
 	int ready;
@@ -118,26 +154,53 @@ void GetPos(base, color) {
 	printf("%3d, %3d acc:%3d \n", x, y,accuracy);
 }
 
+/*
+ * Is the coordinate inside the camera frame?
+ * @return boolean
+ */
 char isBounded(Coordinate * c) {
 	return 0 <= c->x && c->x < FRAME_WIDTH && 0 <= c->y && c->y < FRAME_HEIGHT;
 }
 
+/*
+ * Is the coordinate above the screen?
+ * @return boolean
+ */
 char violateTopBound(Coordinate * c) {
 	return c->y < 0;
 }
 
+/*
+ * Is the coordinate past the right of the screen?
+ * @return boolean
+ */
 char violateRightBound(Coordinate * c) {
 	return c->x > FRAME_WIDTH;
 }
 
+/*
+ * Is the coordinate past the bottom of the screen?
+ * @return boolean
+ */
 char violateBottomBound(Coordinate * c) {
 	return c->y > FRAME_HEIGHT;
 }
 
+/*
+ * Is the coordinate past the left of the screen?
+ * @return boolean
+ */
 char violateLeftBound(Coordinate * c) {
 	return c->x < 0;
 }
 
+/*
+ * Calculate the coordinate of the lightsaber's tip
+ * "Extends" the handle coordinates with scaled vector addition
+ * @param fromCoord Bottom handle coordinate
+ * @param toCoord Top handle coordinate
+ * @param rayEndCoord Coordinate to store result
+ */
 void extend(Coordinate * fromCoord, Coordinate * toCoord, Coordinate * rayEndCoord) {
 	rayEndCoord->x = toCoord->x + ray_scale_factor * (toCoord->x - fromCoord->x);
 	rayEndCoord->y = toCoord->y + ray_scale_factor * (toCoord->y - fromCoord->y);
@@ -203,6 +266,7 @@ int main() {
 	initPixelBuffer();
 	ScreenShotInit(pixel_buffer);
 
+    // Setup coordinate structs
 	Coordinate* fromCoord = CoordinateCreate(0, 0);
 	Coordinate* toCoord = CoordinateCreate(0, 0);
 	Coordinate* rayEndCoord = CoordinateCreate(0, 0);
@@ -210,6 +274,7 @@ int main() {
 	Coordinate* tmpFrom = CoordinateCreate(0,0);
 	Coordinate* tmpTo= CoordinateCreate(0,0);
 
+    // Timer frequency
 	printf("%d\n", alt_timestamp_freq);
 
 	rayColor = 0x7f00;
@@ -245,6 +310,7 @@ int main() {
 			}
 		}
 
+        // Get track positions
 		getTrackPosition(tracker_1_base, tmpFrom);
 		getTrackPosition(tracker_2_base, tmpTo);
 
@@ -260,6 +326,7 @@ int main() {
 			toCoord->acc = tmpTo->acc;
 		}
 
+        // Draw lightsaber
 		IOWR_32DIRECT(draw_base, 24, 0);
 		extend(fromCoord, toCoord, rayEndCoord);
 		plotLine(toCoord->x, toCoord->y, rayEndCoord->x, rayEndCoord->y, rayColor);
