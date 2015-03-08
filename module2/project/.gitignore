@@ -1,0 +1,7 @@
+obj/
+
+Makefile
+create-this-app
+readme.txt
+[a-zA-Z0-9]*bsp/
+.force_relink

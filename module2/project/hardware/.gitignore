@@ -1,0 +1,15 @@
+# Ignore these
+software
+db
+*/synthesis
+*.html
+*.sopcinfo
+*.ncf
+*.bsf
+*.cmp
+*.qpf
+*.qsf
+*.bak
+*.txt
+*.sof
+*.pof
