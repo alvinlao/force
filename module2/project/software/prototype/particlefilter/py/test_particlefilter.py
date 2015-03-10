@@ -35,6 +35,7 @@ for i in xrange(5):
     print("Best:")
     print(best.x, best.y)
 
+"""
 x = []
 y = []
 s = []
@@ -47,3 +48,4 @@ plt.scatter(x, y, s=s)
 plt.xlim(0, 320)
 plt.ylim(0, 240)
 plt.show()
+"""
