@@ -4,11 +4,11 @@ import java.util.List;
 
 public class Particle extends Point {
     // [0, 1] : How strongly do we take into account a new measurement?
-    private static final float MEASUREMENT_BIAS = 0.75f;
+    private static final float MEASUREMENT_BIAS = 0.10f;
     // [0, 1] : How much do we move the particle each update step
     private static final float MOVEMENT_BIAS = 0.5f;
     // [0, ~) : How much random noise do we add?
-    private static final int RANDOM_DRIFT = 5;
+    private static final int RANDOM_DRIFT = 10;
 
     public Particle() {
         super(0, 0, 0);
@@ -31,8 +31,8 @@ public class Particle extends Point {
      * @param motionVector unit direction
      */
     public void walk(double rx, double ry, double rv, float[] motionVector) {
-        float dx = (float) (MOVEMENT_BIAS * rv * motionVector[0]);
-        float dy = (float) (MOVEMENT_BIAS * rv * motionVector[1]);
+        int dx = (int) Math.ceil(MOVEMENT_BIAS * rv * motionVector[0]);
+        int dy = (int) Math.ceil(MOVEMENT_BIAS * rv * motionVector[1]);
 
         // Noise + movement
         this.x += (rx * RANDOM_DRIFT) + dx;
