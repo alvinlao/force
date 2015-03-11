@@ -5,11 +5,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
+#include <unistd.h>
 
-const int pin_en = 24; //green
-const int pin_ack = 25; //blue
-const int pin_keep = 12; //orange
-const int pin_data = 16; //yellow
+const int pin_en = 27;
+const int pin_ack = 26;
+const int pin_keep = 25;
+const int pin_data = 16;
 
 unsigned char keepRunning = 1;
 unsigned char processing = 0;
@@ -31,7 +32,7 @@ void setupPins(){
 }
 
 void finalizeData(){
-        printf("finalizing input : %x \n\n\n",buffer);
+        printf("Final : %x \n\n\n",buffer);
         buffer = 0;
 }
 
@@ -88,6 +89,8 @@ void main(){
 		return;
 	}
 
-	while(keepRunning==1){
-	}
+	pause();
+
+//	while(keepRunning==1){
+//	}
 }
