@@ -43,12 +43,12 @@ void HandleData(){
 			unsigned char value = 0;
 			int i;
 			for(i=pin_data;i<pin_data+8;i++){
-		printf("%d",digitalRead(i));
+//		printf("%d",digitalRead(i));
 				value = value << 1;
 				value = value | digitalRead(i);
 			}
-		printf("\n");
-		printf("accpted byte : %x\n",value);
+//		printf("\n");
+//		printf("accpted byte : %x\n",value);
 
 			buffer = buffer << 8;
 			buffer = buffer | value;
@@ -58,8 +58,8 @@ void HandleData(){
 			}else{
 				finalizeData();
 			}
-			digitalWrite(pin_ack,HIGH);
 		}
+		digitalWrite(pin_ack,HIGH);
 	}else{
 		processing = 0;
 		digitalWrite(pin_ack,LOW);
