@@ -4,6 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Particle Filter
+ *
+ * Goal:
+ * Attempt to reduce raw measurement noise and produce a more accurate estimation
+ *
+ * This particle filter is designed specifically for tracking
+ * a writing pen. See the prediction model for more details.
+ *
+ */
 public class ParticleFilter {
     // Number of particles to use. More is better.
     private static final int NUM_PARTICLES = 300;
@@ -14,13 +24,14 @@ public class ParticleFilter {
     private WeightedRandom weightedRandom;
 
     // Best estimate
-    private Particle best;
+    private Particle previousBest = new Particle();
+    private Particle best = new Particle();
 
     // Measurements
-    private Measurement previousMeanMeasurementPoint = new Measurement(Frame.WIDTH/2, Frame.HEIGHT/2, 0);
-    private Measurement meanMeasurementPoint = new Measurement(Frame.WIDTH/2, Frame.HEIGHT/2, 0);
+    private Measurement previousProcessedMeasurementPoint = new Measurement(Frame.WIDTH/2, Frame.HEIGHT/2, 0);
+    private Measurement processedMeasurementPoint = new Measurement(Frame.WIDTH/2, Frame.HEIGHT/2, 0);
 
-    // General movement direction
+    // Our state model
     private float[] motionVector = {0, 0};
 
     // Particles!
@@ -55,10 +66,12 @@ public class ParticleFilter {
      */
     public Point run(List<Measurement> measurements) {
         updateModel();
-        updateMeasurement(measurements);
+
+        processMeasurements(measurements);
+        updateMeasurement();
 
         updateBestEstimate();
-        updateMotionVector(measurements);
+        updateMotionVector();
 
         resample();
 
@@ -73,22 +86,48 @@ public class ParticleFilter {
      */
     private void updateModel() {
         for (Particle p : particles) {
-            p.walk(
-                2 * random.nextDouble() - 1,
-                2 * random.nextDouble() - 1,
-                random.nextDouble() + 0.5,
-                motionVector
+            p.predict(
+                    2 * random.nextDouble() - 1,
+                    2 * random.nextDouble() - 1,
+                    random.nextDouble() + 0.5,
+                    motionVector
             );
         }
     }
 
 
     /**
+     * Process the incoming measurements
+     *
+     * TODO Currently just performs an average of all measurements. Use a more sophisticated algorithm.
+     *
+     * @param measurements measurements
+     */
+    private void processMeasurements(List<Measurement> measurements) {
+        previousProcessedMeasurementPoint.copy(processedMeasurementPoint);
+
+        // Average all measurements...
+        processedMeasurementPoint.x = 0;
+        processedMeasurementPoint.y = 0;
+        processedMeasurementPoint.weight = 0;
+        for (Measurement measurement : measurements) {
+            processedMeasurementPoint.x += measurement.x;
+            processedMeasurementPoint.y += measurement.y;
+            processedMeasurementPoint.weight += measurement.weight;
+        }
+
+        processedMeasurementPoint.x /= measurements.size();
+        processedMeasurementPoint.y /= measurements.size();
+        processedMeasurementPoint.weight /= measurements.size();
+    }
+
+
+    /**
      * Use measurement to update weight of all particles
      */
-    private void updateMeasurement(List<Measurement> measurements) {
+    private void updateMeasurement() {
         for (Particle p : particles) {
-            p.updateWeight(measurements);
+            p.updateWeight(processedMeasurementPoint);
         }
 
         normalizeParticleWeights();
@@ -102,14 +141,17 @@ public class ParticleFilter {
      * Alternative: Median around heaviest particle
      */
     private void updateBestEstimate() {
-        best = particles.get(0);
+        Particle candidate = particles.get(0);
 
         // Choose particle with the highest weight
         for (Particle p : particles) {
-            if (p.weight > best.weight) {
-                best = p;
+            if (p.weight > candidate.weight) {
+                candidate = p;
             }
         }
+
+        previousBest.copy(best);
+        best.copy(candidate);
     }
 
 
@@ -154,33 +196,11 @@ public class ParticleFilter {
 
     /**
      * Determine general direction the measurements moved toward
-     *
-     * NOTE: Motion vector is a unit vector
-     * @param measurements list of measurements
      */
-    private void updateMotionVector(List<Measurement> measurements) {
-        updateMeanMeasurementPoint(measurements);
+    private void updateMotionVector() {
+        motionVector = PredictionModel.next(previousBest, best);
 
-        motionVector[0] = meanMeasurementPoint.x - previousMeanMeasurementPoint.x;
-        motionVector[1] = meanMeasurementPoint.y - previousMeanMeasurementPoint.y;
-    }
-
-
-    /**
-     * Update the mean measured point
-     * @param measurements
-     */
-    private void updateMeanMeasurementPoint(List<Measurement> measurements) {
-        previousMeanMeasurementPoint.copy(meanMeasurementPoint);
-
-        int x = 0;
-        int y = 0;
-        for (Measurement p : measurements) {
-            x += p.x;
-            y += p.y;
-        }
-
-        meanMeasurementPoint.x = x / measurements.size();
-        meanMeasurementPoint.y = y / measurements.size();
+        motionVector[0] = processedMeasurementPoint.x - previousProcessedMeasurementPoint.x;
+        motionVector[1] = processedMeasurementPoint.y - previousProcessedMeasurementPoint.y;
     }
 }

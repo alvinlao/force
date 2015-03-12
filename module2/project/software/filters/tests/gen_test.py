@@ -20,8 +20,8 @@ def line(noise=0, accuracy=30):
         tx, ty = getnoise(noise, x, y)
         print("{0} {1} {2}".format(tx, ty, accuracy))
 
-def sine(noise=0, accuracy=30):
-    for x in xrange(20, 300):
+def sine(noise=0, accuracy=303030):
+    for x in xrange(20, 300, 2):
         y = int(100 * math.sin(x * math.pi / (320 / 3)) + 120)
         
         x, y = getnoise(noise, x, y)
@@ -56,6 +56,6 @@ def box(noise=0, accuracy=30):
         print("{0} {1} {2}".format(x, y, accuracy))
 
     
-#line()
-sine(5)
+#line(2)
+sine(3, 200)
 #box()

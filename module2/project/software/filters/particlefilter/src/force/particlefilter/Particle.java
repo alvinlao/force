@@ -24,13 +24,16 @@ public class Particle extends Point {
 
 
     /**
-     * Move the particle
+     * Predict where the real object will be
+     * Move the particle there
+     * Add noise
+     *
      * @param rx random walk x direction [-1, 1]
      * @param ry random walk y direction [-1, 1]
      * @param rv [0.5, 1.5] amount of motion vector to take
      * @param motionVector unit direction
      */
-    public void walk(double rx, double ry, double rv, float[] motionVector) {
+    public void predict(double rx, double ry, double rv, float[] motionVector) {
         int dx = (int) Math.ceil(MOVEMENT_BIAS * rv * motionVector[0]);
         int dy = (int) Math.ceil(MOVEMENT_BIAS * rv * motionVector[1]);
 
@@ -48,17 +51,10 @@ public class Particle extends Point {
      * new weight = (1-C) * previous weight + C * weight from measurements
      * C : MEASUREMENT_BIAS
      *
-     * @param measurements
+     * @param measurement
      */
-    public void updateWeight(List<Measurement> measurements) {
-        float totalMeasurementWeight = 0;
-        for (Measurement measurement : measurements) {
-            totalMeasurementWeight += measurement.weightOf(this);
-        }
-
-        float measurementWeight = totalMeasurementWeight / measurements.size();
-
-        weight = (1 - MEASUREMENT_BIAS) * weight + MEASUREMENT_BIAS * measurementWeight;
+    public void updateWeight(Measurement measurement) {
+        weight = (1 - MEASUREMENT_BIAS) * weight + MEASUREMENT_BIAS * measurement.weightOf(this);
     }
 
     /**

@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 # Measurements
 a = open('in', 'r')
 # Output
-b = open('output', 'r')
+b = open('out', 'r')
 
 ax = []
 ay = []
