@@ -58,4 +58,4 @@ def box(noise=0, accuracy=30):
     
 #line()
 sine(5)
-box()
+#box()
