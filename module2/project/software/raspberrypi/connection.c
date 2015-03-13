@@ -32,7 +32,16 @@ void setupPins(){
 }
 
 void finalizeData(){
-        printf("Final : %x \n\n\n",buffer);
+	//analyze buffer in promised format
+	unsigned int posx;
+	unsigned int posy;
+	int acc;
+	unsigned char channel;
+	acc = buffer & 0x000000FF;
+	posy = (buffer >> 8) & 0x000000FF;
+	posx = (buffer >> 16) & 0x000001FF;
+	channel = (buffer >> 31) & 0x00000001;
+        printf("%3d %3d %3d %1d \n",posx,posy,acc, channel);
         buffer = 0;
 }
 
