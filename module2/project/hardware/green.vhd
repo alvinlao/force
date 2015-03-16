@@ -1,23 +1,6 @@
 -- Author	:	Jae Yeong Bae
 -- Team		:	EECE 381 Group 18
--- Date		:	Feb 5 2015
---
--- File		:	Sum of Absolute Differences Hardware Accelorator
--- 				to be used with Quartus II Qsys System and Avalon Memory Mapping interface
---
--- Usage	:	pixel_buffer_base 	= pixel buffer base as defined in Pixel Buffer core
---				win_size			= search window size in pixels
---				block_size_x		= reference block size in pixels
---				steps				= how many pixels to be searched for
---				screen_width		= CONSTANT value of 320
---				screen_height		= CONSTANT value of 240
---
--- Timing	:	(2w)+(1)+(2(w-b)/s) clocks
---				w = win_size_x * win_size_y
---				b = block_size_x * block_size_y-1
---				s = steps
---
--- Memory	:	a lot
+
 
 library ieee;
 use ieee.std_logic_1164.all;
@@ -25,7 +8,7 @@ use ieee.numeric_std.all;
 
 
 
-entity sad is
+entity green is
 	generic(
 		pixel_buffer_base : std_logic_vector := x"00000000";
 		find_color : integer := 0;
@@ -51,9 +34,9 @@ entity sad is
 		slave_writedata: in std_logic_vector(31 downto 0);
 		slave_waitrequest : out std_logic
 	);
-end sad;
+end green;
 
-architecture bhv of sad is
+architecture bhv of green is
 	CONSTANT SCREEN_WIDTH 	: integer := 320;
 	CONSTANT SCREEN_HEIGHT 	: integer := 240;
 	
@@ -241,8 +224,8 @@ architecture bhv of sad is
 		slave_readdata <= (others => '-');
 		if (slave_rd_en = '1') then
 			case slave_addr is
-				--outputs
-				when "0000" => slave_readdata <= b"0000_0000_0000_0000_0000_0000_0000_0000";
+				--XYAcc encoded word
+				when "0000" => slave_readdata <= std_logic_vector(to_unsigned(0,7))&std_logic_vector(to_unsigned(posX,9))&std_logic_vector(to_unsigned(posY,8))&std_logic_vector(to_signed(acc,8));
 				--X unsigned, 0 to SCREEN_WIDTH
 				when "0001" => slave_readdata <= std_logic_vector(to_unsigned(posX,32));
 				--Y unsigned, 0 to SCREEN_HEIGHT

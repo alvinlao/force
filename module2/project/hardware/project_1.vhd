@@ -41,7 +41,11 @@ entity project_1 is
 				b_SD_DAT : INOUT STD_LOGIC;
 				b_SD_CMD : INOUT STD_LOGIC;
 				b_SD_DAT3 : INOUT STD_LOGIC;
-				o_SD_CLOCK : OUT STD_LOGIC
+				o_SD_CLOCK : OUT STD_LOGIC;
+				PI_EN : out std_LOGIC;
+				PI_ACK : IN STD_LOGIC;
+				PI_KEEP : OUT STD_LOGIC;
+				PI_DATA : out STD_LOGIC_VECTOR(7 downto 0)
 	);
 end project_1;
 
@@ -89,7 +93,11 @@ architecture rtl of project_1 is
             sd_card_b_SD_dat   : inout std_logic ; -- b_SD_dat
             sd_card_b_SD_dat3  : inout std_logic ; -- b_SD_dat3
             sd_card_o_SD_clock : out   std_logic ;        -- o_SD_clock
-				keys_export : in    std_logic_vector(3 downto 0)  := (others => 'X')  -- export
+				keys_export                                     : in    std_logic_vector(3 downto 0)  := (others => 'X'); -- export
+            piconnector_data_bus                            : out   std_logic_vector(7 downto 0);                     -- data_bus
+            piconnector_ack                                 : in    std_logic                     := 'X';             -- ack
+            piconnector_en                                  : out   std_logic;                                        -- en
+            piconnector_keep                                : out   std_logic                                         -- keep
         );
     end component project_1_qsys;
 	 
@@ -143,7 +151,11 @@ architecture rtl of project_1 is
             sd_card_b_SD_dat   => b_SD_dat,   --        .b_SD_dat
             sd_card_b_SD_dat3  => b_SD_dat3,  --        .b_SD_dat3
             sd_card_o_SD_clock => o_SD_clock,  --        .o_SD_clock
-				keys_export                                     => KEY -- keys.export
+				keys_export                                     => KEY, -- keys.export
+            piconnector_data_bus                            => PI_DATA,                            --                         piconnector.data_bus
+            piconnector_ack                                 => PI_ACK,                                 --                                    .ack
+            piconnector_en                                  => PI_EN,                                  --                                    .en
+            piconnector_keep                                => PI_KEEP                                 --                                    .keep
         );
 
 		  TD_RESET <= '1';
