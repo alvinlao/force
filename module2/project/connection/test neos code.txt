@@ -1,0 +1,21 @@
+#include "sys/alt_stdio.h"
+#include "io.h"
+#include <stdlib.h>
+#include <time.h>
+#include <unistd.h>
+#include "altera_up_avalon_video_pixel_buffer_dma.h"
+
+#define base (volatile int*) 0x000894c0
+
+int main()
+{
+	int i;
+	int val = 0x1234ABCD;
+	while(1){
+			IOWR_32DIRECT(base, 0, val);
+			printf("sending %8x \n", val);
+			val++;
+	}
+
+  return 0;
+}
