@@ -76,7 +76,7 @@ public class Magic {
             //coordinate = camera.transform2Dto3D(measurements[0], measurements[1]);
 
             //System.out.println(coordinate.x + " " + coordinate.y + " " + coordinate.z);
-            paint.draw(points[0].x, points[1].y);
+            paint.draw(points[0].x, points[0].y);
         }
     }
 }
