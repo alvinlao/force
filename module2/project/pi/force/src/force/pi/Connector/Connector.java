@@ -38,7 +38,7 @@ public class Connector {
     private int lastIndex;
 
 
-    public Connector() throws java.lang.InterruptedException {
+    public void RunConnector() throws java.lang.InterruptedException {
         isprocessing = false;
         buffer = new BitSet(32);
         lastIndex = 0;
