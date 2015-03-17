@@ -3,6 +3,7 @@ package force.pi;
 import force.pi.camera.Camera;
 import force.pi.filters.kalman.KalmanFilter;
 import force.pi.filters.kalman.Measurement;
+import force.pi.projection.Paint;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -44,6 +45,7 @@ public class Magic {
         Camera camera = new Camera();
 
         // Create projection
+        Paint paint = new Paint();
 
         // Read stdin
         while (true) {
@@ -71,9 +73,10 @@ public class Magic {
             }
 
             // Execute per frame logic
-            coordinate = camera.transform2Dto3D(measurements[0], measurements[1]);
+            //coordinate = camera.transform2Dto3D(measurements[0], measurements[1]);
 
-            System.out.println(coordinate.x + " " + coordinate.y + " " + coordinate.z);
+            //System.out.println(coordinate.x + " " + coordinate.y + " " + coordinate.z);
+            paint.draw(points[0].x, points[1].y);
         }
     }
 }
