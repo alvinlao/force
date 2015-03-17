@@ -6,7 +6,7 @@ import java.awt.Robot;
 import java.awt.event.InputEvent;
 
 
-public class paint{
+public class Paint{
 	public static void main(String[] args){
 
 		JFrame frame = new JFrame("Draw");

@@ -1,4 +1,4 @@
-package force.particlefilter;
+package force.pi.filters.particle;
 
 import java.util.ArrayList;
 import java.util.List;

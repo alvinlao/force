@@ -1,20 +1,17 @@
-package force.particlefilter;
+package force.pi.filters.kalman;
 
 public class Point {
     public int x;
     public int y;
-    public float weight;
 
     public Point() {
         x = 0;
         y = 0;
-        weight = 0f;
     }
 
-    public Point(int x, int y, float weight) {
+    public Point(int x, int y) {
         this.x = x;
         this.y = y;
-        this.weight = weight;
     }
 
     /**
@@ -24,7 +21,6 @@ public class Point {
     void copy(Point other) {
         x = other.x;
         y = other.y;
-        weight = other.weight;
     }
 
     /**

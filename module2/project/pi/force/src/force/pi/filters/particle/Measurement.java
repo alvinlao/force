@@ -1,4 +1,4 @@
-package force.particlefilter;
+package force.pi.filters.particle;
 
 public class Measurement extends Point {
     private static final int MAX_MEASUREMENT_WEIGHT = 255 * 3;

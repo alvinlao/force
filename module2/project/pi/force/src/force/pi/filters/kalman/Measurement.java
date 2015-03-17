@@ -1,3 +1,5 @@
+package force.pi.filters.kalman;
+
 public class Measurement extends Point {
     public static final int MAX_ACCURACY = 255 * 3;
 

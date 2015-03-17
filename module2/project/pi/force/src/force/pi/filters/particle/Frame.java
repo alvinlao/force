@@ -1,4 +1,4 @@
-package force.particlefilter;
+package force.pi.filters.particle;
 
 public class Frame {
     public static final int WIDTH = 320;

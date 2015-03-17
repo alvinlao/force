@@ -1,4 +1,4 @@
-package force.particlefilter.test;
+package force.pi.filters.particle.test;
 
 import force.particlefilter.*;
 

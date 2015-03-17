@@ -1,4 +1,4 @@
-package force.particlefilter;
+package force.pi.filters.particle;
 
 public class PredictionModel {
     private static float[] v = new float[2];

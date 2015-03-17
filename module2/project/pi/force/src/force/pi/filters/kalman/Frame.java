@@ -1,3 +1,5 @@
+package force.pi.filters.kalman;
+
 public class Frame {
     public static final int WIDTH = 320;
     public static final int HEIGHT = 240;
