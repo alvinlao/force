@@ -1,4 +1,4 @@
-package force.pi.filters.kalman;
+package force.pi;
 
 public class Frame {
     public static final int WIDTH = 320;

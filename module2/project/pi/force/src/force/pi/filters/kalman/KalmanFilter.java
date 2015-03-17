@@ -1,5 +1,8 @@
 package force.pi.filters.kalman;
 
+import force.pi.Frame;
+import force.pi.Point;
+
 /**
  * Filter noise from measurements
  */

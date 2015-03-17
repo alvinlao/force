@@ -1,8 +1,8 @@
 package force.pi;
 
+import force.pi.camera.Camera;
 import force.pi.filters.kalman.KalmanFilter;
 import force.pi.filters.kalman.Measurement;
-import force.pi.filters.kalman.Point;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -40,6 +40,8 @@ public class Magic {
         }
 
         // Create camera
+        Point3D coordinate;
+        Camera camera = new Camera();
 
         // Create projection
 
@@ -63,15 +65,15 @@ public class Magic {
                     throw new Exception("Incorrect number of inputs. Expected format: 'x y accuracy'");
                 }
 
-                // Note: Testing hardcoded accuracy
+                // TODO: Testing hardcoded accuracy
                 measurements[i].set(x, y, 300);
                 points[i] = kalmanFilters[i].run(measurements[i]);
             }
 
             // Execute per frame logic
-            for (int i = 0; i < NUM_INPUT_COORDINATES_PER_FRAME; ++i) {
-                System.out.println(points[i].x + " " + points[i].y);
-            }
+            coordinate = camera.transform2Dto3D(measurements[0], measurements[1]);
+
+            System.out.println(coordinate.x + " " + coordinate.y + " " + coordinate.z);
         }
     }
 }

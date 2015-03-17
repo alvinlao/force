@@ -1,5 +1,7 @@
 package force.pi.filters.kalman;
 
+import force.pi.Point;
+
 public class PointState extends Point {
     float errorX, errorY;
 

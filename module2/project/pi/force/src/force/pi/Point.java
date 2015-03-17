@@ -1,4 +1,4 @@
-package force.pi.filters.kalman;
+package force.pi;
 
 public class Point {
     public int x;
