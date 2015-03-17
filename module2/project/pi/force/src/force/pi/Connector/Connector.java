@@ -1,3 +1,7 @@
+/**
+ * Created by Jae on 2015-03-17.
+ */
+
 package force.pi.Connector;
 
 import com.pi4j.io.gpio.GpioController;
@@ -22,10 +26,6 @@ import com.pi4j.io.gpio.event.PinEventType;
 
 import java.util.BitSet;
 
-
-/**
- * Created by Jae on 2015-03-17.
- */
 public class Connector {
     private GpioController gpio;
     private GpioPinDigitalInput pin_en;
@@ -80,11 +80,12 @@ public class Connector {
                             int acc = toInt(buffer.get(0,7));
                             int channel = buffer.get(31)?1:0;
 
+                            //do something with these data
+                            System.out.println(String.format("%8x -- %3d %3d %3d %3d",toInt(buffer),posx,posy,acc,channel));
+
+
                             buffer.clear();
                             lastIndex = 0;
-
-                            //do something with these data
-                            System.out.println(String.format("{0} {1} {2} {3}",posx,posy,acc,channel));
                         }
                     }
                     pin_ack.high();
