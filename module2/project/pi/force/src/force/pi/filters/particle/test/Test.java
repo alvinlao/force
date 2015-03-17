@@ -1,6 +1,7 @@
 package force.pi.filters.particle.test;
 
-import force.particlefilter.*;
+
+import force.pi.filters.particle.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class Test {
         Particle p = new Particle();
 
         for(int i = 0; i < 20; ++i) {
-            p.walk(2 * r.nextDouble() - 1, 2 * r.nextDouble() - 1, r.nextDouble() + 0.5, new float[]{5.0f, 5.0f});
+            p.predict(2 * r.nextDouble() - 1, 2 * r.nextDouble() - 1, r.nextDouble() + 0.5, new float[]{5.0f, 5.0f});
             System.out.println(p.x + " " + p.y);
         }
     }
