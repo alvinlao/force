@@ -41,7 +41,7 @@ void finalizeData(){
 	posy = (buffer >> 8) & 0x000000FF;
 	posx = (buffer >> 16) & 0x000001FF;
 	channel = (buffer >> 31) & 0x00000001;
-        printf("%3d %3d %3d %1d \n",posx,posy,acc, channel);
+        printf("%d %d %d %d \n",posx,posy,acc, channel);
         buffer = 0;
 }
 
