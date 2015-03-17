@@ -90,7 +90,7 @@ void main(){
 
 	setupPins();
 
-	printf("waiting.. \n");
+//	printf("waiting.. \n");
 
 	if (wiringPiISR(pin_en, INT_EDGE_BOTH, &HandleData)==-1){
 		printf("Unable to start interrupt for En\n");
