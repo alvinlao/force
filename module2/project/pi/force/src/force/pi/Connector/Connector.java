@@ -39,6 +39,7 @@ public class Connector {
 
 
     public void RunConnector() throws java.lang.InterruptedException {
+        System.out.println("Initializing GPIO");
         isprocessing = false;
         buffer = new BitSet(32);
         lastIndex = 0;
@@ -58,6 +59,7 @@ public class Connector {
         pin_data[6] = gpio.provisionDigitalInputPin(RaspiPin.GPIO_22, "DATA", PinPullResistance.PULL_DOWN);
         pin_data[7] = gpio.provisionDigitalInputPin(RaspiPin.GPIO_23, "DATA", PinPullResistance.PULL_DOWN);
 
+        System.out.println("Listening..");
         pin_en.addListener(new GpioPinListenerDigital() {
             @Override
             public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
