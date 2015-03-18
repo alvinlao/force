@@ -65,7 +65,6 @@ public class Connector {
             @Override
             public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
                 // display pin state on console
-                System.out.println(" --> GPIO PIN STATE CHANGE: " + event.getPin() + " = " + event.getState());
 
                 if (pin_en.isHigh()) {
                     if (!isprocessing) {
