@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Runs our java project
-# Don't forget to give priviledges: chmod 755 run
+# Don't forget to give privileges: chmod 755 run
 
 if [ $# -eq 0 ]; then
     java -cp .:../pi4j/* force/pi/Magic
