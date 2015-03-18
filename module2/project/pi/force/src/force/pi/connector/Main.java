@@ -8,6 +8,11 @@ public class Main {
 
     public static void main(String[] args) throws Exception{
 
+        ConnectorC connectorC = new ConnectorC();
+        connectorC.connectorFromC();
+
+
+/*
         Connector connector = new Connector();
         connector.AttachConnector();
 
@@ -23,6 +28,6 @@ public class Main {
         //keep alive (for time being)
         while (keepRunning) {
             Thread.sleep(500);
-        }
+        }*/
     }
 }
