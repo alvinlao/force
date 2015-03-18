@@ -34,16 +34,14 @@ public class Connector {
     private GpioPinDigitalInput[] pin_data;
 
     private boolean isprocessing;
-    private BitSet buffer;
-    private int lastIndex;
+    private int buffer;
     private boolean keeprunning = true;
 
 
     public void RunConnector() throws java.lang.InterruptedException {
         System.out.println("Initializing GPIO");
         isprocessing = false;
-        buffer = new BitSet(32);
-        lastIndex = 0;
+        buffer = 0;
 
         gpio = GpioFactory.getInstance();
         pin_en = gpio.provisionDigitalInputPin(RaspiPin.GPIO_08, "EN", PinPullResistance.PULL_DOWN);
@@ -66,60 +64,67 @@ public class Connector {
             public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
                 // display pin state on console
 
-                if (pin_en.isHigh()) {
-                    if (!isprocessing) {
-                        isprocessing = true;
+                pin_en.addListener(new GpioPinListenerDigital() {
+                    @Override
+                    public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
+                        // display pin state on console
 
-                        //build byte
-                        for (int i = 0; i < 8; i++) {
-                            buffer.set(lastIndex+i,pin_data[i].isHigh());
-                        }
-                        lastIndex += 8;
+                        if (pin_en.isHigh()) {
+                            if (!isprocessing) {
+                                isprocessing = true;
 
-                        if(pin_keep.isLow()){
+                                //build byte
+                                int value = 0;
+                                for (int i = 0; i < 8; i++) {
+                                    value = value << 1;
+                                    value = value | (pin_data[i].isHigh() ? 1 : 0);
+                                }
 
-                            int posx = toInt(buffer.get(16,25));
-                            int posy = toInt(buffer.get(8,15));
-                            int acc = toInt(buffer.get(0,7));
-                            int channel = buffer.get(31)?1:0;
+                                //build buffer
+                                buffer = buffer << 8;
+                                buffer = buffer | value;
 
-                            //do something with these data
-                            System.out.println(String.format("%8x -- %3d %3d %3d %3d",toInt(buffer),posx,posy,acc,channel));
+                                if (pin_keep.isLow()) {
+                                    //finallize buffer
+                                    int posx;
+                                    int posy;
+                                    int acc;
+                                    int channel;
+                                    acc = buffer & 0x000000FF;
+                                    posy = (buffer >> 8) & 0x000000FF;
+                                    posx = (buffer >> 16) & 0x000001FF;
+                                    channel = (buffer >> 31) & 0x00000001;
 
-
-                            buffer.clear();
-                            lastIndex = 0;
+                                    //do something with these data
+                                    System.out.println(String.format("%8x %d %d %d %d", buffer, posx, posy, acc, channel));
+                                    buffer = 0;
+                                }
+                            }
+                            pin_ack.high();
+                        } else {
+                            isprocessing = false;
+                            pin_ack.low();
                         }
                     }
-                    pin_ack.high();
-                } else {
-                    isprocessing = false;
-                    pin_ack.low();
+
+                });
+
+                Runtime.getRuntime().addShutdownHook(new Thread() {
+                    public void run() {
+                        keeprunning = false;
+                    }
+                });
+
+
+                //keep alive (for time being)
+                while (keeprunning) {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-
         });
-
-
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            public void run() {
-            keeprunning = false;
-      }
-        });
-
-
-        //keep alive (for time being)
-        while(keeprunning) {
-            Thread.sleep(500);
-        }
-    }
-
-
-    public static int toInt(BitSet bits) {
-        int value = 0;
-        for (int i = 0; i < bits.length(); ++i) {
-            value += bits.get(i) ? (1L << i) : 0L;
-        }
-        return value;
     }
 }
