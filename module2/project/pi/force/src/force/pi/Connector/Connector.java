@@ -36,6 +36,7 @@ public class Connector {
     private boolean isprocessing;
     private BitSet buffer;
     private int lastIndex;
+    private boolean keeprunning = true;
 
 
     public void RunConnector() throws java.lang.InterruptedException {
@@ -59,11 +60,12 @@ public class Connector {
         pin_data[6] = gpio.provisionDigitalInputPin(RaspiPin.GPIO_22, "DATA", PinPullResistance.PULL_DOWN);
         pin_data[7] = gpio.provisionDigitalInputPin(RaspiPin.GPIO_23, "DATA", PinPullResistance.PULL_DOWN);
 
-        System.out.println("Listening..");
+        System.out.println("Listening..\n\n");
         pin_en.addListener(new GpioPinListenerDigital() {
             @Override
             public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
                 // display pin state on console
+                System.out.println(" --> GPIO PIN STATE CHANGE: " + event.getPin() + " = " + event.getState());
 
                 if (pin_en.isHigh()) {
                     if (!isprocessing) {
@@ -99,8 +101,16 @@ public class Connector {
 
         });
 
+
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+            keeprunning = false;
+      }
+        });
+
+
         //keep alive (for time being)
-        for (;;) {
+        while(keeprunning) {
             Thread.sleep(500);
         }
     }

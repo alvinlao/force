@@ -61,3 +61,6 @@
 *.qws
 *.jdi
 *db
+module2/project/pi/force/force.properties
+module2/project/pi/force/force.xml
+module2/project/pi/force/module_force.xml
