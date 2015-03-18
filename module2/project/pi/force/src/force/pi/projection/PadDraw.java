@@ -7,7 +7,6 @@ class PadDraw extends JComponent {
     Image image;
     Graphics2D graphics2D;
 
-    //for testing. need to change to buffered reader still. mouse for now
     public PadDraw(){
         setDoubleBuffered(false);
     }

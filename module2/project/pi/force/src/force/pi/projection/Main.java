@@ -1,5 +1,7 @@
 package  force.pi.projection;
 
+import force.pi.Point3D;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
@@ -12,6 +14,10 @@ public class Main {
         String[] ss;
         int x, y, accuracy;
         Paint paint = new Paint();
+        Point3D cam = new Point3D(100,100,10);
+
+        projection pro = new projection();
+        pro.projectIt(cam, paint);
 
         // Read from stdin
         while ((s = in.readLine()) != null && s.length() != 0) {
@@ -27,7 +33,8 @@ public class Main {
             }
 
             // Output
-            paint.draw(x, y);
+
+
         }
     }
 }
