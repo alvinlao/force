@@ -1,4 +1,4 @@
-package force.pi.Connector;
+package force.pi.connector;
 
 import org.junit.Test;
 

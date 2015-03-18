@@ -2,7 +2,7 @@
  * Created by Jae on 2015-03-17.
  */
 
-package force.pi.Connector;
+package force.pi.connector;
 
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
