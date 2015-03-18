@@ -108,23 +108,23 @@ public class Connector {
                     }
 
                 });
-
-                Runtime.getRuntime().addShutdownHook(new Thread() {
-                    public void run() {
-                        keeprunning = false;
-                    }
-                });
-
-
-                //keep alive (for time being)
-                while (keeprunning) {
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
             }
         });
+
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                keeprunning = false;
+            }
+        });
+
+
+        //keep alive (for time being)
+        while (keeprunning) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
