@@ -7,10 +7,10 @@
 #include <signal.h>
 #include <unistd.h>
 
-const int pin_en = 27;
-const int pin_ack = 26;
-const int pin_keep = 25;
-const int pin_data = 16;
+const int pin_en = 8;
+const int pin_ack = 9;
+const int pin_keep = 10;
+const int pin_data = 0;
 
 unsigned char keepRunning = 1;
 unsigned char processing = 0;
@@ -82,7 +82,7 @@ void intHandler(){
 
 void main(){
 	signal(SIGINT, &intHandler);
-	if (wiringPiSetupGpio()==-1){
+	if (wiringPiSetup()==-1){
 		printf("failed to setup wiringPi");
 		printf("exiting");
 		return;
