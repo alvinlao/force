@@ -46,19 +46,19 @@ public class Connector {
         lastIndex = 0;
 
         gpio = GpioFactory.getInstance();
-        pin_en = gpio.provisionDigitalInputPin(RaspiPin.GPIO_27, "EN", PinPullResistance.PULL_DOWN);
-        pin_ack = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_26, "ACK", PinState.LOW);
-        pin_keep = gpio.provisionDigitalInputPin(RaspiPin.GPIO_25, "KEEP", PinPullResistance.PULL_DOWN);
+        pin_en = gpio.provisionDigitalInputPin(RaspiPin.GPIO_08, "EN", PinPullResistance.PULL_DOWN);
+        pin_ack = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_09, "ACK", PinState.LOW);
+        pin_keep = gpio.provisionDigitalInputPin(RaspiPin.GPIO_10, "KEEP", PinPullResistance.PULL_DOWN);
 
         pin_data = new GpioPinDigitalInput[8];
-        pin_data[0] = gpio.provisionDigitalInputPin(RaspiPin.GPIO_16, "DATA", PinPullResistance.PULL_DOWN);
-        pin_data[1] = gpio.provisionDigitalInputPin(RaspiPin.GPIO_17, "DATA", PinPullResistance.PULL_DOWN);
-        pin_data[2] = gpio.provisionDigitalInputPin(RaspiPin.GPIO_18, "DATA", PinPullResistance.PULL_DOWN);
-        pin_data[3] = gpio.provisionDigitalInputPin(RaspiPin.GPIO_19, "DATA", PinPullResistance.PULL_DOWN);
-        pin_data[4] = gpio.provisionDigitalInputPin(RaspiPin.GPIO_20, "DATA", PinPullResistance.PULL_DOWN);
-        pin_data[5] = gpio.provisionDigitalInputPin(RaspiPin.GPIO_21, "DATA", PinPullResistance.PULL_DOWN);
-        pin_data[6] = gpio.provisionDigitalInputPin(RaspiPin.GPIO_22, "DATA", PinPullResistance.PULL_DOWN);
-        pin_data[7] = gpio.provisionDigitalInputPin(RaspiPin.GPIO_23, "DATA", PinPullResistance.PULL_DOWN);
+        pin_data[0] = gpio.provisionDigitalInputPin(RaspiPin.GPIO_00, "DATA", PinPullResistance.PULL_DOWN);
+        pin_data[1] = gpio.provisionDigitalInputPin(RaspiPin.GPIO_01, "DATA", PinPullResistance.PULL_DOWN);
+        pin_data[2] = gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, "DATA", PinPullResistance.PULL_DOWN);
+        pin_data[3] = gpio.provisionDigitalInputPin(RaspiPin.GPIO_03, "DATA", PinPullResistance.PULL_DOWN);
+        pin_data[4] = gpio.provisionDigitalInputPin(RaspiPin.GPIO_04, "DATA", PinPullResistance.PULL_DOWN);
+        pin_data[5] = gpio.provisionDigitalInputPin(RaspiPin.GPIO_05, "DATA", PinPullResistance.PULL_DOWN);
+        pin_data[6] = gpio.provisionDigitalInputPin(RaspiPin.GPIO_06, "DATA", PinPullResistance.PULL_DOWN);
+        pin_data[7] = gpio.provisionDigitalInputPin(RaspiPin.GPIO_07, "DATA", PinPullResistance.PULL_DOWN);
 
         System.out.println("Listening..\n\n");
         pin_en.addListener(new GpioPinListenerDigital() {
