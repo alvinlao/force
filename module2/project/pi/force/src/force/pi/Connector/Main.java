@@ -1,4 +1,4 @@
-package force.pi.Connector;
+package force.pi.connector;
 
 /**
  * Created by Jae on 2015-03-17.
