@@ -23,40 +23,11 @@ JNIEnv* jenv;
 jobject jobj;
 
 void setJavaVariable_0_x(int val){
-  jclass jClass = GetObjectClass(*jenv, jobj);
-  jfieldID fidToWrite = GetFieldID(*jenv, jClass, "channel_0_pos_x", "J");
+  jclass jClass = (*jenv)->GetObjectClass(jenv, jobj);
+  jfieldID fidToWrite = (*jenv)->GetFieldID(jenv, jClass, "channel_0_pos_x", "J");
   SetIntField(jobj, fidToWrite, (jint) val);
 }
 
-void setJavaVariable_0_y(int val){
-  jclass jClass = GetObjectClass(*jenv, jobj);
-  jfieldID fidToWrite = GetFieldID(*jenv, jClass, "channel_0_pos_y", "J");
-  SetIntField(jobj, fidToWrite, (jint) val);
-}
-
-void setJavaVariable_0_a(int val){
-  jclass jClass = GetObjectClass(*jenv, jobj);
-  jfieldID fidToWrite = GetFieldID(*jenv, jClass, "channel_0_pos_a", "J");
-  SetIntField(jobj, fidToWrite, (jint) val);
-}
-
-void setJavaVariable_1_x(int val){
-  jclass jClass = GetObjectClass(*jenv, jobj);
-  jfieldID fidToWrite = GetFieldID(*jenv, jClass, "channel_1_pos_x", "J");
-  SetIntField(jobj, fidToWrite, (jint) val);
-}
-
-void setJavaVariable_1_y(int val){
-  jclass jClass = GetObjectClass(*jenv, jobj);
-  jfieldID fidToWrite = GetFieldID(*jenv, jClass, "channel_1_pos_y", "J");
-  SetIntField(jobj, fidToWrite, (jint) val);
-}
-
-void setJavaVariable_1_a(int val){
-  jclass jClass = GetObjectClass(*jenv, jobj);
-  jfieldID fidToWrite = GetFieldID(*jenv, jClass, "channel_1_pos_a", "J");
-  SetIntField(jobj, fidToWrite, (jint) val);
-}
 void setupPins(){
 	pinMode(pin_en, INPUT);
 	pullUpDnControl(pin_en,PUD_DOWN);
@@ -83,8 +54,6 @@ void finalizeData(){
 	channel = (buffer >> 31) & 0x00000001;
         //printf("%d %d %d %d \n",posx,posy,acc, channel);
 		setJavaVariable_0_x(posx);
-		setJavaVariable_0_y(posy);
-		setJavaVariable_0_a(acc);
         buffer = 0;
 }
 
