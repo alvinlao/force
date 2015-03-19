@@ -54,13 +54,9 @@ void HandleData(){
 			unsigned char value = 0;
 			int i;
 			for(i=pin_data;i<pin_data+8;i++){
-//		printf("%d",digitalRead(i));
 				value = value << 1;
 				value = value | digitalRead(i);
 			}
-//		printf("\n");
-//		printf("accpted byte : %x\n",value);
-
 			buffer = buffer << 8;
 			buffer = buffer | value;
 
@@ -82,26 +78,30 @@ void intHandler(){
 }
 
 
-void main(){
+void run(){
 	signal(SIGINT, &intHandler);
 	if (wiringPiSetup()==-1){
-		printf("failed to setup wiringPi");
-		printf("exiting");
+		printf("C-failed to setup wiringPi");
+		printf("C-exiting");
 		return;
 	}
 
 	setupPins();
 
-//	printf("waiting.. \n");
+//	printf("C-waiting.. \n");
 
 	if (wiringPiISR(pin_en, INT_EDGE_BOTH, &HandleData)==-1){
 		printf("Unable to start interrupt for En\n");
 		printf("exiting");
 		return;
 	}
+	printf("C-Listening...\n\n\n");
 
 	pause();
+}
 
-//	while(keepRunning==1){
-//	}
+
+JNIEXPORT void JNICALL Java_force_pi_connector_ConnectorC_connectorFromC(JNIEnv *env, jobject thisObj) {
+   run();
+   return;
 }
