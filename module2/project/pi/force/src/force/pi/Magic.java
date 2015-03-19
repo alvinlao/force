@@ -53,7 +53,7 @@ public class Magic {
 
         //keep alive (for time being)
         while (keepRunning) {
-            Thread.sleep(33);
+            Thread.sleep(10);
 
             for (int i = 0; i < NUM_INPUT_COORDINATES_PER_FRAME; ++i) {
                 measurements[i] = connector.getMeasurement(i);

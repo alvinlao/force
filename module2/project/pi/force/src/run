@@ -4,7 +4,7 @@
 # Don't forget to give privileges: chmod 755 run
 
 if [ $# -eq 0 ]; then
-    java -cp .:../lib/pi4j/* force/pi/Magic
+    java -cp .:../lib/pi4j/* -Djava.library.path="../lib/ConnectorC/" force/pi/Magic
 elif [ "$1" = 'connector' ]; then
     java -cp .:../lib/pi4j/*:../lib/ConnectorC/* -Djava.library.path="../lib/ConnectorC/" force/pi/connector/Main
 else

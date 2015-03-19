@@ -1,6 +1,5 @@
 package force.pi.connector;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import force.pi.Measurement;
 
 /**
