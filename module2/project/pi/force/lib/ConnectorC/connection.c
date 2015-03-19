@@ -16,8 +16,47 @@ const int pin_data = 0;
 
 unsigned char keepRunning = 1;
 unsigned char processing = 0;
-
 unsigned long buffer = 0;
+
+
+JNIEnv* jenv;
+jobject jobj;
+
+void setJavaVariable_0_x(, int val){
+  jclass jClass = jenv->GetObjectClass(jobj);
+  jfieldID fidToWrite = env->GetFieldID(jClass, "channel_0_pos_x", "J");
+  env->SetLongField(obj, fidToWrite, (jint) val);
+}
+
+void setJavaVariable_0_y(, int val){
+  jclass jClass = jenv->GetObjectClass(jobj);
+  jfieldID fidToWrite = env->GetFieldID(jClass, "channel_0_pos_y", "J");
+  env->SetLongField(obj, fidToWrite, (jint) val);
+}
+
+void setJavaVariable_0_a(, int val){
+  jclass jClass = jenv->GetObjectClass(jobj);
+  jfieldID fidToWrite = env->GetFieldID(jClass, "channel_0_pos_a", "J");
+  env->SetLongField(obj, fidToWrite, (jint) val);
+}
+
+void setJavaVariable_1_x(, int val){
+  jclass jClass = jenv->GetObjectClass(jobj);
+  jfieldID fidToWrite = env->GetFieldID(jClass, "channel_1_pos_x", "J");
+  env->SetLongField(obj, fidToWrite, (jint) val);
+}
+
+void setJavaVariable_1_y(, int val){
+  jclass jClass = jenv->GetObjectClass(jobj);
+  jfieldID fidToWrite = env->GetFieldID(jClass, "channel_1_pos_y", "J");
+  env->SetLongField(obj, fidToWrite, (jint) val);
+}
+
+void setJavaVariable_1_a(, int val){
+  jclass jClass = jenv->GetObjectClass(jobj);
+  jfieldID fidToWrite = env->GetFieldID(jClass, "channel_1_pos_a", "J");
+  env->SetLongField(obj, fidToWrite, (jint) val);
+}
 
 void setupPins(){
 	pinMode(pin_en, INPUT);
@@ -43,7 +82,10 @@ void finalizeData(){
 	posy = (buffer >> 8) & 0x000000FF;
 	posx = (buffer >> 16) & 0x000001FF;
 	channel = (buffer >> 31) & 0x00000001;
-        printf("%d %d %d %d \n",posx,posy,acc, channel);
+        //printf("%d %d %d %d \n",posx,posy,acc, channel);
+		setJavaVariable(0,posx,channel);
+		setJavaVariable(1,posy,channel);
+		setJavaVariable(2,acc,channel);
         buffer = 0;
 }
 
@@ -101,7 +143,10 @@ void run(){
 }
 
 
-JNIEXPORT void JNICALL Java_force_pi_connector_ConnectorC_connectorFromC(JNIEnv *env, jobject thisObj) {
-   run();
-   return;
+JNIEXPORT void JNICALL Java_force_pi_connector_ConnectorC_connectorFromC(JNIEnv *env, jobject jobj) {
+	jenv = env;
+	jobj = jobj;
+	
+    run();
+    return;
 }
