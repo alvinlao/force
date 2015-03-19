@@ -89,7 +89,7 @@ void intHandler(){
 
 
 void run(){
-	signal(SIGINT, &intHandler);
+//	signal(SIGINT, &intHandler);
 	if (wiringPiSetup()==-1){
 		printf("C-failed to setup wiringPi");
 		printf("C-exiting");
