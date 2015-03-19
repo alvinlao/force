@@ -30,8 +30,7 @@ public class Main {
 
         //keep alive (for time being)
         while (keepRunning) {
-            Thread.sleep(500);
-            System.out.println("Java-"+connectorC.channel1values());
+            System.out.println(String.format("%3d %3d %3d",connectorC.getChannel_0_pos_x(),connectorC.getChannel_0_pos_y(),connectorC.getChannel_0_pos_a()));
         }
     }
 }

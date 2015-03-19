@@ -28,7 +28,47 @@ void setJavaVariable_0_x(int val){
 	(*jvm)->AttachCurrentThread(jvm, (void **) &jenv, NULL);
 
 	jclass jClass = (*jenv)->GetObjectClass(jenv, jobj);
+	jfieldID fidToWrite = (*jenv)->GetFieldID(jenv, jClass, "channel_0_pos_x", "I");
+	(*jenv)-> SetIntField(jenv, jobj, fidToWrite, (jint) val);
+}
+void setJavaVariable_0_y(int val){
+	JNIEnv *jenv;
+	(*jvm)->AttachCurrentThread(jvm, (void **) &jenv, NULL);
+
+	jclass jClass = (*jenv)->GetObjectClass(jenv, jobj);
+	jfieldID fidToWrite = (*jenv)->GetFieldID(jenv, jClass, "channel_0_pos_y", "I");
+	(*jenv)-> SetIntField(jenv, jobj, fidToWrite, (jint) val);
+}
+void setJavaVariable_0_a(int val){
+	JNIEnv *jenv;
+	(*jvm)->AttachCurrentThread(jvm, (void **) &jenv, NULL);
+
+	jclass jClass = (*jenv)->GetObjectClass(jenv, jobj);
+	jfieldID fidToWrite = (*jenv)->GetFieldID(jenv, jClass, "channel_0_pos_a", "I");
+	(*jenv)-> SetIntField(jenv, jobj, fidToWrite, (jint) val);
+}
+void setJavaVariable_1_x(int val){
+	JNIEnv *jenv;
+	(*jvm)->AttachCurrentThread(jvm, (void **) &jenv, NULL);
+
+	jclass jClass = (*jenv)->GetObjectClass(jenv, jobj);
 	jfieldID fidToWrite = (*jenv)->GetFieldID(jenv, jClass, "channel_1_pos_x", "I");
+	(*jenv)-> SetIntField(jenv, jobj, fidToWrite, (jint) val);
+}
+void setJavaVariable_1_y(int val){
+	JNIEnv *jenv;
+	(*jvm)->AttachCurrentThread(jvm, (void **) &jenv, NULL);
+
+	jclass jClass = (*jenv)->GetObjectClass(jenv, jobj);
+	jfieldID fidToWrite = (*jenv)->GetFieldID(jenv, jClass, "channel_1_pos_y", "I");
+	(*jenv)-> SetIntField(jenv, jobj, fidToWrite, (jint) val);
+}
+void setJavaVariable_1_a(int val){
+	JNIEnv *jenv;
+	(*jvm)->AttachCurrentThread(jvm, (void **) &jenv, NULL);
+
+	jclass jClass = (*jenv)->GetObjectClass(jenv, jobj);
+	jfieldID fidToWrite = (*jenv)->GetFieldID(jenv, jClass, "channel_1_pos_a", "I");
 	(*jenv)-> SetIntField(jenv, jobj, fidToWrite, (jint) val);
 }
 
@@ -57,7 +97,15 @@ void finalizeData(){
 	posx = (buffer >> 16) & 0x000001FF;
 	channel = (buffer >> 31) & 0x00000001;
         //printf("%d %d %d %d \n",posx,posy,acc, channel);
-		setJavaVariable_0_x(posx);
+		if(channel = 0){
+			setJavaVariable_0_x(posx);
+			setJavaVariable_0_y(posy);
+			setJavaVariable_0_a(acc);
+		}else{
+			setJavaVariable_1_x(posx);
+			setJavaVariable_1_y(posy);
+			setJavaVariable_1_a(acc);		
+		}
         buffer = 0;
 }
 

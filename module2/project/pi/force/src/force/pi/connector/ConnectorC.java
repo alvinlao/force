@@ -21,7 +21,27 @@ public class ConnectorC implements Runnable{
         connectorFromC();
     }
 
-    public String channel1values(){
-        return String.format("%3d %3d %3d",channel_1_pos_x, channel_1_pos_y,channel_1_pos_a);
+    public int getChannel_0_pos_x() {
+        return channel_0_pos_x;
+    }
+
+    public int getChannel_0_pos_y() {
+        return channel_0_pos_y;
+    }
+
+    public int getChannel_0_pos_a() {
+        return channel_0_pos_a;
+    }
+
+    public int getChannel_1_pos_x() {
+        return channel_1_pos_x;
+    }
+
+    public int getChannel_1_pos_y() {
+        return channel_1_pos_y;
+    }
+
+    public int getChannel_1_pos_a() {
+        return channel_1_pos_a;
     }
 }
