@@ -30,6 +30,7 @@ public class Main {
 
         //keep alive (for time being)
         while (keepRunning) {
+		Thread.sleep(33);
             System.out.println(String.format("%3d %3d %3d",connectorC.getChannel_0_pos_x(),connectorC.getChannel_0_pos_y(),connectorC.getChannel_0_pos_a()));
         }
     }
