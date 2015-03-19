@@ -19,13 +19,13 @@ public class Main {
 */
         //attach ctrl-c capture
 
-/*
+
         Runtime.getRuntime().addShutdownHook(new Thread() {
             public void run() {
                 keepRunning = false;
             }
         });
-*/
+
 
 
         //keep alive (for time being)
