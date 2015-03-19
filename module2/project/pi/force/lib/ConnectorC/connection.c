@@ -19,10 +19,14 @@ unsigned char processing = 0;
 unsigned long buffer = 0;
 
 
-JNIEnv* jenv;
+//JNIEnv* jenv;
 jobject jobj;
+JavaVM* jvm;
 
 void setJavaVariable_0_x(int val){
+	JNIEnv *jenv;
+	(*jvm)->AttachCurrentThread(jvm, (void **) &jenv, NULL);
+
 	jclass jClass = (*jenv)->GetObjectClass(jenv, jobj);
 	jfieldID fidToWrite = (*jenv)->GetFieldID(jenv, jClass, "channel_1_pos_x", "I");
 	(*jenv)-> SetIntField(jenv, jobj, fidToWrite, (jint) val);
@@ -112,16 +116,11 @@ void run(){
 
 
 JNIEXPORT void JNICALL Java_force_pi_connector_ConnectorC_connectorFromC(JNIEnv *env, jobject obj) {
-	jenv = env;
+	//jenv = env;
 	jobj = obj;
+	(*env)->GetJavaVM(env, &jvm);
 
-int i = 50;
-while(1){
-	sleep(1);
-	setJavaVariable_0_x(i);
-	i++;
-}
 
-    //run();
+    run();
     return;
 }
