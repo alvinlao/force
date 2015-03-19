@@ -81,7 +81,8 @@ void finalizeData(){
 
 	JNIEnv *jenv;
 	(*jvm)->AttachCurrentThread(jvm, (void **) &jenv, NULL);
-
+		// Lock
+		(*jenv)->MonitorEnter(jenv, jobj);
         //printf("%d %d %d %d \n",posx,posy,acc, channel);
 		if(channel == 0){
 			setJavaVariable_0_x(jenv, posx);
@@ -92,7 +93,8 @@ void finalizeData(){
 			setJavaVariable_1_y(jenv, posy);
 			setJavaVariable_1_a(jenv, acc);
 		}
-
+		(*jenv)->MonitorExit(jenv, jobj);
+		
 	(*jvm)->DetachCurrentThread(jvm);
         buffer = 0;
 }

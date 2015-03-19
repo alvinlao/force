@@ -23,7 +23,7 @@ public class ConnectorC implements Runnable{
         connectorFromC();
     }
 
-    public Measurement getMeasurement(int channel){
+    public synchronized Measurement getMeasurement(int channel){
         if(channel == 0){
             return new Measurement(channel_0_pos_x,channel_0_pos_y,channel_0_pos_a);
         }else if (channel == 1){
