@@ -22,40 +22,40 @@ unsigned long buffer = 0;
 JNIEnv* jenv;
 jobject jobj;
 
-void setJavaVariable_0_x(, int val){
+void setJavaVariable_0_x(int val){
   jclass jClass = jenv->GetObjectClass(jobj);
-  jfieldID fidToWrite = env->GetFieldID(jClass, "channel_0_pos_x", "J");
-  env->SetLongField(obj, fidToWrite, (jint) val);
+  jfieldID fidToWrite = jenv->GetFieldID(jClass, "channel_0_pos_x", "J");
+  jenv->SetIntField(jobj, fidToWrite, (jint) val);
 }
 
-void setJavaVariable_0_y(, int val){
+void setJavaVariable_0_y(int val){
   jclass jClass = jenv->GetObjectClass(jobj);
-  jfieldID fidToWrite = env->GetFieldID(jClass, "channel_0_pos_y", "J");
-  env->SetLongField(obj, fidToWrite, (jint) val);
+  jfieldID fidToWrite = jenv->GetFieldID(jClass, "channel_0_pos_y", "J");
+  jenv->SetIntField(jobj, fidToWrite, (jint) val);
 }
 
-void setJavaVariable_0_a(, int val){
+void setJavaVariable_0_a(int val){
   jclass jClass = jenv->GetObjectClass(jobj);
-  jfieldID fidToWrite = env->GetFieldID(jClass, "channel_0_pos_a", "J");
-  env->SetLongField(obj, fidToWrite, (jint) val);
+  jfieldID fidToWrite = jenv->GetFieldID(jClass, "channel_0_pos_a", "J");
+  jenv->SetIntField(jobj, fidToWrite, (jint) val);
 }
 
-void setJavaVariable_1_x(, int val){
+void setJavaVariable_1_x(int val){
   jclass jClass = jenv->GetObjectClass(jobj);
-  jfieldID fidToWrite = env->GetFieldID(jClass, "channel_1_pos_x", "J");
-  env->SetLongField(obj, fidToWrite, (jint) val);
+  jfieldID fidToWrite = jenv->GetFieldID(jClass, "channel_1_pos_x", "J");
+  jenv->SetIntField(jobj, fidToWrite, (jint) val);
 }
 
-void setJavaVariable_1_y(, int val){
+void setJavaVariable_1_y(int val){
   jclass jClass = jenv->GetObjectClass(jobj);
-  jfieldID fidToWrite = env->GetFieldID(jClass, "channel_1_pos_y", "J");
-  env->SetLongField(obj, fidToWrite, (jint) val);
+  jfieldID fidToWrite = jenv->GetFieldID(jClass, "channel_1_pos_y", "J");
+  jenv->SetIntField(jobj, fidToWrite, (jint) val);
 }
 
-void setJavaVariable_1_a(, int val){
+void setJavaVariable_1_a(int val){
   jclass jClass = jenv->GetObjectClass(jobj);
-  jfieldID fidToWrite = env->GetFieldID(jClass, "channel_1_pos_a", "J");
-  env->SetLongField(obj, fidToWrite, (jint) val);
+  jfieldID fidToWrite = jenv->GetFieldID(jClass, "channel_1_pos_a", "J");
+  jenv->SetIntField(jobj, fidToWrite, (jint) val);
 }
 
 void setupPins(){
@@ -83,9 +83,9 @@ void finalizeData(){
 	posx = (buffer >> 16) & 0x000001FF;
 	channel = (buffer >> 31) & 0x00000001;
         //printf("%d %d %d %d \n",posx,posy,acc, channel);
-		setJavaVariable(0,posx,channel);
-		setJavaVariable(1,posy,channel);
-		setJavaVariable(2,acc,channel);
+		setJavaVariable_0_x(posx);
+		setJavaVariable_0_y(posy);
+		setJavaVariable_0_a(acc);
         buffer = 0;
 }
 
