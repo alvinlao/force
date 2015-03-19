@@ -1,5 +1,6 @@
 package force.pi.filters.kalman;
 
+import force.pi.Measurement;
 import force.pi.Point;
 
 import java.io.BufferedReader;

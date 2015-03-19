@@ -1,5 +1,8 @@
 package force.pi.connector;
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
+import force.pi.Measurement;
+
 /**
  * Created by Jae on 2015-03-18.
  */
@@ -19,6 +22,15 @@ public class ConnectorC implements Runnable{
     @Override
     public void run() {
         connectorFromC();
+    }
+
+    public Measurement getMeasurement(int channel){
+        if(channel == 0){
+            return new Measurement(channel_0_pos_x,channel_0_pos_y,channel_0_pos_a);
+        }else if (channel == 1){
+            return new Measurement(channel_1_pos_x,channel_1_pos_y,channel_1_pos_a);
+        }
+        return null;
     }
 
     public int getChannel_0_pos_x() {

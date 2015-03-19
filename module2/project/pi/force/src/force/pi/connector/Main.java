@@ -9,9 +9,9 @@ public class Main {
     public static void main(String[] args) throws Exception{
 
         ConnectorC connectorC = new ConnectorC();
+
         Thread connectorThread = new Thread(connectorC);
         connectorThread.start();
-
 
 /*
         Connector connector = new Connector();
