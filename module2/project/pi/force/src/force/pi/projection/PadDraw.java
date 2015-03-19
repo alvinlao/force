@@ -30,8 +30,9 @@ class PadDraw extends JComponent {
     }
 
     public void Draw (int x, int y){
-        if(graphics2D != null)
+        if(graphics2D != null) {
             graphics2D.drawLine(x, y, x, y);
+        }
         repaint();
     }
 }

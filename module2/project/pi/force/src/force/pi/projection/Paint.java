@@ -9,7 +9,7 @@ public class Paint{
 	public Paint(){
 
 		JFrame frame = new JFrame("Draw");
-		
+
 		Container content = frame.getContentPane();
 		content.setLayout(new BorderLayout());
 
@@ -29,7 +29,7 @@ public class Paint{
 				DrawPad.clear();
 			}
 		});
-		
+
 		panel.add(clearButton);
 
 		content.add(panel, BorderLayout.WEST);

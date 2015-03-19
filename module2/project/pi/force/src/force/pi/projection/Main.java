@@ -6,18 +6,24 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public class Main {
-
     public static void main(String[] args) throws Exception {
+        Paint paint = new Paint();
+
         // Read stdin init
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         String s;
         String[] ss;
         int x, y, accuracy;
-        Paint paint = new Paint();
+
         Point3D cam = new Point3D(100,100,10);
 
-        projection pro = new projection();
-        pro.projectIt(cam, paint);
+        Projection pro = new Projection();
+        double [][]displayCOORDS = pro.projectIt(cam, paint);
+        Thread.sleep(500);
+
+        for(int i = 0; i < 8; i++){
+            paint.draw((int)displayCOORDS[i][0], (int)displayCOORDS[i][1]);
+        }
 
         // Read from stdin
         while ((s = in.readLine()) != null && s.length() != 0) {
@@ -33,7 +39,7 @@ public class Main {
             }
 
             // Output
-
+            paint.draw(x, y);
 
         }
     }

@@ -44,7 +44,7 @@ public class Magic {
         Point3D coordinate;
         Camera camera = new Camera();
 
-        // Create projection
+        // Create Projection
         Paint paint = new Paint();
 
         // Read stdin
