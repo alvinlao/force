@@ -19,13 +19,23 @@ unsigned char processing = 0;
 unsigned long buffer = 0;
 
 
-JNIEnv* jenv;
-jobject jobj;
+static volatile JavaVM *jvm;
+//static volatile JNIEnv* jenv;
+static volatile jobject jobj;
 
 void setJavaVariable_0_x(int val){
-  jclass jClass = (*jenv)->GetObjectClass(jenv, jobj);
-  jfieldID fidToWrite = (*jenv)->GetFieldID(jenv, jClass, "channel_0_pos_x", "J");
-  SetIntField(jobj, fidToWrite, (jint) val);
+JNIEnv *g_env;
+int status  = (*jvm)->GetEnv(jvm, &g_env, JNI_VERSION_1_6);
+if (status != 0){
+	printf("FAILED TO GENV\n STATUS:%d\n EDETACHED:%d \n EVERSION:%d\n",status, JNI_EDETACHED, JNI_EVERSION);
+	exit(0);
+}
+
+
+//(*g_env)->GetVersion(g_env);
+  //jclass jClass = (*g_env)->GetObjectClass(g_env, jobj);
+  //jfieldID fidToWrite = (*g_env)->GetFieldID(g_env, jClass, "channel_1_pos_x", "I");
+  //(*g_env)->SetIntField(g_env, jobj, fidToWrite, (jint) val);
 }
 
 void setupPins(){
@@ -53,7 +63,7 @@ void finalizeData(){
 	posx = (buffer >> 16) & 0x000001FF;
 	channel = (buffer >> 31) & 0x00000001;
         //printf("%d %d %d %d \n",posx,posy,acc, channel);
-		setJavaVariable_0_x(posx);
+	setJavaVariable_0_x(365);
         buffer = 0;
 }
 
@@ -111,10 +121,13 @@ void run(){
 }
 
 
-JNIEXPORT void JNICALL Java_force_pi_connector_ConnectorC_connectorFromC(JNIEnv *env, jobject jobj) {
-	jenv = env;
-	jobj = jobj;
-	
+JNIEXPORT void JNICALL Java_force_pi_connector_ConnectorC_connectorFromC(JNIEnv *env, jobject obj) {
+int version = (*env)->GetVersion(env);
+printf("version: %d",version);
+//	jenv = env;
+	jobj = obj;
+	(*env)->GetJavaVM(env, &jvm);
+
     run();
     return;
 }
