@@ -23,9 +23,9 @@ JNIEnv* jenv;
 jobject jobj;
 
 void setJavaVariable_0_x(int val){
-  jclass jClass = (*jenv)->GetObjectClass(jenv, jobj);
-  jfieldID fidToWrite = (*jenv)->GetFieldID(jenv, jClass, "channel_0_pos_x", "J");
-  SetIntField(jobj, fidToWrite, (jint) val);
+	jclass jClass = (*jenv)->GetObjectClass(jenv, jobj);
+	jfieldID fidToWrite = (*jenv)->GetFieldID(jenv, jClass, "channel_1_pos_x", "I");
+	(*jenv)-> SetIntField(jenv, jobj, fidToWrite, (jint) val);
 }
 
 void setupPins(){
@@ -111,10 +111,17 @@ void run(){
 }
 
 
-JNIEXPORT void JNICALL Java_force_pi_connector_ConnectorC_connectorFromC(JNIEnv *env, jobject jobj) {
+JNIEXPORT void JNICALL Java_force_pi_connector_ConnectorC_connectorFromC(JNIEnv *env, jobject obj) {
 	jenv = env;
-	jobj = jobj;
-	
-    run();
+	jobj = obj;
+
+int i = 50;
+while(1){
+	sleep(1);
+	setJavaVariable_0_x(i);
+	i++;
+}
+
+    //run();
     return;
 }
