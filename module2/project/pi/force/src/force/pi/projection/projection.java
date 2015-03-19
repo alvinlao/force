@@ -11,9 +11,11 @@ import java.lang.reflect.Array;
  * where B is camera coordinates
  */
 public class Projection {
-
+    static final int SCREEN_WIDTH = 960;
+    static final int SCREEN_HEIGHT = 720;
     public double camX, camY, camZ;
     public double [] cam = new double[3];
+    Paint paint = new Paint();
 
 
     public Projection(){
@@ -23,25 +25,45 @@ public class Projection {
         cam[0] = camX;
         cam[1] = camY;
         cam[2] = camZ;
+        for (int i = 0; i < vals.length; ++i) {
+            for (int j = 0; j < vals[i].length; ++j) {
+                vals[i][j] *= scale;
+            }
+        }
+        try {
+            Thread.sleep(500);
+        } catch (Exception e){
+
+        }
     }
 
     public Projection(double a, double b, double c){
         camX = a;
         camY = b;
         camZ = c;
+        for (int i = 0; i < vals.length; ++i) {
+            for (int j = 0; j < vals[i].length; ++j) {
+                vals[i][j] *= scale;
+            }
+        }
+        try {
+            Thread.sleep(500);
+        } catch (Exception e){
+
+        }
     }
 
 
     //  Matrix camCOORD = new Matrix(cam , 1);
-
-    double [][] vals = { {50, 100, 0},
-            {100, 50, 0},
-            {50, 50, 0},
-            {100, 100, 0},
-            {50, 100, 50},
-            {100, 50, 50},
-            {100, 100, 50},
-            {50, 100, 50}};
+    int scale = 25;
+    double [][] vals = { {-1, 1, 0},
+            {1, 1, 0},
+            {-1, -1, 0},
+            {1, -1, 0},
+            {-1, 1, 2},
+            {1, 1, 2},
+            {-1, -1, 2},
+            {1, -1, 2}};
 
     //all points in object
     //   Matrix Box = new Matrix(vals);
@@ -122,13 +144,19 @@ public class Projection {
 
     // A is box matrix. B is camera coordinates
     // returns matrix of flattened box coordinates
-    public double[][] projectIt(Point3D B, Paint paint) {
+    public void projectIt(Point3D B) {
         camX = B.x;
         camY = B.y;
         camZ = B.z;
+        cam[0] = camX;
+        cam[1] = camY;
+        cam[2] = camZ;
         double [][] displayCOORDS;
         displayCOORDS = retXY(flatten(vals));
+        paint.clear();
 
-        return displayCOORDS;
+        for(int i = 0; i < 8; i++){
+            paint.draw((-1 * (int)displayCOORDS[i][0])+SCREEN_WIDTH/2, (int)displayCOORDS[i][1]+SCREEN_HEIGHT/2);
+        }
     }
 }

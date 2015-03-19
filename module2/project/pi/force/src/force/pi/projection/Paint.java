@@ -34,10 +34,14 @@ public class Paint{
 
 		content.add(panel, BorderLayout.WEST);
 		
-		frame.setSize(320, 240);
+		frame.setSize(960, 720);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
+
+    public void clear(){
+        DrawPad.clear();
+    }
 
     public void draw(int x, int y){
         DrawPad.Draw(x, y);

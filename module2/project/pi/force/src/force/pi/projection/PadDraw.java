@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 class PadDraw extends JComponent {
+    static final int PIXEL_SIZE = 5;
     Image image;
     Graphics2D graphics2D;
 
@@ -31,7 +32,7 @@ class PadDraw extends JComponent {
 
     public void Draw (int x, int y){
         if(graphics2D != null) {
-            graphics2D.drawLine(x, y, x, y);
+            graphics2D.fillRect(x,y,PIXEL_SIZE,PIXEL_SIZE);
         }
         repaint();
     }
