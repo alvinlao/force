@@ -8,17 +8,18 @@ import javax.swing.*;
  * Sets up window and draw pad for drawing
  */
 
-public class Paint{
-    private PadDraw DrawPad;
-	public Paint(){
+public class Paint {
+    private PadDraw drawPad;
+
+	public Paint() {
 
 		JFrame frame = new JFrame("Draw");
 
 		Container content = frame.getContentPane();
 		content.setLayout(new BorderLayout());
 
-        DrawPad = new PadDraw();
-		content.add(DrawPad, BorderLayout.CENTER);
+        drawPad = new PadDraw();
+		content.add(drawPad, BorderLayout.CENTER);
 		
 		JPanel panel = new JPanel();
 		panel.setPreferredSize(new Dimension(32, 68));
@@ -28,7 +29,7 @@ public class Paint{
 		JButton clearButton = new JButton("Clear");
 		clearButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				DrawPad.clear();
+				drawPad.clear();
 			}
 		});
 
@@ -42,19 +43,19 @@ public class Paint{
 	}
 
     /**
-     * clears the draw pad
+     * Clears the draw pad
      */
     public void clear(){
-        DrawPad.clear();
+        drawPad.clear();
     }
 
     /**
-     * draws pixel at x, y coordinate given in
+     * Draws pixel at x, y coordinate given in
      * @param x
      * @param y
      */
     public void draw(int x, int y){
-        DrawPad.Draw(x, y);
+        drawPad.draw(x, y);
     }
 
 }
