@@ -1,12 +1,9 @@
 package force.pi;
 
 import force.pi.camera.Camera;
+import force.pi.connector.ConnectorC;
 import force.pi.filters.kalman.KalmanFilter;
-import force.pi.filters.kalman.Measurement;
 import force.pi.projection.Paint;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 
 /**
  * Perform magic
@@ -22,14 +19,9 @@ import java.io.InputStreamReader;
  */
 public class Magic {
     private static final int NUM_INPUT_COORDINATES_PER_FRAME = 2;
+    private static boolean keepRunning = true;
 
     public static void main(String[] args) throws Exception {
-        // Input variables
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        String s;
-        String[] ss;
-        int x, y, accuracy;
-
         // Create filters
         Point[] points = new Point[NUM_INPUT_COORDINATES_PER_FRAME];
         Measurement[] measurements = new Measurement[NUM_INPUT_COORDINATES_PER_FRAME];
@@ -47,36 +39,32 @@ public class Magic {
         // Create Projection
         Paint paint = new Paint();
 
-        // Read stdin
-        while (true) {
-            // Read # coordinates per frame
+        // Create connector
+        ConnectorC connector = new ConnectorC();
+        Thread connectorThread = new Thread(connector);
+
+        connectorThread.start();
+
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                keepRunning = false;
+            }
+        });
+
+        //keep alive (for time being)
+        while (keepRunning) {
+            Thread.sleep(10);
+
             for (int i = 0; i < NUM_INPUT_COORDINATES_PER_FRAME; ++i) {
-                s = in.readLine();
-
-                // Terminate
-                if (s == null || s.length() == 0) break;
-
-                ss = s.split(" ");
-
-                // Convert input into measurement
-                try {
-                    x = Integer.parseInt(ss[0]);
-                    y = Integer.parseInt(ss[1]);
-                    accuracy = Integer.parseInt(ss[2]);
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    throw new Exception("Incorrect number of inputs. Expected format: 'x y accuracy'");
-                }
-
-                // TODO: Testing hardcoded accuracy
-                measurements[i].set(x, y, 300);
+                measurements[i] = connector.getMeasurement(i);
+                // HARD CODE ACCURACY
+                measurements[i].accuracyRating = 300;
                 points[i] = kalmanFilters[i].run(measurements[i]);
             }
 
-            // Execute per frame logic
-            //coordinate = camera.transform2Dto3D(measurements[0], measurements[1]);
-
-            //System.out.println(coordinate.x + " " + coordinate.y + " " + coordinate.z);
             paint.draw(points[0].x, points[0].y);
+
+//            coordinate = camera.transform2Dto3D(points[0], points[1]);
         }
     }
 }

@@ -1,6 +1,7 @@
 package force.pi.filters.kalman;
 
 import force.pi.Frame;
+import force.pi.Measurement;
 import force.pi.Point;
 
 /**

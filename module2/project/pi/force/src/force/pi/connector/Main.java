@@ -8,10 +8,17 @@ public class Main {
 
     public static void main(String[] args) throws Exception{
 
+        ConnectorC connectorC = new ConnectorC();
+
+        Thread connectorThread = new Thread(connectorC);
+        connectorThread.start();
+
+/*
         Connector connector = new Connector();
         connector.AttachConnector();
-
+*/
         //attach ctrl-c capture
+
 
         Runtime.getRuntime().addShutdownHook(new Thread() {
             public void run() {
@@ -20,9 +27,11 @@ public class Main {
         });
 
 
+
         //keep alive (for time being)
         while (keepRunning) {
-            Thread.sleep(500);
+		Thread.sleep(33);
+            System.out.println(String.format("%3d %3d %3d",connectorC.getChannel_0_pos_x(),connectorC.getChannel_0_pos_y(),connectorC.getChannel_0_pos_a()));
         }
     }
 }

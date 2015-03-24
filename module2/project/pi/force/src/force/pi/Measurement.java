@@ -1,4 +1,4 @@
-package force.pi.filters.kalman;
+package force.pi;
 
 import force.pi.Point;
 
@@ -6,7 +6,19 @@ public class Measurement extends Point {
     public static final int MAX_ACCURACY = 255 * 3;
 
     // (0, 1] : 0 is no noise. 1 is all noise
-    float accuracyRating;
+    public float accuracyRating;
+
+    public Measurement() {
+        this.x = 0;
+        this.y = 0;
+        this.accuracyRating = 0;
+    }
+
+    public Measurement(int x, int y, int acc){
+        this.x = x;
+        this.y = y;
+        this.accuracyRating = acc;
+    }
 
     public void set(int x, int y, int accuracy) throws Exception {
         this.x = x;
