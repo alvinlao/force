@@ -15,13 +15,26 @@ public class Projection {
     static final int SCREEN_HEIGHT = 720;
     public double camX, camY, camZ;
     public double [] cam = new double[3];
+
     Paint paint = new Paint();
 
+    // Points for box to draw out
+    int scale = 25;
+    double [][] vals = { {-1, 1, 0},
+            {1, 1, 0},
+            {-1, -1, 0},
+            {1, -1, 0},
+            {-1, 1, 2},
+            {1, 1, 2},
+            {-1, -1, 2},
+            {1, -1, 2}};
+
+    double [] normal = {0,0,1};
 
     /**
      * Default constructor
      */
-    public Projection(){
+    public Projection() {
         camX = 75;
         camY = 75;
         camZ = 75;
@@ -46,7 +59,7 @@ public class Projection {
      * @param b is y coordinate of camera position
      * @param c is z coordinate of camera position
      */
-    public Projection(double a, double b, double c){
+    public Projection(double a, double b, double c) {
         camX = a;
         camY = b;
         camZ = c;
@@ -57,24 +70,10 @@ public class Projection {
         }
         try {
             Thread.sleep(500);
-        } catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
-
-
-    // Points for box to draw out
-    int scale = 25;
-    double [][] vals = { {-1, 1, 0},
-            {1, 1, 0},
-            {-1, -1, 0},
-            {1, -1, 0},
-            {-1, 1, 2},
-            {1, 1, 2},
-            {-1, -1, 2},
-            {1, -1, 2}};
-
-    double [] normal = {0,0,1};
 
     /**
      * Method to dot two 1x3 arrays
@@ -131,7 +130,7 @@ public class Projection {
     }
 
     /**
-     * takes in matrix of points (set to 8 points right now)
+     * Takes in matrix of points (set to 8 points right now)
      * returns flattened points ready for display...
     */
     private double[][] flatten(double [][] A ) {

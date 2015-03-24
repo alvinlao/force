@@ -40,7 +40,7 @@ class PadDraw extends JComponent {
      * @param x is the x coordinate for pixel to draw
      * @param y is the y coordinate for pixel to draw
      */
-    public void Draw (int x, int y){
+    public void draw(int x, int y){
         if(graphics2D != null) {
             graphics2D.fillRect(x,y,PIXEL_SIZE,PIXEL_SIZE);
         }
