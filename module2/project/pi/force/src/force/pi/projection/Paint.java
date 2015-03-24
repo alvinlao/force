@@ -4,6 +4,10 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**
+ * Sets up window and draw pad for drawing
+ */
+
 public class Paint{
     private PadDraw DrawPad;
 	public Paint(){
@@ -20,9 +24,7 @@ public class Paint{
 		panel.setPreferredSize(new Dimension(32, 68));
 		panel.setMinimumSize(new Dimension(32, 68));
 		panel.setMaximumSize(new Dimension(32, 68));
-		
-		// plan to make it so that when we detect the tracker over 
-		// certain parts of the screen we can simulate mouse clicks
+
 		JButton clearButton = new JButton("Clear");
 		clearButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -39,10 +41,18 @@ public class Paint{
 		frame.setVisible(true);
 	}
 
+    /**
+     * clears the draw pad
+     */
     public void clear(){
         DrawPad.clear();
     }
 
+    /**
+     * draws pixel at x, y coordinate given in
+     * @param x
+     * @param y
+     */
     public void draw(int x, int y){
         DrawPad.Draw(x, y);
     }

@@ -18,6 +18,9 @@ public class Projection {
     Paint paint = new Paint();
 
 
+    /**
+     * Default constructor
+     */
     public Projection(){
         camX = 75;
         camY = 75;
@@ -37,6 +40,12 @@ public class Projection {
         }
     }
 
+    /**
+     * Constructor
+     * @param a is x coordinate of camera position
+     * @param b is y coordinate of camera position
+     * @param c is z coordinate of camera position
+     */
     public Projection(double a, double b, double c){
         camX = a;
         camY = b;
@@ -54,7 +63,7 @@ public class Projection {
     }
 
 
-    //  Matrix camCOORD = new Matrix(cam , 1);
+    // Points for box to draw out
     int scale = 25;
     double [][] vals = { {-1, 1, 0},
             {1, 1, 0},
@@ -65,23 +74,26 @@ public class Projection {
             {-1, -1, 2},
             {1, -1, 2}};
 
-    //all points in object
-    //   Matrix Box = new Matrix(vals);
-
-    //Makes 1x3 vector of zeros
-    //  Matrix normal = new Matrix(1,3);
     double [] normal = {0,0,1};
 
-    //set normal; 'set' takes parameters: row index, column index, value
-    //normal.set(1, 3, 1.0);
-
-    //takes in two 1x3 matrices
+    /**
+     * Method to dot two 1x3 arrays
+     * @param x is first array
+     * @param y is second array
+     * @return x dot y
+     */
     private double dot(double [] x, double [] y){
         double dotVal;
         dotVal = (x[0] * y[0]) + (x[1] * y[1]) + (x[2] * y[2]);
         return dotVal;
     }
 
+    /**
+     * Method to add two 1x3 arrays to each other
+     * @param x is first array
+     * @param y is second array
+     * @return x+y
+     */
     private double [] add(double [] x, double [] y){
         double [] addVal = new double[3];
         addVal[0] = (x[0] + y[0]);
@@ -90,6 +102,12 @@ public class Projection {
         return addVal;
     }
 
+    /**
+     * Method to subtract two 1x3 arrays from one another
+     * @param x is first array
+     * @param y is second array
+     * @return x-y
+     */
     private double [] sub(double [] x, double [] y){
         double [] subVal = new double[3];
         subVal[0] = (x[0] - y[0]);
@@ -98,6 +116,12 @@ public class Projection {
         return subVal;
     }
 
+    /**
+     * Method to scale a 1x3 array
+     * @param a is the array
+     * @param s is the scaling factor
+     * @return a*s
+     */
     private double [] scale(double [] a, double s){
         double [] scaleVal = new double[3];
         scaleVal[0] = s*a[0];
@@ -106,9 +130,9 @@ public class Projection {
         return scaleVal;
     }
 
-    /*
-    takes in matrix of points (set to 8 points right now)
-    returns flattened points ready for display...
+    /**
+     * takes in matrix of points (set to 8 points right now)
+     * returns flattened points ready for display...
     */
     private double[][] flatten(double [][] A ) {
         double [][] flattened = new double[8][3];
@@ -132,7 +156,9 @@ public class Projection {
         return flattened;
     }
 
-    //takes in 8byX array and should work fine as long as X >= 2
+    /**
+     takes in 8byX array and should work fine as long as X >= 2
+     */
     private double[][] retXY(double [][] A){
         double[][] retCOORD = new double[8][2];
         for(int i = 0; i < 8; i++){
@@ -142,8 +168,11 @@ public class Projection {
         return retCOORD;
     }
 
-    // A is box matrix. B is camera coordinates
-    // returns matrix of flattened box coordinates
+    /**
+     * Sets up internal camera coordinates and prints out
+     * transformed points of the box to the draw pad
+     * @param B is camera coordinates
+     */
     public void projectIt(Point3D B) {
         camX = B.x;
         camY = B.y;
