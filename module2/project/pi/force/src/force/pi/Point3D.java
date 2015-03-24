@@ -6,24 +6,42 @@ package force.pi;
 public class Point3D {
     public float x, y, z;
 
+    /**
+     * Default Point3D constructor
+     */
     public Point3D() {
         x = 0;
         y = 0;
         z = 0;
     }
 
+    /**
+     * Point3D constructor
+     * @param x - The x position
+     * @param y - The y position
+     * @param z - The z position
+     */
     public Point3D(float x, float y, float z) {
         this.x = x;
         this.y = y;
         this.z = z;
     }
 
+    /**
+     * Copies the coordinates from another point to this point.
+     * @param other - The point to copy from.
+     */
     void copy(Point3D other) {
         this.x = other.x;
         this.y = other.y;
         this.z = other.z;
     }
 
+    /**
+     * Computes the distance from one point to another point.
+     * @param other - The point to compute the distance from.
+     * @return
+     */
     double distance(Point3D other) {
         double dx = Math.pow((other.x - this.x), 2);
         double dy = Math.pow((other.y - this.y), 2);

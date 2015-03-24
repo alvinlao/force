@@ -24,6 +24,13 @@ public class Measurement extends Point {
         this.accuracyRating = acc;
     }
 
+    /**
+     * Sets the x, y, and accuracy values of the measurement.
+     * @param x
+     * @param y
+     * @param accuracy
+     * @throws Exception
+     */
     public void set(int x, int y, int accuracy) throws Exception {
         this.x = x;
         this.y = y;
