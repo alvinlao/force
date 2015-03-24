@@ -29,6 +29,11 @@ public class KalmanFilter {
         state.errorY = initialError;
     }
 
+    /**
+     * Run an iteration of the kalman filter
+     * @param measurement Input measurement
+     * @return filtered point
+     */
     public Point run(Measurement measurement) {
         predict();
         update(measurement);

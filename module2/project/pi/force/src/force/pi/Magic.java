@@ -7,6 +7,7 @@ import force.pi.projection.Paint;
 
 /**
  * Perform magic
+ * The program's entry point
  *
  * High level overview:
  * stdin | filter | camera | projection

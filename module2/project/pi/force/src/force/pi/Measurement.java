@@ -1,7 +1,11 @@
 package force.pi;
 
-import force.pi.Point;
-
+/**
+ * A measurement from the DE2
+ *
+ * Accuracy rating is from the DE2
+ * It is based on how close the tracked color is to the target color
+ */
 public class Measurement extends Point {
     public static final int MAX_ACCURACY = 255 * 3;
 

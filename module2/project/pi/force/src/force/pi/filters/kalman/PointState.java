@@ -2,6 +2,10 @@ package force.pi.filters.kalman;
 
 import force.pi.Point;
 
+/**
+ * A kalman filter state encapsulation for a point
+ *
+ */
 public class PointState extends Point {
     float errorX, errorY;
 
