@@ -156,7 +156,7 @@ public class Projection {
     }
 
     /**
-     takes in 8byX array and should work fine as long as X >= 2
+     * Takes in 8 by X array and should work fine as long as X >= 2
      */
     private double[][] retXY(double [][] A){
         double[][] retCOORD = new double[8][2];

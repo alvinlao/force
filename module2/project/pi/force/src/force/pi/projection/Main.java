@@ -21,6 +21,7 @@ public class Main {
         Projection pro = new Projection();
         pro.projectIt(cam);
         while(true) {
+
             for (int i = 0; i < 20; ++i) {
                 cam.x += 10;
                 pro.projectIt(cam);
