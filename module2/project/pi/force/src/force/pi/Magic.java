@@ -4,6 +4,7 @@ import force.pi.camera.Camera;
 import force.pi.connector.ConnectorC;
 import force.pi.filters.kalman.KalmanFilter;
 import force.pi.projection.Paint;
+import force.pi.projection.Projection;
 
 /**
  * Perform magic
@@ -38,7 +39,7 @@ public class Magic {
         Camera camera = new Camera();
 
         // Create Projection
-        Paint paint = new Paint();
+        Projection projection = new Projection();
 
         // Create connector
         ConnectorC connector = new ConnectorC();
@@ -63,9 +64,11 @@ public class Magic {
                 points[i] = kalmanFilters[i].run(measurements[i]);
             }
 
-            paint.draw(points[0].x, points[0].y);
+            // Convert two points into a camera coordinate
+            coordinate = camera.transform2Dto3D(points[0], points[1]);
 
-//            coordinate = camera.transform2Dto3D(points[0], points[1]);
+            // Update projection with latest camera coordinate
+            projection.projectIt(coordinate);
         }
     }
 }
