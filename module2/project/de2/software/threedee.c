@@ -13,7 +13,7 @@ long GetPosData(base) {
 	IOWR_32DIRECT(base, 0, 0xffffffff);
 	int ready;
 	do {
-		ready = IORD_32DIRECT(base, 16);
+		ready = IORD_32DIRECT(base, 0);
 	} while(!ready);
 
 	return(IORD_32DIRECT(base, 0));

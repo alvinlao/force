@@ -13,7 +13,8 @@ entity green is
 		pixel_buffer_base : std_logic_vector := x"00000000";
 		find_color : integer := 0;
 		block_size : integer := 2;
-		score_factor: integer := 2
+		score_factor: integer := 2;
+		get_top_count: integer := 5
 	);	
 	port (
 		clk		: in std_logic;
@@ -41,6 +42,9 @@ architecture bhv of green is
 	CONSTANT SCREEN_HEIGHT 	: integer := 240;
 	
 	TYPE StatesTYPE			is (Initialize,Standby,Computing);
+	TYPE CandidatesType 	is array (0 to get_top_count-1) of std_logic_vector(31 downto 0);
+	
+	SIGNAL Candidates		is CandidatesType;
 	
 	SIGNAL current_state 	: StatesTYPE := Initialize;
 	SIGNAL ready			: std_logic := '0';
@@ -60,8 +64,9 @@ architecture bhv of green is
 		VARIABLE nextBlockY			:	integer range 0  to block_size := 0;
 		
 		VARIABLE candidateX 		:	integer range 0 to SCREEN_WIDTH;
-		VARIABLE candidateY 		:	integer range 0 to SCREEN_HEIGHT;
+		VARIABLE candidateY		:	integer range 0 to SCREEN_HEIGHT;
 		VARIABLE candidateScore		:	integer range 0 to (score_factor+1)*64*block_size*block_size;
+		
 		
 		VARIABLE tempRed			:	integer range 0 to 64;
 		VARIABLE tempGreen			:	integer range 0 to 64;
@@ -172,11 +177,19 @@ architecture bhv of green is
 									nextBlockY := 0;
 									--done computing for the block;
 									
-									if (candidateScore < tempScoreTotal) then
-										candidateX := nextX;
-										candidateY := nextY;
-										candidateScore := tempScoreTotal;
-									end if;
+AssignLoop:							for index in 0 to (get_top_count-1) loop
+										if ( to_integer(unsigned(Candidates(index)(9 downto 0))) < tempScoreTotal)
+											-- decrement values in lower ones
+											for copyIndex in (get_top_count-1) downto index+1 loop
+												Candidates(copyIndex) <= Candidates(copyIndex-1);
+											end loop
+										
+											-- copy tmp to target
+											Candidates(index) <= std_logic_vector(to_unsigned(0,5))&std_logic_vector(to_unsigned(nextX,9))&std_logic_vector(to_unsigned(nextY,8))&std_logic_vector(to_unsigned(tempScoreTotal,10));
+											
+											exit AssignLoop;
+										end if;							
+									end loop;	
 									
 									tempScoreTotal := 0;
 								
@@ -224,20 +237,20 @@ architecture bhv of green is
 		slave_readdata <= (others => '-');
 		if (slave_rd_en = '1') then
 			case slave_addr is
-				--XYAcc encoded word
-				when "0000" => slave_readdata <= std_logic_vector(to_unsigned(0,5))&std_logic_vector(to_unsigned(posX,9))&std_logic_vector(to_unsigned(posY,8))&std_logic_vector(to_unsigned(acc,10));
-				--X unsigned, 0 to SCREEN_WIDTH
-				when "0001" => slave_readdata <= std_logic_vector(to_unsigned(posX,32));
-				--Y unsigned, 0 to SCREEN_HEIGHT
-				when "0010" => slave_readdata <= std_logic_vector(to_unsigned(posY,32));
-				--Accuracy (0 to 64), higher is more accurate
-				when "0011" => slave_readdata <= std_logic_vector(to_signed(acc,32));
-				--Ready (active high)
-				when "0100" => slave_readdata <= b"0000_0000_0000_0000_0000_0000_0000_000" & ready;
+				--Ready
+				when "0000" => slave_readdata <= b"0000_0000_0000_0000_0000_0000_0000_000" & ready;
+				--4
+				when "0001" => slave_readdata <= Candidates(0);
+				--8
+				when "0010" => slave_readdata <= Candidates(1);
+				--12
+				when "0011" => slave_readdata <= Candidates(2);
+				--16
+				when "0100" => slave_readdata <= Candidates(3);
 				
 				--debug stuff
 				--20
-				when "0101" => slave_readdata <= std_logic_vector(to_unsigned(find_color,32));
+				when "0101" => slave_readdata <= Candidates(4);
 				--24
 				when "0110" => slave_readdata <= std_logic_vector(to_unsigned(0,32));
 				--28
