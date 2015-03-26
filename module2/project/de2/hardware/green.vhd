@@ -66,8 +66,8 @@ architecture bhv of green is
 		VARIABLE tempRed			:	integer range 0 to 64;
 		VARIABLE tempGreen			:	integer range 0 to 64;
 		VARIABLE tempBlue			:	integer range 0 to 64;
-		VARIABLE tempScoreForPixel	: 	integer range -64 to 64;
-		VARIABLE tempScoreTotal 	: 	integer range -(score_factor+1)*64*block_size*block_size to (score_factor+1)*64*block_size*block_size;
+		VARIABLE tempScoreForPixel	: 	integer range 0 to 64;
+		VARIABLE tempScoreTotal 	: 	integer range 0 to (score_factor+1)*64*block_size*block_size;
 		VARIABLE tempSecondaryScoreForPixel	: integer range 0 to 64;
 		
 	BEGIN
@@ -125,14 +125,14 @@ architecture bhv of green is
 							
 								-- resize red and blue to match green for comparison
 								tempRed := to_integer(unsigned(master_readdata(15 downto 11))&'1');
-								tempGreen := to_integer(unsigned(master_readdata(10 downto 5)));
+								tempGreen := to_integer(unsigned(master_readdata(10 downto 6))); --ignore LSB of GREEN
 								tempBlue := to_integer(unsigned(master_readdata(4 downto 0))&'1');
 								
 								--We are looking for pixel that has greatest positive difference between find_color and larger of other two
 								--if looking for red
 								if (find_color = 0) then
 									if (tempGreen > tempBlue) then
-										tempScoreForPixel := tempRed - tempGreen;
+										tempScoreForPixel := tempRed - tempGreen + 32;
 										tempSecondaryScoreForPixel := 64-(tempGreen-tempBlue);
 									else
 										tempScoreForPixel := tempRed - tempBlue;
@@ -142,7 +142,7 @@ architecture bhv of green is
 								--if looking for green
 								elsif (find_color = 1) then
 									if (tempRed > tempBlue) then
-										tempScoreForPixel := tempGreen - tempRed;
+										tempScoreForPixel := tempGreen - tempRed + 32;
 										tempSecondaryScoreForPixel := 64-(tempRed-tempBlue);
 									else
 										tempScoreForPixel := tempGreen - tempBlue;
@@ -152,7 +152,7 @@ architecture bhv of green is
 								--if looking for blue
 								elsif (find_color = 2) then 
 									if (tempRed > tempGreen) then
-										tempScoreForPixel := tempBlue - tempRed;
+										tempScoreForPixel := tempBlue - tempRed + 32;
 										tempSecondaryScoreForPixel := 64-(tempRed-tempGreen);
 									else
 										tempScoreForPixel := tempBlue - tempGreen;
@@ -225,7 +225,7 @@ architecture bhv of green is
 		if (slave_rd_en = '1') then
 			case slave_addr is
 				--XYAcc encoded word
-				when "0000" => slave_readdata <= std_logic_vector(to_unsigned(0,7))&std_logic_vector(to_unsigned(posX,9))&std_logic_vector(to_unsigned(posY,8))&std_logic_vector(to_signed(acc,8));
+				when "0000" => slave_readdata <= std_logic_vector(to_unsigned(0,5))&std_logic_vector(to_unsigned(posX,9))&std_logic_vector(to_unsigned(posY,8))&std_logic_vector(to_unsigned(acc,10));
 				--X unsigned, 0 to SCREEN_WIDTH
 				when "0001" => slave_readdata <= std_logic_vector(to_unsigned(posX,32));
 				--Y unsigned, 0 to SCREEN_HEIGHT

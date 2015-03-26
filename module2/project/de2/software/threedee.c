@@ -37,7 +37,7 @@ int main()
 		do {
 			ready = IORD_32DIRECT(tracker_2_base, 16);
 		} while(!ready);
-		SendData(0xf0000000 | IORD_32DIRECT(tracker_2_base, 0));
+		SendData(0x80000000 | IORD_32DIRECT(tracker_2_base, 0));
 	}
 
   return 0;
