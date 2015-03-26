@@ -20,6 +20,8 @@ import force.pi.projection.Paint;
 public class Magic {
     private static final int NUM_INPUT_COORDINATES_PER_FRAME = 2;
     private static boolean keepRunning = true;
+	private static int RED = 0;
+	private static int BLUE = 1;
 
     public static void main(String[] args) throws Exception {
         // Create filters
@@ -51,18 +53,31 @@ public class Magic {
             }
         });
 
+	long start, stop;
+	long startms, stopms, elapsedms;
+	long target = 25000000;
+	long targetms = 25;
+
         //keep alive (for time being)
         while (keepRunning) {
-            Thread.sleep(10);
+		startms = System.currentTimeMillis();
+		start = System.nanoTime();
 
             for (int i = 0; i < NUM_INPUT_COORDINATES_PER_FRAME; ++i) {
                 measurements[i] = connector.getMeasurement(i);
                 // HARD CODE ACCURACY
-                measurements[i].accuracyRating = 300;
+                measurements[i].accuracyRating = 25;
                 points[i] = kalmanFilters[i].run(measurements[i]);
             }
 
-            paint.draw(points[0].x, points[0].y);
+		paint.draw(points[RED].x, points[RED].y);
+		//paint.draw(measurements[RED].x, measurements[RED].y);
+
+		stopms = System.currentTimeMillis();
+		elapsedms = stopms - startms;
+		
+		if(elapsedms < targetms)
+			Thread.sleep(targetms - elapsedms);
 
 //            coordinate = camera.transform2Dto3D(points[0], points[1]);
         }
