@@ -11,7 +11,7 @@ public class KalmanFilter {
     public static final int MODEL_NOISE = 0;
 
     // [0, 1] Predict how much error our model has
-    public static final float PREDICTION_ERROR = 0.05f;
+    public static final float PREDICTION_ERROR = 0.1f;
 
     PointState state;
 

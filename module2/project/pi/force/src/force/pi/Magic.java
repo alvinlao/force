@@ -22,6 +22,8 @@ import force.pi.projection.Projection;
 public class Magic {
     private static final int NUM_INPUT_COORDINATES_PER_FRAME = 2;
     private static boolean keepRunning = true;
+	private static int RED = 0;
+	private static int BLUE = 1;
 
     public static void main(String[] args) throws Exception {
         // Create filters
@@ -53,22 +55,32 @@ public class Magic {
             }
         });
 
+	long startms, stopms, elapsedms;
+	long targetms = 25;
+
         //keep alive (for time being)
         while (keepRunning) {
-            Thread.sleep(10);
+            startms = System.currentTimeMillis();
 
             for (int i = 0; i < NUM_INPUT_COORDINATES_PER_FRAME; ++i) {
                 measurements[i] = connector.getMeasurement(i);
                 // HARD CODE ACCURACY
-                measurements[i].accuracyRating = 300;
+                measurements[i].accuracyRating = 25;
                 points[i] = kalmanFilters[i].run(measurements[i]);
             }
 
             // Convert two points into a camera coordinate
-            coordinate = camera.transform2Dto3D(points[0], points[1]);
+            coordinate = camera.transform2Dto3D(points[RED], points[BLUE]);
 
             // Update projection with latest camera coordinate
             projection.projectIt(coordinate);
+
+            stopms = System.currentTimeMillis();
+            elapsedms = stopms - startms;
+            
+            if(elapsedms < targetms) {
+                Thread.sleep(targetms - elapsedms);
+            }
         }
     }
 }
