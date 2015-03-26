@@ -29,9 +29,11 @@ class PadDraw extends JComponent {
      * clears the draw pad
      */
     public void clear(){
+        if (graphics2D != null) {
         graphics2D.setPaint(Color.white);
         graphics2D.fillRect(0, 0, getSize().width, getSize().height);
         graphics2D.setPaint(Color.black);
+        }
         repaint();
     }
 
