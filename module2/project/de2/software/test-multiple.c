@@ -9,6 +9,12 @@
 #define tracker_2_base (volatile int*) 0x00089440
 #define piconnector_base (volatile int*) 0x00089480
 
+alt_up_pixel_buffer_dma_dev* pixel_buffer;
+
+void initPixelBuffer() {
+	pixel_buffer = alt_up_pixel_buffer_dma_open_dev("/dev/Pixel_Buffer_DMA");
+	alt_up_pixel_buffer_dma_clear_screen(pixel_buffer, 0);
+}
 void drawBoxOutline (int x1, int y1, int x2, int y2, int color){
 
 int outline_width = 1;
@@ -69,7 +75,9 @@ int main()
 			int posy = (buffer >> 10) & 0x000000FF;
 			int posx = (buffer >> 18) & 0x000001FF;
 			outline(posx,posy,i*10000);
+			printf("--%3d",acc);
 		}
+		printf("\n");
 	}
 
   return 0;
