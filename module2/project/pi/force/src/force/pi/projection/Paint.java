@@ -9,6 +9,8 @@ import javax.swing.*;
  */
 
 public class Paint {
+    static final int SCREEN_WIDTH = 960;
+    static final int SCREEN_HEIGHT = 720;
     private PadDraw drawPad;
 
 	public Paint() {
@@ -22,8 +24,8 @@ public class Paint {
 		content.add(drawPad, BorderLayout.CENTER);
 		
 		JPanel panel = new JPanel();
-		panel.setPreferredSize(new Dimension(32, 68));
-		panel.setMinimumSize(new Dimension(32, 68));
+        panel.setPreferredSize(new Dimension(32, 68));
+        panel.setMinimumSize(new Dimension(32, 68));
 		panel.setMaximumSize(new Dimension(32, 68));
 
 		JButton clearButton = new JButton("Clear");
@@ -37,7 +39,7 @@ public class Paint {
 
 		content.add(panel, BorderLayout.WEST);
 		
-		frame.setSize(960, 720);
+		frame.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}

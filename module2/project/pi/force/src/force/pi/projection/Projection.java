@@ -13,6 +13,7 @@ import java.lang.reflect.Array;
 public class Projection {
     static final int SCREEN_WIDTH = 960;
     static final int SCREEN_HEIGHT = 720;
+    static final int numPoints = 8;
     public double camX, camY, camZ;
     public double [] cam = new double[3];
 
@@ -134,9 +135,9 @@ public class Projection {
      * returns flattened points ready for display...
     */
     private double[][] flatten(double [][] A ) {
-        double [][] flattened = new double[8][3];
+        double [][] flattened = new double[numPoints][3];
         double [] l, v;
-        for(int i = 0; i < 8; i++) {
+        for(int i = 0; i < numPoints; i++) {
             double a;
             double [] point = new double[3];
             point[0] = A[i][0];
@@ -159,8 +160,8 @@ public class Projection {
      * Takes in 8 by X array and should work fine as long as X >= 2
      */
     private double[][] retXY(double [][] A){
-        double[][] retCOORD = new double[8][2];
-        for(int i = 0; i < 8; i++){
+        double[][] retCOORD = new double[numPoints][2];
+        for(int i = 0; i < numPoints; i++){
             retCOORD[i][0] = A[i][0];
             retCOORD[i][1] = A[i][1];
         }
@@ -183,7 +184,7 @@ public class Projection {
         displayCOORDS = retXY(flatten(vals));
         paint.clear();
 
-        for(int i = 0; i < 8; i++){
+        for(int i = 0; i < numPoints; i++){
             paint.draw((-1 * (int)displayCOORDS[i][0])+SCREEN_WIDTH/2, (int)displayCOORDS[i][1]+SCREEN_HEIGHT/2);
         }
     }
