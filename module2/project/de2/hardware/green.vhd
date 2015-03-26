@@ -41,7 +41,6 @@ architecture bhv of green is
 	CONSTANT SCREEN_HEIGHT 	: integer := 240;
 	
 	TYPE StatesTYPE			is (Initialize,Standby,Computing);
-	TYPE CandidatesType		
 	
 	SIGNAL current_state 	: StatesTYPE := Initialize;
 	SIGNAL ready			: std_logic := '0';
