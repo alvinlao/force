@@ -55,8 +55,8 @@ public class Magic {
             }
         });
 
-	long startms, stopms, elapsedms;
-	long targetms = 25;
+        long startms, stopms, elapsedms;
+        long targetms = 25;
 
         //keep alive (for time being)
         while (keepRunning) {
@@ -71,6 +71,9 @@ public class Magic {
 
             // Convert two points into a camera coordinate
             coordinate = camera.transform2Dto3D(points[RED], points[BLUE]);
+            coordinate.x *= 100;
+            coordinate.y *= 100;
+            coordinate.z *= 100;
 
             // Update projection with latest camera coordinate
             projection.projectIt(coordinate);

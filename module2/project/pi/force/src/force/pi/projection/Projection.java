@@ -42,7 +42,7 @@ public class Projection {
         cam[0] = camX;
         cam[1] = camY;
         cam[2] = camZ;
-        paint = new Paint();
+
         for (int i = 0; i < vals.length; ++i) {
             for (int j = 0; j < vals[i].length; ++j) {
                 vals[i][j] *= scale;
