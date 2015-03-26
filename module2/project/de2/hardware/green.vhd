@@ -61,7 +61,7 @@ architecture bhv of green is
 		
 		VARIABLE candidateX 		:	integer range 0 to SCREEN_WIDTH;
 		VARIABLE candidateY 		:	integer range 0 to SCREEN_WIDTH;
-		VARIABLE candidateScore		:	integer range -(score_factor+1)*64*block_size*block_size to (score_factor+1)*64*block_size*block_size;
+		VARIABLE candidateScore		:	integer range 0 to (score_factor+1)*64*block_size*block_size;
 		
 		VARIABLE tempRed			:	integer range 0 to 64;
 		VARIABLE tempGreen			:	integer range 0 to 64;
