@@ -41,6 +41,7 @@ architecture bhv of green is
 	CONSTANT SCREEN_HEIGHT 	: integer := 240;
 	
 	TYPE StatesTYPE			is (Initialize,Standby,Computing);
+	TYPE CandidatesType		
 	
 	SIGNAL current_state 	: StatesTYPE := Initialize;
 	SIGNAL ready			: std_logic := '0';
@@ -60,7 +61,7 @@ architecture bhv of green is
 		VARIABLE nextBlockY			:	integer range 0  to block_size := 0;
 		
 		VARIABLE candidateX 		:	integer range 0 to SCREEN_WIDTH;
-		VARIABLE candidateY 		:	integer range 0 to SCREEN_WIDTH;
+		VARIABLE candidateY 		:	integer range 0 to SCREEN_HEIGHT;
 		VARIABLE candidateScore		:	integer range 0 to (score_factor+1)*64*block_size*block_size;
 		
 		VARIABLE tempRed			:	integer range 0 to 64;
