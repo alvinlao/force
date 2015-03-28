@@ -60,6 +60,13 @@ public class Paint {
         drawPad.draw(x, y);
     }
 
+    public void drawPolygon(int[] x, int[]y, int nPoints) {
+        drawPad.drawPolygon(x, y, nPoints);
+    }
+    public void fillPolygon(int[] x, int[]y, int nPoints, int col) {
+        drawPad.changeColour(col);
+        drawPad.fillPolygon(x, y, nPoints);
+    }
 }
 
 
