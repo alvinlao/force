@@ -196,18 +196,23 @@ public class Projection {
             yDraw = (int)displayCOORDS[i][1]+SCREEN_HEIGHT/2;
             paint.draw(xDraw, yDraw);
         }
+        //bottom face
         for(int i = 0; i < 4; i++){
             xPoints[i] = -1*(int)displayCOORDS[i][0]+SCREEN_WIDTH/2;
             yPoints[i] = (int)displayCOORDS[i][1]+SCREEN_HEIGHT/2;
         }
         paint.drawPolygon(xPoints, yPoints, 4);
+        paint.fillPolygon(xPoints, yPoints, 4, 1);
+
+        //topface
         for(int i = 0; i < 4; i++){
             xPoints[i] = -1*(int)displayCOORDS[i+4][0]+SCREEN_WIDTH/2;
             yPoints[i] = (int)displayCOORDS[i+4][1]+SCREEN_HEIGHT/2;
         }
         paint.drawPolygon(xPoints, yPoints, 4);
-    //    paint.fillPolygon(xPoints, yPoints, 4, 1);
+        paint.fillPolygon(xPoints, yPoints, 4, 1);
 
+        //left face
         xPoints[0] = -1*(int)displayCOORDS[0][0]+SCREEN_WIDTH/2;
         xPoints[1] = -1*(int)displayCOORDS[4][0]+SCREEN_WIDTH/2;
         xPoints[2] = -1*(int)displayCOORDS[7][0]+SCREEN_WIDTH/2;
@@ -217,8 +222,9 @@ public class Projection {
         yPoints[2] = (int)displayCOORDS[7][1]+SCREEN_HEIGHT/2;
         yPoints[3] = (int)displayCOORDS[3][1]+SCREEN_HEIGHT/2;
         paint.drawPolygon(xPoints, yPoints, 4);
-    //    paint.fillPolygon(xPoints, yPoints, 4, 2);
+        paint.fillPolygon(xPoints, yPoints, 4, 2);
 
+        //right face
         xPoints[0] = -1*(int)displayCOORDS[1][0]+SCREEN_WIDTH/2;
         xPoints[1] = -1*(int)displayCOORDS[2][0]+SCREEN_WIDTH/2;
         xPoints[2] = -1*(int)displayCOORDS[6][0]+SCREEN_WIDTH/2;
@@ -228,8 +234,9 @@ public class Projection {
         yPoints[2] = (int)displayCOORDS[6][1]+SCREEN_HEIGHT/2;
         yPoints[3] = (int)displayCOORDS[5][1]+SCREEN_HEIGHT/2;
         paint.drawPolygon(xPoints, yPoints, 4);
-     //   paint.fillPolygon(xPoints, yPoints, 4, 3);
+        paint.fillPolygon(xPoints, yPoints, 4, 3);
 
+        //front face
         xPoints[0] = -1*(int)displayCOORDS[0][0]+SCREEN_WIDTH/2;
         xPoints[1] = -1*(int)displayCOORDS[1][0]+SCREEN_WIDTH/2;
         xPoints[2] = -1*(int)displayCOORDS[5][0]+SCREEN_WIDTH/2;
@@ -239,8 +246,9 @@ public class Projection {
         yPoints[2] = (int)displayCOORDS[5][1]+SCREEN_HEIGHT/2;
         yPoints[3] = (int)displayCOORDS[4][1]+SCREEN_HEIGHT/2;
         paint.drawPolygon(xPoints, yPoints, 4);
-    //    paint.fillPolygon(xPoints, yPoints, 4, 1);
+        paint.fillPolygon(xPoints, yPoints, 4, 1);
 
+        //back face
         xPoints[0] = -1*(int)displayCOORDS[3][0]+SCREEN_WIDTH/2;
         xPoints[1] = -1*(int)displayCOORDS[2][0]+SCREEN_WIDTH/2;
         xPoints[2] = -1*(int)displayCOORDS[6][0]+SCREEN_WIDTH/2;
@@ -250,7 +258,7 @@ public class Projection {
         yPoints[2] = (int)displayCOORDS[6][1]+SCREEN_HEIGHT/2;
         yPoints[3] = (int)displayCOORDS[7][1]+SCREEN_HEIGHT/2;
         paint.drawPolygon(xPoints, yPoints, 4);
-     //   paint.fillPolygon(xPoints, yPoints, 4, 2);
+        paint.fillPolygon(xPoints, yPoints, 4, 2);
 
     }
 }
