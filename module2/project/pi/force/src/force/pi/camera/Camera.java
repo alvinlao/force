@@ -23,6 +23,10 @@ import force.pi.Point3D;
  *
  */
 public class Camera {
+    // Our object's two point distance to camera ratio: 
+    // Frame width / z = object real width / distance from camera to fill screen
+    private static final float R_FIXED_POINTS_RATIO = Frame.WIDTH * (0.136f / 0.33f);
+
     // The real fixed distance between the two points (in meters)
     private static final float R_FIXED_POINTS_DISTANCE = 1f;       // TODO
 
@@ -48,10 +52,14 @@ public class Camera {
      */
     public Point3D transform2Dto3D(final Point left, final Point right) {
         // TODO Version one only uses one point
-        transformedPoint.x = (left.x - (Frame.WIDTH/2.0f)) * CAMERA_TO_REAL_CONVERSION;
-        transformedPoint.z = (Frame.HEIGHT - left.y) * CAMERA_TO_REAL_CONVERSION;
-        transformedPoint.y = (float) Math.sqrt(Math.pow(R_FIXED_DISTANCE, 2) - Math.pow(transformedPoint.x, 2) - Math.pow(transformedPoint.z, 2));
+        transformedPoint.x = (left.x - (Frame.WIDTH/2.0f)) * CAMERA_TO_REAL_CONVERSION * -1;
+        transformedPoint.y = (left.y - (Frame.HEIGHT/2.0f)) * CAMERA_TO_REAL_CONVERSION;
+        transformedPoint.z = (float) Math.sqrt(Math.pow(R_FIXED_DISTANCE, 2) - Math.pow(transformedPoint.x, 2) - Math.pow(transformedPoint.y, 2));
 
         return transformedPoint;
+    }
+
+    private float calculateZ(final Point left, final Point right) {
+        return left.distance(right) * R_FIXED_POINTS_RATIO;
     }
 }
