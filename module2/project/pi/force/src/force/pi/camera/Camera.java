@@ -23,15 +23,25 @@ import force.pi.Point3D;
  *
  */
 public class Camera {
-    // Our object's two point distance to camera ratio: 
-    // Frame width / z = object real width / distance from camera to fill screen
-    private static final float R_FIXED_POINTS_RATIO = Frame.WIDTH * (0.136f / 0.33f);
+    // Real width of object: (m)
+    private static final float R_OBJECT_WIDTH = 0.33f;
+
+    // Real distance from camera for object to fill screen horizontally: (m)
+    private static final float R_OBJECT_FILL_DEPTH = 0.136f;
+
+    // How far away is the object from the camera when it appears as one point (m)
+    private static final float R_EFFECTIVE_INF = 1f;
+
 
     // The real fixed distance between the two points (in meters)
     private static final float R_FIXED_POINTS_DISTANCE = 1f;       // TODO
 
     // Conversion factor: C = real distance / camera distance
-    private static final float CAMERA_TO_REAL_CONVERSION = 0.004166f;
+    //private static final float CAMERA_TO_REAL_CONVERSION = 0.004166f;
+    private static final float CAMERA_TO_REAL_CONVERSION = 0.00103125f;
+
+    private static final float CAMERA_TO_REAL_X_CONVERSION = 0.0011f;
+    private static final float CAMERA_TO_REAL_Y_CONVERSION = 0.00165f;
 
     // TODO: Version 1 assumption
     private static final float R_FIXED_DISTANCE = 1f;
@@ -51,15 +61,22 @@ public class Camera {
      * @return
      */
     public Point3D transform2Dto3D(final Point left, final Point right) {
+        Point mid = Point.midpoint(left, right);
+
         // TODO Version one only uses one point
-        transformedPoint.x = (left.x - (Frame.WIDTH/2.0f)) * CAMERA_TO_REAL_CONVERSION * -1;
-        transformedPoint.y = (left.y - (Frame.HEIGHT/2.0f)) * CAMERA_TO_REAL_CONVERSION;
-        transformedPoint.z = (float) Math.sqrt(Math.pow(R_FIXED_DISTANCE, 2) - Math.pow(transformedPoint.x, 2) - Math.pow(transformedPoint.y, 2));
+        transformedPoint.x = (mid.x - (Frame.WIDTH/2.0f)) * CAMERA_TO_REAL_CONVERSION * -1;
+        transformedPoint.y = (mid.y - (Frame.HEIGHT/2.0f)) * CAMERA_TO_REAL_CONVERSION;
+        transformedPoint.z = calculateZ(left, right);
+        //transformedPoint.z = (float) Math.sqrt(Math.pow(R_FIXED_DISTANCE, 2) - Math.pow(transformedPoint.x, 2) - Math.pow(transformedPoint.y, 2));
 
         return transformedPoint;
     }
 
     private float calculateZ(final Point left, final Point right) {
-        return left.distance(right) * R_FIXED_POINTS_RATIO;
+        float r_distance = ((float) left.distance(right)) * CAMERA_TO_REAL_CONVERSION;
+        System.out.println(r_distance);
+
+        float num = ((R_OBJECT_WIDTH * R_EFFECTIVE_INF) - (r_distance * R_EFFECTIVE_INF) + (r_distance * R_OBJECT_FILL_DEPTH));
+        return num / R_OBJECT_WIDTH;
     }
 }
