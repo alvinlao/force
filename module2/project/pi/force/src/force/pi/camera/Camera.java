@@ -45,7 +45,7 @@ public class Camera {
     private static final float CAMERA_TO_REAL_Y_CONVERSION = 0.00165f;
 
     // Camera tilt angle (from table) in degrees
-    private static final float DEGREES_TILTED = 45;
+    private static final float DEGREES_TILTED = 20;
 
 
     // Fields
@@ -69,7 +69,7 @@ public class Camera {
         //transformedPoint.z = (float) Math.sqrt(Math.pow(R_FIXED_DISTANCE, 2) - Math.pow(transformedPoint.x, 2) - Math.pow(transformedPoint.y, 2));
 
         // Apply coordinate system transform
-        //tilt(transformedPoint);
+        tilt(transformedPoint);
 
         // Translate the origin to projection center
         translateOrigin(transformedPoint);
@@ -92,13 +92,12 @@ public class Camera {
      */
     private void tilt(Point3D point) {
         float distance = (float)Math.sqrt(Math.pow(point.y, 2) + Math.pow(point.z, 2));
-        System.out.println("Distance: " + distance);
 
-        float temp_theta = DEGREES_TILTED + (float)Math.asin(point.z / distance);
-        float temp_theta2 = DEGREES_TILTED + (float)Math.acos(point.y / distance);
+        float temp_theta = DEGREES_TILTED + (float) Math.toDegrees(Math.asin(point.z / distance));
+        System.out.println("theta: " + temp_theta);
 
-        point.y = distance * (float)Math.cos(temp_theta);
-        point.z = distance * (float)Math.sin(temp_theta);
+        point.y = distance * (float)Math.cos(Math.toRadians(temp_theta));
+        point.z = distance * (float)Math.sin(Math.toRadians(temp_theta));
     }
 
     /**
