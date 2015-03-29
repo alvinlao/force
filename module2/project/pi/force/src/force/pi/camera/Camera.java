@@ -1,5 +1,7 @@
 package force.pi.camera;
 
+import java.lang.Math.*;
+
 import force.pi.Frame;
 import force.pi.Point;
 import force.pi.Point3D;
@@ -32,9 +34,8 @@ public class Camera {
     // How far away is the object from the camera when it appears as one point (m)
     private static final float R_EFFECTIVE_INF = 1f;
 
-
-    // The real fixed distance between the two points (in meters)
-    private static final float R_FIXED_POINTS_DISTANCE = 1f;       // TODO
+    // Real distance from camera to center of projection
+    private static final float R_CAMERA_TO_PROJECTION_CENTER = 0.3f;
 
     // Conversion factor: C = real distance / camera distance
     //private static final float CAMERA_TO_REAL_CONVERSION = 0.004166f;
@@ -43,14 +44,17 @@ public class Camera {
     private static final float CAMERA_TO_REAL_X_CONVERSION = 0.0011f;
     private static final float CAMERA_TO_REAL_Y_CONVERSION = 0.00165f;
 
-    // TODO: Version 1 assumption
-    private static final float R_FIXED_DISTANCE = 1f;
+    // Camera tilt angle (from table) in degrees
+    private static final float DEGREES_TILTED = 45;
 
+
+    // Fields
+    private final Point3D origin;
     private Point3D transformedPoint = new Point3D();
 
-    // TODO
-    public void calibrate() {
 
+    public Camera() {
+        origin = new Point3D(0, 0, 0);
     }
 
     /**
@@ -63,20 +67,49 @@ public class Camera {
     public Point3D transform2Dto3D(final Point left, final Point right) {
         Point mid = Point.midpoint(left, right);
 
-        // TODO Version one only uses one point
+        // Determine 3D coordinate from 2D
         transformedPoint.x = (mid.x - (Frame.WIDTH/2.0f)) * CAMERA_TO_REAL_CONVERSION * -1;
         transformedPoint.y = (mid.y - (Frame.HEIGHT/2.0f)) * CAMERA_TO_REAL_CONVERSION;
         transformedPoint.z = calculateZ(left, right);
         //transformedPoint.z = (float) Math.sqrt(Math.pow(R_FIXED_DISTANCE, 2) - Math.pow(transformedPoint.x, 2) - Math.pow(transformedPoint.y, 2));
+
+        // Apply coordinate system transform
+        tilt(transformedPoint);
+
+        // Translate the origin to projection center
+        translateOrigin(transformedPoint);
 
         return transformedPoint;
     }
 
     private float calculateZ(final Point left, final Point right) {
         float r_distance = ((float) left.distance(right)) * CAMERA_TO_REAL_CONVERSION;
-        System.out.println(r_distance);
 
         float num = ((R_OBJECT_WIDTH * R_EFFECTIVE_INF) - (r_distance * R_EFFECTIVE_INF) + (r_distance * R_OBJECT_FILL_DEPTH));
         return num / R_OBJECT_WIDTH;
+    }
+
+    /**
+     * Change coordinate system from relative 
+     * to camera to table coordinates.
+     *
+     * @param point 3D point relative to camera
+     */
+    private void tilt(Point3D point) {
+        float distance = (float)Math.sqrt(Math.pow(point.y, 2) + Math.pow(point.z, 2));
+        System.out.println("Distance: " + distance);
+
+        float temp_theta = DEGREES_TILTED + (float)Math.asin(point.z / distance);
+        float temp_theta2 = DEGREES_TILTED + (float)Math.acos(point.y / distance);
+
+        point.y = distance * (float)Math.cos(temp_theta);
+        point.z = distance * (float)Math.sin(temp_theta);
+    }
+
+    /**
+     * Move the origin to the center of our projection
+     */
+    private void translateOrigin(Point3D point) {
+        point.y = point.y - R_CAMERA_TO_PROJECTION_CENTER;
     }
 }
