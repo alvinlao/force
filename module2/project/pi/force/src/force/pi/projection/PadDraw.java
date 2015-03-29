@@ -30,9 +30,9 @@ class PadDraw extends JComponent {
      */
     public void clear(){
         if (graphics2D != null) {
-        graphics2D.setPaint(Color.white);
-        graphics2D.fillRect(0, 0, getSize().width, getSize().height);
-        graphics2D.setPaint(Color.black);
+            graphics2D.setPaint(Color.white);
+            graphics2D.fillRect(0, 0, getSize().width, getSize().height);
+            graphics2D.setPaint(Color.black);
         }
         repaint();
     }
@@ -47,5 +47,31 @@ class PadDraw extends JComponent {
             graphics2D.fillRect(x,y,PIXEL_SIZE,PIXEL_SIZE);
         }
         repaint();
+    }
+
+    public void drawPolygon(int[] x, int[] y, int nPoints){
+        if(graphics2D != null) {
+            graphics2D.drawPolygon(x, y, nPoints);
+        }
+        repaint();
+    }
+
+    public void fillPolygon(int[] x, int[] y, int nPoints){
+        if(graphics2D != null) {
+            graphics2D.fillPolygon(x, y, nPoints);
+        }
+        repaint();
+    }
+    public void changeColour (int x){
+        if(graphics2D != null) {
+            if (x == 1)
+                graphics2D.setPaint(Color.cyan);
+            if (x == 2)
+                graphics2D.setPaint(Color.green);
+            if (x == 3)
+                graphics2D.setPaint(Color.blue);
+            else
+                graphics2D.setPaint(Color.black);
+        }
     }
 }
