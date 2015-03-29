@@ -29,17 +29,17 @@ public class Camera {
     private static final float R_OBJECT_WIDTH = 0.33f;
 
     // Real distance from camera for object to fill screen horizontally: (m)
-    private static final float R_OBJECT_FILL_DEPTH = 0.136f;
+    private static final float R_OBJECT_FILL_DEPTH = 0.123f;
 
     // How far away is the object from the camera when it appears as one point (m)
-    private static final float R_EFFECTIVE_INF = 1f;
+    private static final float R_EFFECTIVE_INF = 0.5f;
 
     // Real distance from camera to center of projection
     private static final float R_CAMERA_TO_PROJECTION_CENTER = 0.3f;
 
     // Conversion factor: C = real distance / camera distance
     //private static final float CAMERA_TO_REAL_CONVERSION = 0.004166f;
-    private static final float CAMERA_TO_REAL_CONVERSION = 0.00103125f;
+    private static final float CAMERA_TO_REAL_CONVERSION = 0.0011f;
 
     private static final float CAMERA_TO_REAL_X_CONVERSION = 0.0011f;
     private static final float CAMERA_TO_REAL_Y_CONVERSION = 0.00165f;
@@ -49,13 +49,8 @@ public class Camera {
 
 
     // Fields
-    private final Point3D origin;
     private Point3D transformedPoint = new Point3D();
 
-
-    public Camera() {
-        origin = new Point3D(0, 0, 0);
-    }
 
     /**
      * Transforms two camera 2D points into a real world 3D point
@@ -68,13 +63,13 @@ public class Camera {
         Point mid = Point.midpoint(left, right);
 
         // Determine 3D coordinate from 2D
-        transformedPoint.x = (mid.x - (Frame.WIDTH/2.0f)) * CAMERA_TO_REAL_CONVERSION * -1;
-        transformedPoint.y = (mid.y - (Frame.HEIGHT/2.0f)) * CAMERA_TO_REAL_CONVERSION;
-        transformedPoint.z = calculateZ(left, right);
+        transformedPoint.x = (mid.x - (Frame.WIDTH/2.0f)) * CAMERA_TO_REAL_X_CONVERSION * -1;
+        transformedPoint.z = (mid.y - (Frame.HEIGHT/2.0f)) * CAMERA_TO_REAL_Y_CONVERSION * -1;
+        transformedPoint.y = calculateZ(left, right);
         //transformedPoint.z = (float) Math.sqrt(Math.pow(R_FIXED_DISTANCE, 2) - Math.pow(transformedPoint.x, 2) - Math.pow(transformedPoint.y, 2));
 
         // Apply coordinate system transform
-        tilt(transformedPoint);
+        //tilt(transformedPoint);
 
         // Translate the origin to projection center
         translateOrigin(transformedPoint);
