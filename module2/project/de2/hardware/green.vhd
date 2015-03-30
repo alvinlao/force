@@ -44,7 +44,7 @@ architecture bhv of green is
 	TYPE StatesTYPE			is (Initialize,Standby,Computing);
 	TYPE CandidatesType 	is array (0 to get_top_count-1) of std_logic_vector(31 downto 0);
 	
-	SIGNAL Candidates		is CandidatesType;
+	SIGNAL Candidates		: CandidatesType;
 	
 	SIGNAL current_state 	: StatesTYPE := Initialize;
 	SIGNAL ready			: std_logic := '0';
@@ -101,7 +101,7 @@ architecture bhv of green is
 					candidateX := 0;
 					candidateY := 0;
 					candidateScore := 0;
-					tempScoreTotal := -(score_factor+1)*64*block_size*block_size;
+					tempScoreTotal := 0;
 					
 					current_state <= Standby;
 					
@@ -178,11 +178,11 @@ architecture bhv of green is
 									--done computing for the block;
 									
 AssignLoop:							for index in 0 to (get_top_count-1) loop
-										if ( to_integer(unsigned(Candidates(index)(9 downto 0))) < tempScoreTotal)
+										if ( to_integer(unsigned(Candidates(index)(9 downto 0))) < tempScoreTotal) then
 											-- decrement values in lower ones
 											for copyIndex in (get_top_count-1) downto index+1 loop
 												Candidates(copyIndex) <= Candidates(copyIndex-1);
-											end loop
+											end loop;
 										
 											-- copy tmp to target
 											Candidates(index) <= std_logic_vector(to_unsigned(0,5))&std_logic_vector(to_unsigned(nextX,9))&std_logic_vector(to_unsigned(nextY,8))&std_logic_vector(to_unsigned(tempScoreTotal,10));
@@ -232,7 +232,7 @@ AssignLoop:							for index in 0 to (get_top_count-1) loop
 		end if;	
 	end process;	
 		
-   process (slave_rd_en, slave_addr,posX,posY,acc)
+   process (slave_rd_en, slave_addr,Candidates)
    BEGIN	       
 		slave_readdata <= (others => '-');
 		if (slave_rd_en = '1') then

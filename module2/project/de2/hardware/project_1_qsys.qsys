@@ -289,19 +289,6 @@
          type = "String";
       }
    }
-   element PiConnector_0.avalon_slave
-   {
-      datum _lockedAddress
-      {
-         value = "1";
-         type = "boolean";
-      }
-      datum baseAddress
-      {
-         value = "562304";
-         type = "String";
-      }
-   }
    element color_search_0.avalon_slave
    {
       datum _lockedAddress
@@ -315,6 +302,19 @@
          type = "String";
       }
    }
+   element PiConnector_0.avalon_slave
+   {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
+      datum baseAddress
+      {
+         value = "562304";
+         type = "String";
+      }
+   }
    element color_search_1.avalon_slave
    {
       datum _lockedAddress
@@ -325,19 +325,6 @@
       datum baseAddress
       {
          value = "562240";
-         type = "String";
-      }
-   }
-   element pixel_drawer_0.avalon_slave_0
-   {
-      datum _lockedAddress
-      {
-         value = "1";
-         type = "boolean";
-      }
-      datum baseAddress
-      {
-         value = "562304";
          type = "String";
       }
    }
@@ -407,6 +394,22 @@
          type = "int";
       }
    }
+   element Onchip_Memory.s1
+   {
+      datum baseAddress
+      {
+         value = "540672";
+         type = "String";
+      }
+   }
+   element button_pio.s1
+   {
+      datum baseAddress
+      {
+         value = "562400";
+         type = "String";
+      }
+   }
    element timer_0.s1
    {
       datum _lockedAddress
@@ -425,22 +428,6 @@
       datum baseAddress
       {
          value = "16777216";
-         type = "String";
-      }
-   }
-   element button_pio.s1
-   {
-      datum baseAddress
-      {
-         value = "562400";
-         type = "String";
-      }
-   }
-   element Onchip_Memory.s1
-   {
-      datum baseAddress
-      {
-         value = "540672";
          type = "String";
       }
    }
@@ -488,10 +475,10 @@
  <parameter name="globalResetBus" value="false" />
  <parameter name="hdlLanguage" value="VERILOG" />
  <parameter name="maxAdditionalLatency" value="0" />
- <parameter name="projectName" value="threedee.qpf" />
+ <parameter name="projectName" value="force.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1426541273832" />
+ <parameter name="timeStamp" value="1427749879709" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface
@@ -1030,7 +1017,9 @@
   <parameter name="width" value="4" />
   <parameter name="clockRate" value="50000000" />
  </module>
- <module kind="PiConnector" version="1.0" enabled="1" name="PiConnector_0" />
+ <module kind="PiConnector" version="1.0" enabled="1" name="PiConnector_0">
+  <parameter name="AUTO_CLOCK_CLOCK_RATE" value="50000000" />
+ </module>
  <connection
    kind="avalon"
    version="13.0"
