@@ -63,15 +63,15 @@ class PadDraw extends JComponent {
         repaint();
     }
     public void changeColour (int x){
-        if(graphics2D != null) {
+       // if(graphics2D != null) {
             if (x == 1)
-                graphics2D.setPaint(Color.cyan);
-            if (x == 2)
+                graphics2D.setPaint(Color.red);
+            else if (x == 2)
                 graphics2D.setPaint(Color.green);
-            if (x == 3)
+            else if (x == 3)
                 graphics2D.setPaint(Color.blue);
             else
                 graphics2D.setPaint(Color.black);
-        }
+       // }
     }
 }
