@@ -12,8 +12,7 @@ entity green is
 	generic(
 		pixel_buffer_base : std_logic_vector := x"00000000";
 		find_color : integer := 0;
-		block_size : integer := 2;
-		score_factor: integer := 2
+		thresold	:	integer := 25 --between 0(black) to 32(white)
 	);	
 	port (
 		clk		: in std_logic;
@@ -41,41 +40,33 @@ architecture bhv of green is
 	CONSTANT SCREEN_HEIGHT 	: integer := 240;
 	
 	TYPE StatesTYPE			is (Initialize,Standby,Computing);
+--	Type FrameType 			is	array(0 to SCREEN_WIDTH, 0 to SCREEN_HEIGHT) of integer range 0 to 32;
 	
 	SIGNAL current_state 	: StatesTYPE := Initialize;
 	SIGNAL ready			: std_logic := '0';
 	
 	SIGNAL posX				: integer range 0 to SCREEN_WIDTH;
 	SIGNAL posY				: integer range 0 to SCREEN_HEIGHT;
-	SIGNAL acc				: integer range 0 to 64;
-	
+	SIGNAL acc				: integer range 0 to 32;
+		
 	BEGIN
 	  
 	process (clk, reset_n)
 		VARIABLE load_waiting		: std_logic := '0';
+		
+--		VARIABLE Frame				: FrameType;
 	
 		VARIABLE nextX 				:	integer range 0 to SCREEN_WIDTH := 0;
 		VARIABLE nextY 				:	integer range 0 to SCREEN_HEIGHT := 0;
-		VARIABLE nextBlockX			:	integer range 0  to block_size := 0;
-		VARIABLE nextBlockY			:	integer range 0  to block_size := 0;
+		VARIABLE tmpColor			:	integer range 0 to 32;
+		VARIABLE tmpGrey			:	integer range 0 to 32;
+		variable tmpDiff			:	integer range 0 to 32;
 		
-		VARIABLE candidateX 		:	integer range 0 to SCREEN_WIDTH;
-		VARIABLE candidateY 		:	integer range 0 to SCREEN_HEIGHT;
-		VARIABLE candidateScore		:	integer range 0 to (score_factor+1)*64*block_size*block_size;
-		
-		VARIABLE tempRed			:	integer range 0 to 64;
-		VARIABLE tempGreen			:	integer range 0 to 64;
-		VARIABLE tempBlue			:	integer range 0 to 64;
-		VARIABLE tempScoreForPixel	: 	integer range 0 to 64;
-		VARIABLE tempScoreTotal 	: 	integer range 0 to (score_factor+1)*64*block_size*block_size;
-		VARIABLE tempSecondaryScoreForPixel	: integer range 0 to 64;
+		variable candidateX : integer range 0 to SCREEN_WIDTH;
+		variable candidateY : integer range 0 to SCREEN_HEIGHT;
+		variable candidateAcc : integer range 0 to 32;
 		
 	BEGIN
-		--following variables are not required to be saved across clock cycles
-		tempRed := 0;
-		tempGreen := 0;
-		tempBlue := 0;
-	
 		if (reset_n = '0') then			
 			current_state <= Initialize;
 			ready <= '0';
@@ -91,27 +82,26 @@ architecture bhv of green is
 				when Initialize =>
 					nextX := 0;
 					nextY := 0;
-					nextBlockX := 0;
-					nextBlockY := 0;
-					candidateX := 0;
-					candidateY := 0;
-					candidateScore := 0;
-					tempScoreTotal := -(score_factor+1)*64*block_size*block_size;
 					
 					current_state <= Standby;
 					
 				when Standby => 
-					if (slave_wr_en = '1') then
-						if (slave_addr="0000") then
-							if (slave_writedata(1)='1') then
-								-- PROCESS HAS BEEN TRIGGERED, START COMPUTATION							
 								ready <= '0';
 								load_waiting := '0';
 								
-								current_state <= Computing;							
-							end if;
-						end if;
-					end if;
+								current_state <= Computing;		
+								
+					-- if (slave_wr_en = '1') then
+						-- if (slave_addr="0000") then
+							-- if (slave_writedata(1)='1') then
+								--PROCESS HAS BEEN TRIGGERED, START COMPUTATION							
+								-- ready <= '0';
+								-- load_waiting := '0';
+								
+								-- current_state <= Computing;							
+							-- end if;
+						-- end if;
+					-- end if;
 
 				when Computing =>
 					if (load_waiting = '1') then
@@ -123,95 +113,74 @@ architecture bhv of green is
 							-- MASTER READDATE IS VALID;
 							-- DO SOME OPERATIONS
 							
-								-- resize red and blue to match green for comparison
-								tempRed := to_integer(unsigned(master_readdata(15 downto 11))&'1');
-								tempGreen := to_integer(unsigned(master_readdata(10 downto 6))); --ignore LSB of GREEN
-								tempBlue := to_integer(unsigned(master_readdata(4 downto 0))&'1');
+								tmpGrey := (to_integer(unsigned(master_readdata(15 downto 11))&'1') + to_integer(unsigned(master_readdata(10 downto 6))) + to_integer(unsigned(master_readdata(4 downto 0))&'1'))/3;
 								
 								--We are looking for pixel that has greatest positive difference between find_color and larger of other two
 								--if looking for red
 								if (find_color = 0) then
-									if (tempGreen > tempBlue) then
-										tempScoreForPixel := tempRed - tempGreen + 32;
-										tempSecondaryScoreForPixel := 64-(tempGreen-tempBlue);
-									else
-										tempScoreForPixel := tempRed - tempBlue;
-										tempSecondaryScoreForPixel := 64-(tempBlue-tempGreen);
-									end if;
+									tmpColor := to_integer(unsigned(master_readdata(15 downto 11))&'1');
 									
 								--if looking for green
 								elsif (find_color = 1) then
-									if (tempRed > tempBlue) then
-										tempScoreForPixel := tempGreen - tempRed + 32;
-										tempSecondaryScoreForPixel := 64-(tempRed-tempBlue);
-									else
-										tempScoreForPixel := tempGreen - tempBlue;
-										tempSecondaryScoreForPixel := 64-(tempBlue-tempRed);
-									end if;
+									tmpColor := to_integer(unsigned(master_readdata(10 downto 6)));
 									
 								--if looking for blue
 								elsif (find_color = 2) then 
-									if (tempRed > tempGreen) then
-										tempScoreForPixel := tempBlue - tempRed + 32;
-										tempSecondaryScoreForPixel := 64-(tempRed-tempGreen);
-									else
-										tempScoreForPixel := tempBlue - tempGreen;
-										tempSecondaryScoreForPixel := 64-(tempGreen-tempRed);
-									end if;
+									tmpColor := to_integer(unsigned(master_readdata(4 downto 0))&'1');
+									
 								end if;
 								
-							
-								tempScoreTotal := tempScoreTotal + (tempScoreForPixel*score_factor) + tempSecondaryScoreForPixel;
-							--
-							
-							nextBlockX := nextBlockX + 1;
-							if (nextBlockX = block_size) then
-								nextBlockX := 0;
-								nextBlockY := nextBlockY + 1;
-								if (nextBlockY = block_size) then
-									nextBlockY := 0;
-									--done computing for the block;
+								if (tmpColor - tmpGrey < 0) then
+									tmpDiff := 0;
+								else
+									tmpDiff := tmpColor - tmpGrey;
+								end if;
+								
+								if (master_waitrequest='0') then
 									
-									if (candidateScore < tempScoreTotal) then
-										candidateX := nextX;
-										candidateY := nextY;
-										candidateScore := tempScoreTotal;
+									if(tmpDiff < thresold) then
+										master_writedata <= std_logic_vector(to_unsigned(0,16));
+									else
+										master_writedata <= std_logic_vector(to_unsigned(65535,16));
 									end if;
 									
-									tempScoreTotal := 0;
 								
+									master_addr <= std_logic_vector(unsigned(pixel_buffer_base) + unsigned(to_unsigned(nextY, 8) & unsigned(to_unsigned(nextX, 9)) & '0'));	
+									master_be <= "11";  -- byte enable
+									master_wr_en <= '1';
+									master_rd_en <= '0';
+									
 								
 									nextX := nextX+1;
-									if(nextX = (SCREEN_WIDTH-block_size)) then
+									if(nextX = SCREEN_WIDTH) then
 										nextX := 0;
 										nextY := nextY +1;
 										
-										if (nextY = (SCREEN_HEIGHT-block_size)) then
+										if (nextY = SCREEN_HEIGHT) then
 											-- DONE COMPUTATION
-											ready <= '1';
-											posX <= candidateX+(block_size/2);
-											posY <= candidateY+(block_size/2);
-											acc <= candidateScore;
 											
+											nextX := 0;
+											nextY := 0;
 											current_state <= Initialize;
 											load_waiting := '1';
 										end if;
 									end if;
+								else
+									master_wr_en <='0';
 								end if;
-							end if;
 						else
 							master_wr_en <= '0';
 							master_rd_en <= '1';
 						end if;
 					else
-						master_addr <= std_logic_vector(unsigned(pixel_buffer_base) + unsigned(to_unsigned(nextY + nextBlockY, 8) & unsigned(to_unsigned(nextX + nextBlockX, 9)) & '0'));	
+						master_addr <= std_logic_vector(unsigned(pixel_buffer_base) + unsigned(to_unsigned(nextY, 8) & unsigned(to_unsigned(nextX, 9)) & '0'));	
 						master_be <= "11";  -- byte enable
 						master_wr_en <= '0';
 						master_rd_en <= '1';
 						
 						load_waiting := '1';
 					end if;
-		
+					
 				when others=>
 					-- why are we here?
 					current_state <= Initialize;

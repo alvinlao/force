@@ -112,7 +112,7 @@
    {
       datum _sortIndex
       {
-         value = "25";
+         value = "23";
          type = "int";
       }
    }
@@ -289,19 +289,6 @@
          type = "String";
       }
    }
-   element PiConnector_0.avalon_slave
-   {
-      datum _lockedAddress
-      {
-         value = "1";
-         type = "boolean";
-      }
-      datum baseAddress
-      {
-         value = "562304";
-         type = "String";
-      }
-   }
    element color_search_0.avalon_slave
    {
       datum _lockedAddress
@@ -315,20 +302,7 @@
          type = "String";
       }
    }
-   element color_search_1.avalon_slave
-   {
-      datum _lockedAddress
-      {
-         value = "1";
-         type = "boolean";
-      }
-      datum baseAddress
-      {
-         value = "562240";
-         type = "String";
-      }
-   }
-   element pixel_drawer_0.avalon_slave_0
+   element PiConnector_0.avalon_slave
    {
       datum _lockedAddress
       {
@@ -358,7 +332,7 @@
    {
       datum _sortIndex
       {
-         value = "24";
+         value = "22";
          type = "int";
       }
    }
@@ -379,15 +353,7 @@
    {
       datum _sortIndex
       {
-         value = "21";
-         type = "int";
-      }
-   }
-   element color_search_1
-   {
-      datum _sortIndex
-      {
-         value = "22";
+         value = "24";
          type = "int";
       }
    }
@@ -420,14 +386,6 @@
          type = "String";
       }
    }
-   element sdram_controller.s1
-   {
-      datum baseAddress
-      {
-         value = "16777216";
-         type = "String";
-      }
-   }
    element button_pio.s1
    {
       datum baseAddress
@@ -441,6 +399,14 @@
       datum baseAddress
       {
          value = "540672";
+         type = "String";
+      }
+   }
+   element sdram_controller.s1
+   {
+      datum baseAddress
+      {
+         value = "16777216";
          type = "String";
       }
    }
@@ -464,7 +430,7 @@
    {
       datum _sortIndex
       {
-         value = "23";
+         value = "21";
          type = "int";
       }
    }
@@ -488,10 +454,10 @@
  <parameter name="globalResetBus" value="false" />
  <parameter name="hdlLanguage" value="VERILOG" />
  <parameter name="maxAdditionalLatency" value="0" />
- <parameter name="projectName" value="threedee.qpf" />
+ <parameter name="projectName" value="force.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1426541273832" />
+ <parameter name="timeStamp" value="1427761043352" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface
@@ -885,7 +851,7 @@
   <parameter name="tightlyCoupledInstructionMaster2AddrWidth" value="1" />
   <parameter name="tightlyCoupledInstructionMaster3AddrWidth" value="1" />
   <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='Onchip_Memory.s1' start='0x84000' end='0x88000' /><slave name='CPU.jtag_debug_module' start='0x88800' end='0x89000' /><slave name='sdram_controller.s1' start='0x1000000' end='0x1800000' /></address-map>]]></parameter>
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='Pixel_Buffer.avalon_sram_slave' start='0x0' end='0x80000' /><slave name='Onchip_Memory.s1' start='0x84000' end='0x88000' /><slave name='CPU.jtag_debug_module' start='0x88800' end='0x89000' /><slave name='SD_CARD_INTERFACE.avalon_sdcard_slave' start='0x89000' end='0x89400' /><slave name='color_search_0.avalon_slave' start='0x89400' end='0x89440' /><slave name='color_search_1.avalon_slave' start='0x89440' end='0x89480' /><slave name='PiConnector_0.avalon_slave' start='0x89480' end='0x894C0' /><slave name='timer_0.s1' start='0x894C0' end='0x894E0' /><slave name='button_pio.s1' start='0x894E0' end='0x894F0' /><slave name='Pixel_Buffer_DMA.avalon_control_slave' start='0x894F0' end='0x89500' /><slave name='Video_DMA.avalon_dma_control_slave' start='0x89500' end='0x89510' /><slave name='AV_Config.avalon_av_config_slave' start='0x89510' end='0x89520' /><slave name='jtag_uart.avalon_jtag_slave' start='0x89520' end='0x89528' /><slave name='sdram_controller.s1' start='0x1000000' end='0x1800000' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='Pixel_Buffer.avalon_sram_slave' start='0x0' end='0x80000' /><slave name='Onchip_Memory.s1' start='0x84000' end='0x88000' /><slave name='CPU.jtag_debug_module' start='0x88800' end='0x89000' /><slave name='SD_CARD_INTERFACE.avalon_sdcard_slave' start='0x89000' end='0x89400' /><slave name='color_search_0.avalon_slave' start='0x89400' end='0x89440' /><slave name='PiConnector_0.avalon_slave' start='0x89480' end='0x894C0' /><slave name='timer_0.s1' start='0x894C0' end='0x894E0' /><slave name='button_pio.s1' start='0x894E0' end='0x894F0' /><slave name='Pixel_Buffer_DMA.avalon_control_slave' start='0x894F0' end='0x89500' /><slave name='Video_DMA.avalon_dma_control_slave' start='0x89500' end='0x89510' /><slave name='AV_Config.avalon_av_config_slave' start='0x89510' end='0x89520' /><slave name='jtag_uart.avalon_jtag_slave' start='0x89520' end='0x89528' /><slave name='sdram_controller.s1' start='0x1000000' end='0x1800000' /></address-map>]]></parameter>
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="deviceFamilyName" value="Cyclone II" />
   <parameter name="internalIrqMaskSystemInfo" value="38" />
@@ -983,20 +949,6 @@
   <parameter name="AUTO_CLOCK_SINK_CLOCK_RATE" value="50000000" />
   <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone II" />
  </module>
- <module kind="color_search" version="1.0" enabled="1" name="color_search_0">
-  <parameter name="pixel_buffer_base" value="0" />
-  <parameter name="find_color" value="0" />
-  <parameter name="block_size" value="2" />
-  <parameter name="score_factor" value="2" />
-  <parameter name="AUTO_CLOCK_CLOCK_RATE" value="50000000" />
- </module>
- <module kind="color_search" version="1.0" enabled="1" name="color_search_1">
-  <parameter name="pixel_buffer_base" value="0" />
-  <parameter name="find_color" value="2" />
-  <parameter name="block_size" value="2" />
-  <parameter name="score_factor" value="2" />
-  <parameter name="AUTO_CLOCK_CLOCK_RATE" value="50000000" />
- </module>
  <module
    kind="altera_avalon_timer"
    version="13.0.1.99.2"
@@ -1030,7 +982,14 @@
   <parameter name="width" value="4" />
   <parameter name="clockRate" value="50000000" />
  </module>
- <module kind="PiConnector" version="1.0" enabled="1" name="PiConnector_0" />
+ <module kind="PiConnector" version="1.0" enabled="1" name="PiConnector_0">
+  <parameter name="AUTO_CLOCK_CLOCK_RATE" value="50000000" />
+ </module>
+ <module kind="color_search" version="1.0" enabled="1" name="color_search_0">
+  <parameter name="pixel_buffer_base" value="0" />
+  <parameter name="find_color" value="2" />
+  <parameter name="thresold" value="15" />
+ </module>
  <connection
    kind="avalon"
    version="13.0"
@@ -1521,72 +1480,6 @@
    version="13.0"
    start="Clock_Signals.sys_clk"
    end="SD_CARD_INTERFACE.clock_sink" />
- <connection
-   kind="avalon"
-   version="13.0"
-   start="CPU.data_master"
-   end="color_search_0.avalon_slave">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00089400" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="13.0"
-   start="CPU.data_master"
-   end="color_search_1.avalon_slave">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00089440" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="reset"
-   version="13.0"
-   start="CPU.jtag_debug_module_reset"
-   end="color_search_0.reset" />
- <connection
-   kind="reset"
-   version="13.0"
-   start="CPU.jtag_debug_module_reset"
-   end="color_search_1.reset" />
- <connection
-   kind="reset"
-   version="13.0"
-   start="clk_0.clk_reset"
-   end="color_search_0.reset" />
- <connection
-   kind="reset"
-   version="13.0"
-   start="clk_0.clk_reset"
-   end="color_search_1.reset" />
- <connection
-   kind="clock"
-   version="13.0"
-   start="Clock_Signals.sys_clk"
-   end="color_search_1.clock" />
- <connection
-   kind="clock"
-   version="13.0"
-   start="Clock_Signals.sys_clk"
-   end="color_search_0.clock" />
- <connection
-   kind="avalon"
-   version="13.0"
-   start="color_search_0.avalon_master"
-   end="Pixel_Buffer.avalon_sram_slave">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="13.0"
-   start="color_search_1.avalon_master"
-   end="Pixel_Buffer.avalon_sram_slave">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
  <connection kind="avalon" version="13.0" start="CPU.data_master" end="timer_0.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x000894c0" />
@@ -1665,6 +1558,39 @@
    version="13.0"
    start="Clock_Signals.sys_clk"
    end="PiConnector_0.clock" />
+ <connection
+   kind="avalon"
+   version="13.0"
+   start="CPU.data_master"
+   end="color_search_0.avalon_slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x00089400" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="13.0"
+   start="color_search_0.avalon_master"
+   end="Pixel_Buffer.avalon_sram_slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="clock"
+   version="13.0"
+   start="Clock_Signals.sys_clk"
+   end="color_search_0.clock" />
+ <connection
+   kind="reset"
+   version="13.0"
+   start="clk_0.clk_reset"
+   end="color_search_0.reset" />
+ <connection
+   kind="reset"
+   version="13.0"
+   start="CPU.jtag_debug_module_reset"
+   end="color_search_0.reset" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="0" />
 </system>
