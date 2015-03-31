@@ -373,24 +373,11 @@
          type = "int";
       }
    }
-   element timer_0.s1
-   {
-      datum _lockedAddress
-      {
-         value = "0";
-         type = "boolean";
-      }
-      datum baseAddress
-      {
-         value = "562368";
-         type = "String";
-      }
-   }
-   element button_pio.s1
+   element sdram_controller.s1
    {
       datum baseAddress
       {
-         value = "562400";
+         value = "16777216";
          type = "String";
       }
    }
@@ -402,11 +389,24 @@
          type = "String";
       }
    }
-   element sdram_controller.s1
+   element button_pio.s1
    {
       datum baseAddress
       {
-         value = "16777216";
+         value = "562400";
+         type = "String";
+      }
+   }
+   element timer_0.s1
+   {
+      datum _lockedAddress
+      {
+         value = "0";
+         type = "boolean";
+      }
+      datum baseAddress
+      {
+         value = "562368";
          type = "String";
       }
    }
@@ -457,7 +457,7 @@
  <parameter name="projectName" value="force.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1427761043352" />
+ <parameter name="timeStamp" value="1427827978241" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface
@@ -987,8 +987,9 @@
  </module>
  <module kind="color_search" version="1.0" enabled="1" name="color_search_0">
   <parameter name="pixel_buffer_base" value="0" />
-  <parameter name="find_color" value="2" />
-  <parameter name="thresold" value="15" />
+  <parameter name="find_color" value="0" />
+  <parameter name="thresold" value="20" />
+  <parameter name="AUTO_CLOCK_CLOCK_RATE" value="50000000" />
  </module>
  <connection
    kind="avalon"
