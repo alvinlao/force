@@ -80,20 +80,20 @@ architecture bhv of color_tracker is
 							-- MASTER READDATE IS VALID;
 							-- DO SOME OPERATIONS
 							
-								tmpGrey := (to_integer(unsigned(master_readdata(15 downto 11))&'1') + to_integer(unsigned(master_readdata(10 downto 6))) + to_integer(unsigned(master_readdata(4 downto 0))&'1'))/3;
+								tmpGrey := (to_integer(unsigned(master_readdata(15 downto 11))) + to_integer(unsigned(master_readdata(10 downto 6))) + to_integer(unsigned(master_readdata(4 downto 0))))/3;
 								
 								--We are looking for pixel that has greatest positive difference between find_color and larger of other two
 								--if looking for red
 								if (find_color = 0) then
-									tmpColor := to_integer(unsigned(master_readdata(15 downto 11))&'1');
+									tmpColor := to_integer(unsigned(master_readdata(15 downto 11)));
 									
-								--if looking for color_tracker
+								--if looking for green
 								elsif (find_color = 1) then
 									tmpColor := to_integer(unsigned(master_readdata(10 downto 6)));
 									
 								--if looking for blue
 								elsif (find_color = 2) then 
-									tmpColor := to_integer(unsigned(master_readdata(4 downto 0))&'1');
+									tmpColor := to_integer(unsigned(master_readdata(4 downto 0)));
 									
 								end if;
 								
