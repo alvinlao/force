@@ -544,6 +544,11 @@
    internal="PiConnector_0.conduit_end"
    type="conduit"
    dir="end" />
+ <interface
+   name="color_track"
+   internal="color_tracker_2_0.conduit_end"
+   type="conduit"
+   dir="end" />
  <module kind="clock_source" version="13.0" enabled="1" name="clk_0">
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="clockFrequencyKnown" value="true" />
@@ -993,7 +998,6 @@
   <parameter name="pixel_buffer_base" value="0" />
   <parameter name="back_buffer_base" value="245760" />
   <parameter name="find_color" value="0" />
-  <parameter name="thresold" value="25" />
  </module>
  <connection
    kind="avalon"
@@ -1564,21 +1568,6 @@
    start="Clock_Signals.sys_clk"
    end="PiConnector_0.clock" />
  <connection
-   kind="reset"
-   version="13.0"
-   start="clk_0.clk_reset"
-   end="color_tracker_2_0.reset" />
- <connection
-   kind="reset"
-   version="13.0"
-   start="CPU.jtag_debug_module_reset"
-   end="color_tracker_2_0.reset" />
- <connection
-   kind="clock"
-   version="13.0"
-   start="Clock_Signals.sys_clk"
-   end="color_tracker_2_0.clock" />
- <connection
    kind="avalon"
    version="13.0"
    start="color_tracker_2_0.avalon_master"
@@ -1587,6 +1576,21 @@
   <parameter name="baseAddress" value="0x0000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
+ <connection
+   kind="reset"
+   version="13.0"
+   start="CPU.jtag_debug_module_reset"
+   end="color_tracker_2_0.reset" />
+ <connection
+   kind="reset"
+   version="13.0"
+   start="clk_0.clk_reset"
+   end="color_tracker_2_0.reset" />
+ <connection
+   kind="clock"
+   version="13.0"
+   start="Clock_Signals.sys_clk"
+   end="color_tracker_2_0.clock" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="0" />
 </system>

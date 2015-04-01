@@ -12,12 +12,13 @@ entity color_tracker is
 	generic(
 		pixel_buffer_base : std_logic_vector := x"00000000";
 		back_buffer_base : std_logic_vector := x"00000000";
-		find_color : integer := 0;
-		thresold	:	integer := 25 --between 0(black) to 32(white)
+		find_color : integer := 0
 	);	
 	port (
 		clk		: in std_logic;
 		reset_n	: in std_logic;
+		
+		threshold : in std_logic_vector(4 downto 0);
 				
 		master_addr : out std_logic_vector(31 downto 0);
 		master_rd_en : out std_logic;
@@ -105,12 +106,12 @@ architecture bhv of color_tracker is
 								
 								if (master_waitrequest='0') then
 									
-									-- if(tmpDiff < thresold) then
-										-- master_writedata <= std_logic_vector(to_unsigned(0,16));
-									-- else
-										-- master_writedata <= std_logic_vector(to_unsigned(65535,16));
-									-- end if;
-									master_writedata <= std_logic_vector(to_unsigned(tmpDiff,5) & to_unsigned(tmpDiff,5) & '0' &to_unsigned(tmpDiff,5));
+									if(tmpDiff < to_integer(unsigned(threshold))) then
+										master_writedata <= std_logic_vector(to_unsigned(0,16));
+									else
+										master_writedata <= std_logic_vector(to_unsigned(65535,16));
+									end if;
+									--master_writedata <= std_logic_vector(to_unsigned(tmpDiff,5) & to_unsigned(tmpDiff,5) & '0' &to_unsigned(tmpDiff,5));
 								
 									master_addr <= std_logic_vector(unsigned(back_buffer_base) + unsigned(to_unsigned(nextY, 8) & to_unsigned(nextX, 9) & '0'));
 									master_be <= "11";  -- byte enable
