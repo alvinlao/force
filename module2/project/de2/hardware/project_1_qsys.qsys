@@ -289,6 +289,19 @@
          type = "String";
       }
    }
+   element color_search_0.avalon_slave
+   {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
+      datum baseAddress
+      {
+         value = "562176";
+         type = "String";
+      }
+   }
    element PiConnector_0.avalon_slave
    {
       datum _lockedAddress
@@ -336,7 +349,7 @@
          type = "boolean";
       }
    }
-   element color_search_0
+   element color_tracker_2_0
    {
       datum _sortIndex
       {
@@ -360,6 +373,14 @@
          type = "int";
       }
    }
+   element Onchip_Memory.s1
+   {
+      datum baseAddress
+      {
+         value = "540672";
+         type = "String";
+      }
+   }
    element button_pio.s1
    {
       datum baseAddress
@@ -378,14 +399,6 @@
       datum baseAddress
       {
          value = "562368";
-         type = "String";
-      }
-   }
-   element Onchip_Memory.s1
-   {
-      datum baseAddress
-      {
-         value = "540672";
          type = "String";
       }
    }
@@ -444,7 +457,7 @@
  <parameter name="projectName" value="force.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1427834966788" />
+ <parameter name="timeStamp" value="1427853950267" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface
@@ -972,11 +985,15 @@
  <module kind="PiConnector" version="1.0" enabled="1" name="PiConnector_0">
   <parameter name="AUTO_CLOCK_CLOCK_RATE" value="50000000" />
  </module>
- <module kind="color_search" version="1.0" enabled="1" name="color_search_0">
+ <module
+   kind="color_tracker_2"
+   version="1.0"
+   enabled="1"
+   name="color_tracker_2_0">
   <parameter name="pixel_buffer_base" value="0" />
   <parameter name="back_buffer_base" value="245760" />
   <parameter name="find_color" value="0" />
-  <parameter name="thresold" value="15" />
+  <parameter name="thresold" value="25" />
  </module>
  <connection
    kind="avalon"
@@ -1549,22 +1566,22 @@
  <connection
    kind="reset"
    version="13.0"
-   start="CPU.jtag_debug_module_reset"
-   end="color_search_0.reset" />
+   start="clk_0.clk_reset"
+   end="color_tracker_2_0.reset" />
  <connection
    kind="reset"
    version="13.0"
-   start="clk_0.clk_reset"
-   end="color_search_0.reset" />
+   start="CPU.jtag_debug_module_reset"
+   end="color_tracker_2_0.reset" />
  <connection
    kind="clock"
    version="13.0"
    start="Clock_Signals.sys_clk"
-   end="color_search_0.clock" />
+   end="color_tracker_2_0.clock" />
  <connection
    kind="avalon"
    version="13.0"
-   start="color_search_0.avalon_master"
+   start="color_tracker_2_0.avalon_master"
    end="Pixel_Buffer.avalon_sram_slave">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0000" />
