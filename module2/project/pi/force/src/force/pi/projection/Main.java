@@ -25,26 +25,26 @@ public class Main {
             for (int i = 0; i < 20; ++i) {
                 cam.x += 10;
                 pro.projectIt(cam);
-                Thread.sleep(33);
+                Thread.sleep(3);
             }
 
 //            for (int i = 0; i < 20; ++i) {
 //                cam.y -= 10;
 //                pro.projectIt(cam);
-//                Thread.sleep(33);
+//                Thread.sleep(3);
 //            }
 
             for (int i = 0; i < 20; ++i) {
                 cam.z += 10;
                 pro.projectIt(cam);
-                Thread.sleep(33);
+                Thread.sleep(3);
             }
 
             for (int i = 0; i < 10; ++i) {
                 cam.x -= 10;
           //      cam.y += 10;
                 pro.projectIt(cam);
-                Thread.sleep(33);
+                Thread.sleep(3);
             }
 
             for (int i = 0; i < 10; ++i) {
@@ -52,7 +52,7 @@ public class Main {
            //     cam.y += 10;
                 cam.z -= 20;
                 pro.projectIt(cam);
-                Thread.sleep(33);
+                Thread.sleep(3);
             }
             System.out.println(cam.x + " " + cam.y + " " + cam.z);
         }

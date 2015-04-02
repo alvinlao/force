@@ -21,14 +21,14 @@ public class Projection {
 
     // Points for box to draw out
     int scale = 25;
-    double [][] vals = { {-1, 1, 1},
+    double [][] vals = { {-1, 1, 0},
+            {1, 1, 0},
+            {1, -1, 0},
+            {-1, -1, 0},
+            {-1, 1, 1},
             {1, 1, 1},
             {1, -1, 1},
-            {-1, -1, 1},
-            {-1, 1, 2},
-            {1, 1, 2},
-            {1, -1, 2},
-            {-1, -1, 2}};
+            {-1, -1, 1}};
 
     double [] normal = {0,0,1};
 
