@@ -94,7 +94,6 @@ public class Camera {
         float distance = (float)Math.sqrt(Math.pow(point.y, 2) + Math.pow(point.z, 2));
 
         float temp_theta = DEGREES_TILTED + (float) Math.toDegrees(Math.asin(point.z / distance));
-        System.out.println("theta: " + temp_theta);
 
         point.y = distance * (float)Math.cos(Math.toRadians(temp_theta));
         point.z = distance * (float)Math.sin(Math.toRadians(temp_theta));

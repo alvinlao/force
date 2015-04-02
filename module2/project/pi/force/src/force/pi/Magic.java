@@ -68,16 +68,17 @@ public class Magic {
                 measurements[i].accuracyRating = 25;
                 points[i] = kalmanFilters[i].run(measurements[i]);
             }
+            
+            System.out.println(String.format("<%d, %d> <%d, %d>", points[RED].x, points[RED].y, points[BLUE].x, points[BLUE].y));
+
 
             // Convert two points into a camera coordinate
             coordinate = camera.transform2Dto3D(points[RED], points[BLUE]);
-            coordinate.x *= 1000 * -1;
-            coordinate.y *= 1000 * -1;
+            coordinate.x *= 1000;
+            coordinate.y *= 1000;
             coordinate.z *= 1000;
 
-            System.out.println(coordinate.x + " " + coordinate.y + " " + coordinate.z);
-
-	    System.out.println(String.format("%f %f %f", coordinate.x, coordinate.y, coordinate.z));
+            //System.out.println(coordinate.x + " " + coordinate.y + " " + coordinate.z);
 
             // Update projection with latest camera coordinate
             projection.projectIt(coordinate);
