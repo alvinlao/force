@@ -42,7 +42,7 @@ public class Point3D {
      * @param other - The point to compute the distance from.
      * @return
      */
-    double distance(Point3D other) {
+    public double distance(Point3D other) {
         double dx = Math.pow((other.x - this.x), 2);
         double dy = Math.pow((other.y - this.y), 2);
         double dz = Math.pow((other.z - this.z), 2);

@@ -29,10 +29,20 @@ public class Point {
      * @param other point
      * @return distance
      */
-    double distance(Point other) {
+    public double distance(Point other) {
         double dx = Math.pow((other.x - this.x), 2);
         double dy = Math.pow((other.y - this.y), 2);
         return Math.sqrt(dx + dy);
+    }
+
+    /**
+     * Get the midpoint
+     */
+    public static Point midpoint(final Point left, final Point right) {
+        int x = left.x + (right.x - left.x) / 2;
+        int y = left.y + (right.y - left.y) / 2;
+
+        return new Point(x, y);
     }
 
     @Override
