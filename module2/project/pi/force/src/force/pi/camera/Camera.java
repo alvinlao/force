@@ -35,7 +35,7 @@ public class Camera {
     private static final float R_EFFECTIVE_INF = 0.5f;
 
     // Real distance from camera to center of projection
-    private static final float R_CAMERA_TO_PROJECTION_CENTER = 0.3f;
+    private static final float R_CAMERA_TO_PROJECTION_CENTER = 0.2f;
 
     // Conversion factor: C = real distance / camera distance
     //private static final float CAMERA_TO_REAL_CONVERSION = 0.004166f;
@@ -45,7 +45,7 @@ public class Camera {
     private static final float CAMERA_TO_REAL_Y_CONVERSION = 0.00165f;
 
     // Camera tilt angle (from table) in degrees
-    private static final float DEGREES_TILTED = 20;
+    private static final float DEGREES_TILTED = 55;
 
 
     // Fields
@@ -69,7 +69,7 @@ public class Camera {
         //transformedPoint.z = (float) Math.sqrt(Math.pow(R_FIXED_DISTANCE, 2) - Math.pow(transformedPoint.x, 2) - Math.pow(transformedPoint.y, 2));
 
         // Apply coordinate system transform
-        tilt(transformedPoint);
+        //tilt(transformedPoint);
 
         // Translate the origin to projection center
         translateOrigin(transformedPoint);
@@ -92,6 +92,7 @@ public class Camera {
      */
     private void tilt(Point3D point) {
         float distance = (float)Math.sqrt(Math.pow(point.y, 2) + Math.pow(point.z, 2));
+	System.out.println(distance);
 
         float temp_theta = DEGREES_TILTED + (float) Math.toDegrees(Math.asin(point.z / distance));
 
