@@ -368,11 +368,27 @@
          type = "int";
       }
    }
+   element button_pio.s1
+   {
+      datum baseAddress
+      {
+         value = "562208";
+         type = "String";
+      }
+   }
    element sdram_controller.s1
    {
       datum baseAddress
       {
          value = "16777216";
+         type = "String";
+      }
+   }
+   element Onchip_Memory.s1
+   {
+      datum baseAddress
+      {
+         value = "540672";
          type = "String";
       }
    }
@@ -386,22 +402,6 @@
       datum baseAddress
       {
          value = "562176";
-         type = "String";
-      }
-   }
-   element Onchip_Memory.s1
-   {
-      datum baseAddress
-      {
-         value = "540672";
-         type = "String";
-      }
-   }
-   element button_pio.s1
-   {
-      datum baseAddress
-      {
-         value = "562208";
          type = "String";
       }
    }
@@ -452,7 +452,7 @@
  <parameter name="projectName" value="magicblobs.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1428096037324" />
+ <parameter name="timeStamp" value="1428129319348" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface
@@ -1002,8 +1002,6 @@
  </module>
  <module kind="blobs_master" version="1.0" enabled="1" name="blobs_master_0">
   <parameter name="pixel_buffer_base" value="245760" />
-  <parameter name="box_color" value="2016" />
-  <parameter name="AUTO_CLOCK_CLOCK_RATE" value="50000000" />
  </module>
  <connection
    kind="avalon"
@@ -1598,14 +1596,20 @@
    start="Clock_Signals.sys_clk"
    end="color_tracker_2_0.clock" />
  <connection
-   kind="avalon"
+   kind="reset"
    version="13.0"
-   start="blobs_master_0.avalon_master"
-   end="Pixel_Buffer.avalon_sram_slave">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
+   start="CPU.jtag_debug_module_reset"
+   end="blobs_master_0.reset" />
+ <connection
+   kind="reset"
+   version="13.0"
+   start="clk_0.clk_reset"
+   end="blobs_master_0.reset" />
+ <connection
+   kind="clock"
+   version="13.0"
+   start="Clock_Signals.sys_clk"
+   end="blobs_master_0.clock" />
  <connection
    kind="avalon"
    version="13.0"
@@ -1616,20 +1620,14 @@
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
-   kind="reset"
+   kind="avalon"
    version="13.0"
-   start="CPU.jtag_debug_module_reset"
-   end="blobs_master_0.reset" />
- <connection
-   kind="clock"
-   version="13.0"
-   start="Clock_Signals.sys_clk"
-   end="blobs_master_0.clock" />
- <connection
-   kind="reset"
-   version="13.0"
-   start="clk_0.clk_reset"
-   end="blobs_master_0.reset" />
+   start="blobs_master_0.avalon_master"
+   end="Pixel_Buffer.avalon_sram_slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="0" />
 </system>

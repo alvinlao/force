@@ -21,18 +21,19 @@ entity outliner is
 		master_writedata: out  std_logic_vector(15 downto 0);
 		master_waitrequest : in std_logic;
 				
-		data_in: in std_logic_vector(33 downto 0);
+		data_in: in std_logic_vector(34 downto 0);
 		data_wait: out std_logic;
 		start : in std_logic;
 		
-		pixel_buffer_base : in std_logic_vector (31 downto 0);
-		box_color : in std_logic_vector(15 downto 0)
+		pixel_buffer_base : in std_logic_vector (31 downto 0)
 	);
 end outliner;
 
 architecture bhv of outliner is
 	CONSTANT SCREEN_WIDTH 	: integer := 320;
 	CONSTANT SCREEN_HEIGHT 	: integer := 240;
+	CONSTANT COLOR1			: std_logic_vector := "0000011111100000";
+	CONSTANT COLOR2			: std_logic_vector := "0000000000011111";
 	
 	TYPE	StatesTYPE	is (Standby, Drawing,Waiting);
 	TYPE	DrawingTYPE	is (Top, Bottom, LeftSide, RightSide);
@@ -50,6 +51,7 @@ architecture bhv of outliner is
 		VARIABLE nextX 				:	integer range 0 to SCREEN_WIDTH := 0;
 		VARIABLE nextY 				:	integer range 0 to SCREEN_HEIGHT := 0;
 		VARIABLE CurrentDrawing 	: DrawingTYPE;
+		VARIABLE Color				: std_logic_vector (15 downto 0);
 	BEGIN
 		if (reset_n = '0') then			
 			current_state <= Standby;
@@ -66,6 +68,11 @@ architecture bhv of outliner is
 							X2 <= to_integer(unsigned(data_in(8 downto 0)));
 							Y1 <= to_integer(unsigned(data_in(33 downto 26)));
 							Y2 <= to_integer(unsigned(data_in(16 downto 9)));
+							if (data_in(34) = '0') then
+								Color := COLOR1;
+							else
+								Color := COLOR2;
+							end if;
 					
 							if(X1 < X2) and (Y1 < Y2) then
 								nextX := X1;
@@ -77,7 +84,7 @@ architecture bhv of outliner is
 				when Drawing =>
 					data_wait <= '1';
 					master_addr <= std_logic_vector(unsigned(pixel_buffer_base) + unsigned(to_unsigned(nextY,8) & to_unsigned(nextX,9) & '0'));
-					master_writedata <= std_logic_vector(box_color);
+					master_writedata <= std_logic_vector(Color);
 					master_rd_en <= '0';
 					master_wr_en <= '1';
 					master_be <= "11";
@@ -137,6 +144,9 @@ architecture bhv of outliner is
 							when others=>
 								current_state <= Standby;
 							end case;
+					else
+						master_rd_en <= '0';
+						master_wr_en <= '0';
 					end if;
 					
 				

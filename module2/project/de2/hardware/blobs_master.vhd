@@ -4,8 +4,7 @@ use ieee.numeric_std.all;
 
 entity blobs_master is
 generic(
-    pixel_buffer_base : std_logic_vector := x"00000000";
-	box_color : std_logic_vector (15 downto 0) := x"07e0"
+    pixel_buffer_base : std_logic_vector := x"00000000"
 	 );
 port (
     clk: in std_logic;
@@ -14,6 +13,9 @@ port (
 	ext_draw_box : in std_logic;
 	ext_start_drawing: out std_logic;
 	ext_drawing_wait: out std_logic;
+	ext_StatesDebug : out std_logic_vector (7 downto 0);
+	ext_colDebug	: out std_logic_vector( 8 downto 0);
+	ext_colSelect	: in std_logic_vector( 1 downto 0);
 	
     pb1_master_addr : out std_logic_vector(31 downto 0);
     pb1_master_rd_en : out std_logic;
@@ -41,9 +43,12 @@ architecture rtl of blobs_master is
 			reset_n	: in std_logic;
 			
 			draw_box : in std_logic;
+			StatesDebug : out std_logic_vector(7 downto 0);
+			ColDebug : out std_logic_vector (8 downto 0);
+			ColSelect : in std_logic_vector (1 downto 0);
 			
 			outline_start : out std_logic;
-			outline_data : out std_logic_vector(33 downto 0);
+			outline_data : out std_logic_vector(34 downto 0);
 			outline_wait : in std_logic;
 							
 			pb_master_addr : out std_logic_vector(31 downto 0);
@@ -71,12 +76,11 @@ architecture rtl of blobs_master is
 		master_writedata: out  std_logic_vector(15 downto 0);
 		master_waitrequest : in std_logic;
 				
-		data_in: in std_logic_vector(33 downto 0);
+		data_in: in std_logic_vector(34 downto 0);
 		data_wait: out std_logic;
 		start : in std_logic;
 
-		pixel_buffer_base : in std_logic_vector (31 downto 0);
-		box_color : in std_logic_vector(15 downto 0)
+		pixel_buffer_base : in std_logic_vector (31 downto 0)
 	);
 	end component pixel_drawer;
 	 
@@ -85,7 +89,7 @@ architecture rtl of blobs_master is
 	 
 	 
 	 SIGNAL outline_start : std_logic;
-	 SIGNAL outline_data : std_logic_vector(33 downto 0);
+	 SIGNAL outline_data : std_logic_vector(34 downto 0);
 	 SIGNAL outline_wait : std_logic;
 	 
 	 begin
@@ -95,6 +99,9 @@ u0 : component blobs
 			reset_n					=> reset_n,
 			
 			draw_box 				=> ext_draw_box,
+			StatesDebug				=> ext_StatesDebug,
+			ColDebug				=>	ext_colDebug,
+			ColSelect				=>	ext_colSelect,
 			
 			outline_start 			=> outline_start,
 			outline_data 			=> outline_data,
@@ -128,8 +135,7 @@ u1 : component pixel_drawer
 			data_wait				=> outline_wait,
 			start 					=> outline_start,
 			
-			pixel_buffer_base		=> pixel_buffer_base,
-			box_color				=> box_color
+			pixel_buffer_base		=> pixel_buffer_base
         );
 		
 		ext_drawing_wait <= outline_wait;

@@ -15,8 +15,12 @@ entity blobs is
 		
 		draw_box : in std_logic;
 		
+		StatesDebug: out std_logic_vector(7 downto 0);
+		ColDebug: out std_logic_vector(8 downto 0);
+		ColSelect : in std_logic_vector(1 downto 0);
+		
 		outline_start : out std_logic;
-		outline_data : out std_logic_vector(33 downto 0);
+		outline_data : out std_logic_vector(34 downto 0);
 		outline_wait : in std_logic;
 						
 		pb_master_addr : out std_logic_vector(31 downto 0);
@@ -34,60 +38,83 @@ end blobs;
 architecture bhv of blobs is
 	CONSTANT SCREEN_WIDTH 	: integer := 320;
 	CONSTANT SCREEN_HEIGHT 	: integer := 240;
-	CONSTANT max_blob_count : integer := 5;
 	
-	TYPE	StatesTYPE			is (Initialize,Standby,Computing,Finalizing);
-	TYPE	FrameTYPE			is array(0 to SCREEN_WIDTH, 0 to SCREEN_HEIGHT) of integer range 0 to max_blob_count;
-	TYPE 	BlobsTYPE			is array (0 to max_blob_count) of std_logic_vector(33 downto 0);
+	TYPE	StatesTYPE			is (Initialize,Standby,
+									DetectingColumns,
+									DetectingColumn1_Top,
+									DetectingColumn1_Bottom,
+									DetectingColumn2_Top,
+									DetectingColumn2_Bottom,
+									Finalizing);
+	TYPE ColTYPE				is  array(0 to 3) of integer range 0 to SCREEN_WIDTH;
 	
 	SIGNAL current_state 	: StatesTYPE := Initialize;
-	SIGNAL blobs	: BlobsTYPE;
-	SIGNAL nextBlobsId : integer range 1 to max_blob_count;
 		
 	BEGIN
 	  
 	process (clk, reset_n)
-		VARIABLE load_waiting		: std_logic := '0';
+		VARIABLE load_waiting			:	std_logic := '0';
 			
-		VARIABLE nextX 				:	integer range 0 to SCREEN_WIDTH := 0;
-		VARIABLE nextY 				:	integer range 0 to SCREEN_HEIGHT := 0;
+		VARIABLE	curX 				:	integer range -1 to SCREEN_WIDTH := 0;
+		VARIABLE	curY 				:	integer range -1 to SCREEN_HEIGHT := 0;
 		
-		VARIABLE Frame	: FrameTYPE;
+		VARIABLE	LookingForColumn	:	integer range 0 to 3 := 0;
 		
-		VARIABLE tmpHasNeighbour	:	std_logic;
-		VARIABLE tmpNeighbourID		: integer range 0 to max_blob_count;
+		VARIABLE	Col					:	ColTYPE := ((others=> 0));
+		VARIABLE	CurrentColHasWhite	:	std_logic := '0';
+		VARIABLE	ColumnFound			:	std_logic := '0';
 		
-		VARIABLE tmpX1	:	 integer range 0 to SCREEN_WIDTH;
-		VARIABLE tmpY1	:	 integer range 0 to SCREEN_HEIGHT;
-		VARIABLE tmpX2	:	 integer range 0 to SCREEN_WIDTH;
-		VARIABLE tmpY2	:	 integer range 0 to SCREEN_HEIGHT;
+		VARIABLE	Col1Top				: integer range 0 to SCREEN_HEIGHT;
+		VARIABLE	Col1Bot				: integer range 0 to SCREEN_HEIGHT;
+		VARIABLE	Col2Top				: integer range 0 to SCREEN_HEIGHT;
+		VARIABLE	Col2Bot				: integer range 0 to SCREEN_HEIGHT;
 		
-		VARIABLE tmpBlob : 	integer range 0 to max_blob_count;
+		VARIABLE	DrawingBox			: integer range 1 to 2;
 		
 	BEGIN
 		if (reset_n = '0') then			
 			current_state <= Initialize;
-			nextX := 0;
-			nextY := 0;
 		elsif rising_edge(clk) then
 			pb_master_wr_en <= '0';
 			pb_master_rd_en <= '0';
 			outline_start <= '0';
 			
+			if (ColSelect = "00") then
+				ColDebug <= std_logic_vector(to_unsigned(Col(0),9));
+			elsif(ColSelect = "01") then
+				ColDebug <= std_logic_vector(to_unsigned(Col(1),9));
+			elsif(ColSelect = "10") then
+				ColDebug <= std_logic_vector(to_unsigned(Col(2),9));
+			else
+				ColDebug <= std_logic_vector(to_unsigned(Col(3),9));
+			end if;
+			
 			case (current_state) is
 				when Initialize =>
-					nextX := 0;
-					nextY := 0;
-					nextBlobsId <= 1;
+					StatesDebug <= "00000001";
+					curX := 0;
+					curY := 0;
+					
+					LookingForColumn 	:= 0;
+					Col 				:= ((others=> 0));
+					CurrentColHasWhite 	:= '0';
+					DrawingBox			:= 1;
+					
+					Col1Top := 0;
+					Col2Top := 0;
+					Col1Bot := 0;
+					Col2Bot := 0;
 					
 					current_state <= Standby;
 					
 				when Standby => 
-						current_state <= Computing;
-						nextX := 0;
-						nextY := 0;
+							StatesDebug <= "00000010";
+						current_state <= DetectingColumns;
+						curX := 0;
+						curY := 0;
 						load_waiting := '0';
-				when Computing =>
+				when DetectingColumns =>
+				StatesDebug <= "00000100";
 					if (load_waiting = '1') then
 						if (pb_master_waitrequest = '0') then
 							load_waiting := '0';
@@ -97,66 +124,54 @@ architecture bhv of blobs is
 							-- MASTER READDATE IS VALID;
 							-- DO SOME OPERATIONS
 							
-							--Frame(nextX,nextY) := pb_master_readdata(15);
-							
 							if (pb_master_readdata(15)='1') then
-								tmpHasNeighbour := '0';
-								if (Frame(nextX-1,nextY) /= 0) then
-									tmpHasNeighbour := '1';
-									tmpNeighbourID := Frame(nextX-1,nextY);
-								elsif (Frame(nextX-1,nextY-1) /= 0) then
-									tmpHasNeighbour := '1';
-									tmpNeighbourID := Frame(nextX-1,nextY-1);
-								elsif (Frame(nextX,nextY-1) /= 0) then
-									tmpHasNeighbour := '1';
-									tmpNeighbourID := Frame(nextX,nextY-1);
-								elsif (Frame(nextX+1,nextY-1) /= 0) then
-									tmpHasNeighbour := '1';
-									tmpNeighbourID := Frame(nextX+1,nextY-1);
-								end if;
-								if (tmpHasNeighbour='1') then
-									-- has neighbour
-									Frame(nextX,nextY) := tmpNeighbourID;
-									
-									tmpX1 := to_integer(unsigned(blobs(tmpNeighbourID)(25 downto 17)));
-									tmpY1 := to_integer(unsigned(blobs(tmpNeighbourID)(33 downto 26)));
-									tmpX2 := to_integer(unsigned(blobs(tmpNeighbourID)(8 downto 0)));
-									tmpY2 := to_integer(unsigned(blobs(tmpNeighbourID)(16 downto 9)));
-									if(tmpX1 > nextX) then
-										tmpX1 := nextX;
-									elsif (tmpX2 < nextX) then
-										tmpX2 := nextX;
-									end if;
-									if(tmpY1 > nextY) then
-										tmpY1 := nextY;
-									elsif (tmpY2 < nextY) then
-										tmpY2 := nextY;
-									end if;
-									blobs(tmpNeighbourID) <= std_logic_vector(to_unsigned(tmpY1,8)&to_unsigned(tmpX1,9)&to_unsigned(tmpY2,8)&to_unsigned(tmpX2,9));
-									
-									
+								if (LookingForColumn = 0) then
+									Col(0) := curX;
+									ColumnFound := '1';
+								elsif (LookingForColumn = 2) then
+									Col(2) := curX;
+									ColumnFound := '1';
 								else
-									--is start of new blob
-									Frame(nextX,nextY) := nextBlobsId;
-									blobs(nextBlobsId) <= std_logic_vector(to_unsigned(nextY,8)&to_unsigned(nextX,9)&to_unsigned(nextY,8)&to_unsigned(nextX,9));
-									
-									nextBlobsId <= nextBlobsId + 1;
+									CurrentColHasWhite := '1';
 								end if;
 							end if;
 								
-							nextX := nextX+1;
-							if(nextX = SCREEN_WIDTH) then
-								nextX := 0;
-								nextY := nextY +1;
+							curY := curY+1;
+							if ((curY = SCREEN_HEIGHT) or (ColumnFound='1')) then
+								--End of Column (or no need to continue this column)
+								if (CurrentColHasWhite = '0') then
+									if (LookingForColumn = 1) then
+										Col(1) := curX;
+										ColumnFound := '1';
+									elsif (LookingForColumn = 3) then
+										Col(3) := curX;
+										ColumnFound := '1';
+									end if;
+								end if;
 								
-								if (nextY = SCREEN_HEIGHT) then
+								curY := 0;
+								curX := curX +1;
+								CurrentColHasWhite := '0';
+								
+								if (ColumnFound = '1') then
+									if (LookingForColumn = 3) then
+										--Found All Columns
+										curX := Col(0);
+										curY := 0;
+										current_state <= DetectingColumn1_Top;
+									else
+										LookingForColumn := LookingForColumn + 1;
+									end if;
+								end if;
+								
+								ColumnFound := '0'; 
+								
+								if (curX = SCREEN_WIDTH) then
 									-- DONE COMPUTATION
 									
-									nextX := 0;
-									nextY := 0;
-									tmpBlob := 1;
-									current_state <= Finalizing;
-									load_waiting := '1';
+									curX := Col(0);
+									curY := 0;
+									current_state <= DetectingColumn1_Top;
 								end if;
 							end if;
 						else
@@ -164,7 +179,7 @@ architecture bhv of blobs is
 							pb_master_rd_en <= '1';
 						end if;
 					else
-						pb_master_addr <= std_logic_vector(unsigned(pixel_buffer_base) + unsigned(to_unsigned(nextY, 8) & to_unsigned(nextX, 9) & '0'));	
+						pb_master_addr <= std_logic_vector(unsigned(pixel_buffer_base) + unsigned(to_unsigned(curY, 8) & to_unsigned(curX, 9) & '0'));	
 						pb_master_be <= "11";  -- byte enable
 						pb_master_wr_en <= '0';
 						pb_master_rd_en <= '1';
@@ -172,29 +187,200 @@ architecture bhv of blobs is
 						load_waiting := '1';
 					end if;
 					
-				when Finalizing=>
-					if (draw_box = '1') then
-						if (tmpBlob < nextBlobsId) then
-							if (outline_wait ='0') then
-								outline_data <= blobs(tmpBlob);
-								outline_start <= '1';
-								tmpBlob := tmpBlob + 1;
-							else
-								outline_start <= '0';
+				when DetectingColumn1_Top=>
+				StatesDebug <= "00001000";
+					if (load_waiting = '1') then
+						if (pb_master_waitrequest = '0') then
+							load_waiting := '0';
+							pb_master_wr_en <= '0';
+							pb_master_rd_en <= '0';
+							
+							if (pb_master_readdata(15)='1') then
+								--found Top
+								Col1Top := curY;
+								curX := Col(0);
+								curY := SCREEN_HEIGHT-1;
+								current_state <= DetectingColumn1_Bottom;
+							end if;
+							
+							curX := curX + 1;
+							if (curX > Col(1)) then
+								curX := Col(0);
+								curY := curY + 1;
+								if (curY = SCREEN_HEIGHT) then
+									--failed to find top
+									Col1Top := curY;
+									curX := Col(0);
+									curY := SCREEN_HEIGHT-1;
+									current_state <= DetectingColumn1_Bottom;
+								end if;
 							end if;
 						else
-							current_state <= Initialize;
+							pb_master_wr_en <= '0';
+							pb_master_rd_en <= '1';
+						end if;
+					else
+						pb_master_addr <= std_logic_vector(unsigned(pixel_buffer_base) + unsigned(to_unsigned(curY, 8) & to_unsigned(curX, 9) & '0'));	
+						pb_master_be <= "11";  -- byte enable
+						pb_master_wr_en <= '0';
+						pb_master_rd_en <= '1';
+						
+						load_waiting := '1';
+					end if;
+					
+				when DetectingColumn1_Bottom=>
+				StatesDebug <= "00010000";
+					if (load_waiting = '1') then
+						if (pb_master_waitrequest = '0') then
+							load_waiting := '0';
+							pb_master_wr_en <= '0';
+							pb_master_rd_en <= '0';
+							
+							if (pb_master_readdata(15)='1') then
+								--found Bottom
+								Col1Bot := curY;
+								curX := Col(2);
+								curY := 0;
+								current_state <= DetectingColumn2_Top;
+							end if;
+							
+							curX := curX + 1;
+							if (curX > Col(1)) then
+								curX := Col(0);
+								curY := curY - 1;
+								if (curY = -1) then
+									--failed to find bottom
+									Col1Bot := curY;
+									curX := Col(2);
+									curY := 0;
+									current_state <= DetectingColumn2_Top;
+								end if;
+							end if;
+						else
+							pb_master_wr_en <= '0';
+							pb_master_rd_en <= '1';
+						end if;
+					else
+						pb_master_addr <= std_logic_vector(unsigned(pixel_buffer_base) + unsigned(to_unsigned(curY, 8) & to_unsigned(curX, 9) & '0'));	
+						pb_master_be <= "11";  -- byte enable
+						pb_master_wr_en <= '0';
+						pb_master_rd_en <= '1';
+						
+						load_waiting := '1';
+					end if;
+					
+
+				when DetectingColumn2_Top=>
+				StatesDebug <= "00100000";
+					if (load_waiting = '1') then
+						if (pb_master_waitrequest = '0') then
+							load_waiting := '0';
+							pb_master_wr_en <= '0';
+							pb_master_rd_en <= '0';
+							
+							if (pb_master_readdata(15)='1') then
+								--found Top
+								Col2Top := curY;
+								curX := Col(2);
+								curY := SCREEN_HEIGHT-1;
+								current_state <= DetectingColumn2_Bottom;
+							end if;
+							
+							curX := curX + 1;
+							if (curX > Col(3)) then
+								curX := Col(2);
+								curY := curY + 1;
+								if (curY = SCREEN_HEIGHT) then
+									--failed to find top
+									Col1Top := curY;
+									curX := Col(2);
+									curY := SCREEN_HEIGHT-1;
+									current_state <= DetectingColumn2_Bottom;
+								end if;
+							end if;
+						else
+							pb_master_wr_en <= '0';
+							pb_master_rd_en <= '1';
+						end if;
+					else
+						pb_master_addr <= std_logic_vector(unsigned(pixel_buffer_base) + unsigned(to_unsigned(curY, 8) & to_unsigned(curX, 9) & '0'));	
+						pb_master_be <= "11";  -- byte enable
+						pb_master_wr_en <= '0';
+						pb_master_rd_en <= '1';
+						
+						load_waiting := '1';
+					end if;
+					
+
+				when DetectingColumn2_Bottom=>
+StatesDebug <= "01000000";
+					if (load_waiting = '1') then
+						if (pb_master_waitrequest = '0') then
+							load_waiting := '0';
+							pb_master_wr_en <= '0';
+							pb_master_rd_en <= '0';
+							
+							if (pb_master_readdata(15)='1') then
+								--found Bottom
+								Col2Bot := curY;
+								curX := 0;
+								curY := 0;
+								current_state <= Finalizing;
+							end if;
+							
+							curX := curX + 1;
+							if (curX > Col(3)) then
+								curX := Col(2);
+								curY := curY - 1;
+								if (curY = -1) then
+									--failed to find bottom
+									Col1Bot := curY;
+									curX := 0;
+									curY := 0;
+									current_state <= Finalizing;
+								end if;
+							end if;
+						else
+							pb_master_wr_en <= '0';
+							pb_master_rd_en <= '1';
+						end if;
+					else
+						pb_master_addr <= std_logic_vector(unsigned(pixel_buffer_base) + unsigned(to_unsigned(curY, 8) & to_unsigned(curX, 9) & '0'));	
+						pb_master_be <= "11";  -- byte enable
+						pb_master_wr_en <= '0';
+						pb_master_rd_en <= '1';
+						
+						load_waiting := '1';
+					end if;
+					
+					
+				when Finalizing=>
+StatesDebug <= "10000000";
+					if (draw_box = '1') then
+						if (outline_wait ='0') then
+							if (DrawingBox = 1) then
+								outline_data <= std_logic_vector('0' & to_unsigned(Col1Top,8) & to_unsigned(Col(0),9) & to_unsigned(Col1Bot,8) & to_unsigned(Col(1),9));
+								DrawingBox := 2;
+							else
+								outline_data <= std_logic_vector('1' & to_unsigned(Col2Top,8) & to_unsigned(Col(2),9) & to_unsigned(Col2Bot,8) & to_unsigned(Col(3),9));
+								DrawingBox := 1;
+								current_state <= Initialize;
+							end if;
+							outline_start <= '1';
+						else
+							outline_start <= '0';
 						end if;
 					else
 						if (outline_wait ='0') then
-							outline_data <= std_logic_vector(to_unsigned(100,8) & to_unsigned(100,9) & to_unsigned(200,8) & to_unsigned(200,9));
+							outline_data <= std_logic_vector('1' & to_unsigned(100,8) & to_unsigned(100,9) & to_unsigned(200,8) & to_unsigned(200,9));
 							outline_start <= '1';
 						end if;
 					end if;
 				when others=>
+StatesDebug <= "00000000";
 					-- why are we here?
 					current_state <= Initialize;
 			end case;
 		end if;	
-	end process;	
+	end process;
 end bhv;

@@ -7,7 +7,7 @@ port (
     clk: in std_logic;
     reset_n: in std_logic;
 				
-		data_in: in std_logic_vector(33 downto 0);
+		data_in: in std_logic_vector(34 downto 0);
 		data_wait: out std_logic;
 		start : in std_logic;
 		
@@ -19,8 +19,7 @@ port (
     master_writedata: out  std_logic_vector(15 downto 0);
     master_waitrequest : in std_logic;
 	
-	pixel_buffer_base : in std_logic_vector (31 downto 0);
-	box_color : in std_logic_vector(15 downto 0)
+	pixel_buffer_base : in std_logic_vector (31 downto 0)
 	);
 	
 end pixel_drawer;
@@ -70,7 +69,6 @@ begin
 
            -- on a rising clock edge, if we are currently in the middle of a
            -- drawing operation, step through the drawing state machine.
-			data_wait <= '0';
            if processing = '1' then
 				data_wait <= '1';
 
@@ -95,6 +93,7 @@ begin
                -- master_waitrequest is 0.  If it is 1, stay in state 1.
 
                elsif state = 1 and master_waitrequest = '0' then
+			   
                   master_wr_en  <= '0';
                   state := 0;
                   if (x1_local = x2_local) then
@@ -106,55 +105,57 @@ begin
                         y1_local := std_logic_vector(unsigned(y1_local)+1);								 
                      end if;
                   else 
+					if (y1_local = y2) or (y1_local = y1) then
                         x1_local := std_logic_vector(unsigned(x1_local)+1);
+					else
+						x1_local := std_logic_vector(unsigned(x2_local));
+					end if;
                   end if;						
                end if;
-             end if;					
+             elsif (start = '1') then
+				data_wait <= '1';
+				x1 <= std_logic_vector(unsigned(data_in(25 downto 17)));
+				x2 <= std_logic_vector(unsigned(data_in(8 downto 0)));
+				y1 <= std_logic_vector(unsigned(data_in(33 downto 26)));
+				y2 <= std_logic_vector(unsigned(data_in(16 downto 9)));
+				if (data_in(34) = '0') then
+					colour_local := "0000011111100000";
+				else
+					colour_local := "0000000000011111";
+				end if;
 
+				   if processing = '0' then
+					  processing := '1';  -- start drawing on next rising clk edge
+					  state := 0;
+					  done <= '0';
 
-             -- We should also check if there is a write on the slave bus.  If so, copy the
-             -- written value into one of our internal registers.
-	
-             if (start = '1') then
+					  -- The above drawing code assumes x1<x2 and y1<y2, however the
+					  -- user may give us points with x1>x2 or y1>y2.  If so, swap
+					  -- the x and y values.  In any case, copy to our internal _local
+					  -- variables.  This ensures that if the user changes a coordinate
+					  -- while a drawing is occurring, it continues to draw the box
+					  -- as originally requested.
 
-						x1 <= data_in(25 downto 17);
-						x2 <= data_in(8 downto 0);
-						y1 <= data_in(33 downto 26);
-						y2 <= data_in(16 downto 9);
-					
-
-                       if processing = '0' then
-                          processing := '1';  -- start drawing on next rising clk edge
-                          state := 0;
-                          done <= '0';
-
-                          -- The above drawing code assumes x1<x2 and y1<y2, however the
-                          -- user may give us points with x1>x2 or y1>y2.  If so, swap
-                          -- the x and y values.  In any case, copy to our internal _local
-                          -- variables.  This ensures that if the user changes a coordinate
-                          -- while a drawing is occurring, it continues to draw the box
-                          -- as originally requested.
-
-                          if (x1 < x2) then
-                             x1_local := x1;
-                             savedx := x1;
-                             x2_local := x2;
-                          else
-                             x2_local := x1;
-                             savedx := x2;
-                             x1_local := x2;
-                          end if;
+						  if (x1 < x2) then
+							 x1_local := x1;
+							 savedx := x1;
+							 x2_local := x2;
+						  else
+							 x2_local := x1;
+							 savedx := x2;
+							 x1_local := x2;
+						  end if;
 								
-                          if (y1 < y2) then
-                             y1_local := y1;
-                             y2_local := y2;
-                          else
-                             y2_local := y1;
-                             y1_local := y2;
-                          end if;									
-
-                          colour_local := box_color;
-                        end if;
+						  if (y1 < y2) then
+							 y1_local := y1;
+							 y2_local := y2;
+						  else
+							 y2_local := y1;
+							 y1_local := y2;
+						  end if;									
+					end if;
+			else
+				data_wait <= '0';
             end if;
          end if;
    end process;	  	
