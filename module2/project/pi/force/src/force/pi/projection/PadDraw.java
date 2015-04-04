@@ -12,7 +12,19 @@ class PadDraw extends JComponent {
     BufferedImage image;
     Graphics2D graphics2D;
 
+    // Colors
+    Color topColor;
+    Color leftColor;
+    Color rightColor;
+    Color frontColor;
+
     public PadDraw(){
+        // Colors
+        topColor = new Color(223, 223, 223);
+        leftColor = new Color(121, 121, 121);
+        frontColor = new Color(183, 183, 183);
+        rightColor = new Color(205, 205, 205);
+
         setDoubleBuffered(true);
     }
 
@@ -54,7 +66,7 @@ class PadDraw extends JComponent {
      */
     public void draw(int x, int y){
         if(graphics2D != null) {
-            graphics2D.fillRect(x,y,PIXEL_SIZE,PIXEL_SIZE);
+            graphics2D.fillRect(x, y, PIXEL_SIZE, PIXEL_SIZE);
         }
     }
 
@@ -75,11 +87,11 @@ class PadDraw extends JComponent {
             if (x == 1)
                 graphics2D.setPaint(Color.red);
             else if (x == 2)
-                graphics2D.setPaint(Color.green);
+                graphics2D.setPaint(topColor);
             else if (x == 3)
-                graphics2D.setPaint(Color.blue);
+                graphics2D.setPaint(leftColor);
             else
-                graphics2D.setPaint(Color.black);
+                graphics2D.setPaint(frontColor);
         }
     }
 }
