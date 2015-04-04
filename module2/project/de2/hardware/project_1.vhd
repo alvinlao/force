@@ -174,7 +174,7 @@ architecture rtl of project_1 is
             blob_start_drawing                              => GPIO_1(0),                              --                                    .start_drawing
             blob_drawing_wait                               => GPIO_1(1),                                --                                    .drawing_wait
             blob_StatesDebug                                => sig_ground(7 downto 0),                                 --                                    .StatesDebug
-            blob_colDebug                                   => sig_ground2(8 downto 0),                                   --                                    .colDebug
+            blob_colDebug                                   => LEDR(8 downto 0),                                   --                                    .colDebug
             blob_colSelect                                  => SW(16 downto 15)                                   --                                    .colSelect
         );
 

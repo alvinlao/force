@@ -114,10 +114,30 @@ begin
                end if;
              elsif (start = '1') then
 				data_wait <= '1';
-				x1 <= std_logic_vector(unsigned(data_in(25 downto 17)));
-				x2 <= std_logic_vector(unsigned(data_in(8 downto 0)));
-				y1 <= std_logic_vector(unsigned(data_in(33 downto 26)));
-				y2 <= std_logic_vector(unsigned(data_in(16 downto 9)));
+				if (unsigned(data_in(25 downto 17)) = 0) then
+					x1 <= std_logic_vector(unsigned(data_in(25 downto 17)));
+				else 
+					x1 <= std_logic_vector(unsigned(data_in(25 downto 17))-1);
+				end if;
+				
+				if (unsigned(data_in(8 downto 0)) = 359) then
+					x2 <= std_logic_vector(unsigned(data_in(8 downto 0)));
+				else 
+					x2 <= std_logic_vector(unsigned(data_in(8 downto 0))+1);
+				end if;
+				
+				if (unsigned(data_in(33 downto 26)) = 0) then
+					y1 <= std_logic_vector(unsigned(data_in(33 downto 26)));
+				else 
+					y1 <= std_logic_vector(unsigned(data_in(33 downto 26))-1);
+				end if;
+				
+				if (unsigned(data_in(16 downto 9)) = 239) then
+					y2 <= std_logic_vector(unsigned(data_in(16 downto 9)));
+				else 
+					y2 <= std_logic_vector(unsigned(data_in(16 downto 9))+1);
+				end if;
+				
 				if (data_in(34) = '0') then
 					colour_local := "0000011111100000";
 				else

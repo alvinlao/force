@@ -80,7 +80,7 @@ architecture bhv of blobs is
 			outline_start <= '0';
 			
 			if (ColSelect = "00") then
-				ColDebug <= std_logic_vector(to_unsigned(Col(0),9));
+				ColDebug <= std_logic_vector(to_unsigned(Col1Bot,9));
 			elsif(ColSelect = "01") then
 				ColDebug <= std_logic_vector(to_unsigned(Col(1),9));
 			elsif(ColSelect = "10") then
@@ -292,7 +292,7 @@ architecture bhv of blobs is
 								curY := curY + 1;
 								if (curY = SCREEN_HEIGHT) then
 									--failed to find top
-									Col1Top := curY;
+									Col2Top := curY;
 									curX := Col(2);
 									curY := SCREEN_HEIGHT-1;
 									current_state <= DetectingColumn2_Bottom;
@@ -334,7 +334,7 @@ StatesDebug <= "01000000";
 								curY := curY - 1;
 								if (curY = -1) then
 									--failed to find bottom
-									Col1Bot := curY;
+									Col2Bot := curY;
 									curX := 0;
 									curY := 0;
 									current_state <= Finalizing;
@@ -357,24 +357,32 @@ StatesDebug <= "01000000";
 				when Finalizing=>
 StatesDebug <= "10000000";
 					if (draw_box = '1') then
-						if (outline_wait ='0') then
-							if (DrawingBox = 1) then
-								outline_data <= std_logic_vector('0' & to_unsigned(Col1Top,8) & to_unsigned(Col(0),9) & to_unsigned(Col1Bot,8) & to_unsigned(Col(1),9));
-								DrawingBox := 2;
+						if (load_waiting = '0') then
+							if (outline_wait ='0') then
+								if (DrawingBox = 1) then
+									outline_data <= std_logic_vector('1' & to_unsigned(Col2Top,8) & to_unsigned(Col(2),9) & to_unsigned(Col2Bot,8) & to_unsigned(Col(3),9));
+								else
+									outline_data <= std_logic_vector('0' & to_unsigned(Col1Top,8) & to_unsigned(Col(0),9) & to_unsigned(Col1Bot,8) & to_unsigned(Col(1),9));
+								end if;
+								outline_start <= '1';
+								load_waiting := '1';
 							else
-								outline_data <= std_logic_vector('1' & to_unsigned(Col2Top,8) & to_unsigned(Col(2),9) & to_unsigned(Col2Bot,8) & to_unsigned(Col(3),9));
-								DrawingBox := 1;
-								current_state <= Initialize;
+								outline_start <= '0';
 							end if;
-							outline_start <= '1';
 						else
-							outline_start <= '0';
+							load_waiting := '0';
+							if (DrawingBox = 2) then
+								current_state <= Initialize;
+							else
+								DrawingBox := 2;
+							end if;
 						end if;
 					else
 						if (outline_wait ='0') then
 							outline_data <= std_logic_vector('1' & to_unsigned(100,8) & to_unsigned(100,9) & to_unsigned(200,8) & to_unsigned(200,9));
 							outline_start <= '1';
 						end if;
+						current_state <= Initialize;
 					end if;
 				when others=>
 StatesDebug <= "00000000";
