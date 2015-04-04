@@ -34,7 +34,7 @@ class PadDraw extends JComponent {
             graphics2D.fillRect(0, 0, getSize().width, getSize().height);
             graphics2D.setPaint(Color.black);
         }
-        repaint();
+        /epaint();
     }
 
     /**
