@@ -191,11 +191,22 @@ public class Projection {
         xPoints = new int[4];
         yPoints = new int[4];
 
-//        for(int i = 0; i < numPoints; i++){
-//            xDraw = (-1 * (int)displayCOORDS[i][0])+SCREEN_WIDTH/2;
-//            yDraw = (int)displayCOORDS[i][1]+SCREEN_HEIGHT/2;
-//            paint.draw(xDraw, yDraw);
-//        }
+        for(int i = 0; i < numPoints; i++){
+            xDraw = (-1 * (int)displayCOORDS[i][0])+SCREEN_WIDTH/2;
+            yDraw = (int)displayCOORDS[i][1]+SCREEN_HEIGHT/2;
+            if(yDraw < 0){
+                displayCOORDS[i][1] = 0;
+            }
+            if(yDraw > (SCREEN_HEIGHT -1) ){
+                displayCOORDS[i][1] = SCREEN_HEIGHT -1;
+            }
+            if(xDraw < 0){
+                displayCOORDS[i][0] = 0;
+            }
+            if(yDraw > (SCREEN_WIDTH -1) ){
+                displayCOORDS[i][0] = SCREEN_HEIGHT -1;
+            }
+        }
 
 //        //bottom face
 //        for(int i = 0; i < 4; i++){
