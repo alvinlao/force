@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import java.awt.image.BufferStrategy;
+
 /**
  * Sets up window and draw pad for drawing
  */
@@ -12,6 +14,7 @@ public class Paint {
     static final int SCREEN_WIDTH = 960;
     static final int SCREEN_HEIGHT = 720;
     private PadDraw drawPad;
+    private BufferStrategy strategy;                             
 
 	public Paint() {
 
@@ -49,6 +52,10 @@ public class Paint {
      */
     public void clear(){
         drawPad.clear();
+    }
+
+    public void update(){
+        drawPad.update();
     }
 
     /**

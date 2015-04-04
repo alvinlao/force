@@ -2,17 +2,19 @@ package force.pi.projection;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.*;
 
 /**
  * Sets up a draw pad to draw on.
  */
 class PadDraw extends JComponent {
     static final int PIXEL_SIZE = 5;
-    Image image;
+    //Image image;
+    BufferedImage image;
     Graphics2D graphics2D;
 
     public PadDraw(){
-        setDoubleBuffered(false);
+        setDoubleBuffered(true);
     }
 
     @Override
@@ -20,10 +22,12 @@ class PadDraw extends JComponent {
 	super.paintComponent(g);
 
         if(image == null){
-            image = createImage(getSize().width, getSize().height);
-            graphics2D = (Graphics2D)image.getGraphics();
+            //image = createImage(getSize().width, getSize().height);
+            image = new BufferedImage(getSize().width, getSize().height, BufferedImage.TYPE_INT_RGB);
+            //graphics2D = (Graphics2D)image.getGraphics();
+            graphics2D = image.createGraphics();
             graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            clear();
+            //clear();
         }
         g.drawImage(image, 0, 0, null);
     }
@@ -35,9 +39,13 @@ class PadDraw extends JComponent {
         if (graphics2D != null) {
             graphics2D.setPaint(Color.white);
             graphics2D.fillRect(0, 0, getSize().width, getSize().height);
-            graphics2D.setPaint(Color.black);
+            //graphics2D.setPaint(Color.white);
         }
         //repaint();
+    }
+
+    public void update() {
+        repaint();
     }
 
     /**
@@ -49,21 +57,21 @@ class PadDraw extends JComponent {
         if(graphics2D != null) {
             graphics2D.fillRect(x,y,PIXEL_SIZE,PIXEL_SIZE);
         }
-        repaint();
+        //repaint();
     }
 
     public void drawPolygon(int[] x, int[] y, int nPoints){
         if(graphics2D != null) {
             graphics2D.drawPolygon(x, y, nPoints);
         }
-        repaint();
+        //repaint();
     }
 
     public void fillPolygon(int[] x, int[] y, int nPoints){
         if(graphics2D != null) {
             graphics2D.fillPolygon(x, y, nPoints);
         }
-        repaint();
+        //repaint();
     }
     public void changeColour (int x){
         if(graphics2D != null) {

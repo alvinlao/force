@@ -187,7 +187,6 @@ public class Projection {
         double [][] displayCOORDS;
         int xDraw, yDraw;
         displayCOORDS = retXY(flatten(vals));
-        paint.clear();
         xPoints = new int[4];
         yPoints = new int[4];
 
@@ -207,6 +206,8 @@ public class Projection {
                 displayCOORDS[i][0] = SCREEN_HEIGHT -1;
             }
         }
+
+        paint.clear();
 
 //        //bottom face
 //        for(int i = 0; i < 4; i++){
@@ -335,5 +336,6 @@ public class Projection {
             paint.drawPolygon(xPoints, yPoints, 4);
             paint.fillPolygon(xPoints, yPoints, 4, 2);
         }
+        paint.update();
     }
 }
