@@ -30,6 +30,7 @@ entity project_1 is
 				
             TD_RESET              : out   std_logic;                                        -- TD_RESET
 				SW					: in std_LOGIC_VECTOR(17 downto 0);
+				GPIO_1 : out std_logic_vector (35 downto 0);
 
 -- sdram
 				DRAM_CLK, DRAM_CKE : OUT STD_LOGIC;
@@ -99,7 +100,10 @@ architecture rtl of project_1 is
             piconnector_ack                                 : in    std_logic                     := 'X';             -- ack
             piconnector_en                                  : out   std_logic;                                        -- en
             piconnector_keep                                : out   std_logic;                                         -- keep
-				color_track_export                              : in    std_logic_vector(4 downto 0)  := (others => 'X')  -- export
+				color_track_export                              : in    std_logic_vector(4 downto 0)  := (others => 'X');  -- export
+            blob_draw_box                                   : in    std_logic                     := 'X';             -- draw_box
+            blob_start_drawing                              : out   std_logic;                                        -- start_drawing
+            blob_drawing_wait                               : out   std_logic                                         -- drawing_wait
         );
     end component project_1_qsys;
 	 
@@ -158,7 +162,10 @@ architecture rtl of project_1 is
             piconnector_ack                                 => PI_ACK,                                 --                                    .ack
             piconnector_en                                  => PI_EN,                                  --                                    .en
             piconnector_keep                                => PI_KEEP,                                 --                                    .keep
-            color_track_export                              => SW(4 downto 0)
+            color_track_export                              => SW(4 downto 0),
+            blob_draw_box                                   => SW(17),                                   --                                blob.draw_box
+            blob_start_drawing                              => GPIO_1(0),                              --                                    .start_drawing
+            blob_drawing_wait                               => GPIO_1(1)                                --                                    .drawing_wait
         );
 
 		  TD_RESET <= '1';
