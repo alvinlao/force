@@ -20,7 +20,7 @@ public class Projection {
     Paint paint = new Paint();
 
     // Points for box to draw out
-    int scale = 20;
+    int scale = 25;
     double [][] vals = { {-0.8f, 1, 0},
             {0.8f, 1, 0},
             {0.8f, -1, 0},
