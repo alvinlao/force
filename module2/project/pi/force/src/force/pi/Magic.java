@@ -77,7 +77,7 @@ public class Magic {
             coordinate.y *= 1000;
             coordinate.z *= 1000;
 
-            //System.out.println(coordinate.x + " " + coordinate.y + " " + coordinate.z);
+            System.out.println(coordinate.x + " " + coordinate.y + " " + coordinate.z);
 
             // Update projection with latest camera coordinate
             projection.projectIt(coordinate);
