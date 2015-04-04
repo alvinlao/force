@@ -15,7 +15,10 @@ class PadDraw extends JComponent {
         setDoubleBuffered(false);
     }
 
+    @Override
     public void paintComponent(Graphics g){
+	super.paintComponent(g);
+
         if(image == null){
             image = createImage(getSize().width, getSize().height);
             graphics2D = (Graphics2D)image.getGraphics();
@@ -34,7 +37,7 @@ class PadDraw extends JComponent {
             graphics2D.fillRect(0, 0, getSize().width, getSize().height);
             graphics2D.setPaint(Color.black);
         }
-        /epaint();
+        //repaint();
     }
 
     /**
