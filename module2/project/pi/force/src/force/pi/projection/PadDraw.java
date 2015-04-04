@@ -21,10 +21,10 @@ class PadDraw extends JComponent {
 
     public PadDraw(){
         // Colors
-        topColor = new Color(223, 223, 223);
-        leftColor = new Color(121, 121, 121);
-        frontColor = new Color(183, 183, 183);
-        rightColor = new Color(205, 205, 205);
+        topColor = new Color(198, 198, 198);
+        leftColor = new Color(67, 67, 67);
+        frontColor = new Color(140, 140, 140);
+        rightColor = new Color(67, 67, 67);
 
         setDoubleBuffered(true);
     }
