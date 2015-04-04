@@ -2,8 +2,6 @@ package force.pi.projection;
 
 import force.pi.Point3D;
 
-import java.lang.reflect.Array;
-
 /**
  * Created by Shaan on 17/03/2015.
  * need to pass in camera coordinates

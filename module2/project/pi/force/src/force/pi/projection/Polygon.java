@@ -3,7 +3,6 @@ package force.pi.projection;
 import force.pi.Point3D;
 
 import java.awt.*;
-import java.util.Arrays;
 import java.util.List;
 
 /**
