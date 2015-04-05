@@ -1,4 +1,4 @@
 all:
-	javac -cp .:../lib/pi4j/* force/pi/Magic.java
+	javac force/pi/Magic.java
 connector:
-	javac -cp .:../lib/pi4j/* force/pi/connector/Main.java
+	javac force/pi/connector/Main.java
