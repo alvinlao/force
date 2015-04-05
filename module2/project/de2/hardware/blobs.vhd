@@ -313,7 +313,7 @@ architecture bhv of blobs is
 					
 
 				when DetectingColumn2_Bottom=>
-StatesDebug <= "01000000";
+					StatesDebug <= "01000000";
 					if (load_waiting = '1') then
 						if (pb_master_waitrequest = '0') then
 							load_waiting := '0';
@@ -355,7 +355,7 @@ StatesDebug <= "01000000";
 					
 					
 				when Finalizing=>
-StatesDebug <= "10000000";
+					StatesDebug <= "10000000";
 					if (draw_box = '1') then
 						if (load_waiting = '0') then
 							if (outline_wait ='0') then
@@ -370,6 +370,7 @@ StatesDebug <= "10000000";
 								outline_start <= '0';
 							end if;
 						else
+							outline_start <= '0';
 							load_waiting := '0';
 							if (DrawingBox = 2) then
 								current_state <= Initialize;
@@ -385,7 +386,7 @@ StatesDebug <= "10000000";
 						current_state <= Initialize;
 					end if;
 				when others=>
-StatesDebug <= "00000000";
+					StatesDebug <= "00000000";
 					-- why are we here?
 					current_state <= Initialize;
 			end case;
