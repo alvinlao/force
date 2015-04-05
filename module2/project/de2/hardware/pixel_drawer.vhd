@@ -25,6 +25,10 @@ port (
 end pixel_drawer;
 
 architecture rtl of pixel_drawer is
+	constant color1 : std_logic_vector (15 downto 0) := "0000011111100000";
+	constant color2 : std_logic_vector (15 downto 0) := "0000000000011111";
+
+
     signal x1,x2 : std_logic_vector(8 downto 0);
     signal y1,y2 : std_logic_vector(7 downto 0);
     signal done : std_logic := '0';
@@ -139,9 +143,9 @@ begin
 				end if;
 				
 				if (data_in(34) = '0') then
-					colour_local := "0000011111100000";
+					colour_local := color1;
 				else
-					colour_local := "0000000000011111";
+					colour_local := color2;
 				end if;
 
 				   if processing = '0' then
