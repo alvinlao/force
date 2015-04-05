@@ -1,5 +1,7 @@
 package force.pi.projection;
 
+import com.sun.scenario.effect.Color4f;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.*;
@@ -92,6 +94,18 @@ class PadDraw extends JComponent {
                 graphics2D.setPaint(leftColor);
             else
                 graphics2D.setPaint(frontColor);
+        }
+    }
+    public void changeColour (Color x){
+        if(graphics2D != null) {
+            if (x == Color.red)
+                graphics2D.setPaint(Color.red);
+            else if (x == Color.green)
+                graphics2D.setPaint(Color.green);
+            else if (x == Color.blue)
+                graphics2D.setPaint(Color.blue);
+            else
+                graphics2D.setPaint(Color.black);
         }
     }
 }

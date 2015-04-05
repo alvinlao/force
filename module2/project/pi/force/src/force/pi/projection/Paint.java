@@ -74,6 +74,10 @@ public class Paint {
         drawPad.changeColour(col);
         drawPad.fillPolygon(x, y, nPoints);
     }
+    public void fillPolygon(int[] x, int[]y, int nPoints, Color col) {
+        drawPad.changeColour(col);
+        drawPad.fillPolygon(x, y, nPoints);
+    }
 }
 
 

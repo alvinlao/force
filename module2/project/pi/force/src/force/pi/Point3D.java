@@ -31,7 +31,7 @@ public class Point3D {
      * Copies the coordinates from another point to this point.
      * @param other - The point to copy from.
      */
-    void copy(Point3D other) {
+    public void copy(Point3D other) {
         this.x = other.x;
         this.y = other.y;
         this.z = other.z;
