@@ -214,6 +214,7 @@ public class Projection {
      * @param B is camera coordinates
      */
     public void projectIt(Point3D B) {
+        /**
         cam[0] = B.x;
         cam[1] = B.y;
         cam[2] = B.z;
@@ -378,7 +379,6 @@ public class Projection {
             }
         }
 
-
         for(int i = 0; i < numPoints; i++){
             xDraw = (-1 * (int)displayCOORDS[i][0])+SCREEN_WIDTH/2;
             yDraw = (int)displayCOORDS[i][1]+SCREEN_HEIGHT/2;
@@ -483,5 +483,6 @@ public class Projection {
             paint.fillPolygon(xPoints, yPoints, 4, 2);
         }
         paint.update();
+         **/
     }
 }

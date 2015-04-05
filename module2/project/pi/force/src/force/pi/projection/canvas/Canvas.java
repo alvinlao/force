@@ -15,7 +15,7 @@ public class Canvas extends java.awt.Canvas {
 
     public Canvas() {
         // create a frame to contain our game
-        JFrame container = new JFrame("Space Invaders 101");
+        JFrame container = new JFrame("EECE 381");
 
         // get hold the content of the frame and set up the resolution of the game
         JPanel panel = (JPanel) container.getContentPane();
@@ -67,6 +67,11 @@ public class Canvas extends java.awt.Canvas {
         for (force.pi.projection.Shape shape : shapes) {
             for (force.pi.projection.Polygon polygon : shape.polygons) {
                 g.setColor(polygon.color);
+
+                // Offset
+                offsetPoints(polygon.xpoints, WIDTH / 2);
+                offsetPoints(polygon.ypoints, HEIGHT / 2);
+
                 g.fillPolygon(polygon.xpoints, polygon.ypoints, polygon.npoints);
             }
         }
@@ -74,5 +79,16 @@ public class Canvas extends java.awt.Canvas {
         // Swap buffers
         g.dispose();
         strategy.show();
+    }
+
+    /**
+     * Offset all points
+     * @param points
+     * @param offset
+     */
+    public void offsetPoints(int[] points, int offset) {
+        for (int i = 0; i < points.length; ++i) {
+            points[i] += offset;
+        }
     }
 }

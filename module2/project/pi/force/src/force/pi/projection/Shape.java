@@ -21,6 +21,7 @@ public class Shape implements Comparable<Shape> {
 
         // Get polygon centroids
         centroid = new Point3D();
+        polygonCentroids = new ArrayList<Point3D>();
         for (Polygon polygon : polygons) {
             polygonCentroids.add(polygon.centroid);
         }
@@ -33,7 +34,7 @@ public class Shape implements Comparable<Shape> {
      * Update shape with new camera position
      * @param camPos
      */
-    void update(Point3D camPos) {
+    public void update(Point3D camPos) {
         for (Polygon polygon : polygons) {
             polygon.update(camPos);
         }
