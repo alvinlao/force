@@ -20,6 +20,9 @@ public class Polygon implements Comparable<Polygon> {
      */
     Polygon(List<Point3D> points, Point3D camPos, Color color) {
         polyPoints = new Point3D[points.size()];
+        for(int i =0; i < points.size(); i++){
+            polyPoints[i] = points.get(i);
+        }
         this.color = color;
         distanceToCamera = distance(points, camPos);
     }
@@ -36,6 +39,7 @@ public class Polygon implements Comparable<Polygon> {
                 distance = points.get(i).distance(camPos);
             }
         }
+       // System.out.println("distance:" + distance);
         return distance;
     }
     public void copy(Polygon other) {
