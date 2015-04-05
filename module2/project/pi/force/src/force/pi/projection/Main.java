@@ -18,7 +18,8 @@ public class Main {
         // Box!
         ShapeFactory bb = new BoxFactory();
         List<Shape> shapes = new ArrayList<Shape>();
-        shapes.add(bb.build());
+        shapes.add(bb.build(-25, 0, 0));
+        shapes.add(bb.build(25, 0, 0));
 
         Canvas c = new Canvas(960, 720);
         Point3D cameraPoint = new Point3D(-100, 100, 200);
