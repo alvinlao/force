@@ -3,7 +3,6 @@ package force.pi;
 import force.pi.camera.Camera;
 import force.pi.connector.ConnectorC;
 import force.pi.filters.kalman.KalmanFilter;
-import force.pi.projection.Paint;
 import force.pi.projection.Projection;
 
 /**
@@ -80,7 +79,7 @@ public class Magic {
             System.out.println(coordinate.x + " " + coordinate.y + " " + coordinate.z);
 
             // Update projection with latest camera coordinate
-            projection.projectIt(coordinate);
+            projection.update(coordinate);
 
             stopms = System.currentTimeMillis();
             elapsedms = stopms - startms;

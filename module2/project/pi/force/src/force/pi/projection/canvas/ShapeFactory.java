@@ -8,5 +8,6 @@ import force.pi.projection.Shape;
 public abstract class ShapeFactory {
     public static final int scale = 50;
 
+    public abstract Shape build(int x, int y, int z);
     public abstract Shape build();
 }
