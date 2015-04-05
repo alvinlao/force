@@ -3,30 +3,50 @@ package force.pi.projection;
 import force.pi.Point3D;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by Shaan on 03/04/2015.
  */
-public class Shape {
+public class Shape implements Comparable<Shape> {
+    public List<Polygon> polygons;
+    List<Point3D> polygonCentroids;
 
-    Polygon[] projectedPolygons;
-    Point3D camPosition;
+    Point3D centroid;
+    double zorder;
 
-    Shape(List<Polygon> polygons, Point3D camPos) {
-        projectedPolygons = new Polygon[polygons.size()];
-        update(polygons, camPos);
-    }
+    public Shape(List<Polygon> polygons) {
+        this.polygons = polygons;
 
-    void update(List<Polygon> polygons, Point3D camPos) {
-        for (int i = 0; i < polygons.size(); i++) {
-            projectedPolygons[i] = polygons.get(i);
-            projectedPolygons[i].distanceToCamera = projectedPolygons[i].distanceToCamera;
+        // Get polygon centroids
+        centroid = new Point3D();
+        for (Polygon polygon : polygons) {
+            polygonCentroids.add(polygon.centroid);
         }
-        camPosition = camPos;
-        Arrays.sort(projectedPolygons);
+
+        // Shape centroid
+        Centroid.calculate(centroid, polygonCentroids);
     }
 
+    /**
+     * Update shape with new camera position
+     * @param camPos
+     */
+    void update(Point3D camPos) {
+        for (Polygon polygon : polygons) {
+            polygon.update(camPos);
+        }
 
+        // Sort polygons by z-order
+        Collections.sort(polygons);
+
+        // Distance to camera
+        zorder = centroid.distance(camPos);
+    }
+
+    @Override
+    public int compareTo(Shape other) {
+        return (int) (this.zorder - other.zorder);
+    }
 }

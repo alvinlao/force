@@ -49,6 +49,48 @@ public class Point3D {
         return Math.sqrt(dx + dy + dz);
     }
 
+
+    /**
+     * Dot product
+     * @param v
+     * @param w
+     * @return
+     */
+    public static double dot(Point3D v, Point3D w) {
+        return (v.x * w.x) + (v.y * w.y) + (v.z * w.z);
+    }
+
+    /**
+     * Scale a vector
+     * Saves result in vector
+     * @param s
+     * @param v
+     */
+    public static void scale(double s, Point3D v) {
+        v.x *= s;
+        v.y *= s;
+        v.z *= s;
+    }
+
+    /**
+     * Subtract two vectors
+     * @param res
+     * @param v
+     * @param w
+     * @return
+     */
+    public static void sub(Point3D res, Point3D v, Point3D w) {
+        res.x = v.x - w.x;
+        res.y = v.y - w.y;
+        res.z = v.z - w.z;
+    }
+
+    public static void add(Point3D res, Point3D v, Point3D w) {
+        res.x = v.x + w.x;
+        res.y = v.y + w.y;
+        res.z = v.z + w.z;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

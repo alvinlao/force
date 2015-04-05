@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
+import java.util.List;
 
 public class Canvas extends java.awt.Canvas {
     public static final int WIDTH = 800;
@@ -51,7 +52,11 @@ public class Canvas extends java.awt.Canvas {
         strategy = getBufferStrategy();
     }
 
-    public void draw() {
+    /**
+     *
+     * @param shapes
+     */
+    public void draw(List<force.pi.projection.Shape> shapes) {
         // Get hold of a graphics context for the accelerated
         // surface and blank it out
         Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
@@ -59,8 +64,12 @@ public class Canvas extends java.awt.Canvas {
         g.fillRect(0, 0, WIDTH, HEIGHT);
 
         // Draw
-        g.setColor(Color.blue);
-        g.fillPolygon(new Polygon(new int[]{10, 20, 20, 10}, new int[]{10, 10, 20, 20}, 4));
+        for (force.pi.projection.Shape shape : shapes) {
+            for (force.pi.projection.Polygon polygon : shape.polygons) {
+                g.setColor(polygon.color);
+                g.fillPolygon(polygon.xpoints, polygon.ypoints, polygon.npoints);
+            }
+        }
 
         // Swap buffers
         g.dispose();
