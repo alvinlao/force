@@ -1,60 +1,56 @@
-package  force.pi.projection;
+package force.pi.projection;
 
 import force.pi.Point3D;
+import force.pi.projection.Shape;
+import force.pi.projection.canvas.BoxFactory;
+import force.pi.projection.canvas.Canvas;
+import force.pi.projection.canvas.ShapeFactory;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-
+/**
+ * Created by alvinlao on 15-04-03.
+ */
 public class Main {
-
     public static void main(String[] args) throws Exception {
+        // Box!
+        ShapeFactory bb = new BoxFactory();
+        List<Shape> shapes = new ArrayList<Shape>();
+        shapes.add(bb.build());
 
-        // Read stdin init
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        String s;
-        String[] ss;
-        int x, y, accuracy;
+        Canvas c = new Canvas(960, 720);
+        Point3D cameraPoint = new Point3D(-100, 100, 200);
 
-        Point3D cam = new Point3D(-100, 100, 100);
+        int distance = 200;
+        int time = 30;
 
-        Projection pro = new Projection();
-        pro.projectIt(cam);
-        while(true) {
-
-            for (int i = 0; i < 20; ++i) {
-                cam.x += 10;
-                pro.projectIt(cam);
-                Thread.sleep(3);
+        while (true) {
+            // Move right
+            for (int i = 0; i < time; ++i) {
+                cameraPoint.x += distance/time;
+                draw(c, shapes, cameraPoint);
+                Thread.sleep(33);
             }
 
-//            for (int i = 0; i < 20; ++i) {
-//                cam.y -= 10;
-//                pro.projectIt(cam);
-//                Thread.sleep(3);
-//            }
-
-            for (int i = 0; i < 20; ++i) {
-                cam.z += 10;
-                pro.projectIt(cam);
-                Thread.sleep(3);
+            // Move left
+            for (int i = 0; i < time; ++i) {
+                cameraPoint.x -= distance/time;
+                draw(c, shapes, cameraPoint);
+                Thread.sleep(33);
             }
 
-            for (int i = 0; i < 10; ++i) {
-                cam.x -= 10;
-          //      cam.y += 10;
-                pro.projectIt(cam);
-                Thread.sleep(3);
-            }
-
-            for (int i = 0; i < 10; ++i) {
-                cam.x -= 10;
-           //     cam.y += 10;
-                cam.z -= 20;
-                pro.projectIt(cam);
-                Thread.sleep(3);
-            }
-            System.out.println(cam.x + " " + cam.y + " " + cam.z);
         }
+    }
+
+    public static void draw(Canvas c, List<Shape> shapes, Point3D camera) {
+        for (Shape shape : shapes) {
+            shape.update(camera);
+        }
+
+        Collections.sort(shapes);
+
+        c.draw(shapes);
     }
 }
