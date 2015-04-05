@@ -368,27 +368,11 @@
          type = "int";
       }
    }
-   element button_pio.s1
-   {
-      datum baseAddress
-      {
-         value = "562208";
-         type = "String";
-      }
-   }
    element sdram_controller.s1
    {
       datum baseAddress
       {
          value = "16777216";
-         type = "String";
-      }
-   }
-   element Onchip_Memory.s1
-   {
-      datum baseAddress
-      {
-         value = "540672";
          type = "String";
       }
    }
@@ -402,6 +386,22 @@
       datum baseAddress
       {
          value = "562176";
+         type = "String";
+      }
+   }
+   element button_pio.s1
+   {
+      datum baseAddress
+      {
+         value = "562208";
+         type = "String";
+      }
+   }
+   element Onchip_Memory.s1
+   {
+      datum baseAddress
+      {
+         value = "540672";
          type = "String";
       }
    }
@@ -449,10 +449,10 @@
  <parameter name="globalResetBus" value="false" />
  <parameter name="hdlLanguage" value="VERILOG" />
  <parameter name="maxAdditionalLatency" value="0" />
- <parameter name="projectName" value="magicblobs.qpf" />
+ <parameter name="projectName" value="unicorns.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1428129319348" />
+ <parameter name="timeStamp" value="1428275190613" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface
@@ -1002,6 +1002,7 @@
  </module>
  <module kind="blobs_master" version="1.0" enabled="1" name="blobs_master_0">
   <parameter name="pixel_buffer_base" value="245760" />
+  <parameter name="AUTO_CLOCK_CLOCK_RATE" value="50000000" />
  </module>
  <connection
    kind="avalon"
