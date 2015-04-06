@@ -26,16 +26,16 @@ import force.pi.Point3D;
  */
 public class Camera {
     // Real width of object: (m)
-    private static final float R_OBJECT_WIDTH = 0.33f;
+    private static final float R_OBJECT_WIDTH = 0.154f;
 
     // Real distance from camera for object to fill screen horizontally: (m)
-    private static final float R_OBJECT_FILL_DEPTH = 0.123f;
+    private static final float R_OBJECT_FILL_DEPTH = 0.070f;
 
     // How far away is the object from the camera when it appears as one point (m)
     private static final float R_EFFECTIVE_INF = 0.5f;
 
     // Real distance from camera to center of projection
-    private static final float R_CAMERA_TO_PROJECTION_CENTER = 0.2f;
+    private static final float R_CAMERA_TO_PROJECTION_CENTER = 0.275f;
 
     // Conversion factor: C = real distance / camera distance
     //private static final float CAMERA_TO_REAL_CONVERSION = 0.004166f;

@@ -32,6 +32,15 @@ public class OneFactory extends LetterFactory {
 
         scalePoints(bottomBPoints);
 
+        // Top B
+        List<Point3D> topBPoints = new ArrayList<Point3D>();
+        topBPoints.add(new Point3D(-0.4f, -0.35f, 0));
+        topBPoints.add(new Point3D(-0.4f, -0.35f, 1));
+        topBPoints.add(new Point3D(-0.25f, -0.25f, 1));
+        topBPoints.add(new Point3D(-0.25f, -0.25f, 0));
+
+        scalePoints(topBPoints);
+
         // Left A
         List<Point3D> leftAPoints = new ArrayList<Point3D>();
         leftAPoints.add(new Point3D(-0.1f, -0.5f, 0));
@@ -109,6 +118,7 @@ public class OneFactory extends LetterFactory {
         polygons.add(new Polygon(leftDPoints, new Color(100, 100, 100)));
         polygons.add(new Polygon(rightAPoints, new Color(150, 150, 150)));
         polygons.add(new Polygon(rightBPoints, new Color(150, 150, 150)));
+        polygons.add(new Polygon(topBPoints, new Color(167, 167, 167)));
         polygons.add(new Polygon(bottomAPoints, new Color(167, 167, 167)));
         polygons.add(new Polygon(bottomBPoints, new Color(167, 167, 167)));
         polygons.add(new Polygon(frontPoints, new Color(208, 208, 208)));

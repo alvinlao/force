@@ -15,15 +15,18 @@ public class Main {
     public static void main(String[] args) throws Exception {
         // Box!
         ShapeFactory bb = new BoxFactory();
+        List<Shape> shapes = new ArrayList<Shape>();
         ShapeFactory eFactory = new EFactory();
         ShapeFactory oneFactory = new OneFactory();
+        ShapeFactory cFactory = new CFactory();
 
-        List<Shape> shapes = new ArrayList<Shape>();
-        shapes.add(bb.build(-25, 0, 0));
-        shapes.add(oneFactory.build(25, 0, 0));
+        shapes.add(oneFactory.build(25, 25, 0));
+        shapes.add(bb.build(-25, -25, 0));
+        shapes.add(eFactory.build(25, -25, 0));
+        shapes.add(cFactory.build(-25, 25, 0));
 
         Canvas c = new Canvas(960, 720);
-        Point3D cameraPoint = new Point3D(-150, 150, 100);
+        Point3D cameraPoint = new Point3D(-150, 50, 300);
 
         int distance = 300;
         int time = 30;
