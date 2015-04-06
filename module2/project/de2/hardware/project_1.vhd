@@ -29,6 +29,10 @@ entity project_1 is
             TD_VS                   : in    std_logic                     := 'X';             -- TD_VS
 				
             TD_RESET              : out   std_logic;                                        -- TD_RESET
+				SW					: in std_LOGIC_VECTOR(17 downto 0);
+				GPIO_1 : out std_logic_vector (35 downto 0);
+				LEDG : out std_LOGIC_VECTOR (7 downto 0);
+				LEDR : out std_LOGIC_VECTOR (17 downto 0);
 
 -- sdram
 				DRAM_CLK, DRAM_CKE : OUT STD_LOGIC;
@@ -97,11 +101,20 @@ architecture rtl of project_1 is
             piconnector_data_bus                            : out   std_logic_vector(7 downto 0);                     -- data_bus
             piconnector_ack                                 : in    std_logic                     := 'X';             -- ack
             piconnector_en                                  : out   std_logic;                                        -- en
-            piconnector_keep                                : out   std_logic                                         -- keep
+            piconnector_keep                                : out   std_logic;                                         -- keep
+				color_track_export                              : in    std_logic_vector(4 downto 0)  := (others => 'X');  -- export
+            blob_draw_box                                   : in    std_logic                     := 'X';             -- draw_box
+            blob_start_drawing                              : out   std_logic;                                        -- start_drawing
+            blob_drawing_wait                               : out   std_logic;                                        -- drawing_wait
+            blob_StatesDebug                                : out   std_logic_vector(7 downto 0);                     -- StatesDebug
+            blob_colDebug                                   : out   std_logic_vector(8 downto 0);                     -- colDebug
+            blob_colSelect                                  : in    std_logic_vector(1 downto 0)  := (others => 'X')  -- colSelect
         );
     end component project_1_qsys;
 	 
 	 SIGNAL TDRESET,overflow_flag,SCL,SDT : STD_logic;
+	 signal sig_ground : std_LOGIC_VECTOR(7 downto 0);
+	 signal sig_ground2 : std_LOGIC_VECTOR(8 downto 0);
 	 
 	 begin
 
@@ -155,7 +168,14 @@ architecture rtl of project_1 is
             piconnector_data_bus                            => PI_DATA,                            --                         piconnector.data_bus
             piconnector_ack                                 => PI_ACK,                                 --                                    .ack
             piconnector_en                                  => PI_EN,                                  --                                    .en
-            piconnector_keep                                => PI_KEEP                                 --                                    .keep
+            piconnector_keep                                => PI_KEEP,                                 --                                    .keep
+            color_track_export                              => SW(4 downto 0),
+            blob_draw_box                                   => SW(17),                                   --                                blob.draw_box
+            blob_start_drawing                              => GPIO_1(0),                              --                                    .start_drawing
+            blob_drawing_wait                               => GPIO_1(1),                                --                                    .drawing_wait
+            blob_StatesDebug                                => sig_ground(7 downto 0),                                 --                                    .StatesDebug
+            blob_colDebug                                   => LEDR(8 downto 0),                                   --                                    .colDebug
+            blob_colSelect                                  => SW(16 downto 15)                                   --                                    .colSelect
         );
 
 		  TD_RESET <= '1';

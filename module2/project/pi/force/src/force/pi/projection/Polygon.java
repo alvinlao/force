@@ -1,6 +1,7 @@
 package force.pi.projection;
 
 import force.pi.Point3D;
+import force.pi.projection.centroid.Centroid;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -69,6 +70,6 @@ public class Polygon extends java.awt.Polygon implements Comparable<Polygon> {
 
     @Override
     public int compareTo(Polygon other) {
-        return (int) (this.zorder - other.zorder);
+        return (int) (other.zorder - this.zorder);
     }
 }
