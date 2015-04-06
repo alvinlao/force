@@ -14,12 +14,9 @@ const int pin_ack = 9;
 const int pin_keep = 10;
 const int pin_data = 0;
 
-unsigned char keepRunning = 1;
 unsigned char processing = 0;
 unsigned long buffer = 0;
 
-
-//JNIEnv* jenv;
 jobject jobj;
 JavaVM* jvm;
 
@@ -74,9 +71,9 @@ void finalizeData(){
 	unsigned int posy;
 	int acc;
 	unsigned char channel;
-	acc = buffer & 0x000000FF;
-	posy = (buffer >> 8) & 0x000000FF;
-	posx = (buffer >> 16) & 0x000001FF;
+	acc = buffer & 0x000003FF;
+	posy = (buffer >> 10) & 0x000000FF;
+	posx = (buffer >> 18) & 0x000001FF;
 	channel = (buffer >> 31) & 0x00000001;
 
 	JNIEnv *jenv;
@@ -125,13 +122,8 @@ void HandleData(){
 	}
 }
 
-void intHandler(){
-	keepRunning = 0;
-}
-
 
 void run(){
-//	signal(SIGINT, &intHandler);
 	if (wiringPiSetup()==-1){
 		printf("C-failed to setup wiringPi");
 		printf("C-exiting");
@@ -139,9 +131,6 @@ void run(){
 	}
 
 	setupPins();
-
-//	printf("C-waiting.. \n");
-
 	if (wiringPiISR(pin_en, INT_EDGE_BOTH, &HandleData)==-1){
 		printf("Unable to start interrupt for En\n");
 		printf("exiting");
@@ -154,7 +143,6 @@ void run(){
 
 
 JNIEXPORT void JNICALL Java_force_pi_connector_ConnectorC_connectorFromC(JNIEnv *env, jobject obj) {
-	//jenv = env;
 	jobj = obj;
 	(*env)->GetJavaVM(env, &jvm);
 
