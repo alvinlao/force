@@ -5,6 +5,7 @@ import force.pi.Point3D;
 import force.pi.projection.canvas.BoxFactory;
 import force.pi.projection.canvas.EFactory;
 import force.pi.projection.canvas.Canvas;
+import force.pi.projection.canvas.EFactory;
 import force.pi.projection.canvas.ShapeFactory;
 
 import java.util.ArrayList;
