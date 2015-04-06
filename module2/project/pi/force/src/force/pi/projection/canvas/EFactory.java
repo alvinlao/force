@@ -136,6 +136,6 @@ public class EFactory extends LetterFactory {
 
     @Override
     public Shape build() {
-        return null;
+	return build(0, 0, 0);
     }
 }
