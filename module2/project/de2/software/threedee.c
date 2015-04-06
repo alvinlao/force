@@ -7,6 +7,64 @@
 
 #define blob_base (volatile int*) 0x00089400
 #define piconnector_base (volatile int*) 0x00089480
+unsigned int pixel_buffer_base_addr1;
+unsigned int pixel_buffer_base_addr2;
+
+volatile int edge_capture;
+
+
+alt_up_pixel_buffer_dma_dev* pixel_buffer;
+
+/*
+ * Initialize the pixel buffer
+ */
+void initPixelBuffer() {
+	pixel_buffer = alt_up_pixel_buffer_dma_open_dev("/dev/Pixel_Buffer_DMA");
+	alt_up_pixel_buffer_dma_clear_screen(pixel_buffer, 0);
+	// pixel_buffer_base_addr1 = PIXEL_BUFFER_BASE;
+	// pixel_buffer_base_addr2 = PIXEL_BUFFER_BASE + 245760;
+
+	// alt_up_pixel_buffer_dma_change_back_buffer_address(pixel_buffer,pixel_buffer_base_addr1);
+	// alt_up_pixel_buffer_dma_change_back_buffer_address(pixel_buffer,pixel_buffer_base_addr2);
+}
+
+void swapBuffer(){
+	alt_up_pixel_buffer_dma_swap_buffers(pixel_buffer);
+	while(alt_up_pixel_buffer_dma_check_swap_buffers_status(pixel_buffer));
+}
+
+void handle_button_interrupts(void* context, alt_u32 id){
+	//cast the context pointer to an integer pointer
+	volatile int* edge_capture_ptr = (volatile int*) context;
+	
+	//read the edge capture register on the button PIO and store value
+	*edge_capture_ptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(BUTTON_PIO_BASE);
+
+	//check which button was pressed
+	if(*edge_capture_ptr == 0x2){
+		// take screenshot
+		printf("11111111111\n");
+	} else if(*edge_capture_ptr == 0x4){
+		printf("22222222222222\n");
+	} else if(*edge_capture_ptr == 0x8){
+		printf("333333333333333\n");
+	} else {
+		printf("Something pressed.\n");
+	}
+
+	//write to the edge capture register to reset it
+	IOWR_ALTERA_AVALON_PIO_EDGE_CAP(BUTTON_PIO_BASE, 0);
+}
+
+void init_button_pio(){
+	volatile void* edge_capture_ptr = (void*) &edge_capture;
+
+	IOWR_ALTERA_AVALON_PIO_IRQ_MASK(BUTTON_PIO_BASE, 0xf);
+	IOWR_ALTERA_AVALON_PIO_EDGE_CAP(BUTTON_PIO_BASE, 0x0);
+	alt_irq_register(BUTTON_PIO_IRQ, edge_capture_ptr, handle_button_interrupts);
+}
+
+
 
 void SendData(long data){
 	IOWR_32DIRECT(piconnector_base, 0, data);
@@ -15,6 +73,9 @@ void SendData(long data){
 
 int main()
 {
+	initPixelBuffer();
+	init_button_pio();
+	
 	printf("letsgo");
 	while(1){
 		IOWR_32DIRECT(blob_base, 0, 0xffffffff);

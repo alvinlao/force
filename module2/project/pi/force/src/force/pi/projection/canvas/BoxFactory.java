@@ -50,10 +50,21 @@ public class BoxFactory extends ShapeFactory {
 
         scalePoints(topPoints);
 
+        // Shadow
+        List<Point3D> shadowPoints = new ArrayList<Point3D>();
+        shadowPoints.add(new Point3D(0.5f, -0.5f, 0));
+        shadowPoints.add(new Point3D(-0.5f, 0.5f, 0));
+        shadowPoints.add(new Point3D(-1.5f, -0.5f, 0));
+        shadowPoints.add(new Point3D(-1.5f, -1.5f, 0));
+        shadowPoints.add(new Point3D(-0.5f, -1.5f, 0));
+
+        scalePoints(shadowPoints);
+
         // Polygons
         List<Polygon> polygons = new ArrayList<Polygon>();
-        polygons.add(new Polygon(leftPoints, new Color(100, 100, 100)));
-        polygons.add(new Polygon(rightPoints, new Color(224, 224, 224)));
+        polygons.add(new Polygon(shadowPoints, new Color(140, 140, 140)));
+        polygons.add(new Polygon(leftPoints, new Color(120, 120, 120)));
+        polygons.add(new Polygon(rightPoints, new Color(180, 180, 180)));
         polygons.add(new Polygon(topPoints, new Color(208, 208, 208)));
         polygons.add(new Polygon(frontPoints, new Color(164, 164, 164)));
 

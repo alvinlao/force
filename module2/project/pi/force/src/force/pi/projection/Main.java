@@ -15,10 +15,12 @@ public class Main {
     public static void main(String[] args) throws Exception {
         // Box!
         ShapeFactory bb = new BoxFactory();
+        List<Shape> shapes = new ArrayList<Shape>();
         ShapeFactory eFactory = new EFactory();
+        ShapeFactory oneFactory = new OneFactory();
         ShapeFactory cFactory = new CFactory();
 
-        List<Shape> shapes = new ArrayList<Shape>();
+        shapes.add(oneFactory.build(25, 25, 0));
         shapes.add(bb.build(-25, -25, 0));
         shapes.add(eFactory.build(25, -25, 0));
         shapes.add(cFactory.build(-25, 25, 0));
