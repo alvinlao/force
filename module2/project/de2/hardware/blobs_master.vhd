@@ -31,7 +31,14 @@ port (
     pb2_master_be : out std_logic_vector(1 downto 0);
     pb2_master_readdata : in std_logic_vector(15 downto 0);
     pb2_master_writedata: out  std_logic_vector(15 downto 0);
-    pb2_master_waitrequest : in std_logic
+    pb2_master_waitrequest : in std_logic;
+
+	slave_addr: in std_logic_vector(3 downto 0);
+	slave_rd_en: in std_logic;
+	slave_wr_en: in std_logic;
+	slave_readdata: out std_logic_vector(31 downto 0);
+	slave_writedata: in std_logic_vector(31 downto 0);
+	slave_waitrequest : out std_logic
 	);
 end blobs_master;
 
@@ -58,6 +65,14 @@ architecture rtl of blobs_master is
 			pb_master_readdata : in std_logic_vector(15 downto 0);
 			pb_master_writedata: out  std_logic_vector(15 downto 0);
 			pb_master_waitrequest : in std_logic;
+
+			slave_addr: in std_logic_vector(3 downto 0);
+			slave_rd_en: in std_logic;
+			slave_wr_en: in std_logic;
+			slave_readdata: out std_logic_vector(31 downto 0);
+			slave_writedata: in std_logic_vector(31 downto 0);
+			slave_waitrequest : out std_logic;
+		
 
 			pixel_buffer_base : in std_logic_vector (31 downto 0)
 		);
@@ -114,6 +129,13 @@ u0 : component blobs
 			pb_master_readdata 		=>	pb1_master_readdata,
 			pb_master_writedata		=>	pb1_master_writedata,
 			pb_master_waitrequest	=>	pb1_master_waitrequest,
+
+			slave_addr				=>	slave_addr,
+			slave_rd_en				=>	slave_rd_en,
+			slave_wr_en				=>	slave_wr_en,
+			slave_readdata			=>	slave_readdata,
+			slave_writedata			=> 	slave_writedata,
+			slave_waitrequest		=>	slave_waitrequest,
 			
 			pixel_buffer_base		=> pixel_buffer_base
         );

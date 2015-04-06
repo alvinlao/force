@@ -30,6 +30,13 @@ entity blobs is
 		pb_master_readdata : in std_logic_vector(15 downto 0);
 		pb_master_writedata: out  std_logic_vector(15 downto 0);
 		pb_master_waitrequest : in std_logic;
+
+		slave_addr: in std_logic_vector(3 downto 0);
+		slave_rd_en: in std_logic;
+		slave_wr_en: in std_logic;
+		slave_readdata: out std_logic_vector(31 downto 0);
+		slave_writedata: in std_logic_vector(31 downto 0);
+		slave_waitrequest : out std_logic;
 		
 		pixel_buffer_base : in std_logic_vector (31 downto 0)
 	);
@@ -45,10 +52,13 @@ architecture bhv of blobs is
 									DetectingColumn1_Bottom,
 									DetectingColumn2_Top,
 									DetectingColumn2_Bottom,
-									Finalizing);
+									Finalizing, Previewing);
 	TYPE ColTYPE				is  array(0 to 3) of integer range 0 to SCREEN_WIDTH;
 	
-	SIGNAL current_state 	: StatesTYPE := Initialize;
+	SIGNAL	current_state 		:	StatesTYPE := Initialize;
+	SIGNAL	ready				:	std_logic := '0';
+	SIGNAL	Channel1Midpoint	:	std_logic_vector (31 downto 0);
+	SIGNAL	Channel2Midpoint	:	std_logic_vector (31 downto 0);
 		
 	BEGIN
 	  
@@ -69,7 +79,7 @@ architecture bhv of blobs is
 		VARIABLE	Col2Top				: integer range 0 to SCREEN_HEIGHT;
 		VARIABLE	Col2Bot				: integer range 0 to SCREEN_HEIGHT;
 		
-		VARIABLE	DrawingBox			: integer range 0 to 2;
+		VARIABLE	DrawingBox			: integer range 1 to 2 := 1;
 		
 	BEGIN
 		if (reset_n = '0') then			
@@ -98,7 +108,6 @@ architecture bhv of blobs is
 					LookingForColumn 	:= 0;
 					Col 				:= ((others=> 0));
 					CurrentColHasWhite 	:= '0';
-					DrawingBox			:= 0;
 					
 					Col1Top := 0;
 					Col2Top := 0;
@@ -108,11 +117,19 @@ architecture bhv of blobs is
 					current_state <= Standby;
 					
 				when Standby => 
-							StatesDebug <= "00000010";
-						current_state <= DetectingColumns;
-						curX := 0;
-						curY := 0;
-						load_waiting := '0';
+					StatesDebug <= "00000010";
+					if (slave_wr_en = '1') then
+						if (slave_addr="0000") then
+							if (slave_writedata(1)='1') then
+								-- PROCESS HAS BEEN TRIGGERED, START COMPUTATION							
+								ready <= '0';
+								current_state <= DetectingColumns;
+								curX := 0;
+								curY := 0;
+								load_waiting := '0';
+							end if;
+						end if;
+					end if;
 				when DetectingColumns =>
 				StatesDebug <= "00000100";
 					if (load_waiting = '1') then
@@ -355,59 +372,36 @@ architecture bhv of blobs is
 						load_waiting := '1';
 					end if;
 					
-					
 				when Finalizing=>
+					ready <= '1';
+					Channel1Midpoint <= std_logic_vector(to_unsigned(0,7) & to_unsigned(Col(0)+((Col(1) - Col(0))/2),9) & to_unsigned((Col1Top+(Col1Bot - Col1Top)/2),8) & to_unsigned(0,8));
+					Channel2Midpoint <= std_logic_vector(to_unsigned(0,7) & to_unsigned(Col(2)+((Col(3) - Col(2))/2),9) & to_unsigned((Col2Top+(Col2Bot - Col2Top)/2),8) & to_unsigned(0,8));
+					current_state <= Previewing;
+
+				when Previewing=>
 					StatesDebug <= "10000000";
 					if (draw_box = '1') then
 						if (load_waiting = '0') then
-							--if (DrawingBox = 1) then
+							if (DrawingBox = 1) then
 								outline_data <= std_logic_vector('1' & to_unsigned(Col2Top,8) & to_unsigned(Col(2),9) & to_unsigned(Col2Bot,8) & to_unsigned(Col(3),9));
-							--elsif (DrawingBox = 2) then
-							--	outline_data <= std_logic_vector('0' & to_unsigned(Col1Top,8) & to_unsigned(Col(0),9) & to_unsigned(Col1Bot,8) & to_unsigned(Col(1),9));
-							--else
-							--	outline_data <= std_logic_vector('0' & to_unsigned(1,8) & to_unsigned(1,9) & to_unsigned(10,8) & to_unsigned(10,9));
-							--end if;
-							outline_start <= '1';
-							load_waiting := '1';
-							current_state <= Initialize;
+								outline_start <= '1';
+								load_waiting := '1';
+								current_state <= Initialize;
+								DrawingBox := 2;
+							else
+								outline_data <= std_logic_vector('0' & to_unsigned(Col1Top,8) & to_unsigned(Col(0),9) & to_unsigned(Col1Bot,8) & to_unsigned(Col(1),9));
+								outline_start <= '1';
+								load_waiting := '1';
+								current_state <= Initialize;
+								DrawingBox := 1;
+							end if;
 						else
 							if (outline_wait ='0') then
-							--	outline_start <= '0';
 								load_waiting := '0';
-							--	if (DrawingBox = 0) then
-							--		DrawingBox := 1;
-							--	elsif(DrawingBox = 1) then
-							--		DrawingBox := 2;
-							--	else
-									--current_state <= Initialize;
-								--end if;
 							end if;
 						end if;
 					else
-						if (load_waiting = '0') then
-							--if (DrawingBox = 1) then
-								--outline_data <= std_logic_vector('1' & to_unsigned(Col2Top,8) & to_unsigned(Col(2),9) & to_unsigned(Col2Bot,8) & to_unsigned(Col(3),9));
-							--elsif (DrawingBox = 2) then
-								outline_data <= std_logic_vector('0' & to_unsigned(Col1Top,8) & to_unsigned(Col(0),9) & to_unsigned(Col1Bot,8) & to_unsigned(Col(1),9));
-							--else
-							--	outline_data <= std_logic_vector('0' & to_unsigned(1,8) & to_unsigned(1,9) & to_unsigned(10,8) & to_unsigned(10,9));
-							--end if;
-							outline_start <= '1';
-							load_waiting := '1';
-							current_state <= Initialize;
-						else
-							if (outline_wait ='0') then
-							--	outline_start <= '0';
-								load_waiting := '0';
-							--	if (DrawingBox = 0) then
-							--		DrawingBox := 1;
-							--	elsif(DrawingBox = 1) then
-							--		DrawingBox := 2;
-							--	else
-									--current_state <= Initialize;
-								--end if;
-							end if;
-						end if;
+						current_state <= Initialize;
 					end if;
 				when others=>
 					StatesDebug <= "00000000";
@@ -416,4 +410,51 @@ architecture bhv of blobs is
 			end case;
 		end if;	
 	end process;
+
+  process (slave_rd_en, slave_addr,Channel1Midpoint,Channel2Midpoint)
+    BEGIN	       
+		 slave_readdata <= (others => '-');
+		 if (slave_rd_en = '1') then
+			 case slave_addr is
+				
+				--0 ready
+				 when "0000" => slave_readdata <= std_logic_vector(to_unsigned(0,31)) & ready;
+				--4 ch1 xy
+				 when "0001" => slave_readdata <= Channel1Midpoint;
+				--8 ch2 xy
+				 when "0010" => slave_readdata <= Channel2Midpoint;
+				
+				 when "0011" => slave_readdata <= std_logic_vector(to_unsigned(0,32));
+				
+				 when "0100" => slave_readdata <= std_logic_vector(to_unsigned(0,32));
+				
+				--debug stuff
+				--20
+				 when "0101" => slave_readdata <= std_logic_vector(to_unsigned(0,32));
+				--24
+				 when "0110" => slave_readdata <= std_logic_vector(to_unsigned(0,32));
+				--28
+				 when "0111" => slave_readdata <= std_logic_vector(to_unsigned(0,32));
+				--32
+				 when "1000" => slave_readdata <= std_logic_vector(to_unsigned(0,32));
+				--36
+				 when "1001" => slave_readdata <= std_logic_vector(to_unsigned(0,32));
+				--40
+				 when "1010" => slave_readdata <= std_logic_vector(to_unsigned(0,32));
+				--44
+				 when "1011" => slave_readdata <= std_logic_vector(to_unsigned(0,32));
+				--48
+				 when "1100" => slave_readdata <= std_logic_vector(to_unsigned(0,32));
+				--52
+				 when "1101" => slave_readdata <= std_logic_vector(to_unsigned(0,32));
+				--56
+				 when "1110" => slave_readdata <= std_logic_vector(to_unsigned(0,32));
+				
+				--What?
+				 when others => slave_readdata <= std_logic_vector(to_unsigned(0,32));
+			 end case;
+		 end if;
+     end process;			
+
+	slave_waitrequest <= '0';
 end bhv;
