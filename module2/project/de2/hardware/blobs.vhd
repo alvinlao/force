@@ -69,7 +69,7 @@ architecture bhv of blobs is
 		VARIABLE	Col2Top				: integer range 0 to SCREEN_HEIGHT;
 		VARIABLE	Col2Bot				: integer range 0 to SCREEN_HEIGHT;
 		
-		VARIABLE	DrawingBox			: integer range 1 to 2;
+		VARIABLE	DrawingBox			: integer range 0 to 2;
 		
 	BEGIN
 		if (reset_n = '0') then			
@@ -98,7 +98,7 @@ architecture bhv of blobs is
 					LookingForColumn 	:= 0;
 					Col 				:= ((others=> 0));
 					CurrentColHasWhite 	:= '0';
-					DrawingBox			:= 1;
+					DrawingBox			:= 0;
 					
 					Col1Top := 0;
 					Col2Top := 0;
@@ -198,9 +198,9 @@ architecture bhv of blobs is
 							if (pb_master_readdata(15)='1') then
 								--found Top
 								Col1Top := curY;
-								curX := Col(0);
-								curY := SCREEN_HEIGHT-1;
-								current_state <= DetectingColumn1_Bottom;
+								curX := Col(2);
+								curY := 0;
+								current_state <= DetectingColumn2_Top;
 							end if;
 							
 							curX := curX + 1;
@@ -210,9 +210,9 @@ architecture bhv of blobs is
 								if (curY = SCREEN_HEIGHT) then
 									--failed to find top
 									Col1Top := curY;
-									curX := Col(0);
-									curY := SCREEN_HEIGHT-1;
-									current_state <= DetectingColumn1_Bottom;
+									curX := Col(2);
+									curY := 0;
+									current_state <= DetectingColumn2_Top;
 								end if;
 							end if;
 						else
@@ -240,8 +240,8 @@ architecture bhv of blobs is
 								--found Bottom
 								Col1Bot := curY;
 								curX := Col(2);
-								curY := 0;
-								current_state <= DetectingColumn2_Top;
+								curY := SCREEN_HEIGHT-1;
+								current_state <= DetectingColumn2_Bottom;
 							end if;
 							
 							curX := curX + 1;
@@ -252,8 +252,8 @@ architecture bhv of blobs is
 									--failed to find bottom
 									Col1Bot := curY;
 									curX := Col(2);
-									curY := 0;
-									current_state <= DetectingColumn2_Top;
+									curY := SCREEN_HEIGHT-1;
+									current_state <= DetectingColumn2_Bottom;
 								end if;
 							end if;
 						else
@@ -281,9 +281,9 @@ architecture bhv of blobs is
 							if (pb_master_readdata(15)='1') then
 								--found Top
 								Col2Top := curY;
-								curX := Col(2);
+								curX := Col(0);
 								curY := SCREEN_HEIGHT-1;
-								current_state <= DetectingColumn2_Bottom;
+								current_state <= DetectingColumn1_Bottom;
 							end if;
 							
 							curX := curX + 1;
@@ -293,9 +293,9 @@ architecture bhv of blobs is
 								if (curY = SCREEN_HEIGHT) then
 									--failed to find top
 									Col2Top := curY;
-									curX := Col(2);
+									curX := Col(0);
 									curY := SCREEN_HEIGHT-1;
-									current_state <= DetectingColumn2_Bottom;
+									current_state <= DetectingColumn1_Bottom;
 								end if;
 							end if;
 						else
@@ -325,6 +325,7 @@ architecture bhv of blobs is
 								Col2Bot := curY;
 								curX := 0;
 								curY := 0;
+								load_waiting := '1';
 								current_state <= Finalizing;
 							end if;
 							
@@ -337,6 +338,7 @@ architecture bhv of blobs is
 									Col2Bot := curY;
 									curX := 0;
 									curY := 0;
+									load_waiting := '1';
 									current_state <= Finalizing;
 								end if;
 							end if;
@@ -358,32 +360,54 @@ architecture bhv of blobs is
 					StatesDebug <= "10000000";
 					if (draw_box = '1') then
 						if (load_waiting = '0') then
-							if (outline_wait ='0') then
-								if (DrawingBox = 1) then
-									outline_data <= std_logic_vector('1' & to_unsigned(Col2Top,8) & to_unsigned(Col(2),9) & to_unsigned(Col2Bot,8) & to_unsigned(Col(3),9));
-								else
-									outline_data <= std_logic_vector('0' & to_unsigned(Col1Top,8) & to_unsigned(Col(0),9) & to_unsigned(Col1Bot,8) & to_unsigned(Col(1),9));
-								end if;
-								outline_start <= '1';
-								load_waiting := '1';
-							else
-								outline_start <= '0';
-							end if;
+							--if (DrawingBox = 1) then
+								outline_data <= std_logic_vector('1' & to_unsigned(Col2Top,8) & to_unsigned(Col(2),9) & to_unsigned(Col2Bot,8) & to_unsigned(Col(3),9));
+							--elsif (DrawingBox = 2) then
+							--	outline_data <= std_logic_vector('0' & to_unsigned(Col1Top,8) & to_unsigned(Col(0),9) & to_unsigned(Col1Bot,8) & to_unsigned(Col(1),9));
+							--else
+							--	outline_data <= std_logic_vector('0' & to_unsigned(1,8) & to_unsigned(1,9) & to_unsigned(10,8) & to_unsigned(10,9));
+							--end if;
+							outline_start <= '1';
+							load_waiting := '1';
+							current_state <= Initialize;
 						else
-							outline_start <= '0';
-							load_waiting := '0';
-							if (DrawingBox = 2) then
-								current_state <= Initialize;
-							else
-								DrawingBox := 2;
+							if (outline_wait ='0') then
+							--	outline_start <= '0';
+								load_waiting := '0';
+							--	if (DrawingBox = 0) then
+							--		DrawingBox := 1;
+							--	elsif(DrawingBox = 1) then
+							--		DrawingBox := 2;
+							--	else
+									--current_state <= Initialize;
+								--end if;
 							end if;
 						end if;
 					else
-						if (outline_wait ='0') then
-							outline_data <= std_logic_vector('1' & to_unsigned(100,8) & to_unsigned(100,9) & to_unsigned(200,8) & to_unsigned(200,9));
+						if (load_waiting = '0') then
+							--if (DrawingBox = 1) then
+								--outline_data <= std_logic_vector('1' & to_unsigned(Col2Top,8) & to_unsigned(Col(2),9) & to_unsigned(Col2Bot,8) & to_unsigned(Col(3),9));
+							--elsif (DrawingBox = 2) then
+								outline_data <= std_logic_vector('0' & to_unsigned(Col1Top,8) & to_unsigned(Col(0),9) & to_unsigned(Col1Bot,8) & to_unsigned(Col(1),9));
+							--else
+							--	outline_data <= std_logic_vector('0' & to_unsigned(1,8) & to_unsigned(1,9) & to_unsigned(10,8) & to_unsigned(10,9));
+							--end if;
 							outline_start <= '1';
+							load_waiting := '1';
+							current_state <= Initialize;
+						else
+							if (outline_wait ='0') then
+							--	outline_start <= '0';
+								load_waiting := '0';
+							--	if (DrawingBox = 0) then
+							--		DrawingBox := 1;
+							--	elsif(DrawingBox = 1) then
+							--		DrawingBox := 2;
+							--	else
+									--current_state <= Initialize;
+								--end if;
+							end if;
 						end if;
-						current_state <= Initialize;
 					end if;
 				when others=>
 					StatesDebug <= "00000000";

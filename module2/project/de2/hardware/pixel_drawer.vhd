@@ -26,7 +26,7 @@ end pixel_drawer;
 
 architecture rtl of pixel_drawer is
 	constant color1 : std_logic_vector (15 downto 0) := "0000011111100000";
-	constant color2 : std_logic_vector (15 downto 0) := "0000000000011111";
+	constant color2 : std_logic_vector (15 downto 0) := "0000011111111111";
 
 
     signal x1,x2 : std_logic_vector(8 downto 0);
