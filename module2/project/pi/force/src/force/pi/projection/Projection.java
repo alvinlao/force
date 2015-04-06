@@ -3,6 +3,7 @@ package force.pi.projection;
 import force.pi.Point3D;
 
 import force.pi.projection.canvas.BoxFactory;
+import force.pi.projection.canvas.CFactory;
 import force.pi.projection.canvas.EFactory;
 import force.pi.projection.canvas.Canvas;
 import force.pi.projection.canvas.EFactory;
@@ -26,7 +27,7 @@ public class Projection {
         canvas = new Canvas(SCREEN_WIDTH, SCREEN_HEIGHT);
 
         // Shape factory
-        ShapeFactory shapeFactory = new EFactory();
+        ShapeFactory shapeFactory = new BoxFactory();
 
         // Shape list
         shapes = new ArrayList<Shape>();
