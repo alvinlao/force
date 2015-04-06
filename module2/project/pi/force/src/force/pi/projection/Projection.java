@@ -10,10 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by Shaan on 17/03/2015.
- * need to pass in camera coordinates
- * call public method "projectIt(Point3D B)"
- * where B is camera coordinates
+ * Project 3D shapes onto a 2D plane
  */
 public class Projection {
     static final int SCREEN_WIDTH = 960;
@@ -26,13 +23,13 @@ public class Projection {
         canvas = new Canvas(SCREEN_WIDTH, SCREEN_HEIGHT);
 
         // Shape factory
-        ShapeFactory bb = new BoxFactory();
+        ShapeFactory shapeFactory = new BoxFactory();
 
         // Shape list
         shapes = new ArrayList<Shape>();
 
         // Create a box
-        shapes.add(bb.build());
+        shapes.add(shapeFactory.build());
     }
 
     /**
