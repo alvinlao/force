@@ -3,7 +3,6 @@ package force.pi;
 import force.pi.camera.Camera;
 import force.pi.connector.ConnectorC;
 import force.pi.filters.kalman.KalmanFilter;
-import force.pi.projection.Paint;
 import force.pi.projection.Projection;
 
 /**
@@ -55,8 +54,8 @@ public class Magic {
             }
         });
 
-	long startms, stopms, elapsedms;
-	long targetms = 25;
+        long startms, stopms, elapsedms;
+        long targetms = 25;
 
         //keep alive (for time being)
         while (keepRunning) {
@@ -69,11 +68,18 @@ public class Magic {
                 points[i] = kalmanFilters[i].run(measurements[i]);
             }
 
+            //System.out.println(String.format("<%d, %d> <%d, %d>", points[RED].x, points[RED].y, points[BLUE].x, points[BLUE].y));
+
             // Convert two points into a camera coordinate
             coordinate = camera.transform2Dto3D(points[RED], points[BLUE]);
+            coordinate.x *= 1000;
+            coordinate.y *= 1000;
+            coordinate.z *= 1000;
+
+            //System.out.println(coordinate.x + " " + coordinate.y + " " + coordinate.z);
 
             // Update projection with latest camera coordinate
-            projection.projectIt(coordinate);
+            projection.update(coordinate);
 
             stopms = System.currentTimeMillis();
             elapsedms = stopms - startms;

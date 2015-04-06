@@ -31,7 +31,7 @@ public class Point3D {
      * Copies the coordinates from another point to this point.
      * @param other - The point to copy from.
      */
-    void copy(Point3D other) {
+    public void copy(Point3D other) {
         this.x = other.x;
         this.y = other.y;
         this.z = other.z;
@@ -42,11 +42,53 @@ public class Point3D {
      * @param other - The point to compute the distance from.
      * @return
      */
-    double distance(Point3D other) {
+    public double distance(Point3D other) {
         double dx = Math.pow((other.x - this.x), 2);
         double dy = Math.pow((other.y - this.y), 2);
         double dz = Math.pow((other.z - this.z), 2);
         return Math.sqrt(dx + dy + dz);
+    }
+
+
+    /**
+     * Dot product
+     * @param v
+     * @param w
+     * @return
+     */
+    public static double dot(Point3D v, Point3D w) {
+        return (v.x * w.x) + (v.y * w.y) + (v.z * w.z);
+    }
+
+    /**
+     * Scale a vector
+     * Saves result in vector
+     * @param s
+     * @param v
+     */
+    public static void scale(double s, Point3D v) {
+        v.x *= s;
+        v.y *= s;
+        v.z *= s;
+    }
+
+    /**
+     * Subtract two vectors
+     * @param res
+     * @param v
+     * @param w
+     * @return
+     */
+    public static void sub(Point3D res, Point3D v, Point3D w) {
+        res.x = v.x - w.x;
+        res.y = v.y - w.y;
+        res.z = v.z - w.z;
+    }
+
+    public static void add(Point3D res, Point3D v, Point3D w) {
+        res.x = v.x + w.x;
+        res.y = v.y + w.y;
+        res.z = v.z + w.z;
     }
 
     @Override
