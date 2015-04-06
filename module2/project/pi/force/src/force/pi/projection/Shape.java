@@ -49,6 +49,6 @@ public class Shape implements Comparable<Shape> {
 
     @Override
     public int compareTo(Shape other) {
-        return (int) (this.zorder - other.zorder);
+        return (int) (other.zorder - this.zorder);
     }
 }
