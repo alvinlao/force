@@ -10,7 +10,7 @@ import java.util.List;
  * Created by Shaan on 03/04/2015.
  */
 public class Polygon extends java.awt.Polygon implements Comparable<Polygon> {
-    List<Point3D> points;
+    public List<Point3D> points;
     List<Point3D> projectedPoints;
 
     public Color color;
@@ -27,6 +27,8 @@ public class Polygon extends java.awt.Polygon implements Comparable<Polygon> {
 
         // Initialize local list
         npoints = points.size();
+        xpoints = new int[npoints];
+        ypoints = new int[npoints];
 
         // Initialize projection points list
         this.projectedPoints = new ArrayList<Point3D>();

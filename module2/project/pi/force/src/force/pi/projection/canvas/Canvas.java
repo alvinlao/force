@@ -8,45 +8,47 @@ import java.awt.image.BufferStrategy;
 import java.util.List;
 
 public class Canvas extends java.awt.Canvas {
-    public static final int WIDTH = 800;
-    public static final int HEIGHT = 600;
+    int canvasWidth;
+    int canvasHeight;
 
     BufferStrategy strategy;
 
-    public Canvas() {
-        // create a frame to contain our game
+    public Canvas(int width, int height) {
+        canvasWidth = width;
+        canvasHeight = height;
+
+        // Create a frame
         JFrame container = new JFrame("EECE 381");
 
-        // get hold the content of the frame and set up the resolution of the game
+        // Set resolution
         JPanel panel = (JPanel) container.getContentPane();
-        panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        panel.setPreferredSize(new Dimension(canvasWidth, canvasHeight));
         panel.setLayout(null);
 
-        // setup our canvas size and put it into the content of the frame
-        setBounds(0,0,WIDTH,HEIGHT);
+        // Setup canvas size and put into frame
+        setBounds(0, 0, canvasWidth, canvasHeight);
         panel.add(this);
 
         // Tell AWT not to bother repainting our canvas since we're
         // going to do that our self in accelerated mode
         setIgnoreRepaint(true);
 
-        // finally make the window visible
+        // Make the window visible
         container.pack();
         container.setResizable(false);
         container.setVisible(true);
 
-        // add a listener to respond to the user closing the window. If they
-        // do we'd like to exit the game
+        // Add a listener to respond to the user closing the window. If they
         container.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
             }
         });
 
-        // request the focus so key events come to us
+        // Request the focus so key events come to us
         requestFocus();
 
-        // create the buffering strategy which will allow AWT
+        // Create the buffering strategy which will allow AWT
         // to manage our accelerated graphics
         createBufferStrategy(2);
         strategy = getBufferStrategy();
@@ -61,7 +63,7 @@ public class Canvas extends java.awt.Canvas {
         // surface and blank it out
         Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
         g.setColor(Color.white);
-        g.fillRect(0, 0, WIDTH, HEIGHT);
+        g.fillRect(0, 0, canvasWidth, canvasHeight);
 
         // Draw
         for (force.pi.projection.Shape shape : shapes) {
@@ -69,8 +71,8 @@ public class Canvas extends java.awt.Canvas {
                 g.setColor(polygon.color);
 
                 // Offset
-                offsetPoints(polygon.xpoints, WIDTH / 2);
-                offsetPoints(polygon.ypoints, HEIGHT / 2);
+                offsetPoints(polygon.xpoints, canvasWidth / 2);
+                offsetPoints(polygon.ypoints, canvasHeight / 2);
 
                 g.fillPolygon(polygon.xpoints, polygon.ypoints, polygon.npoints);
             }
