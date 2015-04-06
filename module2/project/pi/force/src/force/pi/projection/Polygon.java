@@ -1,6 +1,7 @@
 package force.pi.projection;
 
 import force.pi.Point3D;
+import force.pi.projection.centroid.Centroid;
 
 import java.awt.*;
 import java.util.ArrayList;
