@@ -26,9 +26,10 @@ public class Main {
         shapes.add(cFactory.build(-25, 25, 0));
 
         Canvas c = new Canvas(960, 720);
-        Point3D cameraPoint = new Point3D(-150, 50, 300);
+        Point3D cameraPoint = new Point3D(-150, 50, 20);
 
         int distance = 300;
+        int zDistance = 280;
         int time = 30;
 
         while (true) {
@@ -45,7 +46,6 @@ public class Main {
                 draw(c, shapes, cameraPoint);
                 Thread.sleep(33);
             }
-
         }
     }
 
