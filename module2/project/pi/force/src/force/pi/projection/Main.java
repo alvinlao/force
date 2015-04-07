@@ -25,7 +25,7 @@ public class Main {
         shapes.add(eFactory.build(25, -25, 0));
         shapes.add(cFactory.build(-25, 25, 0));
 
-        Canvas c = new Canvas(960, 720);
+        Canvas c = new Canvas();
         Point3D cameraPoint = new Point3D(-150, 50, 20);
 
         int distance = 300;
