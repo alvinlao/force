@@ -62,11 +62,11 @@ public class BoxFactory extends ShapeFactory {
 
         // Polygons
         List<Polygon> polygons = new ArrayList<Polygon>();
-        polygons.add(new Polygon(shadowPoints, new Color(170, 170, 170)));
+        polygons.add(new Polygon(shadowPoints, new Color(175, 175, 175)));
         polygons.add(new Polygon(leftPoints, new Color(160, 160, 160)));
-        polygons.add(new Polygon(rightPoints, new Color(220, 220, 220)));
-        polygons.add(new Polygon(topPoints, new Color(230, 230, 230)));
-        polygons.add(new Polygon(frontPoints, new Color(210, 210, 210)));
+        polygons.add(new Polygon(rightPoints, new Color(195, 195, 195)));
+        polygons.add(new Polygon(topPoints, new Color(210, 210, 210)));
+        polygons.add(new Polygon(frontPoints, new Color(190, 190, 190)));
 
         // Apply offset
         Shape s = new Shape(polygons);

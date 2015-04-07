@@ -20,13 +20,13 @@ public class Main {
         ShapeFactory oneFactory = new OneFactory();
         ShapeFactory cFactory = new CFactory();
 
-        shapes.add(oneFactory.build(25, 25, 0));
+        //shapes.add(oneFactory.build(25, 25, 0));
         shapes.add(bb.build(-25, -25, 0));
-        shapes.add(eFactory.build(25, -25, 0));
-        shapes.add(cFactory.build(-25, 25, 0));
+        //shapes.add(eFactory.build(25, -25, 0));
+        //shapes.add(cFactory.build(-25, 25, 0));
 
         Canvas c = new Canvas();
-        Point3D cameraPoint = new Point3D(-150, 50, 20);
+        Point3D cameraPoint = new Point3D(-150, 50, 300);
 
         int distance = 300;
         int zDistance = 280;
