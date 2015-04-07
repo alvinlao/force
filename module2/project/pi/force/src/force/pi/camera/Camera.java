@@ -35,7 +35,7 @@ public class Camera {
     private static final float R_EFFECTIVE_INF = 0.5f;
 
     // Real distance from camera to center of projection
-    private static final float R_CAMERA_TO_PROJECTION_CENTER = 0.275f;
+    private static final float R_CAMERA_TO_PROJECTION_CENTER = 0.12f;
 
     // Conversion factor: C = real distance / camera distance
     //private static final float CAMERA_TO_REAL_CONVERSION = 0.004166f;
@@ -45,7 +45,7 @@ public class Camera {
     private static final float CAMERA_TO_REAL_Y_CONVERSION = 0.00165f;
 
     // Camera tilt angle (from table) in degrees
-    private static final float DEGREES_TILTED = 18;
+    private static final float DEGREES_TILTED = 40;
 
 
     // Fields

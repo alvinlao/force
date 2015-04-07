@@ -8,7 +8,7 @@ import force.pi.projection.canvas.ShapeFactory;
  */
 public class ProjectionPoint extends Point3D {
     // The closest the camera can get to the object
-    static final int SLACK = 20;
+    static final int SLACK = 10;
 
     // Define the plane we are projecting on to.
     static final Point3D normal = new Point3D(0, 0, 1);
