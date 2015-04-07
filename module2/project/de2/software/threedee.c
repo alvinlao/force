@@ -4,6 +4,8 @@
 #include <time.h>
 #include <unistd.h>
 #include "altera_up_avalon_video_pixel_buffer_dma.h"
+#include "sys/alt_irq.h"
+#include "altera_avalon_pio_regs.h"
 
 #define blob_base (volatile int*) 0x00089400
 #define piconnector_base (volatile int*) 0x00089480
@@ -36,18 +38,19 @@ void swapBuffer(){
 void handle_button_interrupts(void* context, alt_u32 id){
 	//cast the context pointer to an integer pointer
 	volatile int* edge_capture_ptr = (volatile int*) context;
-	
+
 	//read the edge capture register on the button PIO and store value
 	*edge_capture_ptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(BUTTON_PIO_BASE);
 
 	//check which button was pressed
 	if(*edge_capture_ptr == 0x2){
 		// take screenshot
-		printf("11111111111\n");
+//		printf("11111111111\n");
 	} else if(*edge_capture_ptr == 0x4){
-		printf("22222222222222\n");
+//		printf("22222222222222\n");
 	} else if(*edge_capture_ptr == 0x8){
-		printf("333333333333333\n");
+//		printf("333333333333333\n");
+		swapBuffer();
 	} else {
 		printf("Something pressed.\n");
 	}
@@ -75,7 +78,7 @@ int main()
 {
 	initPixelBuffer();
 	init_button_pio();
-	
+
 	printf("letsgo");
 	while(1){
 		IOWR_32DIRECT(blob_base, 0, 0xffffffff);
