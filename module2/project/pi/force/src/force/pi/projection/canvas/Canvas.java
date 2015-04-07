@@ -13,11 +13,62 @@ public class Canvas extends java.awt.Canvas {
 
     BufferStrategy strategy;
 
-    public Canvas(int width, int height) {
+    /**
+     * Default constructor
+     * Creates a canvas with the screen width and screen height set to the actual
+     * width and height of the screen.
+     */
+    public Canvas() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         canvasWidth = ((int) screenSize.getWidth());
         canvasHeight = ((int) screenSize.getHeight());
         
+        // Create a frame
+        JFrame container = new JFrame("EECE 381");
+
+        // Set resolution
+        JPanel panel = (JPanel) container.getContentPane();
+        panel.setPreferredSize(new Dimension(canvasWidth, canvasHeight));
+        panel.setLayout(null);
+
+        // Setup canvas size and put into frame
+        setBounds(0, 0, canvasWidth, canvasHeight);
+        panel.add(this);
+
+        // Tell AWT not to bother repainting our canvas since we're
+        // going to do that our self in accelerated mode
+        setIgnoreRepaint(true);
+
+        // Make the window visible
+        container.pack();
+        container.setResizable(false);
+        container.setVisible(true);
+
+        // Add a listener to respond to the user closing the window. If they
+        container.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
+
+        // Request the focus so key events come to us
+        requestFocus();
+
+        // Create the buffering strategy which will allow AWT
+        // to manage our accelerated graphics
+        createBufferStrategy(2);
+        strategy = getBufferStrategy();
+    }
+
+    /**
+     * Parameterized constructor
+     * @param width The screen width in pixels.
+     * @param height The screen height in pixels.
+     */
+    public Canvas(int width, int height) {
+        canvasWidth = width;
+        canvasHeight = height;
+
         // Create a frame
         JFrame container = new JFrame("EECE 381");
 

@@ -16,14 +16,11 @@ import java.util.List;
  * Project 3D shapes onto a 2D plane
  */
 public class Projection {
-    static final int SCREEN_WIDTH = 960;
-    static final int SCREEN_HEIGHT = 720;
-
     Canvas canvas;
     List<Shape> shapes;
 
     public Projection() {
-        canvas = new Canvas(SCREEN_WIDTH, SCREEN_HEIGHT);
+        canvas = new Canvas();
 
         // Shape factory
         ShapeFactory shapeFactory = new EFactory();
