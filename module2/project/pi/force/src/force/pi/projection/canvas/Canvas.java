@@ -14,9 +14,10 @@ public class Canvas extends java.awt.Canvas {
     BufferStrategy strategy;
 
     public Canvas(int width, int height) {
-        canvasWidth = width;
-        canvasHeight = height;
-
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        canvasWidth = ((int) screenSize.getWidth());
+        canvasHeight = ((int) screenSize.getHeight());
+        
         // Create a frame
         JFrame container = new JFrame("EECE 381");
 
