@@ -2,6 +2,10 @@ package force.pi.projection;
 
 import force.pi.Point3D;
 import force.pi.projection.builders.Box;
+import force.pi.projection.builders.LetterC;
+import force.pi.projection.builders.LetterE;
+import force.pi.projection.builders.color.Red;
+import force.pi.projection.builders.color.Yellow;
 import force.pi.projection.canvas.Canvas;
 
 import java.util.ArrayList;
@@ -25,13 +29,31 @@ public class Projection {
         shapes.add(new Box().build());
 
         shapes.add(new Box()
-                .setOffset(0, 0, -0.1f)
+                .setOffset(0.05f, -0.04f, -0.05f)
                 .build());
 
         shapes.add(new Box()
-                .setOffset(0, 0, -0.2f)
+                .setOffset(0.12f, 0.06f, -0.1f)
                 .build());
-        shapes.add(new Box().build());
+
+        shapes.add(new Box()
+                .setOffset(-0.02f, 0.09f, -0.12f)
+                .build());
+
+        shapes.add(new Box()
+                .setOffset(-0.22f, -0.10f, -0.21f)
+                .setColorScheme(new Red())
+                .build());
+
+        shapes.add(new LetterC().setOffset(0.08f, -0.05f, -0.0f)
+                .setWidth(0.015f)
+                .setDepth(0.01f)
+                .build());
+
+        shapes.add(new LetterE().setOffset(-0.018f, -0.06f, 0f)
+                .setWidth(0.015f)
+                .setDepth(0.01f)
+                .build());
     }
 
     /**
