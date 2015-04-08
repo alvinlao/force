@@ -1,9 +1,11 @@
 package force.pi.projection.builders;
 
+import force.pi.projection.Polygon;
 import force.pi.projection.Shape;
 import force.pi.projection.builders.color.ColorScheme;
 
 import java.awt.Color;
+import java.util.List;
 
 /**
  * Specifications to build a Shape
@@ -93,4 +95,15 @@ public abstract class ShapeSpec {
     }
 
     public abstract Shape build();
+
+    /**
+     * Create the shape
+     * @param polygons
+     * @return
+     */
+    protected Shape create(List<Polygon> polygons) {
+        Shape s = new Shape(polygons);
+        s.applyOffset(xOffset, yOffset, zOffset);
+        return s;
+    }
 }

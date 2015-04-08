@@ -103,9 +103,6 @@ public class NumberOne extends ShapeSpec {
         polygons.add(new Polygon(frontPoints, new Color(208, 208, 208)));
 
         // Shape
-        Shape shape = new Shape(polygons);
-        shape.applyOffset(xOffset, yOffset, zOffset);
-
-        return shape;
+        return create(polygons);
     }
 }

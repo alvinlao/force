@@ -15,6 +15,8 @@ public class Shape implements Comparable<Shape> {
 
     public Shape(List<Polygon> polygons) {
         this.polygons = polygons;
+
+        applyOffset(0, 0, 0);
     }
 
 

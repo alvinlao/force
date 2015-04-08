@@ -7,7 +7,7 @@ import java.awt.*;
  */
 public class Red extends ColorScheme {
     public Red() {
-        topColor = new Color(244, 111, 52);
+        topColor = new Color(248, 128, 75);
         leftColor = new Color(198, 70, 13);
         backColor = leftColor;
         rightColor = new Color(231, 87, 23);

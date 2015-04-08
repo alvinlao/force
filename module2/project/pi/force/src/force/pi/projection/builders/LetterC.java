@@ -75,9 +75,6 @@ public class LetterC extends ShapeSpec {
         polygons.add(new Polygon(frontBPoints, frontColor));
         polygons.add(new Polygon(topPoints, topColor));
 
-        Shape shape = new Shape(polygons);
-        shape.applyOffset(xOffset, yOffset, zOffset);
-
-        return shape;
+        return create(polygons);
     }
 }

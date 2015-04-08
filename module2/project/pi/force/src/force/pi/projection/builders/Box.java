@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Build a box!
+ * S
  */
 public class Box extends ShapeSpec {
     @Override
@@ -56,9 +57,7 @@ public class Box extends ShapeSpec {
         polygons.add(new Polygon(topPoints, topColor));
         polygons.add(new Polygon(frontPoints, frontColor));
 
-        Shape shape = new Shape(polygons);
-        shape.applyOffset(xOffset, yOffset, zOffset);
-
-        return shape;
+        // Shape
+        return create(polygons);
     }
 }
