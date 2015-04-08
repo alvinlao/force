@@ -17,12 +17,10 @@ import java.util.List;
  */
 public class Main {
 
-
     private static final int INTENTSITY = 5;
     private static final float depth = 0.5f;
     private static final float screen_width = 0.4f;
     private static final float screen_height = 0.22f;
-
 
     public static void main(String[] args) throws Exception {
         // Shapes
