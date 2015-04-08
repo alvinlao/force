@@ -31,6 +31,10 @@ public class Projection {
 
         // Create a box
         shapes.add(shapeFactory.build(0, 0, 0));
+        shapes.add(shapeFactory.build(-0.05f, -0.05f, 0));
+        shapes.add(shapeFactory.build(0.05f, 0.05f, 0));
+        shapes.add(shapeFactory.build(-0.05f, 0.05f, 0));
+        shapes.add(shapeFactory.build(0.05f, -0.05f, 0));
     }
 
     /**

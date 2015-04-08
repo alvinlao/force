@@ -35,7 +35,7 @@ public class Camera {
     private static final float R_EFFECTIVE_INF = 0.125f;
 
     // Real distance from camera to center of projection
-    private static final float R_CAMERA_TO_PROJECTION_CENTER = 0.0012f;
+    private static final float R_CAMERA_TO_PROJECTION_CENTER = 0.2f;
 
     // Conversion factor: C = real distance / camera distance
     //private static final float CAMERA_TO_REAL_CONVERSION = 0.004166f;

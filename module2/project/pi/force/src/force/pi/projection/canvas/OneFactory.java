@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class OneFactory extends LetterFactory {
     @Override
-    public Shape build(int xOffset, int yOffset, int zOffset) {
+    public Shape build(float xOffset, float yOffset, float zOffset) {
         // Bottom A
         List<Point3D> bottomAPoints = new ArrayList<Point3D>();
         bottomAPoints.add(new Point3D(-0.5f, 0.5f, 0));

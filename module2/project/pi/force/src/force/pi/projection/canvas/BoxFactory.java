@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class BoxFactory extends ShapeFactory {
     @Override
-    public Shape build(int xOffset, int yOffset, int zOffset) {
+    public Shape build(float xOffset, float yOffset, float zOffset) {
 	float width = 0.02f;
 	float height = 0.02f;
 	float depth = 0.02f;

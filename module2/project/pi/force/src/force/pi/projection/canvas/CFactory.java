@@ -14,7 +14,7 @@ import java.util.List;
 public class CFactory extends LetterFactory {
 
     @Override
-    public Shape build(int xOffset, int yOffset, int zOffset) {
+    public Shape build(float xOffset, float yOffset, float zOffset) {
         // Top
         List<Point3D> topPoints = new ArrayList<Point3D>();
         topPoints.add(new Point3D(-0.5f, -0.5f, 1));

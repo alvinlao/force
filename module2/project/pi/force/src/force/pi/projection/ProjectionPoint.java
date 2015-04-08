@@ -8,7 +8,7 @@ import force.pi.projection.canvas.ShapeFactory;
  */
 public class ProjectionPoint extends Point3D {
     // The closest the camera can get to the object
-    static final int SLACK = 10;
+    static final float SLACK = 0.1f;
 
     // Define the plane we are projecting on to.
     static final Point3D normal = new Point3D(0, 0, 1);
@@ -25,8 +25,8 @@ public class ProjectionPoint extends Point3D {
      */
     public void update(Point3D original, Point3D cameraPosition) {
         // Edge case: Camera below object height
-        if (cameraPosition.z <= ShapeFactory.scale + SLACK) {
-            cameraPosition.z = ShapeFactory.scale + SLACK;
+        if (cameraPosition.z <= original.z + SLACK) {
+            cameraPosition.z = original.z + SLACK;
         }
 
         sub(l, original, cameraPosition);

@@ -12,7 +12,7 @@ import java.util.List;
 public abstract class ShapeFactory {
     public static final int scale = 1;
 
-    public abstract Shape build(int xOffset, int yOffset, int zOffset);
+    public abstract Shape build(float xOffset, float yOffset, float zOffset);
     public abstract Shape build();
 
     /**
@@ -22,7 +22,7 @@ public abstract class ShapeFactory {
      * @param yOffset
      * @param zOffset
      */
-    public void applyOffset(Shape s, int xOffset, int yOffset, int zOffset) {
+    public void applyOffset(Shape s, float xOffset, float yOffset, float zOffset) {
         for (Polygon polygon : s.polygons) {
             for (Point3D point : polygon.points) {
                 point.x += xOffset;
