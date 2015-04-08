@@ -1,16 +1,13 @@
 package force.pi.projection;
 
 import force.pi.Point3D;
-import force.pi.projection.builders.LetterC;
 import force.pi.projection.builders.Box;
-import force.pi.projection.builders.LetterE;
+import force.pi.projection.builders.Grid;
+import force.pi.projection.builders.Orientation;
 import force.pi.projection.builders.color.Blue;
 import force.pi.projection.builders.color.Purple;
-import force.pi.projection.builders.color.Red;
-import force.pi.projection.builders.color.Yellow;
 import force.pi.projection.canvas.Canvas;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,6 +16,14 @@ import java.util.List;
  * Created by alvinlao on 15-04-03.
  */
 public class Main {
+
+
+    private static final int INTENTSITY = 5;
+    private static final float depth = 0.5f;
+    private static final float screen_width = 0.4f;
+    private static final float screen_height = 0.22f;
+
+
     public static void main(String[] args) throws Exception {
         // Shapes
         List<Shape> shapes = new ArrayList<Shape>();
@@ -33,6 +38,21 @@ public class Main {
                 .setColorScheme(new Purple())
                 .setOffset(0, 0, -0.2f)
                 .build());
+
+        //shapes.add(new Grid(INTENTSITY, screen_width, depth, Orientation.XZ).build());
+
+        //left
+        shapes.add(new Grid(INTENTSITY,depth,screen_height, Orientation.YZ).setOffset(-screen_width/2,-screen_height/2,-depth).build());
+        //right
+        shapes.add(new Grid(INTENTSITY,depth,screen_height,Orientation.YZ).setOffset(screen_width/2,-screen_height/2,-depth).build());
+        //top
+        shapes.add(new Grid(INTENTSITY,screen_width,depth,Orientation.XZ).setOffset(-screen_width/2,-screen_height/2,-depth).build());
+        //bottom
+        shapes.add(new Grid(INTENTSITY,screen_width,depth,Orientation.XZ).setOffset(-screen_width/2,screen_height/2,-depth).build());
+        //back
+        shapes.add(new Grid(INTENTSITY,screen_width,screen_height,Orientation.XY).setOffset(-screen_width/2,-screen_height/2,-depth).build());
+
+
 
 //        shapes.add(new Box()
 //                .setOffset(0.05f, -0.04f, -0.05f)
