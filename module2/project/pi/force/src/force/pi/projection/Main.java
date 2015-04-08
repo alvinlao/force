@@ -4,6 +4,8 @@ import force.pi.Point3D;
 import force.pi.projection.builders.LetterC;
 import force.pi.projection.builders.Box;
 import force.pi.projection.builders.LetterE;
+import force.pi.projection.builders.color.Blue;
+import force.pi.projection.builders.color.Purple;
 import force.pi.projection.builders.color.Red;
 import force.pi.projection.builders.color.Yellow;
 import force.pi.projection.canvas.Canvas;
@@ -23,10 +25,12 @@ public class Main {
         shapes.add(new Box().build());
 
         shapes.add(new Box()
+                .setColorScheme(new Blue())
                 .setOffset(0, 0, -0.1f)
                 .build());
 
         shapes.add(new Box()
+                .setColorScheme(new Purple())
                 .setOffset(0, 0, -0.2f)
                 .build());
 
@@ -63,7 +67,7 @@ public class Main {
 
         // Simulated camera
         float distanceX = 0.3f;
-        float distanceY = 0f;
+        float distanceY = 0.3f;
         int time = 60;
         Point3D camera = new Point3D(-distanceX/2, -distanceY/2, 0.4f);
 
