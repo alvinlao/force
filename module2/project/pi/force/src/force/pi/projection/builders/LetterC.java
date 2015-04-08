@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LetterC extends ShapeSpec {
-    protected float thickness = 0.02f / 4;
+    protected float thickness = DEFAULT_SIZE / 4;
 
     @Override
     public Shape build() {

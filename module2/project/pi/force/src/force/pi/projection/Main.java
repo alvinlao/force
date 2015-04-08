@@ -3,6 +3,7 @@ package force.pi.projection;
 import force.pi.Point3D;
 import force.pi.projection.builders.LetterC;
 import force.pi.projection.builders.Box;
+import force.pi.projection.builders.LetterE;
 import force.pi.projection.builders.color.Red;
 import force.pi.projection.builders.color.Yellow;
 import force.pi.projection.canvas.Canvas;
@@ -44,14 +45,18 @@ public class Main {
                 .setDepth(0.01f)
                 .build());
 
+        shapes.add(new LetterE().setOffset(-0.018f, -0.06f, 0f)
+                .setWidth(0.015f)
+                .setDepth(0.01f)
+                .build());
+
         // Canvas
         Canvas c = new Canvas();
 
         // Simulated camera
-        Point3D camera = new Point3D(0.0f, 0.1f, 0.2f);
-
         float distance = 0.3f;
         int time = 60;
+        Point3D camera = new Point3D(-distance/2, 0.1f, 0.4f);
 
         while (true) {
             // Move right

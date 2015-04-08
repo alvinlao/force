@@ -14,10 +14,11 @@ import java.util.List;
  */
 public abstract class ShapeSpec {
     // Default values
+    protected static final float DEFAULT_SIZE = 0.02f;
 
-    protected float width = 0.02f;
-    protected float height = 0.02f;
-    protected float depth = 0.02f;
+    protected float width = DEFAULT_SIZE;
+    protected float height = DEFAULT_SIZE;
+    protected float depth = DEFAULT_SIZE;
 
     protected float xOffset = 0;
     protected float yOffset = 0;
