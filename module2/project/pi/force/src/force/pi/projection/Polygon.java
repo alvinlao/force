@@ -81,6 +81,6 @@ public class Polygon extends java.awt.Polygon implements Comparable<Polygon> {
 
     @Override
     public int compareTo(Polygon other) {
-        return (int) (other.zorder - this.zorder);
+        return (int) (1000 * (other.zorder - this.zorder));
     }
 }

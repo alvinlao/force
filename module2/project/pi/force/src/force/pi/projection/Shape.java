@@ -53,11 +53,10 @@ public class Shape implements Comparable<Shape> {
 
         // Distance to camera
         zorder = centroid.distance(camPos);
-        //System.out.println(zorder);
     }
 
     @Override
     public int compareTo(Shape other) {
-        return (int) (other.zorder - this.zorder);
+        return (int) (1000 * (other.zorder - this.zorder));
     }
 }
