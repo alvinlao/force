@@ -23,6 +23,10 @@ public class Main {
         shapes.add(new Box().build());
 
         shapes.add(new Box()
+                .setOffset(0, 0, -0.1f)
+                .build());
+
+        shapes.add(new Box()
                 .setOffset(0.05f, -0.04f, -0.05f)
                 .build());
 
@@ -54,21 +58,36 @@ public class Main {
         Canvas c = new Canvas();
 
         // Simulated camera
-        float distance = 0.3f;
+        float distanceX = 0.3f;
+        float distanceY = 0.3f;
         int time = 60;
-        Point3D camera = new Point3D(-distance/2, 0.1f, 0.4f);
+        Point3D camera = new Point3D(-distanceX/2, -distanceY/2, 0.4f);
 
         while (true) {
             // Move right
             for (int i = 0; i < time; ++i) {
-                camera.x += distance/time;
+                camera.x += distanceX/time;
+                draw(c, shapes, camera);
+                Thread.sleep(33);
+            }
+
+            // Move down
+            for (int i = 0; i < time; ++i) {
+                camera.y += distanceY/time;
                 draw(c, shapes, camera);
                 Thread.sleep(33);
             }
 
             // Move left
             for (int i = 0; i < time; ++i) {
-                camera.x -= distance/time;
+                camera.x -= distanceX/time;
+                draw(c, shapes, camera);
+                Thread.sleep(33);
+            }
+
+            // Move up
+            for (int i = 0; i < time; ++i) {
+                camera.y -= distanceY/time;
                 draw(c, shapes, camera);
                 Thread.sleep(33);
             }

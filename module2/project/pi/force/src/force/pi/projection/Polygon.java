@@ -44,6 +44,7 @@ public class Polygon extends java.awt.Polygon implements Comparable<Polygon> {
 
         // Create centroid
         centroid = new Point3D();
+        setCentroid();
     }
 
     /**
