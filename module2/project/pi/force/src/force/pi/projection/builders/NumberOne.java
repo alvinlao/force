@@ -1,4 +1,4 @@
-package force.pi.projection.canvas;
+package force.pi.projection.builders;
 
 import force.pi.Point3D;
 import force.pi.projection.Polygon;
@@ -8,20 +8,17 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by alvinlao on 15-04-05.
- */
-public class OneFactory extends LetterFactory {
+public class NumberOne extends ShapeSpec {
     @Override
-    public Shape build(float xOffset, float yOffset, float zOffset) {
+    public Shape build() {
+        // TODO Use SPEC
+
         // Bottom A
         List<Point3D> bottomAPoints = new ArrayList<Point3D>();
         bottomAPoints.add(new Point3D(-0.5f, 0.5f, 0));
         bottomAPoints.add(new Point3D(0.5f, 0.5f, 0));
         bottomAPoints.add(new Point3D(0.5f, 0.5f, 1));
         bottomAPoints.add(new Point3D(-0.5f, 0.5f, 1));
-
-        scalePoints(bottomAPoints);
 
         // Bottom B
         List<Point3D> bottomBPoints = new ArrayList<Point3D>();
@@ -30,16 +27,12 @@ public class OneFactory extends LetterFactory {
         bottomBPoints.add(new Point3D(-0.1f, -0.35f, 1));
         bottomBPoints.add(new Point3D(-0.1f, -0.35f, 0));
 
-        scalePoints(bottomBPoints);
-
         // Top B
         List<Point3D> topBPoints = new ArrayList<Point3D>();
         topBPoints.add(new Point3D(-0.4f, -0.35f, 0));
         topBPoints.add(new Point3D(-0.4f, -0.35f, 1));
         topBPoints.add(new Point3D(-0.25f, -0.25f, 1));
         topBPoints.add(new Point3D(-0.25f, -0.25f, 0));
-
-        scalePoints(topBPoints);
 
         // Left A
         List<Point3D> leftAPoints = new ArrayList<Point3D>();
@@ -48,16 +41,12 @@ public class OneFactory extends LetterFactory {
         leftAPoints.add(new Point3D(-0.5f, -0.35f, 1));
         leftAPoints.add(new Point3D(-0.1f, -0.5f, 1));
 
-        scalePoints(leftAPoints);
-
         // Left B
         List<Point3D> leftBPoints = new ArrayList<Point3D>();
         leftBPoints.add(new Point3D(-0.4f, -0.35f, 0));
         leftBPoints.add(new Point3D(-0.4f, -0.35f, 1));
         leftBPoints.add(new Point3D(-0.25f, -0.25f, 1));
         leftBPoints.add(new Point3D(-0.25f, -0.25f, 0));
-
-        scalePoints(leftBPoints);
 
         // Left C
         List<Point3D> leftCPoints = new ArrayList<Point3D>();
@@ -66,16 +55,12 @@ public class OneFactory extends LetterFactory {
         leftCPoints.add(new Point3D(-0.1f, 0.25f, 1));
         leftCPoints.add(new Point3D(-0.1f, 0.25f, 0));
 
-        scalePoints(leftCPoints);
-
         // Left D
         List<Point3D> leftDPoints = new ArrayList<Point3D>();
         leftDPoints.add(new Point3D(-0.5f, 0.25f, 0));
         leftDPoints.add(new Point3D(-0.5f, 0.25f, 1));
         leftDPoints.add(new Point3D(-0.5f, 0.5f, 1));
         leftDPoints.add(new Point3D(-0.5f, 0.5f, 0));
-
-        scalePoints(leftDPoints);
 
         // Right A
         List<Point3D> rightAPoints = new ArrayList<Point3D>();
@@ -84,16 +69,12 @@ public class OneFactory extends LetterFactory {
         rightAPoints.add(new Point3D(0.1f, 0.25f, 1));
         rightAPoints.add(new Point3D(0.1f, 0.25f, 0));
 
-        scalePoints(rightAPoints);
-
         // Right B
         List<Point3D> rightBPoints = new ArrayList<Point3D>();
         rightBPoints.add(new Point3D(0.5f, 0.25f, 0));
         rightBPoints.add(new Point3D(0.5f, 0.25f, 1));
         rightBPoints.add(new Point3D(0.5f, 0.5f, 1));
         rightBPoints.add(new Point3D(0.5f, 0.5f, 0));
-
-        scalePoints(rightBPoints);
 
         // Front 1
         List<Point3D> frontPoints = new ArrayList<Point3D>();
@@ -109,8 +90,6 @@ public class OneFactory extends LetterFactory {
         frontPoints.add(new Point3D(-0.25f, -0.25f, 1));
         frontPoints.add(new Point3D(-0.4f, -0.35f, 1));
 
-        scalePoints(frontPoints);
-
         // Polygons
         List<Polygon> polygons = new ArrayList<Polygon>();
         polygons.add(new Polygon(leftBPoints, new Color(100, 100, 100)));
@@ -124,14 +103,9 @@ public class OneFactory extends LetterFactory {
         polygons.add(new Polygon(frontPoints, new Color(208, 208, 208)));
 
         // Shape
-        Shape s = new Shape(polygons);
-        applyOffset(s, xOffset, yOffset, zOffset);
+        Shape shape = new Shape(polygons);
+        shape.applyOffset(xOffset, yOffset, zOffset);
 
-        return s;
-    }
-
-    @Override
-    public Shape build() {
-        return null;
+        return shape;
     }
 }

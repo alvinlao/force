@@ -2,7 +2,7 @@ package force.pi.projection.centroid;
 
 import force.pi.Point3D;
 import force.pi.projection.Shape;
-import force.pi.projection.canvas.BoxFactory;
+import force.pi.projection.builders.Box;
 
 import java.util.List;
 
@@ -164,7 +164,7 @@ public class Centroid {
     }
 
     public static void testCalculate() {
-        BoxFactory box = new BoxFactory();
+        Box box = new Box();
         Shape shape = box.build();
         for (int i = 0; i < shape.polygons.size(); i++) {
             List<Point3D> points = shape.polygons.get(i).points;

@@ -1,7 +1,6 @@
 package force.pi.projection;
 
 import force.pi.Point3D;
-import force.pi.projection.canvas.ShapeFactory;
 
 /**
  * Created by alvinlao on 15-04-05.

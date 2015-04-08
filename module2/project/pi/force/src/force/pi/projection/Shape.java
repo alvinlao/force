@@ -7,37 +7,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by Shaan on 03/04/2015.
- */
 public class Shape implements Comparable<Shape> {
     public List<Polygon> polygons;
-    List<Point3D> polygonCentroids;
 
-    Point3D centroid;
+    public Point3D centroid;
     double zorder;
 
     public Shape(List<Polygon> polygons) {
         this.polygons = polygons;
     }
 
-    /**
-     * Sets up the centroid with the offset
-     * Assumes the applyOffset method of the ShapeFactory
-     * class has already been called.
-     */
-    public void setCentroid() {
-        // Get polygon centroids
-        centroid = new Point3D();
-        polygonCentroids = new ArrayList<Point3D>();
-        for (Polygon polygon : polygons) {
-            polygon.setCentroid();
-            polygonCentroids.add(polygon.centroid);
-        }
-
-        // Shape centroid
-        Centroid.calculate(centroid, polygonCentroids);
-    }
 
     /**
      * Update shape with new camera position
@@ -53,6 +32,37 @@ public class Shape implements Comparable<Shape> {
 
         // Distance to camera
         zorder = centroid.distance(camPos);
+    }
+
+    /**
+     * Offset the shape
+     * @param xOffset x offset
+     * @param yOffset y offset
+     * @param zOffset z offset
+     */
+    public void applyOffset(float xOffset, float yOffset, float zOffset) {
+        for (Polygon polygon : polygons) {
+            for (Point3D point : polygon.points) {
+                point.x += xOffset;
+                point.y += yOffset;
+                point.z += zOffset;
+            }
+        }
+
+        setCentroid(xOffset, yOffset, zOffset);
+    }
+
+    /**
+     * Sets up the centroid with the offset
+     * Assumes the applyOffset method of the ShapeFactory
+     * class has already been called.
+     */
+    private void setCentroid(float x, float y, float z) {
+        // Get polygon centroids
+        centroid = new Point3D();
+        centroid.x = x;
+        centroid.y = y;
+        centroid.z = z;
     }
 
     @Override
