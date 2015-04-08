@@ -27,39 +27,43 @@ public class Main {
                 .build());
 
         shapes.add(new Box()
-                .setOffset(0.05f, -0.04f, -0.05f)
+                .setOffset(0, 0, -0.2f)
                 .build());
 
-        shapes.add(new Box()
-                .setOffset(0.12f, 0.06f, -0.1f)
-                .build());
-
-        shapes.add(new Box()
-                .setOffset(-0.02f, 0.09f, -0.12f)
-                .setColorScheme(new Red())
-                .build());
-
-        shapes.add(new Box()
-                .setOffset(-0.22f, -0.10f, -0.21f)
-                .setColorScheme(new Yellow())
-                .build());
-
-        shapes.add(new LetterC().setOffset(0.08f, -0.05f, -0.0f)
-                .setWidth(0.015f)
-                .setDepth(0.01f)
-                .build());
-
-        shapes.add(new LetterE().setOffset(-0.018f, -0.06f, 0f)
-                .setWidth(0.015f)
-                .setDepth(0.01f)
-                .build());
+//        shapes.add(new Box()
+//                .setOffset(0.05f, -0.04f, -0.05f)
+//                .build());
+//
+//        shapes.add(new Box()
+//                .setOffset(0.12f, 0.06f, -0.1f)
+//                .build());
+//
+//        shapes.add(new Box()
+//                .setOffset(-0.02f, 0.09f, -0.12f)
+//                .setColorScheme(new Red())
+//                .build());
+//
+//        shapes.add(new Box()
+//                .setOffset(-0.22f, -0.10f, -0.21f)
+//                .setColorScheme(new Yellow())
+//                .build());
+//
+//        shapes.add(new LetterC().setOffset(0.08f, -0.05f, -0.0f)
+//                .setWidth(0.015f)
+//                .setDepth(0.01f)
+//                .build());
+//
+//        shapes.add(new LetterE().setOffset(-0.018f, -0.06f, 0f)
+//                .setWidth(0.015f)
+//                .setDepth(0.01f)
+//                .build());
 
         // Canvas
         Canvas c = new Canvas();
 
         // Simulated camera
         float distanceX = 0.3f;
-        float distanceY = 0.3f;
+        float distanceY = 0f;
         int time = 60;
         Point3D camera = new Point3D(-distanceX/2, -distanceY/2, 0.4f);
 

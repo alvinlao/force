@@ -23,7 +23,9 @@ public class Polygon extends java.awt.Polygon implements Comparable<Polygon> {
 
     /**
      * Makes a polygon ready to be transformed into the 2d world
+     *
      * @param points assumes points are in a order where a line is drawn from one point to the next
+     *               Assumes points are NOT offset yet
      */
     public Polygon(List<Point3D> points, Color color) {
         this.points = points;
@@ -44,33 +46,7 @@ public class Polygon extends java.awt.Polygon implements Comparable<Polygon> {
 
         // Create centroid
         centroid = new Point3D();
-        setCentroid();
-    }
-
-    /**
-     * Sets up the centroid with the offset
-     * Assumes the applyOffset method of the ShapeFactory
-     * class has already been called.
-     */
-    public void setCentroid() {
-        // Calculate centroid and z-order
-        float x = 0;
-        float y = 0;
-        float z = 0;
-        for (Point3D point : points) {
-            x += point.x;
-            y += point.y;
-            z += point.z;
-        }
-
-        x /= points.size();
-        y /= points.size();
-        z /= points.size();
-
-        centroid.x = x;
-        centroid.y = y;
-        centroid.z = z;
-        //Centroid.calculate(centroid, points);
+        Centroid.calculate(centroid, points);
     }
 
     /**
