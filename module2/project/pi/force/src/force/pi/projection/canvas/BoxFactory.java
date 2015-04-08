@@ -14,58 +14,63 @@ import java.util.List;
 public class BoxFactory extends ShapeFactory {
     @Override
     public Shape build(int xOffset, int yOffset, int zOffset) {
+	float width = 1.6f;
+	float height = 1f;
+	//float depth = 0.166f;
+	float depth = 0;
+
         // Right
         List<Point3D> rightPoints = new ArrayList<Point3D>();
-        rightPoints.add(new Point3D(0.5f, -0.5f, 0));
-        rightPoints.add(new Point3D(0.5f, 0.5f, 0));
-        rightPoints.add(new Point3D(0.5f, 0.5f, 1));
-        rightPoints.add(new Point3D(0.5f, -0.5f, 1));
+        rightPoints.add(new Point3D(width/2, -height/2, 0));
+        rightPoints.add(new Point3D(width/2, height/2, 0));
+        rightPoints.add(new Point3D(width/2, height/2, depth));
+        rightPoints.add(new Point3D(width/2, -height/2, depth));
 
         scalePoints(rightPoints);
 
         // Back
         List<Point3D> backPoints = new ArrayList<Point3D>();
-        backPoints.add(new Point3D(0.5f, -0.5f, 0));
-        backPoints.add(new Point3D(-0.5f, -0.5f, 0));
-        backPoints.add(new Point3D(-0.5f, -0.5f, 1));
-        backPoints.add(new Point3D(0.5f, -0.5f, 1));
+        backPoints.add(new Point3D(width/2, -height/2, 0));
+        backPoints.add(new Point3D(-width/2, -height/2, 0));
+        backPoints.add(new Point3D(-width/2, -height/2, depth));
+        backPoints.add(new Point3D(width/2, -height/2, depth));
 
         scalePoints(backPoints);
 
         // Front
         List<Point3D> frontPoints = new ArrayList<Point3D>();
-        frontPoints.add(new Point3D(0.5f, 0.5f, 0));
-        frontPoints.add(new Point3D(-0.5f, 0.5f, 0));
-        frontPoints.add(new Point3D(-0.5f, 0.5f, 1));
-        frontPoints.add(new Point3D(0.5f, 0.5f, 1));
+        frontPoints.add(new Point3D(width/2, height/2, 0));
+        frontPoints.add(new Point3D(-width/2, height/2, 0));
+        frontPoints.add(new Point3D(-width/2, height/2, depth));
+        frontPoints.add(new Point3D(width/2, height/2, depth));
 
         scalePoints(frontPoints);
 
         // Left
         List<Point3D> leftPoints = new ArrayList<Point3D>();
-        leftPoints.add(new Point3D(-0.5f, -0.5f, 0));
-        leftPoints.add(new Point3D(-0.5f, 0.5f, 0));
-        leftPoints.add(new Point3D(-0.5f, 0.5f, 1));
-        leftPoints.add(new Point3D(-0.5f, -0.5f, 1));
+        leftPoints.add(new Point3D(-width/2, -height/2, 0));
+        leftPoints.add(new Point3D(-width/2, height/2, 0));
+        leftPoints.add(new Point3D(-width/2, height/2, depth));
+        leftPoints.add(new Point3D(-width/2, -height/2, depth));
 
         scalePoints(leftPoints);
 
         // Top
         List<Point3D> topPoints = new ArrayList<Point3D>();
-        topPoints.add(new Point3D(0.5f, -0.5f, 1));
-        topPoints.add(new Point3D(-0.5f, -0.5f, 1));
-        topPoints.add(new Point3D(-0.5f, 0.5f, 1));
-        topPoints.add(new Point3D(0.5f, 0.5f, 1));
+        topPoints.add(new Point3D(width/2, -height/2, depth));
+        topPoints.add(new Point3D(-width/2, -height/2, depth));
+        topPoints.add(new Point3D(-width/2, height/2, depth));
+        topPoints.add(new Point3D(width/2, height/2, depth));
 
         scalePoints(topPoints);
 
         // Shadow
         List<Point3D> shadowPoints = new ArrayList<Point3D>();
-        shadowPoints.add(new Point3D(0.5f, -0.5f, 0));
-        shadowPoints.add(new Point3D(-0.5f, 0.5f, 0));
-        shadowPoints.add(new Point3D(-1.5f, -0.5f, 0));
-        shadowPoints.add(new Point3D(-1.5f, -1.5f, 0));
-        shadowPoints.add(new Point3D(-0.5f, -1.5f, 0));
+        shadowPoints.add(new Point3D(width/2, -height/2, 0));
+        shadowPoints.add(new Point3D(-width/2, height/2, 0));
+        shadowPoints.add(new Point3D(-(3 * width / 2), -height/2, 0));
+        shadowPoints.add(new Point3D(-(3 * width / 2), -(3 * height / 2), 0));
+        shadowPoints.add(new Point3D(-width/2, -(3 * height / 2), 0));
 
         scalePoints(shadowPoints);
 
