@@ -6,6 +6,7 @@ import force.pi.projection.builders.LetterC;
 import force.pi.projection.builders.LetterE;
 import force.pi.projection.builders.color.Red;
 import force.pi.projection.builders.color.Yellow;
+import force.pi.projection.builders.color.Green;
 import force.pi.projection.canvas.Canvas;
 
 import java.util.ArrayList;
@@ -53,7 +54,12 @@ public class Projection {
                 .build());
 
         shapes.add(new Box()
+                .setColorScheme(new Green())
                 .setOffset(-0.16f, -0.06f, -0.05f)
+                .build());
+
+        shapes.add(new Box()
+                .setOffset(-0.09f, 0.005f, -0.16f)
                 .build());
 
         /*
