@@ -1,14 +1,11 @@
 package force.pi.projection;
 
 import force.pi.Point3D;
-
-import force.pi.projection.builders.LetterC;
-import force.pi.projection.canvas.*;
 import force.pi.projection.builders.Box;
 import force.pi.projection.canvas.Canvas;
 
-import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -46,7 +43,7 @@ public class Projection {
             shape.update(camera);
         }
 
-        //Collections.sort(builders);
+        Collections.sort(shapes);
 
         // Draw
         canvas.draw(shapes);
