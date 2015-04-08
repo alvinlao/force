@@ -3,6 +3,7 @@ package force.pi.projection;
 import force.pi.Point3D;
 import force.pi.projection.builders.LetterC;
 import force.pi.projection.builders.Box;
+import force.pi.projection.builders.color.Red;
 import force.pi.projection.builders.color.Yellow;
 import force.pi.projection.canvas.Canvas;
 
@@ -30,6 +31,7 @@ public class Main {
 
         shapes.add(new Box()
                 .setOffset(-0.02f, 0.09f, -0.12f)
+                .setColorScheme(new Red())
                 .build());
 
         shapes.add(new Box()
