@@ -24,7 +24,7 @@ public class Projection {
         // Shape list
         shapes = new ArrayList<Shape>();
 
-        // Create a box
+        // Create a boxes
         shapes.add(new Box().build());
 
         shapes.add(new Box()

@@ -3,6 +3,7 @@ package force.pi.projection;
 import force.pi.Point3D;
 import force.pi.projection.builders.LetterC;
 import force.pi.projection.builders.Box;
+import force.pi.projection.builders.color.Yellow;
 import force.pi.projection.canvas.Canvas;
 
 import java.awt.*;
@@ -33,25 +34,22 @@ public class Main {
 
         shapes.add(new Box()
                 .setOffset(-0.22f, -0.10f, -0.21f)
-                .setTopColor(new Color(248, 210, 2))
-                .setRightColor(new Color(225, 196, 36))
-                .setFrontColor(new Color(225, 196, 36))
-                .setLeftColor(new Color(179, 161, 60))
-                .setBackColor(new Color(244, 215, 55))
+                .setColorScheme(new Yellow())
                 .build());
 
-        shapes.add(new LetterC().setOffset(0.08f, -0.05f, -0.25f)
+        shapes.add(new LetterC().setOffset(0.08f, -0.05f, -0.0f)
                 .setWidth(0.015f)
+                .setDepth(0.01f)
                 .build());
 
         // Canvas
         Canvas c = new Canvas();
 
         // Simulated camera
-        Point3D camera = new Point3D(-0.15f, 0.1f, 0.4f);
+        Point3D camera = new Point3D(0.0f, 0.1f, 0.2f);
 
         float distance = 0.3f;
-        int time = 30;
+        int time = 60;
 
         while (true) {
             // Move right

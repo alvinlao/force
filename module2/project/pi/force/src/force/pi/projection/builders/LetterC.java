@@ -8,19 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LetterC extends ShapeSpec {
+    protected float thickness = 0.02f / 4;
+
     @Override
     public Shape build() {
-        float thickness = width / 6;
-        float emptySpace = width / 2 - thickness;
-
         // Top
         List<Point3D> topPoints = new ArrayList<Point3D>();
         topPoints.add(new Point3D(-width / 2, -height / 2, depth));
         topPoints.add(new Point3D(width / 2, -height / 2, depth));
-        topPoints.add(new Point3D(width / 2, -emptySpace, depth));
-        topPoints.add(new Point3D(-emptySpace, -emptySpace, depth));
-        topPoints.add(new Point3D(-emptySpace, emptySpace, depth));
-        topPoints.add(new Point3D(width / 2, emptySpace, depth));
+        topPoints.add(new Point3D(width / 2, -height / 2 + thickness, depth));
+        topPoints.add(new Point3D(-width / 2 + thickness, -height / 2 + thickness, depth));
+        topPoints.add(new Point3D(-width / 2 + thickness, height / 2 - thickness, depth));
+        topPoints.add(new Point3D(width / 2, height / 2 - thickness, depth));
         topPoints.add(new Point3D(width / 2, height / 2, depth));
         topPoints.add(new Point3D(-width / 2, height / 2, depth));
 
@@ -34,30 +33,30 @@ public class LetterC extends ShapeSpec {
         // Right A
         List<Point3D> rightAPoints = new ArrayList<Point3D>();
         rightAPoints.add(new Point3D(width / 2, -height / 2, 0));
-        rightAPoints.add(new Point3D(width / 2, -emptySpace, 0));
-        rightAPoints.add(new Point3D(width / 2, -emptySpace, depth));
+        rightAPoints.add(new Point3D(width / 2, -height / 2 + thickness, 0));
+        rightAPoints.add(new Point3D(width / 2, -height / 2 + thickness, depth));
         rightAPoints.add(new Point3D(width / 2, -height / 2, depth));
 
         // Right B
         List<Point3D> rightBPoints = new ArrayList<Point3D>();
-        rightBPoints.add(new Point3D(-emptySpace, -emptySpace, 0));
-        rightBPoints.add(new Point3D(-emptySpace, emptySpace, 0));
-        rightBPoints.add(new Point3D(-emptySpace, emptySpace, depth));
-        rightBPoints.add(new Point3D(-emptySpace, -emptySpace, depth));
+        rightBPoints.add(new Point3D(-width/2 + thickness, -height / 2 + thickness, 0));
+        rightBPoints.add(new Point3D(-width/2 + thickness, height / 2 - thickness, 0));
+        rightBPoints.add(new Point3D(-width/2 + thickness, height / 2 - thickness, depth));
+        rightBPoints.add(new Point3D(-width/2 + thickness, -height / 2 + thickness, depth));
 
         // Right C
         List<Point3D> rightCPoints = new ArrayList<Point3D>();
         rightCPoints.add(new Point3D(width / 2, height / 2, 0));
-        rightCPoints.add(new Point3D(width / 2, emptySpace, 0));
-        rightCPoints.add(new Point3D(width / 2, emptySpace, depth));
+        rightCPoints.add(new Point3D(width / 2, height / 2 - thickness, 0));
+        rightCPoints.add(new Point3D(width / 2, height / 2 - thickness, depth));
         rightCPoints.add(new Point3D(width / 2, height / 2, depth));
 
         // Front A
         List<Point3D> frontAPoints = new ArrayList<Point3D>();
-        frontAPoints.add(new Point3D(-emptySpace, -emptySpace, 0));
-        frontAPoints.add(new Point3D(width / 2, -emptySpace, 0));
-        frontAPoints.add(new Point3D(width / 2, -emptySpace, depth));
-        frontAPoints.add(new Point3D(-emptySpace, -emptySpace, depth));
+        frontAPoints.add(new Point3D(-width/2 + thickness, -height / 2 + thickness, 0));
+        frontAPoints.add(new Point3D(width / 2, -height / 2 + thickness, 0));
+        frontAPoints.add(new Point3D(width / 2, -height / 2 + thickness, depth));
+        frontAPoints.add(new Point3D(-width/2 + thickness, -height / 2 + thickness, depth));
 
         // Front B
         List<Point3D> frontBPoints = new ArrayList<Point3D>();
@@ -72,8 +71,8 @@ public class LetterC extends ShapeSpec {
         polygons.add(new Polygon(rightAPoints, rightColor));
         polygons.add(new Polygon(rightBPoints, rightColor));
         polygons.add(new Polygon(rightCPoints, rightColor));
-        polygons.add(new Polygon(frontAPoints, rightColor));
-        polygons.add(new Polygon(frontBPoints, rightColor));
+        polygons.add(new Polygon(frontAPoints, frontColor));
+        polygons.add(new Polygon(frontBPoints, frontColor));
         polygons.add(new Polygon(topPoints, topColor));
 
         Shape shape = new Shape(polygons);

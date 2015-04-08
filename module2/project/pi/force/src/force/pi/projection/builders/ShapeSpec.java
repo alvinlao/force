@@ -1,6 +1,7 @@
 package force.pi.projection.builders;
 
 import force.pi.projection.Shape;
+import force.pi.projection.builders.color.ColorScheme;
 
 import java.awt.Color;
 
@@ -54,6 +55,15 @@ public abstract class ShapeSpec {
         this.height = height;
         this.depth = depth;
 
+        return this;
+    }
+
+    public ShapeSpec setColorScheme(ColorScheme colorScheme) {
+        setTopColor(colorScheme.topColor);
+        setLeftColor(colorScheme.leftColor);
+        setRightColor(colorScheme.rightColor);
+        setFrontColor(colorScheme.frontColor);
+        setBackColor(colorScheme.backColor);
         return this;
     }
 
