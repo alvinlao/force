@@ -12,12 +12,24 @@ import java.util.List;
  * Created by alvinlao on 15-04-05.
  */
 public class BoxFactory extends ShapeFactory {
+    private float width = 0.02f;
+    private float height = 0.02f;
+    private float depth = 0.02f;
+
+    /**
+     * Sets the dimensions of the box.
+     * @param depth The depth of the box.
+     * @param height The height of the box.
+     * @param width The width of the box.
+     */
+    public void setDimensions(float depth, float height, float width) {
+        this.depth = depth;
+        this.height = height;
+        this.width = width;
+    }
+
     @Override
     public Shape build(float xOffset, float yOffset, float zOffset) {
-	float width = 0.02f;
-	float height = 0.02f;
-	float depth = 0.02f;
-
         // Right
         List<Point3D> rightPoints = new ArrayList<Point3D>();
         rightPoints.add(new Point3D(width/2, -height/2, 0));
@@ -85,6 +97,7 @@ public class BoxFactory extends ShapeFactory {
         // Apply offset
         Shape s = new Shape(polygons);
         applyOffset(s, xOffset, yOffset, zOffset);
+        s.setCentroid();
 
         return s;
     }

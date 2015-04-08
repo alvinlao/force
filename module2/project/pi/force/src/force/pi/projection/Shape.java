@@ -19,11 +19,19 @@ public class Shape implements Comparable<Shape> {
 
     public Shape(List<Polygon> polygons) {
         this.polygons = polygons;
+    }
 
+    /**
+     * Sets up the centroid with the offset
+     * Assumes the applyOffset method of the ShapeFactory
+     * class has already been called.
+     */
+    public void setCentroid() {
         // Get polygon centroids
         centroid = new Point3D();
         polygonCentroids = new ArrayList<Point3D>();
         for (Polygon polygon : polygons) {
+            polygon.setCentroid();
             polygonCentroids.add(polygon.centroid);
         }
 
@@ -49,6 +57,6 @@ public class Shape implements Comparable<Shape> {
 
     @Override
     public int compareTo(Shape other) {
-        return (int) (other.zorder - this.zorder);
+        return (int) (1000 * (other.zorder - this.zorder));
     }
 }

@@ -44,7 +44,14 @@ public class Polygon extends java.awt.Polygon implements Comparable<Polygon> {
 
         // Create centroid
         centroid = new Point3D();
+    }
 
+    /**
+     * Sets up the centroid with the offset
+     * Assumes the applyOffset method of the ShapeFactory
+     * class has already been called.
+     */
+    public void setCentroid() {
         // Calculate centroid and z-order
         Centroid.calculate(centroid, points);
     }
@@ -68,10 +75,12 @@ public class Polygon extends java.awt.Polygon implements Comparable<Polygon> {
 
         // Update z-order
         zorder = centroid.distance(camPos);
+        //System.out.println("Centroid: " + centroid.x + " " + centroid.y + " " + centroid.z);
+        //System.out.println("camPos: " + camPos.x + " " + camPos.y + " " + camPos.z);
     }
 
     @Override
     public int compareTo(Polygon other) {
-        return (int) (other.zorder - this.zorder);
+        return (int) (1000 * (other.zorder - this.zorder));
     }
 }
