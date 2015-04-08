@@ -26,6 +26,37 @@ public class Projection {
         shapes = new ArrayList<Shape>();
 
         // Create a boxes
+        shapes.add(new Box()
+                .setOffset(0, 0, -0.02f)
+                .build());
+
+        shapes.add(new Box()
+                .setOffset(-0.04f, -0.04f, -0.08f)
+                .build());
+
+        shapes.add(new Box()
+                .setOffset(0.08f, 0.08f, -0.08f)
+                .setColorScheme(new Red())
+                .build());
+
+        shapes.add(new Box()
+                .setOffset(0.1f, 0.05f, -0.04f)
+                .build());
+
+        shapes.add(new Box()
+                .setOffset(0.2f, -0.09f, -0.06f)
+                .setColorScheme(new Yellow())
+                .build());
+
+        shapes.add(new Box()
+                .setOffset(-0.18f, 0.08f, -0.03f)
+                .build());
+
+        shapes.add(new Box()
+                .setOffset(-0.16f, -0.06f, -0.05f)
+                .build());
+
+        /*
         shapes.add(new Box().build());
 
         shapes.add(new Box()
@@ -50,10 +81,7 @@ public class Projection {
                 .setDepth(0.01f)
                 .build());
 
-        shapes.add(new LetterE().setOffset(-0.018f, -0.06f, 0f)
-                .setWidth(0.015f)
-                .setDepth(0.01f)
-                .build());
+                */
     }
 
     /**

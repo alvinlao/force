@@ -54,7 +54,7 @@ public class Magic {
         });
 
         long startms, stopms, elapsedms;
-        long targetms = 20;
+        long targetms = 26;
 
         //keep alive (for time being)
         while (keepRunning) {
