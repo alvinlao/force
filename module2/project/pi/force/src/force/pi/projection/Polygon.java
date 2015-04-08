@@ -68,8 +68,6 @@ public class Polygon extends java.awt.Polygon implements Comparable<Polygon> {
 
         // Update z-order
         zorder = centroid.distance(camPos);
-        //System.out.println("Centroid: " + centroid.x + " " + centroid.y + " " + centroid.z);
-        //System.out.println("camPos: " + camPos.x + " " + camPos.y + " " + camPos.z);
     }
 
     @Override
