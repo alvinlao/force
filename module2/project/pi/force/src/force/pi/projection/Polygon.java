@@ -11,6 +11,8 @@ import java.util.List;
  * Created by Shaan on 03/04/2015.
  */
 public class Polygon extends java.awt.Polygon implements Comparable<Polygon> {
+	public static final float REAL_CONVERSION = 3333.33f;
+
     public List<Point3D> points;
     List<Point3D> projectedPoints;
 
@@ -60,8 +62,8 @@ public class Polygon extends java.awt.Polygon implements Comparable<Polygon> {
             projectionPoint.update(points.get(i), camPos);
 
             // Update underlying draw class
-            xpoints[i] = (int) projectionPoint.x;
-            ypoints[i] = (int) projectionPoint.y;
+            xpoints[i] = (int) (projectionPoint.x * REAL_CONVERSION);
+            ypoints[i] = (int) (projectionPoint.y * REAL_CONVERSION);
         }
 
         // Update z-order

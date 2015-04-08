@@ -10,7 +10,7 @@ import java.util.List;
  * Created by alvinlao on 15-04-05.
  */
 public abstract class ShapeFactory {
-    public static final int scale = 250;
+    public static final int scale = 1;
 
     public abstract Shape build(int xOffset, int yOffset, int zOffset);
     public abstract Shape build();

@@ -35,7 +35,7 @@ public class Camera {
     private static final float R_EFFECTIVE_INF = 0.125f;
 
     // Real distance from camera to center of projection
-    private static final float R_CAMERA_TO_PROJECTION_CENTER = 0.12f;
+    private static final float R_CAMERA_TO_PROJECTION_CENTER = 0.0012f;
 
     // Conversion factor: C = real distance / camera distance
     //private static final float CAMERA_TO_REAL_CONVERSION = 0.004166f;
@@ -48,8 +48,8 @@ public class Camera {
     private static final float DEGREES_TILTED = 90;
 
     // Camera view angle
-    private static final float CAMERA_VIEW_ANGLE_X = 100;
-    private static final float CAMERA_VIEW_ANGLE_Y = 100;
+    private static final float CAMERA_VIEW_ANGLE_X = 95;
+    private static final float CAMERA_VIEW_ANGLE_Y = 85;
 
 
 
@@ -86,9 +86,10 @@ public class Camera {
 	// Distance theta
 	float pd = (float) Math.sqrt(px * px + py * py);
 	float theta_d = (float) Math.atan(pz / pd);
+	// Pixel distances
 
 	// Real coordinates
-	float r_z = r_d * (float) Math.sin(Math.toRadians(theta_d));
+	float r_z = r_d * (float) Math.sin(theta_d);
 	float r_y = r_z * (float) Math.tan(Math.toRadians(theta_y));
 	float r_x = r_z * (float) Math.tan(Math.toRadians(theta_x));
 
@@ -97,6 +98,7 @@ public class Camera {
 	transformedPoint.y = r_y;
 
 	// Apply translate
+	transformedPoint.y -= R_CAMERA_TO_PROJECTION_CENTER;
 
         return transformedPoint;
     }
@@ -106,7 +108,7 @@ public class Camera {
 	Calculate real distance from camera to eye
 	*/
 	private float calculateDistance(final float width) {
-		float denum = 2 * (float) Math.tan(Math.toRadians((CAMERA_VIEW_ANGLE_X * width) / (Frame.WIDTH / 2)));
+		float denum = 2 * (float) Math.tan(Math.toRadians((CAMERA_VIEW_ANGLE_X * width) / (Frame.WIDTH * 2)));
 
 		return R_OBJECT_WIDTH / denum;
 	}

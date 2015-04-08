@@ -30,17 +30,7 @@ public class Projection {
         shapes = new ArrayList<Shape>();
 
         // Create a box
-	/*
-        shapes.add(shapeFactory.build(-320, 300, -100));
-        shapes.add(shapeFactory.build(50, 0, 0));
-        shapes.add(shapeFactory.build(100, 25, 100));
-        shapes.add(shapeFactory.build(75, -75, 200));
-        shapes.add(shapeFactory.build(-300, -50, 120));
-        shapes.add(shapeFactory.build(-220, 150, -120));
-        shapes.add(shapeFactory.build(-320, 300, 100));
-*/
         shapes.add(shapeFactory.build(0, 0, 0));
-        shapes.add(shapeFactory.build(-100, 300, 0));
     }
 
     /**

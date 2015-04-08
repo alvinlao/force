@@ -24,8 +24,7 @@ public class Magic {
 	private static int RED = 0;
 	private static int BLUE = 1;
 
-    public static void main(String[] args) throws Exception {
-        // Create filters
+    public static void main(String[] args) throws Exception { // Create filters
         Point[] points = new Point[NUM_INPUT_COORDINATES_PER_FRAME];
         Measurement[] measurements = new Measurement[NUM_INPUT_COORDINATES_PER_FRAME];
         KalmanFilter[] kalmanFilters = new KalmanFilter[NUM_INPUT_COORDINATES_PER_FRAME];
@@ -72,14 +71,12 @@ public class Magic {
 
             // Convert two points into a camera coordinate
             coordinate = camera.transform2Dto3D(points[RED], points[BLUE]);
-		/**
-            coordinate.x *= 50;
-            coordinate.y *= 50;
-            coordinate.z *= 50000;
-*/
-            coordinate.x *= 800000;
-            coordinate.y *= 800000;
-            coordinate.z *= 320000;
+
+	/**
+            coordinate.x *= 10;
+            coordinate.y *= 10;
+            coordinate.z *= 10;
+	**/
 
             System.out.println(coordinate.x + " " + coordinate.y + " " + coordinate.z);
 

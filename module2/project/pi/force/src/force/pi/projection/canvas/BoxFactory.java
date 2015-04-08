@@ -14,9 +14,9 @@ import java.util.List;
 public class BoxFactory extends ShapeFactory {
     @Override
     public Shape build(int xOffset, int yOffset, int zOffset) {
-	float width = 1.6f;
-	float height = 1f;
-	float depth = 0.166f;
+	float width = 0.02f;
+	float height = 0.02f;
+	float depth = 0.02f;
 
         // Right
         List<Point3D> rightPoints = new ArrayList<Point3D>();
