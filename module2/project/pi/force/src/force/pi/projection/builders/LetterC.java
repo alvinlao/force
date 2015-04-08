@@ -65,6 +65,20 @@ public class LetterC extends ShapeSpec {
         frontBPoints.add(new Point3D(width / 2, height / 2, depth));
         frontBPoints.add(new Point3D(-width / 2, height / 2, depth));
 
+        // Back A
+        List<Point3D> backAPoints = new ArrayList<Point3D>();
+        backAPoints.add(new Point3D(-width / 2, -height / 2, 0));
+        backAPoints.add(new Point3D(width / 2, -height / 2, 0));
+        backAPoints.add(new Point3D(width / 2, -height / 2, depth));
+        backAPoints.add(new Point3D(-width / 2, -height / 2, depth));
+
+        // Back B
+        List<Point3D> backBPoints = new ArrayList<Point3D>();
+        backBPoints.add(new Point3D(-width / 2 + thickness, height / 2 - thickness, 0));
+        backBPoints.add(new Point3D(width / 2, height / 2 - thickness, 0));
+        backBPoints.add(new Point3D(width / 2, height / 2 - thickness, depth));
+        backBPoints.add(new Point3D(-width / 2 + thickness, height / 2 - thickness, depth));
+
         // Polygons
         List<Polygon> polygons = new ArrayList<Polygon>();
         polygons.add(new Polygon(leftPoints, leftColor));
@@ -74,6 +88,8 @@ public class LetterC extends ShapeSpec {
         polygons.add(new Polygon(frontAPoints, frontColor));
         polygons.add(new Polygon(frontBPoints, frontColor));
         polygons.add(new Polygon(topPoints, topColor));
+        polygons.add(new Polygon(backAPoints, backColor));
+        polygons.add(new Polygon(backBPoints, backColor));
 
         return create(polygons);
     }
