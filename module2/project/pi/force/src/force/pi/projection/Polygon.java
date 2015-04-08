@@ -54,7 +54,23 @@ public class Polygon extends java.awt.Polygon implements Comparable<Polygon> {
      */
     public void setCentroid() {
         // Calculate centroid and z-order
-        Centroid.calculate(centroid, points);
+        float x = 0;
+        float y = 0;
+        float z = 0;
+        for (Point3D point : points) {
+            x += point.x;
+            y += point.y;
+            z += point.z;
+        }
+
+        x /= points.size();
+        y /= points.size();
+        z /= points.size();
+
+        centroid.x = x;
+        centroid.y = y;
+        centroid.z = z;
+        //Centroid.calculate(centroid, points);
     }
 
     /**

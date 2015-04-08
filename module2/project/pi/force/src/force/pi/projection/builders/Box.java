@@ -24,9 +24,9 @@ public class Box extends ShapeSpec {
         // Back
         List<Point3D> backPoints = new ArrayList<Point3D>();
         backPoints.add(new Point3D(width / 2, -height / 2, 0));
-        backPoints.add(new Point3D(-width/2, -height/2, 0));
-        backPoints.add(new Point3D(-width/2, -height/2, depth));
-        backPoints.add(new Point3D(width / 2, height / 2, depth));
+        backPoints.add(new Point3D(-width / 2, -height / 2, 0));
+        backPoints.add(new Point3D(-width / 2, -height / 2, depth));
+        backPoints.add(new Point3D(width / 2, -height / 2, depth));
 
         // Front
         List<Point3D> frontPoints = new ArrayList<Point3D>();
