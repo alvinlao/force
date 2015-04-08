@@ -2,7 +2,6 @@ package force.pi.projection;
 
 import force.pi.Point3D;
 import force.pi.projection.builders.LetterC;
-import force.pi.projection.canvas.*;
 import force.pi.projection.builders.Box;
 import force.pi.projection.canvas.Canvas;
 
@@ -35,10 +34,14 @@ public class Main {
         shapes.add(new Box()
                 .setOffset(-0.22f, -0.10f, -0.21f)
                 .setTopColor(new Color(248, 210, 2))
+                .setRightColor(new Color(225, 196, 36))
+                .setFrontColor(new Color(225, 196, 36))
+                .setLeftColor(new Color(179, 161, 60))
+                .setBackColor(new Color(244, 215, 55))
                 .build());
 
         shapes.add(new LetterC().setOffset(0.08f, -0.05f, -0.25f)
-                .setDimension(0.015f, 0.02f, 0.02f)
+                .setWidth(0.015f)
                 .build());
 
         // Canvas

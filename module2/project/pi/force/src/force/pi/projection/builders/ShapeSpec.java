@@ -34,7 +34,22 @@ public abstract class ShapeSpec {
         return this;
     }
 
-    public ShapeSpec setDimension(float width, float height, float depth) {
+    public ShapeSpec setWidth(float width) {
+        this.width = width;
+        return this;
+    }
+
+    public ShapeSpec setHeight(float height) {
+        this.height = height;
+        return this;
+    }
+
+    public ShapeSpec setDepth(float depth) {
+        this.depth = depth;
+        return this;
+    }
+
+    public ShapeSpec setSize(float width, float height, float depth) {
         this.width = width;
         this.height = height;
         this.depth = depth;
