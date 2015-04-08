@@ -16,8 +16,7 @@ public class BoxFactory extends ShapeFactory {
     public Shape build(int xOffset, int yOffset, int zOffset) {
 	float width = 1.6f;
 	float height = 1f;
-	//float depth = 0.166f;
-	float depth = 0;
+	float depth = 0.166f;
 
         // Right
         List<Point3D> rightPoints = new ArrayList<Point3D>();

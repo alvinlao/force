@@ -32,7 +32,7 @@ public class Camera {
     private static final float R_OBJECT_FILL_DEPTH = 0.070f;
 
     // How far away is the object from the camera when it appears as one point (m)
-    private static final float R_EFFECTIVE_INF = 0.5f;
+    private static final float R_EFFECTIVE_INF = 0.125f;
 
     // Real distance from camera to center of projection
     private static final float R_CAMERA_TO_PROJECTION_CENTER = 0.12f;
@@ -46,6 +46,12 @@ public class Camera {
 
     // Camera tilt angle (from table) in degrees
     private static final float DEGREES_TILTED = 90;
+
+    // Camera view angle
+    private static final float CAMERA_VIEW_ANGLE_X = 100;
+    private static final float CAMERA_VIEW_ANGLE_Y = 100;
+
+
 
 
     // Fields
@@ -61,28 +67,58 @@ public class Camera {
      */
     public Point3D transform2Dto3D(final Point left, final Point right) {
         Point mid = Point.midpoint(left, right);
+	// Real distance from camera to object
+	float r_d = calculateDistance((float) left.distance(right));
 
-        // Determine 3D coordinate from 2D
-        transformedPoint.x = (mid.x - (Frame.WIDTH/2.0f)) * CAMERA_TO_REAL_X_CONVERSION * -1;
-        transformedPoint.z = (mid.y - (Frame.HEIGHT/2.0f)) * CAMERA_TO_REAL_Y_CONVERSION * -1;
-        transformedPoint.y = calculateZ(left, right);
-        //transformedPoint.z = (float) Math.sqrt(Math.pow(R_FIXED_DISTANCE, 2) - Math.pow(transformedPoint.x, 2) - Math.pow(transformedPoint.y, 2));
+	// Percentage of y relative to screen height
+	float ratio_x = mid.x / (float) Frame.WIDTH;
+	float ratio_y = mid.y / (float) Frame.HEIGHT;
 
-        // Apply coordinate system transform
-        tilt(transformedPoint);
+	// Angle of y relative to x=0, z=0
+	float theta_x = CAMERA_VIEW_ANGLE_X * ratio_x - (CAMERA_VIEW_ANGLE_X / 2);
+	float theta_y = CAMERA_VIEW_ANGLE_Y * ratio_y - (CAMERA_VIEW_ANGLE_Y / 2);
 
-        // Translate the origin to projection center
-        translateOrigin(transformedPoint);
+	// Pixel distances
+	float px = mid.x - Frame.WIDTH/2.0f;
+	float py = mid.y - Frame.HEIGHT/2.0f;
+	float pz = py / (float) Math.tan(Math.toRadians(theta_y));
+
+	// Distance theta
+	float pd = (float) Math.sqrt(px * px + py * py);
+	float theta_d = (float) Math.atan(pz / pd);
+
+	// Real coordinates
+	float r_z = r_d * (float) Math.sin(Math.toRadians(theta_d));
+	float r_y = r_z * (float) Math.tan(Math.toRadians(theta_y));
+	float r_x = r_z * (float) Math.tan(Math.toRadians(theta_x));
+
+	transformedPoint.z = r_z;
+	transformedPoint.x = r_x;
+	transformedPoint.y = r_y;
+
+	// Apply translate
 
         return transformedPoint;
     }
 
+
+	/**
+	Calculate real distance from camera to eye
+	*/
+	private float calculateDistance(final float width) {
+		float denum = 2 * (float) Math.tan(Math.toRadians((CAMERA_VIEW_ANGLE_X * width) / (Frame.WIDTH / 2)));
+
+		return R_OBJECT_WIDTH / denum;
+	}
+
+/*
     private float calculateZ(final Point left, final Point right) {
         float r_distance = ((float) left.distance(right)) * CAMERA_TO_REAL_CONVERSION;
 
         float num = ((R_OBJECT_WIDTH * R_EFFECTIVE_INF) - (r_distance * R_EFFECTIVE_INF) + (r_distance * R_OBJECT_FILL_DEPTH));
         return num / R_OBJECT_WIDTH;
     }
+*/
 
     /**
      * Change coordinate system from relative 

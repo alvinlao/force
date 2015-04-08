@@ -72,9 +72,14 @@ public class Magic {
 
             // Convert two points into a camera coordinate
             coordinate = camera.transform2Dto3D(points[RED], points[BLUE]);
-            coordinate.x *= 1000 * -1;
-            coordinate.y *= 1000;
-            coordinate.z *= 1000;
+		/**
+            coordinate.x *= 50;
+            coordinate.y *= 50;
+            coordinate.z *= 50000;
+*/
+            coordinate.x *= 800000;
+            coordinate.y *= 800000;
+            coordinate.z *= 320000;
 
             System.out.println(coordinate.x + " " + coordinate.y + " " + coordinate.z);
 
