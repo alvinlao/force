@@ -85,6 +85,7 @@ public class BoxFactory extends ShapeFactory {
         // Apply offset
         Shape s = new Shape(polygons);
         applyOffset(s, xOffset, yOffset, zOffset);
+        s.setCentroid();
 
         return s;
     }
