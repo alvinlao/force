@@ -45,7 +45,7 @@ public class Camera {
     private static final float CAMERA_TO_REAL_Y_CONVERSION = 0.00165f;
 
     // Camera tilt angle (from table) in degrees
-    private static final float DEGREES_TILTED = 45;
+    private static final float DEGREES_TILTED = 90;
 
 
     // Fields
