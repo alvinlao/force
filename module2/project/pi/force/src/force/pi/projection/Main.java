@@ -1,12 +1,13 @@
 package force.pi.projection;
 
 import force.pi.Point3D;
-import force.pi.projection.builders.*;
-import force.pi.projection.builders.color.Red;
-import force.pi.projection.builders.color.Yellow;
+import force.pi.projection.builders.Box;
+import force.pi.projection.builders.Grid;
+import force.pi.projection.builders.Orientation;
+import force.pi.projection.builders.color.Blue;
+import force.pi.projection.builders.color.Purple;
 import force.pi.projection.canvas.Canvas;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -29,10 +30,12 @@ public class Main {
         shapes.add(new Box().build());
 
         shapes.add(new Box()
+                .setColorScheme(new Blue())
                 .setOffset(0, 0, -0.1f)
                 .build());
 
         shapes.add(new Box()
+                .setColorScheme(new Purple())
                 .setOffset(0, 0, -0.2f)
                 .build());
 
