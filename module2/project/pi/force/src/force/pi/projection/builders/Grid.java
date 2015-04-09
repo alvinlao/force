@@ -14,7 +14,7 @@ import java.util.Set;
  * Created by Jae on 2015-04-08.
  */
 public class Grid extends ShapeSpec {
-    private final Color gridColor = new Color(235, 235, 235);
+    private final Color gridColor = new Color(60, 60, 60);
     private static final float linewidth = 0.002f;
 
     private List<Polygon> polygons;

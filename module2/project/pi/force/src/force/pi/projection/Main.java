@@ -6,6 +6,8 @@ import force.pi.projection.builders.Grid;
 import force.pi.projection.builders.Orientation;
 import force.pi.projection.builders.color.Blue;
 import force.pi.projection.builders.color.Purple;
+import force.pi.projection.builders.color.Red;
+import force.pi.projection.builders.color.Yellow;
 import force.pi.projection.canvas.Canvas;
 
 import java.util.ArrayList;
@@ -25,16 +27,23 @@ public class Main {
     public static void main(String[] args) throws Exception {
         // Shapes
         List<Shape> shapes = new ArrayList<Shape>();
-        shapes.add(new Box().build());
+        shapes.add(new Box()
+                .setColorScheme(new Red())
+                .build());
 
         shapes.add(new Box()
-                .setColorScheme(new Blue())
+                .setColorScheme(new Yellow())
                 .setOffset(0, 0, -0.1f)
                 .build());
 
         shapes.add(new Box()
-                .setColorScheme(new Purple())
+                .setColorScheme(new Blue())
                 .setOffset(0, 0, -0.2f)
+                .build());
+
+        shapes.add(new Box()
+                .setColorScheme(new Purple())
+                .setOffset(0, 0, -0.3f)
                 .build());
 
         //shapes.add(new Grid(INTENTSITY, screen_width, depth, Orientation.XZ).build());
@@ -50,26 +59,6 @@ public class Main {
         //back
         shapes.add(new Grid(INTENTSITY,screen_width,screen_height,Orientation.XY).setOffset(-screen_width/2,-screen_height/2,-depth).build());
 
-
-
-//        shapes.add(new Box()
-//                .setOffset(0.05f, -0.04f, -0.05f)
-//                .build());
-//
-//        shapes.add(new Box()
-//                .setOffset(0.12f, 0.06f, -0.1f)
-//                .build());
-//
-//        shapes.add(new Box()
-//                .setOffset(-0.02f, 0.09f, -0.12f)
-//                .setColorScheme(new Red())
-//                .build());
-//
-//        shapes.add(new Box()
-//                .setOffset(-0.22f, -0.10f, -0.21f)
-//                .setColorScheme(new Yellow())
-//                .build());
-//
 //        shapes.add(new LetterC().setOffset(0.08f, -0.05f, -0.0f)
 //                .setWidth(0.015f)
 //                .setDepth(0.01f)
@@ -84,9 +73,9 @@ public class Main {
         Canvas c = new Canvas();
 
         // Simulated camera
-        float distanceX = 0.3f;
-        float distanceY = 0.3f;
-        int time = 60;
+        float distanceX = 0.1f;
+        float distanceY = 0.1f;
+        int time = 30;
         Point3D camera = new Point3D(-distanceX/2, -distanceY/2, 0.4f);
 
         while (true) {

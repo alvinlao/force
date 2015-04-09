@@ -114,7 +114,7 @@ public class Canvas extends java.awt.Canvas {
         // Get hold of a graphics context for the accelerated
         // surface and blank it out
         Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
-        g.setColor(Color.white);
+        g.setColor(Color.black);
         g.fillRect(0, 0, canvasWidth, canvasHeight);
 
         // Draw
