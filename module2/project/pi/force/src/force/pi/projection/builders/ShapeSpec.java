@@ -24,11 +24,11 @@ public abstract class ShapeSpec {
     protected float yOffset = 0;
     protected float zOffset = 0;
 
-    protected Color backColor = new Color(160, 160, 160);
-    protected Color frontColor = new Color(190, 190, 190);
-    protected Color leftColor = new Color(160, 160, 160);
-    protected Color rightColor = new Color(195, 195, 195);
-    protected Color topColor = new Color(210, 210, 210);
+    protected Color backColor = new Color(133, 133, 133);
+    protected Color frontColor = new Color(152, 152, 152);
+    protected Color leftColor = new Color(133, 133, 133);
+    protected Color rightColor = new Color(152, 152, 152);
+    protected Color topColor = new Color(187, 187, 187);
 
     public ShapeSpec setOffset(float xOffset, float yOffset, float zOffset) {
         this.xOffset = xOffset;

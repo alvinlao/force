@@ -46,6 +46,10 @@ public class Main {
                 .setOffset(0, 0, -0.3f)
                 .build());
 
+        shapes.add(new Box()
+                .setOffset(0.03f, 0.03f, -0.3f)
+                .build());
+
         //shapes.add(new Grid(INTENTSITY, screen_width, depth, Orientation.XZ).build());
 
         //left
